@@ -128,7 +128,7 @@ export default function CharacterBuilderPage() {
         {activeTab === "attributes"  && <AttributesSection />}
         {activeTab === "haki"        && <HakiSection />}
         {activeTab === "akuma"       && <AkumaSection />}
-        {activeTab === "artes"       && <ArtesMarcials Section />}
+        {activeTab === "artes"       && <ArtesMarciaisSection />}
         {activeTab === "techniques"  && <TechniquesSection />}
         {activeTab === "equipment"   && (
           <div className="text-center py-16 text-slate-500">
