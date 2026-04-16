@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type { Character } from "../../shared/types/character";
-import { validateCharacter } from "./utils/attrCalc";
-import { computeGemBudget, type GemBudgetResult } from "./utils/gemBudget";
+import type { Character } from "../../../shared/types/character";
+import { validateCharacter } from "../utils/attrCalc";
+import { computeGemBudget, type GemBudgetResult } from "../utils/gemBudget";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
 

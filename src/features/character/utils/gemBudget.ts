@@ -1,4 +1,4 @@
-import type { Character, AMFaixaId, HakiStage, AkumaRank } from "../../shared/types/character";
+import type { Character, AMFaixaId, AkumaRank } from "../../../shared/types/character";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
 

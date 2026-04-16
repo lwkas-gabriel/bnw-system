@@ -1,4 +1,4 @@
-import type { Character } from "../../shared/types/character";
+import type { Character } from "../../../shared/types/character";
 
 /** Total points a character has to distribute: 6 + level + racial bonus slots */
 export function totalAttributePoints(level: number, racialFreePoints: number = 0): number {

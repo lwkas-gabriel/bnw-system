@@ -1,9 +1,9 @@
-import type { Character, BaseAttributes, AkumaNoMi, ZoanAkuma, LogiaAkuma } from "../../shared/types/character";
+import type { Character, BaseAttributes, ZoanAkuma, LogiaAkuma } from "../../../shared/types/character";
 import type {
   CombatMode, CombatantState, TurnChoice, TurnResult,
   TurnEvent, AttackRollResult, DamageResult, DiceRoll,
   CombatSummary, ActiveBuffs,
-} from "../../shared/types/combat";
+} from "../../../shared/types/combat";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -228,7 +228,7 @@ export function resolveTechniqueBonus(
 /** Builds temp CON stack for a combatant in a given turn */
 export function buildTempConStack(
   char: Character,
-  state: CombatantState,
+  _state: CombatantState,
   choice: TurnChoice
 ): { source: string; value: number }[] {
   const stack: { source: string; value: number }[] = [];
@@ -383,7 +383,7 @@ export function resolveDamage(
 function applyEnergyCost(
   state: CombatantState,
   choice: TurnChoice,
-  useAverage: boolean
+  _useAverage: boolean
 ): { newState: CombatantState; events: TurnEvent[] } {
   const attrs = resolveAttributes(state.character, choice.buffs);
   let totalCost = attrs.energyCostPerTurn;
