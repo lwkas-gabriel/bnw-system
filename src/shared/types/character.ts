@@ -6,7 +6,7 @@ export type RaceId =
 
 export type HakiType = "armament" | "observation" | "king";
 
-export type HakiStage = 1 | 2 | 3 | 4 | 5 | "advanced_partial" | "advanced_complete";
+export type HakiStage = 0 | 1 | 2 | 3 | 4 | 5 | "advanced_partial" | "advanced_complete";
 
 export type AdvancedHakiVariant =
   | "ryuo" | "repulsion"          // Armament Advanced

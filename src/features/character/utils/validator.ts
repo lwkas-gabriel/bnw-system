@@ -1,6 +1,6 @@
-import type { Character, AMFaixaId, ZoanAkuma } from "../../../shared/types/character";
-import { GEM_COSTS, computeGemBudget } from "./gemBudget";
-import { bpn, totalAttributePoints } from "./attrCalc";
+import type { Character, ZoanAkuma } from "../../../shared/types/character";
+import { computeGemBudget } from "./gemBudget";
+import { totalAttributePoints } from "./attrCalc";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

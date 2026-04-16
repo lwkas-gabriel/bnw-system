@@ -1,5 +1,5 @@
 // ItemsPage.tsx
-import { PageHeader, EmptyState, Button } from "../shared/components";
+import { PageHeader, EmptyState } from "../shared/components";
 
 export default function ItemsPage() {
   return (

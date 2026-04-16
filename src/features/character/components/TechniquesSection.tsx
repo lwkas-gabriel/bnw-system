@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
-import { TECHNIQUE_RANKS, ADHERENCES } from "../../../data/techniques";
+import { TECHNIQUE_RANKS } from "../../../data/techniques";
 import type { Technique, TechniqueRank } from "../../../shared/types/character";
 
 const RANK_COLORS: Record<TechniqueRank, string> = {

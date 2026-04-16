@@ -1,6 +1,6 @@
 // ArtesMarciaisSection.tsx
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { SectionCard, Badge } from "../../../shared/components";
 import type { AMFaixaId } from "../../../shared/types/character";
 import { GEM_COSTS } from "../utils/gemBudget";
 
@@ -23,7 +23,7 @@ const FAIXAS: { id: AMFaixaId; label: string; bonus: string; location: string }[
 
 const ORDER = FAIXAS.map(f => f.id);
 
-function isAvailable(id: AMFaixaId, location: typeof import("../../../shared/types/character").Character.prototype.location): boolean {
+function isAvailable(id: AMFaixaId, location: "blues" | "grand_line" | "new_world"): boolean {
   const f = FAIXAS.find(f => f.id === id)!;
   if (f.location === "Qualquer") return true;
   if (f.location === "Grand Line") return location === "grand_line" || location === "new_world";

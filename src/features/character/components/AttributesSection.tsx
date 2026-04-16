@@ -2,7 +2,7 @@ import { useCharacterStore } from "../store/characterStore";
 import { StatControl, SectionCard, Badge, NumberStepper } from "../../../shared/components";
 import { bpn, totalAttributePoints } from "../utils/attrCalc";
 import { RACES } from "../../../data/races";
-import type { RaceId } from "../../../shared/types/character";
+import type { RaceId, BaseAttributes } from "../../../shared/types/character";
 
 const RACE_OPTIONS = Object.values(RACES).map(r => ({ value: r.id, label: r.name }));
 
@@ -20,12 +20,12 @@ export function AttributesSection() {
   const remaining = maxPoints - usedPoints;
   const raceData = RACES[draft.race];
 
-  function increment(attr: keyof typeof draft.investedAttributes) {
+  function increment(attr: keyof BaseAttributes) {
     if (remaining <= 0) return;
     updateDraft(c => { c.investedAttributes[attr]++; });
   }
-  function decrement(attr: keyof typeof draft.investedAttributes) {
-    if (draft.investedAttributes[attr] <= 0) return;
+  function decrement(attr: keyof BaseAttributes) {
+    if ((draft as NonNullable<typeof draft>).investedAttributes[attr] <= 0) return;
     updateDraft(c => { c.investedAttributes[attr]--; });
   }
 

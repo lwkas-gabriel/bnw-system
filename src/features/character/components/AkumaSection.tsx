@@ -85,7 +85,7 @@ export function AkumaSection() {
                     disabled={needsNewWorld}
                     onClick={() => updateDraft(c => { if (c.akuma) c.akuma.rank = r.rank; })}
                     className={`flex-1 py-2 px-3 rounded-lg border text-xs font-medium transition-all ${
-                      draft.akuma.rank === r.rank
+                      draft.akuma!.rank === r.rank
                         ? "border-amber-600 bg-amber-900/20 text-amber-400"
                         : "border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600"
                     } disabled:opacity-40 disabled:cursor-not-allowed`}

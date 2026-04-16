@@ -1,4 +1,4 @@
-import type { HakiType, HakiStage, AdvancedHakiVariant } from "../shared/types/character";
+import type { HakiStage, AdvancedHakiVariant } from "../shared/types/character";
 
 export interface HakiStageData {
   stage: HakiStage;

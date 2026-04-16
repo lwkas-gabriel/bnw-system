@@ -17,14 +17,6 @@ export interface ImportResult {
 
 // ─── Schema checks ────────────────────────────────────────────────────────────
 
-function isValidCharacter(obj: unknown): obj is Character {
-  if (!obj || typeof obj !== "object") return false;
-  const c = obj as Record<string, unknown>;
-
-  const required = ["id", "name", "level", "race", "investedAttributes", "gemBudget"];
-  return required.every(key => key in c);
-}
-
 function migrateCharacter(raw: Record<string, unknown>): Character {
   // Default missing fields for forward/backward compatibility
   return {
@@ -94,7 +86,7 @@ export function parseImportJSON(raw: string): ImportResult {
         validation: null,
       };
     }
-    rawChar = exported.character as Record<string, unknown>;
+    rawChar = exported.character as unknown as Record<string, unknown>;
   } else if (parsed && typeof parsed === "object") {
     // Accept bare character object
     rawChar = parsed as Record<string, unknown>;

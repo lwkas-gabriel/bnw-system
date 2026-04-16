@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useCombatStore } from "../features/combat/store/combatStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button, Badge, Tabs } from "../shared/components";
-import type { TurnChoice, ActiveBuffs } from "../shared/types/combat";
+import { PageHeader, Button } from "../shared/components";
 import type { Character } from "../shared/types/character";
 import { hitProbability } from "../features/combat/engine/combatEngine";
 
@@ -89,11 +87,9 @@ function CombatLog({ log }: { log: string }) {
 export default function CombatPage() {
   const {
     charA, charB, mode, setMode, setCharA, setCharB,
-    choices, setChoice, addTurn, simulate, reset,
+    choices, addTurn, simulate, reset,
     result, isRunning, toggleAverage, useAverage,
   } = useCombatStore();
-
-  const [activeTab, setActiveTab] = useState("setup");
 
   const canSimulate = !!charA && !!charB;
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI } from "../../../data/haki";
@@ -13,7 +12,6 @@ function StageProgress({ stages, current, onSelect, type }: {
   type: "armament" | "observation";
 }) {
   const currentNum = typeof current === "number" ? current : 0;
-  const colors = { armament: "amber", observation: "blue" };
   const colorClass = type === "armament"
     ? "bg-amber-600 border-amber-500 text-white"
     : "bg-blue-700 border-blue-600 text-white";
@@ -22,7 +20,6 @@ function StageProgress({ stages, current, onSelect, type }: {
     <div className="space-y-2">
       <div className="flex gap-1">
         {STAGE_LABELS.map(s => {
-          const stage = stages[s - 1];
           const isActive = s <= currentNum;
           const isCurrent = s === currentNum;
           return (
@@ -52,7 +49,7 @@ function StageProgress({ stages, current, onSelect, type }: {
           </div>
           <p className="text-[10px] text-slate-600 mt-1">{stages[currentNum - 1].description}</p>
           {stages[currentNum - 1].freeTechniqueRank && (
-            <Badge variant="amber" className="mt-1">1 técnica Rank A grátis</Badge>
+            <div className="mt-1"><Badge variant="amber">1 técnica Rank A grátis</Badge></div>
           )}
         </div>
       )}
@@ -104,7 +101,7 @@ export function HakiSection() {
   }
 
   function setKingAdvanced() {
-    if (draft.location !== "new_world") return;
+    if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.kingStage = "advanced";
@@ -113,7 +110,7 @@ export function HakiSection() {
   }
 
   function setAdvanced(variant: AdvancedHakiVariant) {
-    if (draft.location !== "new_world") return;
+    if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.advancedType = variant;
