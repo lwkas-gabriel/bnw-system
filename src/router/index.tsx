@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import { AppLayout } from "../shared/components/AppLayout";
 import { PageLoader } from "../shared/components/PageLoader";
 
@@ -10,6 +10,8 @@ const CombatPage           = lazy(() => import("../pages/CombatPage"));
 const ItemsPage            = lazy(() => import("../pages/ItemsPage"));
 const ImportPage           = lazy(() => import("../pages/ImportPage"));
 const ShipsPage            = lazy(() => import("../pages/ShipsPage"));
+const PericiasPage         = lazy(() => import("../pages/PericiasPage"));
+const ProfissoesPage       = lazy(() => import("../pages/ProfissoesPage"));
 
 function SuspenseLayout() {
   return (
@@ -34,8 +36,8 @@ export const router = createBrowserRouter([
       { path: "items",              element: <ItemsPage /> },
       { path: "import",             element: <ImportPage /> },
       { path: "ships",              element: <ShipsPage /> },
-      { path: "professions",        element: <Navigate to="/characters" replace /> },
-      { path: "pericias",           element: <Navigate to="/characters" replace /> },
+      { path: "professions",        element: <ProfissoesPage /> },
+      { path: "pericias",           element: <PericiasPage /> },
     ],
   },
 ]);
