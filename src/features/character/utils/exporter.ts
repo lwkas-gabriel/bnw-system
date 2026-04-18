@@ -1,4 +1,4 @@
-import type { Character } from "../../../shared/types/character";
+import type { Character, PericiaId } from "../../../shared/types/character";
 import { bpn } from "./attrCalc";
 import { computeGemBudget } from "./gemBudget";
 import { validateCharacterFull } from "./validator";
@@ -77,7 +77,28 @@ export function exportToForumText(char: Character): string {
   lines.push(`Precisão:     ${1 + char.investedAttributes.precision + racialPre}  (1 base + ${racialPre} racial + ${char.investedAttributes.precision} investido)`);
   lines.push(`Defesa:       ${1 + char.investedAttributes.defense + racialDef}  (1 base + ${racialDef} racial + ${char.investedAttributes.defense} investido)`);
   lines.push(`Constituição: ${3 + char.investedAttributes.constitution + racialCon}  (3 base + ${racialCon} racial + ${char.investedAttributes.constitution} investido)`);
-  lines.push(`Ambição: ${char.ambition}`);
+  lines.push("");
+
+  // ── Perícias
+  lines.push("[ PERÍCIAS ]");
+  const periciaLabels: Record<PericiaId, string> = {
+    ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
+    erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
+    investigacao: "Investigação", logica: "Lógica",
+    percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
+  };
+  const hakiObsStage = char.haki
+    ? (char.haki.primaryType === "observation"
+        ? (typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5)
+        : (typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0))
+    : 0;
+  const percepcaoHakiBonus = hakiObsStage >= 3 ? hakiObsStage - 2 : 0;
+  for (const [id, value] of Object.entries(char.pericias) as [PericiaId, number][]) {
+    const hakiNote = id === "percepcao" && percepcaoHakiBonus > 0
+      ? ` (+${percepcaoHakiBonus} Haki Obs)` : "";
+    const effectiveValue = id === "percepcao" ? value + percepcaoHakiBonus : value;
+    lines.push(`${periciaLabels[id]}: ${value}${hakiNote}  (Roll: 3d6 + ${effectiveValue * 3})`);
+  }
   lines.push("");
 
   // ── Haki
