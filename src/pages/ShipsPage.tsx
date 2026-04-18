@@ -10,6 +10,24 @@ import {
 } from "../data/ships";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
 
+// Comodo → profession badge mapping
+const COMODO_PROFESSION: Record<string, string> = {
+  cozinha_industrial: "Cozinheiro",
+  oficina:            "Engenheiro",
+  forja:              "Ferreiro",
+  laboratorio:        "Médico",
+  escritorio:         "Navegador / Arqueólogo",
+  biblioteca:         "Arqueólogo",
+  picadeiro:          "Adestrador",
+  motor:              "Ciborgue",
+  remos:              "Haki / AM",
+  turbina:            "Akuma no Mi",
+  brigue:             "Caçador",
+  antena:             "Ciborgue (Gear Drone)",
+  tanque_reserva:     "Ciborgue (Combustível)",
+  enfermaria:         "Médico",
+};
+
 // ─── Labels ───────────────────────────────────────────────────────────────────
 
 const ROLE_LABELS: Record<ShipRole, string> = {
@@ -105,6 +123,21 @@ function OverviewTab({ shipId }: { shipId: string }) {
         {ship.builtByEngineer && (
           <p className="text-[10px] text-green-400/70 mb-3">
             ✦ Construída por Engenheiro — desconto de 30% aplicado (economia: ₿{engineerDiscount.toLocaleString("pt-BR")})
+          </p>
+        )}
+        {ship.ownership === "navy_permanent" && (
+          <p className="text-[10px] text-amber-400/70 mb-3">
+            ⚓ Comissão Permanente · Marinha — melhorias permitidas às suas custas
+          </p>
+        )}
+        {ship.ownership === "cp_temporary" && (
+          <p className="text-[10px] text-sky-400/70 mb-3">
+            🕵️ Comissão Temporária · CP — disponível por 1 aventura, sem melhorias
+          </p>
+        )}
+        {ship.ownership === "cp_galeon" && (
+          <p className="text-[10px] text-sky-400/70 mb-3">
+            🕵️ Galeão · CP Comandante — embarcação emprestada
           </p>
         )}
 
@@ -346,6 +379,11 @@ function ComodosTab({ shipId }: { shipId: string }) {
                     {comodo.size} slot{comodo.size > 1 ? "s" : ""}
                   </span>
                   <span className="text-[10px] font-mono text-slate-600">₿{(comodo.price / 1_000_000).toFixed(0)}M</span>
+                  {COMODO_PROFESSION[comodo.id] && (
+                    <span className="text-[10px] text-sky-400/70 bg-sky-900/20 px-1.5 py-0.5 rounded-full">
+                      {COMODO_PROFESSION[comodo.id]}
+                    </span>
+                  )}
                 </div>
                 <p className="text-[10px] text-slate-500 mt-0.5">{comodo.description}</p>
               </div>
@@ -451,8 +489,19 @@ function KlabautermannTab({ shipId }: { shipId: string }) {
       >
         + Registrar Viagem
       </Button>
-      {klabautermann.active && (
-        <p className="text-[10px] text-slate-600 mt-2">O Klabautermann já despertou.</p>
+
+      {!klabautermann.active && (
+        <p className="text-[10px] text-slate-500 mt-3">
+          Alternativa: use o <span className="text-amber-400">Desconto de Facção</span> (20g, fora do limite)
+          para despertar instantaneamente — disponível na aba Facção do personagem.
+        </p>
+      )}
+
+      {ship.klabautermannUnlockedWithDiscount && (
+        <p className="text-[10px] text-amber-400/70 mt-2">★ Despertado via Desconto de Facção</p>
+      )}
+      {klabautermann.active && !ship.klabautermannUnlockedWithDiscount && (
+        <p className="text-[10px] text-slate-600 mt-2">O Klabautermann já despertou após {klabautermann.voyageCount} viagens.</p>
       )}
     </SectionCard>
   );

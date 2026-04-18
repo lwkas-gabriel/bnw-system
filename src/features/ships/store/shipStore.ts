@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type { Ship, ShipSize, CrewMember } from "../../../shared/types/ship";
+import type { Ship, ShipSize, ShipOwnership, CrewMember } from "../../../shared/types/ship";
 import { SHIP_MAX_HULL, SHIP_SIZES } from "../../../data/ships";
 import { SHIP_COMODOS_BY_ID } from "../../../data/ships";
 
@@ -35,6 +35,10 @@ interface ShipActions {
 
   // Klabautermann
   incrementVoyage: (shipId: string) => void;
+  unlockKlabautermannWithDiscount: (shipId: string) => void;
+
+  // Ownership
+  updateOwnership: (shipId: string, ownership: ShipOwnership) => void;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -60,6 +64,8 @@ function createBlankShip(name: string, size: ShipSize, builtByEngineer = false):
     klabautermann: { active: false, voyageCount: 0 },
     notes: "",
     builtByEngineer,
+    ownership: "owned",
+    klabautermannUnlockedWithDiscount: false,
   };
 }
 
@@ -164,6 +170,22 @@ export const useShipStore = create<ShipState & ShipActions>()(
           if (!ship.klabautermann.active && ship.klabautermann.voyageCount >= 10) {
             ship.klabautermann.active = true;
           }
+        });
+      },
+
+      unlockKlabautermannWithDiscount: (shipId) => {
+        set(state => {
+          const ship = state.ships.find(s => s.id === shipId);
+          if (!ship || ship.klabautermann.active) return;
+          ship.klabautermann.active = true;
+          ship.klabautermannUnlockedWithDiscount = true;
+        });
+      },
+
+      updateOwnership: (shipId, ownership) => {
+        set(state => {
+          const ship = state.ships.find(s => s.id === shipId);
+          if (ship) ship.ownership = ownership;
         });
       },
     })),
