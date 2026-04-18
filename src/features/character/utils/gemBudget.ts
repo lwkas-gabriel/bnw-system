@@ -81,7 +81,7 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
     breakdown.push({
       category: "Haki",
-      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-5)`,
+      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-${typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5})`,
       cost: primaryCost,
     });
 

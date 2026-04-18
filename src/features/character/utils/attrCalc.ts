@@ -1,4 +1,4 @@
-import type { Character, PericiaId } from "../../../shared/types/character";
+import type { Character, PericiaId, ZoanAkuma, ZoanClass } from "../../../shared/types/character";
 
 /** Total péricia points available: 3 at L1, +1 every even level. L40 = 23. */
 export function totalPericiaPoints(level: number): number {
@@ -107,6 +107,24 @@ export function validateCharacter(char: Character): Record<string, string[]> {
     gems:       validateGems(char),
     haki:       validateHaki(char),
   };
+}
+
+const ZOAN_CLASS_PERICIA: Record<ZoanClass, PericiaId> = {
+  flying:    "atletismo",
+  herbivore: "sobrevivencia",
+  carnivore: "furtividade",
+  rational:  "logica",
+};
+
+/**
+ * Returns the pericias bonus granted by a Zoan animal class, or null if the
+ * character has no Zoan Akuma. This bonus is applied ON TOP of graduated values
+ * and does not count toward the investable pool or the max-5 cap.
+ */
+export function getZoanClassPericiaBonus(char: Character): { pericia: PericiaId; value: 1 } | null {
+  if (char.akuma?.type !== "zoan") return null;
+  const pericia = ZOAN_CLASS_PERICIA[(char.akuma as ZoanAkuma).animalClass];
+  return pericia ? { pericia, value: 1 } : null;
 }
 
 /**

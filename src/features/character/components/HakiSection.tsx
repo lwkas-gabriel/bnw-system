@@ -122,7 +122,7 @@ export function HakiSection() {
   const canHaveKing = primaryStageNum >= 5 || (typeof haki?.secondaryStage === "number" && haki.secondaryStage >= 5);
   const canHaveAdvanced = draft.location === "new_world";
 
-  // Gem cost calculation
+  // Both Armament and Observation cost 20g/stage as primary; only secondary is free
   const gemCost = (primaryStageNum * 20)
     + (haki?.hasKing ? 20 : 0)
     + (haki?.advancedType === "king_advanced" ? 20 : 0)

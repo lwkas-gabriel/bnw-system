@@ -412,7 +412,7 @@ function checkTechniques(char: Character): ValidationIssue[] {
 
     // Defensive adherences on offensive techniques
     const defOnlyEffects = ["aerial", "defensive_posture"];
-    const atkOnlyEffects = ["multiple_hit", "anti_air", "anti_aquatic", "confusion", "double_edge", "fragility", "weakness", "vulnerability", "area_controlled", "exhaustion", "wound"];
+    const atkOnlyEffects = ["multiple_hit", "anti_air", "anti_aquatic", "safety", "confusion", "double_edge", "fragility", "weakness", "vulnerability", "area_controlled", "exhaustion", "wound"];
 
     if (tech.type === "offensive") {
       const wrongEffects = tech.adherences.filter(a => defOnlyEffects.includes(a.effect));
@@ -567,7 +567,8 @@ function checkProfessions(char: Character): ValidationIssue[] {
 function checkEnergy(char: Character): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  const totalEN = char.level * 3 + char.energy.energyInvested;
+  const cyborgEnergyBonus = char.cyborg?.shift3Bonus === "energy" ? 20 : 0;
+  const totalEN = char.level * 3 + char.energy.energyInvested + cyborgEnergyBonus;
 
   // Estimate peak EN cost per turn
   let peakCostPerTurn = 0;

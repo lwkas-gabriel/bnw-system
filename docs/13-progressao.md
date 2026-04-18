@@ -154,10 +154,4 @@ Consulte `src/features/character/utils/gemBudget.ts → GEM_COSTS` para a fonte 
 
 ---
 
-## Bug Conhecido — `gemBudget: 420`
-
-O `createBlankCharacter` em `src/features/character/store/characterStore.ts` atualmente inicializa `gemBudget: 420`. O valor correto é **`20`** (gemas iniciais). Corrigir antes de lançar qualquer funcionalidade de gerenciamento de gemas.
-
----
-
 [← Glossário](./12-glossario.md) | [Perícias →](./14-pericias.md)

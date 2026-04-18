@@ -154,7 +154,7 @@ export function AttributesSection() {
         <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800">
           {[
             { label: "BPN",     value: charBPN,                       sub: `3/4 × Lv.${draft.level}` },
-            { label: "Energia", value: draft.level * 3 + draft.energy.energyInvested, sub: `Lv×3 + ${draft.energy.energyInvested}g` },
+            { label: "Energia", value: draft.level * 3 + draft.energy.energyInvested + (draft.cyborg?.shift3Bonus === "energy" ? 20 : 0), sub: `Lv×3 + ${draft.energy.energyInvested}g${draft.cyborg?.shift3Bonus === "energy" ? " +20 Cib" : ""}` },
           ].map(d => (
             <div key={d.label} className="bg-slate-800 rounded-lg p-3 text-center">
               <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{d.label}</p>

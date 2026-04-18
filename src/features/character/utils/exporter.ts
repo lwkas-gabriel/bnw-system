@@ -1,5 +1,5 @@
 import type { Character, PericiaId } from "../../../shared/types/character";
-import { bpn } from "./attrCalc";
+import { bpn, getZoanClassPericiaBonus } from "./attrCalc";
 import { computeGemBudget } from "./gemBudget";
 import { validateCharacterFull } from "./validator";
 
@@ -93,11 +93,15 @@ export function exportToForumText(char: Character): string {
         : (typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0))
     : 0;
   const percepcaoHakiBonus = hakiObsStage >= 3 ? hakiObsStage - 2 : 0;
+  const zoanPericiaBonus = getZoanClassPericiaBonus(char);
   for (const [id, value] of Object.entries(char.pericias) as [PericiaId, number][]) {
-    const hakiNote = id === "percepcao" && percepcaoHakiBonus > 0
-      ? ` (+${percepcaoHakiBonus} Haki Obs)` : "";
-    const effectiveValue = id === "percepcao" ? value + percepcaoHakiBonus : value;
-    lines.push(`${periciaLabels[id]}: ${value}${hakiNote}  (Roll: 3d6 + ${effectiveValue * 3})`);
+    const notes: string[] = [];
+    if (id === "percepcao" && percepcaoHakiBonus > 0) notes.push(`+${percepcaoHakiBonus} Haki Obs`);
+    if (zoanPericiaBonus && id === zoanPericiaBonus.pericia) notes.push(`+${zoanPericiaBonus.value} Zoan`);
+    const extraBonus = (id === "percepcao" ? percepcaoHakiBonus : 0)
+      + (zoanPericiaBonus?.pericia === id ? zoanPericiaBonus.value : 0);
+    const noteStr = notes.length > 0 ? ` (${notes.join(", ")})` : "";
+    lines.push(`${periciaLabels[id]}: ${value}${noteStr}  (Roll: 3d6 + ${(value + extraBonus) * 3})`);
   }
   lines.push("");
 
