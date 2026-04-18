@@ -12,10 +12,11 @@ description: >
 ```ts
 BPN          = Math.floor(level * 3 / 4)
 energia      = level * 3 + gemasInvestidas
-pontosAttr   = 6 + level + bonusRaciais
+pontosAttr   = level + bonusRaciais   // base 6 já fixos na ficha, não investíveis
 rollAtaque   = PRE + BPN + modificadores + 3d6
 thresholdDef = DEF + BPN + modificadores + 10
 danoBase     = POD + modificadores   // vs CON (temp first, depois base)
+rollPericias = (pericia × 3) + 3d6
 ```
 
 **Probabilidade de acerto com PRE = DEF (mesmo nível): ~58%** — sistema é levemente pró-ofensivo por design.
@@ -28,7 +29,7 @@ danoBase     = POD + modificadores   // vs CON (temp first, depois base)
 src/data/races.ts          → RaceData: attrBonus, periciaBonus, specialAbility
 src/data/haki.ts           → HAKI_ARMAMENT_STAGES[], HAKI_OBSERVATION_STAGES[], ADVANCED_HAKI[], KING_HAKI
 src/data/techniques.ts     → TECHNIQUE_RANKS{}, ADHERENCES[], ROKUSHIKI[]
-src/data/uniqueWeapons.ts  → UNIQUE_WEAPONS{} — todas as 25 armas com UniqueWeaponMechanics
+src/data/uniqueWeapons.ts  → UNIQUE_WEAPONS{} — todas as 26 armas com UniqueWeaponMechanics
 ```
 
 Estes arquivos são **imutáveis em runtime**. Se uma regra mudar, edite o arquivo de dados.
@@ -53,6 +54,16 @@ GEM_COSTS.energyPerGem    = 1
 ```
 
 **Não inclui Arma Única se `laranjaChoice === 'unique_weapon'`.**
+
+### Orçamento de Gemas
+
+```
+gemBudget inicial (nível 1) = 20g
+máximo investível           = 400g
+excesso → 4 XP por gema (só após atingir 400g)
+```
+
+~~**Bug pendente:** `createBlankCharacter` inicializa `gemBudget: 420`~~ — **corrigido para `20`**.
 
 ---
 
@@ -145,6 +156,58 @@ function checkMinhaRegra(char: Character): ValidationIssue[] {
 }
 // Incluir em validateCharacterFull():
 // ...checkMinhaRegra(char),
+```
+
+---
+
+## Bônus de AM por Faixa (flat nos atributos base)
+
+```ts
+// src/features/combat/engine/combatEngine.ts → getFaixaBonuses()
+branca:      {}               // nenhum flat (mas ver mecânica Haissaikai)
+cinza:       { precision: 2 }
+azul_clara:  { defense: 2 }
+azul_escura: { power: 2 }
+amarela:     { constitution: 2 }
+// laranja..grao_mestre: bônus via resolveTechniqueBonus(), não flat de atributo:
+verde:  +2 bônus em técnicas DEFENSIVAS
+roxa:   +2 bônus em técnicas OFENSIVAS
+// marrom..grao_mestre: ← bônus das faixas avançadas pendentes de documentação
+```
+
+**Pendente:** confirmar bônus das faixas Marrom, Preta, Coral, Rajada, Vermelha, Grão Mestre.
+
+---
+
+## Bônus de Técnica por Tipo de Akuma
+
+Os bônus específicos de Zoan/Logia/Paramecia em técnicas (`+1 base`) estão **desabilitados no engine** até serem confirmados nas regras. Quando confirmados, adicionar em `resolveTechniqueBonus()` em `combatEngine.ts`.
+
+---
+
+## Perícias — Referência Rápida
+
+```
+11 perícias: ambicao, atletismo, destreza, erudicao, expressao,
+             furtividade, investigacao, logica, percepcao, persuasao, sobrevivencia
+Graduação: 0–5
+Roll: 3d6 + (gradação × 3)
+Pontos iniciais: 3
+Ganho: +1 a cada nível par (total 23 no nível 40)
+Custo em gemas: 0 (progressão por nível)
+```
+
+**Atenção na implementação:** `char.ambition` existe como campo isolado — migrar para `char.pericias.ambicao` e atualizar referência em `combatEngine.ts`.
+
+---
+
+## Progressão XP
+
+```
+XP para nível N (N ≥ 2) = 75 + 15 × N
+Tabela resumida: L2=90, L10=225 cumul, L20=360 cumul, L40=660 (total 14625)
+Após nível 40: aventuras NÃO concedem mais XP; ganho de gemas cai para 1/3 do normal.
+Jubilamento disponível: entrega personagem como NPC, cria nova PJ no nível 10 em Paradise com 100g + 50% desconto em 1 caminho.
 ```
 
 ---

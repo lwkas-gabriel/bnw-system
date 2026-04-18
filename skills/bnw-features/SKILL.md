@@ -135,32 +135,41 @@ const TABS = [
 
 ---
 
-## Módulos Pendentes — O que Cada Um Precisa
+## Módulos — Status Atual
 
-### Profissões
-- **Arquivo de regras necessário:** lista de profissões, mecânicas de teste, fabricação, slots
-- **Tipo a adicionar:** `ProfessionId`, `CharacterProfession[]` em `Character`
-- **Integração:** no `characterStore` (fica na ficha)
-- **Validação:** checar se número de profissões não excede o máximo permitido por orçamento
-- **Nota:** `GEM_COSTS.profession = 10` já existe
+### Profissões ✅ Documentado + UI Parcial
+- **Regras em:** `docs/24-profissoes.md`
+- **7 profissões:** Adestrador, Arqueólogo, Cozinheiro, Engenheiro, Ferreiro, Médico, Navegador
+- **Dados em:** `src/data/professions.ts`
+- **UI em:** `src/features/character/components/ProfissoesSection.tsx`
+- **GEM_COSTS.profession = 10** (cada profissão)
 
-### Perícias
-- **Arquivo de regras necessário:** lista completa, graduações, DCs, testes fora de combate
-- **Tipo a adicionar:** `PericiaId`, `CharacterPericias` em `Character`
-- **Cuidado:** `ambition` já existe como campo isolado em `Character` — ao implementar perícias, **migrar** esse campo para o sistema de perícias em vez de duplicar
-- **Integração:** `combatEngine.ts` já lê `char.ambition` — ao migrar, atualizar a referência
+### Perícias ✅ Documentado + Implementado
+- **Regras em:** `docs/14-pericias.md`
+- **11 perícias:** ambicao, atletismo, destreza, erudicao, expressao, furtividade, investigacao, logica, percepcao, persuasao, sobrevivencia
+- **Dados em:** `src/data/pericias.ts`
+- **UI em:** `src/features/character/components/PericiasSection.tsx`
+- **Cuidado:** `ambition` existe como campo isolado em `Character` — ao usar, preferir `char.pericias.ambicao`
 
-### Embarcações
-- **Arquivo de regras necessário:** tipos, atributos, upgrades, tripulação
-- **Store:** separado (`shipStore.ts`) — embarcações não são parte da ficha do personagem
-- **Tipo:** novo arquivo `src/shared/types/ship.ts`
-- **Nota:** não impacta `combatEngine.ts` diretamente
+### Embarcações ✅ Documentado + UI Parcial
+- **Regras em:** `docs/27-embarcacoes.md`
+- **Dados em:** `src/data/ships.ts` (SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS)
+- **Tipos em:** `src/shared/types/ship.ts`
+- **Store:** `src/features/ships/store/shipStore.ts`
+- **Página:** `src/pages/ShipsPage.tsx`
+- Tamanhos: individual/pequeno/medio/grande/gigante/colossal
+- Max 2 mecanismos por navio; cômodos limitados por slots do tamanho
 
-### Construtor de Itens (UI)
-- **Dados:** já existem em `src/data/uniqueWeapons.ts` (25 armas com todas as mecânicas)
-- **O que falta:** apenas os componentes de UI e a página
-- **Rota:** `/items` já existe, página `ItemsPage.tsx` existe como placeholder
-- **Prioridade:** mais fácil de implementar — dados prontos, só criar a UI
+### Companheiros 📋 Documentado, não implementado
+- **Regras em:** `docs/25-companheiros.md`
+- Ranks C(10g)/B(20g)/A(30g), Mascotes, Autômatos
+
+### Itens e Equipamentos ⚙️ Parcial
+- **Regras em:** `docs/28-itens.md`
+- **Dados bugigangas:** `src/data/bugigangas.ts` (16 bugigangas, type BugigangaEffect = "pericia_bonus" | "interpretive")
+- **Dados armas únicas:** `src/data/uniqueWeapons.ts` (26 armas)
+- **UI:** `src/pages/ItemsPage.tsx` (catálogo de referência, sem ligação com personagem)
+- **UI Builder:** `src/features/character/components/EquipmentSection.tsx`
 
 ---
 

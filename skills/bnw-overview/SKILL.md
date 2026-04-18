@@ -68,7 +68,7 @@ docs/
   01-visao-geral.md
   02-stack.md
   03-arquitetura.md      ← fluxo de dados, estrutura de pastas
-  04-regras.md           ← TODAS as mecânicas implementadas
+  04-regras.md           ← mecânicas de combate implementadas (fórmulas, CON temp, JxJ)
   05-character-builder.md
   06-calculadora-combate.md
   07-validacao.md
@@ -77,6 +77,22 @@ docs/
   10-coming-soon.md      ← passo a passo para novos módulos
   11-principios.md       ← padrões de código
   12-glossario.md
+  13-progressao.md       ← tabela XP, gemas (início=20, max=400, excesso→4XP)
+  14-pericias.md         ← 11 perícias, roll, DCs, pontos por nível
+  15-racas.md            ← 8 raças com bônus de atributo e perícia
+  16-haki.md             ← estágios Armamento/Observação, Rei, Avançado
+  17-akuma.md            ← Zoan/Logia/Paramecia, ranks, passivos
+  18-artes-marciais.md   ← 14 faixas, escolha Laranja, Rokushiki
+  19-tecnicas.md         ← ranks E-A, efeitos aderidos gerais e Rank A
+  20-armas-unicas.md     ← 26 armas com mecânicas detalhadas
+  21-ciborgue.md         ← 6 shifts, Gears, Ciborgue Completo
+  22-faccoes.md          ← 5 facções, hierarquias, Desconto de Facção, Prisão
+  23-gemas.md            ← início=20g, máx=400g, formas de ganhar/gastar
+  24-profissoes.md       ← 7 profissões, mecânicas de craft, DC 9/18/27
+  25-companheiros.md     ← Ranks C/B/A, Mascotes, Autômatos, recrutamento
+  26-navegacao.md        ← turnos em alto mar, rotas, Combate em Alto Mar
+  27-embarcacoes.md      ← tamanhos, mecanismos, cômodos, Klabautermann
+  28-itens.md            ← equipamentos, consumíveis, bugigangas, mercado global
 ```
 
 Se precisar de detalhe de uma mecânica específica, leia o doc correspondente via `view`.
