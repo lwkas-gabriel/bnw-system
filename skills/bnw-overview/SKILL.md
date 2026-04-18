@@ -14,6 +14,7 @@ description: >
 | Adicionar/editar regra de jogo (fórmula, mecânica) | `bnw-rules/SKILL.md` |
 | Criar componente React, section do builder, nova página | `bnw-frontend/SKILL.md` |
 | Adicionar módulo novo (Profissões, Perícias, Embarcações) | `bnw-features/SKILL.md` |
+| Fazer bump de versão / preparar PR para main | `bnw-versioning/SKILL.md` |
 | Qualquer coisa que envolva combate ou engine | `bnw-rules/SKILL.md` + verificar `src/features/combat/engine/combatEngine.ts` |
 | Qualquer coisa que envolva gemas / validação | `bnw-rules/SKILL.md` + verificar `src/features/character/utils/` |
 
