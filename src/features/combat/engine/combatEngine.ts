@@ -58,6 +58,14 @@ export function resolveAttributes(
     constitution: 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0),
   };
 
+  // Murakumogiri: triples base CON (before any path bonuses)
+  const isMurakumogiri = char.equippedWeapon && "characteristic" in char.equippedWeapon
+    && char.equippedWeapon.characteristic === "murakumogiri";
+  if (isMurakumogiri) {
+    const initialCon = 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0);
+    base.constitution += initialCon * 2; // ×3 total
+  }
+
   let energyCost = 0;
 
   // ── Akuma no Mi passive bonuses ──────────────────────────────────
@@ -79,6 +87,15 @@ export function resolveAttributes(
           }
           base[point.primaryAttr]       += point.bonus;
           base[point.complementaryAttr] += point.bonus;
+
+          // Haissaikai: mirrors active Zoan point bonus onto weapon (adds same bonus again)
+          const isHaissaikai = char.equippedWeapon && "characteristic" in char.equippedWeapon
+            && char.equippedWeapon.characteristic === "haissaikai";
+          if (isHaissaikai) {
+            const mult = buffs.zoanPoint === "awakened" ? 0.5 : 1;
+            base[point.primaryAttr]       += Math.floor(point.bonus * mult);
+            base[point.complementaryAttr] += Math.floor(point.bonus * mult);
+          }
         }
       }
     }
@@ -107,6 +124,10 @@ export function resolveAttributes(
       : char.haki.secondaryStage;
     const stageNum = typeof stage === "number" ? stage : 5;
     base.power        += stageNum;
+    // Enma: doubles Haki Armament POD bonus
+    const isEnma = char.equippedWeapon && "characteristic" in char.equippedWeapon
+      && char.equippedWeapon.characteristic === "enma";
+    if (isEnma) base.power += stageNum;
     // CON temp is handled separately in CombatantState.tempConStack
     energyCost        += stageNum;
   }
@@ -134,7 +155,31 @@ export function resolveAttributes(
     base.constitution += faixaBonuses.constitution ?? 0;
   }
 
+  // ── Ciborgue shift bonuses (always active) ───────────────────────
+  if (char.cyborg?.shifts) {
+    for (const shift of char.cyborg.shifts) {
+      const shiftBonus = getCyborgShiftBonus(shift.location);
+      base.power        += shiftBonus.power        ?? 0;
+      base.precision    += shiftBonus.precision    ?? 0;
+      base.defense      += shiftBonus.defense      ?? 0;
+      base.constitution += shiftBonus.constitution ?? 0;
+    }
+  }
+
   return { ...base, energyCostPerTurn: energyCost };
+}
+
+/** Returns the flat stat bonus for a given cyborg shift location */
+function getCyborgShiftBonus(location: string): Partial<BaseAttributes> {
+  const bonuses: Record<string, Partial<BaseAttributes>> = {
+    head:       { precision: 4 },
+    right_arm:  { power: 4 },
+    left_arm:   { power: 4 },
+    right_leg:  { defense: 4 },
+    left_leg:   { defense: 4 },
+    torso:      { constitution: 4 },
+  };
+  return bonuses[location] ?? {};
 }
 
 /** Returns the cumulative flat stat bonuses from AM faixas up to and including the given one */
@@ -193,13 +238,12 @@ export function resolveTechniqueBonus(
     && char.equippedWeapon.characteristic === "kitetsu";
   if (isKitetsu) bonus *= 2;
 
-  // Bestialidade (Zoan exclusive adherence): +1 to primary attribute
-  const isZoan = char.akuma?.type === "zoan";
-  if (isZoan) bonus += 1;
-
-  // Logia exclusive adherence: +1 to base bonus
-  const isLogia = char.akuma?.type === "logia";
-  if (isLogia) bonus += 1;
+  // TODO: confirmar regras — bônus de técnica exclusivo para Zoan/Logia precisa
+  // ser mapeado no arquivo de regras antes de ser habilitado. Desabilitado temporariamente.
+  // const isZoan = char.akuma?.type === "zoan";
+  // if (isZoan) bonus += 1;
+  // const isLogia = char.akuma?.type === "logia";
+  // if (isLogia) bonus += 1;
 
   // AM Faixa Verde: +2 to defensive techniques
   // AM Faixa Roxa: +2 to offensive techniques
@@ -213,8 +257,8 @@ export function resolveTechniqueBonus(
 
   // Rei Avancado: adds Ambição to technique bonus while King Haki is active
   if (choice.buffs.hakiKing && choice.buffs.hakiAdvanced &&
-      char.haki?.kingStage === "advanced" && char.ambition) {
-    bonus += char.ambition;
+      char.haki?.kingStage === "advanced" && char.pericias.ambicao) {
+    bonus += char.pericias.ambicao;
   }
 
   // Yoru: halves energy cost (bonus calculation unaffected)
@@ -362,11 +406,15 @@ export function resolveDamage(
   const newBaseCon = defenderState.currentCon - totalBaseConDamage;
 
   const isKnockout = newBaseCon <= 0;
+  const hasMurakumogiri = !!defenderState.character.equippedWeapon &&
+    "characteristic" in defenderState.character.equippedWeapon &&
+    defenderState.character.equippedWeapon.characteristic === "murakumogiri";
   const retemAvailable =
-    isKnockout &&
-    !defenderState.retemUsed &&
-    defenderState.character.akuma?.type === "zoan" &&
-    (defenderState.character.akuma as ZoanAkuma).isMythical;
+    isKnockout && !defenderState.retemUsed && (
+      (defenderState.character.akuma?.type === "zoan" &&
+        (defenderState.character.akuma as ZoanAkuma).isMythical) ||
+      hasMurakumogiri
+    );
 
   return {
     rawDamage,
@@ -482,7 +530,7 @@ export function processTurn(
   // In subsequent turns or vs_npc: only B attacks if A is still standing
   const bAttacks = mode === "jxj" && turnNumber === 1
     ? true
-    : currentA.currentCon > 0 && currentB.currentCon > 0;
+    : currentB.currentCon > 0;
 
   if (bAttacks) {
     const rollBA = resolveAttack(stateB.character, choiceB, stateA.character, choiceA, useAverage);
@@ -587,6 +635,16 @@ export function processTurn(
 
 // ─── Full Combat Simulation ───────────────────────────────────────────────────
 
+/** Empty buffs used to compute base stats without any active combat toggles */
+const NO_BUFFS: ActiveBuffs = {
+  hakiArmament: false,
+  hakiObservation: false,
+  hakiKing: false,
+  hakiAdvanced: false,
+  zoanPoint: null,
+  logiaElementalDomain: false,
+};
+
 export function simulateCombat(
   charA: Character,
   charB: Character,
@@ -594,9 +652,14 @@ export function simulateCombat(
   mode: CombatMode = "jxj",
   useAverage: boolean = false
 ): CombatSummary {
+  // Use resolveAttributes with no buffs so passive bonuses (Logia +4 CON,
+  // Zoan vigorAnimal, AM Amarela +2 CON) are included in the starting CON.
+  const baseAttrsA = resolveAttributes(charA, NO_BUFFS);
+  const baseAttrsB = resolveAttributes(charB, NO_BUFFS);
+
   let stateA: CombatantState = {
     character: charA,
-    currentCon: 3 + charA.investedAttributes.constitution + (charA.racialBonus.constitution ?? 0),
+    currentCon: baseAttrsA.constitution,
     currentEnergy: calcEnergy(charA.level, charA.energy.energyInvested),
     retemUsed: false,
     tempConStack: [],
@@ -605,7 +668,7 @@ export function simulateCombat(
 
   let stateB: CombatantState = {
     character: charB,
-    currentCon: 3 + charB.investedAttributes.constitution + (charB.racialBonus.constitution ?? 0),
+    currentCon: baseAttrsB.constitution,
     currentEnergy: calcEnergy(charB.level, charB.energy.energyInvested),
     retemUsed: false,
     tempConStack: [],
