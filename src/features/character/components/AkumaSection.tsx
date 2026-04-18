@@ -5,7 +5,7 @@ import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import type { AkumaModuleOption } from "../../../data/akumaModules";
 import type {
   AkumaRank, ZoanAkuma, LogiaAkuma, ParameciaAkuma, ZoanClass, ParameciaClass,
-  ZoanAbility, ParameciaHabilityPassive, ParameciaHabilityActive,
+  ZoanAbility, ParameciaHabilityPassive, ParameciaHabilityActive, Technique,
 } from "../../../shared/types/character";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -150,14 +150,156 @@ function ModulePicker({
   );
 }
 
+// ─── Akuma free technique inline editor ──────────────────────────────────────
+
+const RANK_COLORS: Record<string, string> = {
+  E: "text-slate-400", D: "text-blue-400", C: "text-green-400",
+  B: "text-purple-400", A: "text-amber-400",
+};
+
+function AkumaTechEditor({ tech, onUpdate }: {
+  tech: Technique;
+  onUpdate: (patch: Partial<Technique>) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border border-amber-800/30 rounded-lg bg-slate-800/60">
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="w-full flex items-center justify-between px-3 py-2 text-left"
+      >
+        <div className="flex items-center gap-2">
+          <span className={`text-xs font-bold ${RANK_COLORS[tech.rank]}`}>[{tech.rank}]</span>
+          <span className="text-xs text-slate-200">{tech.name || "Sem nome"}</span>
+          <span className={`text-[10px] px-1.5 py-0.5 rounded border ${
+            tech.type === "offensive"
+              ? "text-red-400 border-red-800/50"
+              : "text-blue-400 border-blue-800/50"
+          }`}>
+            {tech.type === "offensive" ? "Ofensiva" : "Defensiva"}
+          </span>
+        </div>
+        <span className="text-slate-600 text-xs">{open ? "▲" : "▼"}</span>
+      </button>
+
+      {open && (
+        <div className="px-3 pb-3 space-y-2 border-t border-slate-700">
+          <div className="mt-2">
+            <label className="text-[10px] text-slate-500 mb-1 block">Nome</label>
+            <input
+              className="w-full bg-slate-700 border border-slate-600 rounded px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-amber-600"
+              placeholder="Nome da técnica"
+              value={tech.name}
+              onChange={e => onUpdate({ name: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="text-[10px] text-slate-500 mb-1 block">Tipo</label>
+              <div className="flex gap-1">
+                <button
+                  onClick={() => onUpdate({ type: "offensive", targetAttr: "power" })}
+                  className={`flex-1 py-1 rounded text-xs transition-colors ${
+                    tech.type === "offensive"
+                      ? "bg-red-900/50 border border-red-700 text-red-400"
+                      : "bg-slate-700 border border-slate-600 text-slate-500"
+                  }`}
+                >Ofensiva</button>
+                <button
+                  onClick={() => onUpdate({ type: "defensive", targetAttr: "defense" })}
+                  className={`flex-1 py-1 rounded text-xs transition-colors ${
+                    tech.type === "defensive"
+                      ? "bg-blue-900/50 border border-blue-700 text-blue-400"
+                      : "bg-slate-700 border border-slate-600 text-slate-500"
+                  }`}
+                >Defensiva</button>
+              </div>
+            </div>
+            <div>
+              <label className="text-[10px] text-slate-500 mb-1 block">Atributo</label>
+              <div className="flex gap-1">
+                {(tech.type === "offensive"
+                  ? [["power", "POD"], ["precision", "PRE"]]
+                  : [["defense", "DEF"], ["constitution", "CON"]]
+                ).map(([v, l]) => (
+                  <button
+                    key={v}
+                    onClick={() => onUpdate({ targetAttr: v as Technique["targetAttr"] })}
+                    className={`flex-1 py-1 rounded text-xs font-bold transition-colors ${
+                      tech.targetAttr === v
+                        ? "bg-amber-600 text-white"
+                        : "bg-slate-700 border border-slate-600 text-slate-500"
+                    }`}
+                  >{l}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] text-slate-500 mb-1 block">Descrição</label>
+            <textarea
+              className="w-full bg-slate-700 border border-slate-600 rounded px-2 py-1.5 text-[10px] text-slate-300 focus:outline-none focus:border-amber-600 resize-none"
+              rows={2}
+              placeholder="Descrição narrativa..."
+              value={tech.description}
+              onChange={e => onUpdate({ description: e.target.value })}
+            />
+          </div>
+
+          <p className="text-[9px] text-slate-600">
+            Rank A fixo · +{tech.baseBonus} {tech.targetAttr.slice(0, 3).toUpperCase()} · {tech.energyCost} EN · Gratuita (não cobra gemas)
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function AkumaSection() {
   const { draft, updateDraft } = useCharacterStore();
   if (!draft) return null;
 
+  // C=1 técnica grátis, B/A/S=2 técnicas grátis
+  const FREE_TECH_COUNT: Record<AkumaRank, number> = { C: 1, B: 2, A: 2, S: 2 };
+
+  function syncFreeTechniques(c: import("../../../shared/types/character").Character, rank: AkumaRank) {
+    const target = FREE_TECH_COUNT[rank];
+    const existing = c.techniques.filter(t => t.source === "akuma");
+    const diff = target - existing.length;
+    if (diff > 0) {
+      for (let i = 0; i < diff; i++) {
+        c.techniques.push({
+          id: crypto.randomUUID(),
+          name: `Técnica Akuma ${existing.length + i + 1}`,
+          description: "",
+          rank: "A",
+          type: "offensive",
+          targetAttr: "power",
+          baseBonus: 5,
+          energyCost: 5,
+          adherences: [],
+          source: "akuma",
+        });
+      }
+    } else if (diff < 0) {
+      let toRemove = -diff;
+      for (let i = c.techniques.length - 1; i >= 0 && toRemove > 0; i--) {
+        if (c.techniques[i].source === "akuma") {
+          c.techniques.splice(i, 1);
+          toRemove--;
+        }
+      }
+    }
+  }
+
   function initAkuma(type: string) {
     updateDraft(c => {
+      syncFreeTechniques(c, "C");
       if (type === "logia") {
         c.akuma = {
           type: "logia", name: "Nova Logia", rank: "C",
@@ -190,6 +332,7 @@ export function AkumaSection() {
     updateDraft(c => {
       if (!c.akuma) return;
       c.akuma.rank = rank;
+      syncFreeTechniques(c, rank);
       if (c.akuma.type !== "zoan") return;
       const zoan = c.akuma as ZoanAkuma;
       zoan.vigorAnimalBonus = VIGOR_ANIMAL[rank];
@@ -251,7 +394,7 @@ export function AkumaSection() {
       <SectionCard
         title="Akuma no Mi"
         icon="🍎"
-        action={<Button variant="danger" size="sm" onClick={() => updateDraft(c => { c.akuma = null; })}>Remover</Button>}
+        action={<Button variant="danger" size="sm" onClick={() => updateDraft(c => { c.akuma = null; c.techniques = c.techniques.filter(t => t.source !== "akuma"); })}>Remover</Button>}
       >
         {/* Name + type */}
         <div className="flex items-center gap-3 mb-4">
@@ -302,11 +445,27 @@ export function AkumaSection() {
           ))}
         </div>
 
-        {FREE_TECHS[akuma.rank] && (
-          <div className="p-2 bg-green-950/30 border border-green-800/40 rounded-lg text-[10px] text-green-400 mb-2">
-            🎁 {FREE_TECHS[akuma.rank]} — adicione na aba Técnicas com source "akuma" (não cobra gemas)
-          </div>
-        )}
+        {(() => {
+          const freeTechs = draft.techniques.filter(t => t.source === "akuma");
+          if (freeTechs.length === 0) return null;
+          return (
+            <div className="mb-2 space-y-2">
+              {FREE_TECHS[akuma.rank] && (
+                <p className="text-[10px] text-green-400">🎁 {FREE_TECHS[akuma.rank]}</p>
+              )}
+              {freeTechs.map(tech => (
+                <AkumaTechEditor
+                  key={tech.id}
+                  tech={tech}
+                  onUpdate={patch => updateDraft(c => {
+                    const t = c.techniques.find(t => t.id === tech.id);
+                    if (t) Object.assign(t, patch);
+                  })}
+                />
+              ))}
+            </div>
+          );
+        })()}
 
         {akuma.rank === "S" && (
           <div className="p-2 bg-amber-950/30 border border-amber-800/30 rounded-lg text-[10px] text-amber-400/80">
