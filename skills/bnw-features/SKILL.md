@@ -153,25 +153,39 @@ const TABS = [
 - **Página de referência:** `src/pages/PericiasPage.tsx` (rota `/pericias`)
 - **Cuidado:** `ambition` existe como campo isolado em `Character` — ao usar, preferir `char.pericias.ambicao`
 
+### Facções ✅ Implementado
+- **Regras em:** `docs/22-faccoes.md`
+- **5 facções:** Piratas, Marinha, Caçadores de Recompensa, Governo (CP), Revolucionários
+- **Dados em:** `src/data/factions.ts` — `FACTIONS`, `FactionRankData`, `COMMISSIONED_SHIP_PRESET`
+- **Helpers:** `getFactionRank()`, `getAvailableRanks()`, `pilhagemIncome()`
+- **UI Builder:** `src/features/character/components/FaccoesSection.tsx`
+- **gemBudget:** `computeFactionDiscount()` — retorna +20g fora do limite de 400g quando disponível
+- **Tipos em:** `src/shared/types/character.ts` — `FactionType`, `FactionData`, `faction?` no `Character`
+- Cada facção tem ranks com `grantsDiscount: true` no cargo Nível 12/Prestígio 20 (Supernova, Capitão, etc.)
+- `discountUsed` e `discountAppliedTo` são **nunca perdidos** ao trocar de rank
+
 ### Embarcações ✅ Implementado
 - **Regras em:** `docs/27-embarcacoes.md`
 - **Dados em:** `src/data/ships.ts` (SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS)
-- **Tipos em:** `src/shared/types/ship.ts`
-- **Store:** `src/features/ships/store/shipStore.ts`
-- **Página:** `src/pages/ShipsPage.tsx` (rota `/ships`)
-- Tamanhos: individual/pequeno/medio/grande/**imenso**/colossal
+- **Tipos em:** `src/shared/types/ship.ts` — inclui `ShipOwnership` (owned/navy_permanent/cp_temporary/cp_galeon)
+- **Store:** `src/features/ships/store/shipStore.ts` — inclui `updateOwnership()` e `unlockKlabautermannWithDiscount()`
+- **Página:** `src/pages/ShipsPage.tsx` (rota `/ships`) — badges de profissão nos cômodos, badges de comissão
+- Tamanhos: individual/pequeno/medio/grande/**gigante**/colossal
 - Max 2 mecanismos por navio; cômodos limitados por slots do tamanho
+- `COMMISSIONED_SHIP_PRESET` em `factions.ts`: Médio + Kairoseki + Cabine + Canhão + Arsenal + Brigue
 
 ### Companheiros 📋 Documentado, não implementado
 - **Regras em:** `docs/25-companheiros.md`
 - Ranks C(10g)/B(20g)/A(30g), Mascotes, Autômatos
 
-### Itens e Equipamentos ⚙️ Parcial
+### Itens e Equipamentos ✅ Implementado
 - **Regras em:** `docs/28-itens.md`
-- **Dados bugigangas:** `src/data/bugigangas.ts` (16 bugigangas, type BugigangaEffect = "pericia_bonus" | "interpretive")
-- **Dados armas únicas:** `src/data/uniqueWeapons.ts` (26 armas)
-- **UI:** `src/pages/ItemsPage.tsx` (catálogo de referência, sem ligação com personagem)
-- **UI Builder:** `src/features/character/components/EquipmentSection.tsx`
+- **Dados bugigangas:** `src/data/bugigangas.ts` (16 bugigangas, `BugigangaEffect = "pericia_bonus" | "interpretive"`)
+- **Dados armas únicas:** `src/data/uniqueWeapons.ts` (25 armas com `UniqueWeaponMechanics`)
+- **UI Builder:** `src/features/character/components/EquipmentSection.tsx` — slots arma + 2 defensivos, picker de Arma Única com 25 opções, bugigangas
+- **UI Catálogo:** `src/pages/ItemsPage.tsx` — abas "Bugigangas" e "Armas Únicas" com mecânicas
+- Arma Única via Faixa Laranja (`laranjaChoice === "unique_weapon"`) **não entra no gemBudget**
+- Arma Única comprada custa `GEM_COSTS.uniqueWeapon = 20g`
 
 ---
 

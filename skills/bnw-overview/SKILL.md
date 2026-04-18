@@ -22,25 +22,28 @@ description: >
 ## Mapa de Arquivos Críticos
 
 ```
-src/shared/types/character.ts     ← TIPOS: Character, Haki, Akuma, AM, Cyborg, Technique, PericiaId
+src/shared/types/character.ts     ← TIPOS: Character, Haki, Akuma, AM, Cyborg, Technique, PericiaId,
+                                            FactionType, FactionData (faction?: FactionData no Character)
 src/shared/types/combat.ts        ← TIPOS: CombatantState, TurnChoice, DiceRoll, CombatSummary
-src/shared/types/ship.ts          ← TIPOS: Ship, ShipSize, ShipMechanism, ShipComodo, Klabautermann
+src/shared/types/ship.ts          ← TIPOS: Ship, ShipSize, ShipOwnership, Klabautermann
 src/data/                         ← DADOS IMUTÁVEIS do sistema (nunca modificar em runtime)
   races.ts, haki.ts, techniques.ts, uniqueWeapons.ts
   pericias.ts     ← PERICIAS (11), PERICIAS_DC, periciaRollBonus()
   professions.ts  ← PROFESSIONS (7), PROFESSIONS_BY_ID, ProfessionData
   bugigangas.ts   ← BUGIGANGAS (16), BugigangaData
   ships.ts        ← SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS
+  factions.ts     ← FACTIONS (5), FactionRankData, getFactionRank(), COMMISSIONED_SHIP_PRESET
 src/features/character/utils/
   attrCalc.ts     ← bpn(), energyMax(), totalAttributePoints(), totalPericiaPoints()
-  gemBudget.ts    ← GEM_COSTS (FONTE ÚNICA), computeGemBudget()
+  gemBudget.ts    ← GEM_COSTS (FONTE ÚNICA), computeGemBudget(), computeFactionDiscount()
   validator.ts    ← validateCharacterFull(), ValidationIssue, ValidationReport
   exporter.ts     ← exportToJSON(), exportToForumText()
   importer.ts     ← importFromFile(), migrateCharacter()
 src/features/character/store/characterStore.ts  ← updateDraft(), saveDraft(), loadCharacter()
 src/features/combat/engine/combatEngine.ts      ← ENGINE PURA (sem React)
 src/features/combat/store/combatStore.ts        ← simulate(), setCharA/B(), setChoice()
-src/features/ships/store/shipStore.ts           ← CRUD de navios, mecanismos, cômodos, viagens
+src/features/ships/store/shipStore.ts           ← CRUD de navios, mecanismos, cômodos, viagens,
+                                                   updateOwnership(), unlockKlabautermannWithDiscount()
 src/shared/components/index.tsx                 ← TODOS os componentes reutilizáveis
 src/router/index.tsx                            ← rotas com lazy loading
 src/shared/components/AppLayout.tsx             ← sidebar nav (array NAV)

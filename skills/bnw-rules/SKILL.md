@@ -64,6 +64,10 @@ máximo investível           = 400g
 excesso → 4 XP por gema (só após atingir 400g)
 ```
 
+**Desconto de Facção:** `+20g` **fora** do limite de 400g. Disponível no cargo de Prestígio 20 de cada facção
+(Supernova, Capitão, Ouro B, CP 5–6, Herói). `computeFactionDiscount(char)` retorna `{ hasDiscount, used, bonus }`.
+`GemBudgetResult.factionDiscountBonus` soma ao total efetivo — exibir separado do cap na UI.
+
 ~~**Bug pendente:** `createBlankCharacter` inicializa `gemBudget: 420`~~ — **corrigido para `20`**.
 
 ---
@@ -222,10 +226,33 @@ Jubilamento disponível: entrega personagem como NPC, cria nova PJ no nível 10 
 
 ---
 
+## Facções — Desconto e Comissão de Navio
+
+```ts
+// src/data/factions.ts
+// FACTIONS[type].ranks — hierarquia completa de cada facção
+// grantsDiscount: true → cargo de Prestígio 20 (Supernova, Capitão, Ouro B, CP 5-6, Herói)
+// shipCommission: "navy_permanent" | "cp_temporary" | "cp_galeon" | null
+
+// Comissão permanente (Marinha Capitão+):
+//   COMMISSIONED_SHIP_PRESET → Médio + revestimento_de_kairoseki + cabine_do_capitao + canhao + arsenal + brigue
+
+// Desconto de Facção:
+computeFactionDiscount(char)   // → { hasDiscount, used, appliedTo, bonus: 0|20 }
+// bonus é sempre 20 quando disponível e não usado — fora do cap de 400g
+// discountUsed e discountAppliedTo NUNCA são resetados ao trocar de rank/facção
+```
+
+**Pirata — bônus de tripulação:** `shipCrewBonus` aplica-se **por navio**; em grupos, apenas o cargo do **comandante** conta. Não acumula com outros piratas do grupo.
+
+---
+
 ## migrateCharacter — Ao Adicionar Campo no Character
 
 ```ts
 // src/features/character/utils/importer.ts → migrateCharacter()
 // SEMPRE adicionar o default para o novo campo:
 novoCampo: (raw.novoCampo as any) ?? defaultSeguro,
+// Exemplo do campo faction (adicionado recentemente):
+faction: (raw.faction as any) ?? undefined,
 ```
