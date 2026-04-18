@@ -53,6 +53,12 @@ export interface KlabautermannData {
   voyageCount: number;        // awakens at 10
 }
 
+export type ShipOwnership =
+  | "owned"           // comprado/construído pelo jogador
+  | "navy_permanent"  // Marinha Capitão+: Médio pré-equipado, pode melhorar às suas custas
+  | "cp_temporary"    // CP 5/6+: Médio pré-equipado, 1 aventura, sem melhorias
+  | "cp_galeon";      // CP Comandante: Galeão emprestado
+
 export interface Ship {
   id: string;
   name: string;
@@ -70,4 +76,8 @@ export interface Ship {
   notes: string;
   /** Whether the ship was built by an Engenheiro (30% cheaper) */
   builtByEngineer: boolean;
+  /** How the ship was acquired */
+  ownership: ShipOwnership;
+  /** Klabautermann awakened using the Faction Discount (20g) instead of 10 voyages */
+  klabautermannUnlockedWithDiscount: boolean;
 }

@@ -252,6 +252,22 @@ export interface UniqueWeapon extends Equipment {
   characteristic: UniqueWeaponCharacteristic;
 }
 
+// ─── Faction ──────────────────────────────────────────────────────────────────
+
+export type FactionType =
+  | "pirata" | "marinha" | "cacador" | "governo" | "revolucionario";
+
+export interface FactionData {
+  type: FactionType;
+  /** Rank ID within the faction (e.g. "supernova", "capitao", "ouro_b") */
+  rank: string;
+  prestige: number;
+  /** Faction Discount (20g outside 400g cap) — earned once, never lost */
+  discountUsed: boolean;
+  /** Which item the discount was applied to (display only) */
+  discountAppliedTo?: string;
+}
+
 // ─── Character ────────────────────────────────────────────────────────────────
 
 export interface Character {
@@ -279,4 +295,5 @@ export interface Character {
   gemsSpent: number;
   gemBudget: number;
   location: "blues" | "grand_line" | "new_world";
+  faction?: FactionData;
 }
