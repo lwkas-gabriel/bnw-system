@@ -10,6 +10,7 @@ import { TechniquesSection } from "../features/character/components/TechniquesSe
 import { PericiasSection } from "../features/character/components/PericiasSection";
 import { ProfissoesSection } from "../features/character/components/ProfissoesSection";
 import { EquipmentSection } from "../features/character/components/EquipmentSection";
+import { FaccoesSection } from "../features/character/components/FaccoesSection";
 
 const TABS = [
   { id: "attributes",    label: "Atributos",    icon: "📊" },
@@ -20,6 +21,7 @@ const TABS = [
   { id: "techniques",   label: "Técnicas",     icon: "⚡" },
   { id: "profissoes",   label: "Profissões",   icon: "📜" },
   { id: "equipment",    label: "Equipamentos", icon: "🛡️" },
+  { id: "faccao",      label: "Facção",       icon: "⚑" },
 ];
 
 export default function CharacterBuilderPage() {
@@ -138,6 +140,7 @@ export default function CharacterBuilderPage() {
         {activeTab === "techniques"  && <TechniquesSection />}
         {activeTab === "profissoes"  && <ProfissoesSection />}
         {activeTab === "equipment"   && <EquipmentSection />}
+        {activeTab === "faccao"      && <FaccoesSection />}
       </div>
     </div>
   );

@@ -6,3 +6,4 @@ export * from "./pericias";
 export * from "./professions";
 export * from "./bugigangas";
 export * from "./akumaModules";
+export * from "./factions";
