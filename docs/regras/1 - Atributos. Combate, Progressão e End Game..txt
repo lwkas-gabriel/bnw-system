@@ -1,0 +1,248 @@
+Atributos e Combate
+
+1 | Introdução
+
+O sistema do fórum tem como base a premissa de evolução por níveis. O personagem realiza suas aventuras, ganha pontos de experiência e aumenta seus níveis, permitindo que distribua pontos em quatro atributos primários de acordo com sua vontade.
+
+Ao completar as aventuras e, também, em tarefas especiais no fórum (como ajudar ao ser narrador, participar de eventos, ser avaliador) o personagem ganha uma moeda especial chamada Gemas. Com as gemas é possível comprar características especiais que fogem do ganho ao passar de nível, como uma Akuma no Mi, acesso ao Haki, uso de Técnicas, entre outras coisas.
+
+Esse tópico esclarece o básico referente a progressão de níveis ao ganhar experiência, quais os atributos e como funciona o combate os utilizando. Tópicos mais avançados como as características que podem ser compradas com as gemas estão em seus respectivos tópicos.
+
+2 | Atributos
+
+Poder (PDR): O poder destrutivo do seu personagem. É esse atributo que influencia a quantidade de dano que seu personagem é capaz de causar, seja com ataques a distância ou com ataques corporais.
+
+Precisão (PRE): A mira do seu personagem, ou seja, a capacidade de acertar seus ataques exatamente onde quer. Utilizado para verificar se você é capaz de acertar seus golpes.
+
+Defesa (DEF): Sua capacidade de evitar e receber dano ao receber ataques. A capacidade de defesa influencia tanto em tentativas de bloquear, esquivar ou evitar golpes, da maneira que for narrada pelo usuário. Utilizado para verificar se após ser atacado o inimigo lhe acerta ou não.
+
+Constituição (CON): A constituição é a capacidade de seu corpo em resistir aos golpes. Em outras palavras, é como se fosse a quantidade de pontos de vida de seu personagem. Ao receber um dano, os valores são diretamente diminuídos da sua quantidade de constituição. Ao chegar a 0 de constituição o personagem fica inconsciente.
+
+3 | Investimento em Atributos
+
+Personagens começam obrigatoriamente com 1 em Poder, Precisão e Defesa e com 3 pontos em Constituição. Esses pontos são iniciais e não contam no total de pontos investidos do personagem. Além desses pontos iniciais, um jogador nível 1 começa com 1 ponto para distribuir do jeito que preferir e também seu bônus racial, totalizando 8 pontos em atributos na ficha ao todo.
+
+Cada personagem recebe 1 ponto por nível para investir livremente em seus atributos. Algumas situações podem aumentar os atributos, sendo explicadas em suas devidas seções, como por exemplo a aquisição com gemas dos caminhos de ciborgue, a escolha da espécie do personagem, entre outras coisas. Esses pontos também não influenciam o total recebido por nível.
+
+Não importa quantos pontos o personagem investir em seus atributos, o custo para aumentar +1 no atributo sempre será 1 ponto. Não existem limites máximos ou mínimos para os atributos dos personagens. Simplificando, cada jogador possui [6 + Seu Nível + Bônus Raciais] em pontos para distribuir em seus atributos, no entanto, é importante lembrar que cada atributo possui um mínimo a ser investido.
+
+4 | Energia e Bônus por Nível
+
+A energia é um atributo especial, que não pode receber investimento ao passar de level, mas pode ser aumentada com o investimento de gemas e ao passar de nível.
+
+Energia (EN): Energia reflete o cansaço de seu personagem, ou seja, o quanto ele é capaz de utilizar suas capacidades. A energia é utilizada para utilizar efeitos diversos no combate, como técnicas, haki e alguns efeitos de akuma no mi.
+
+A quantidade de energia de um personagem é igual a seu nível x 3 + a quantidade de gemas investidas. Cada gema investida aumenta +1 de energia.
+
+Bônus por Nível (BPN): Esta característica reflete o quão hábil o personagem se tornou com o aumento de sua força, este atributo é adiconado ao valor de Defesa para compor o número alvo para que o personagem possa ser atingido, assim como é adicionado a Precisão para ver a possibilidade de acertar um oponente. A quantidade de BPN de um personagem é extraída da conta 3/4 do Nível (arredondado para baixo). A tabela abaixo serve como guia neste sentido:
+
+NÍVEL	BÔNUS
+01	00
+02	01
+03	02
+04-05	03
+06	04
+07	05
+08-09	06
+10	07
+11	08
+12-13	09
+14	10
+15	11
+16-17	12
+18	13
+19	14
+20-21	15
+22	16
+23	17
+24-25	18
+26	19
+27	20
+28-29	21
+30	22
+31	23
+32-33	24
+34	25
+35	26
+36-37	27
+38	28
+39	29
+40	30
+
+
+5 | Combate
+
+Fases e Ações de um Combate
+O sistema de combate do fórum tenta ser bem simplificado, na medida do possível. Em cada rodada do combate existem 2 fases: a ação do jogador e a ação do inimigo, onde em um turno pode-se usar:
+
+1 Ação de Movimento (aproximar/afastar/correr/pular/etc..)
+1 Ação de Ataque (causar dano ao adversário, inclusive usar uma técnica)
+1 Ação de Defesa (esquivar/negar dano do adversário, incusive usar uma técnica)
+
+Ação de Ataque
+Com a ação de ataque, para testar se o acerto do golpe foi bem sucedido, deve-se realizar a seguinte comparação:
+
+QUOTE
+[Precisão do Jogador + BPN + Modificadores + 3d6]
+x
+[Defesa do Oponente + BPN+ Modificadores + 10]
+
+
+Nota-se que enquanto o atacante joga três dados de 6 faces, o defensor tem um modificador fixo igual a 10. Isso evita aumentar a rolagem de dados, visto que já são jogados dados no ataque e a aleatoriedade pode se concentrar em apenas uma rolagem. Além dos atributos de Precisão e Defesa, respectivamente, o nível dos personagens também entra no cálculo, assim como modificadores diversos de outras fontes, como bônus de técnicas, de armas ou armaduras, entre outras coisas.
+
+Após acertar o golpe, o jogador subtrai diretamente seu [Poder + Modificadores] da [Constituição + Modificadores] do Inimigo Atingido]. Os modificadores podem ser bônus de técnicas, Haki, ou para o caso de poder, bônus da arma.
+
+Nos ataques, o primeiro golpe a ser contabilizado é sempre o do jogador, devido ao poder do protagonismo. Ou seja, se o personagem acertar o golpe e nocautear seu inimigo com aquele golpe, o combate se encerra e, mesmo que os dados indiquem que o inimigo acertaria seu golpe, o personagem não recebe aquele dano do turno. Porém, se a batalha continuar, os turnos passam a ser alternados, o NPC age antes, depois o jogador novamente e assim por diante.
+
+Em combates Jogador x Jogador, ambos os jogadores sempre atacam ao mesmo tempo no PRIMEIRO TURNO, ou seja, ambos tomam e recebem os danos do turno, mesmo que nocauteiem seus inimigos. Após isso, o jogador que estiver mais ferido começa o próximo turno, e partir daí os turnos se alternam a respeito de quem começa.
+
+Desmaio e Morte
+Caso um integrante do combate chegue a 0 ou menos no valor de sua constituição, ele desmaia/Inconsciente.
+
+Para matar um personagem desmaiado é necessário um novo golpe além do que o fez desmaiar, em uma rodada diferente, mesmo que o valor de constituição fique negativo.
+
+Além disso, em duelos de Jogador x Jogador, o personagem só pode ser morto caso antes do início da luta exista o consentimento de batalha até a morte por ambos os oponentes.
+
+
+Ação de Movimento
+A movimentação funciona em um sistema simples de distâncias. É possível se afastar de um inimigo, mas de maneira unidimensional em relação ao ponto 0 da luta. Ou seja, após o inicio do combate, todos que se afastarem 1 movimento estarão na mesma posição e poderão se atacar entre si. Não existe um grid tridimensional de movimento, apenas a distância numérica e todos que estiverem no mesmo número podem se atacar corpo a corpo. Obviamente, é possível se movimentar para "frente" ou para "trás".
+
+Cada personagem pode apenas se movimentar 1 posição por turno normalmente, mas pode gastar a ação do turno (e ficar sem atacar ou usar consumível) para se mover uma distância extra.
+
+Exemplo: Após o combate Raron se movimenta para frente, ficando na posição de movimento 1. Haror faz o contrário e se movimenta para trás, ficando na posição de movimento -1. Com muito medo, Mendonza decide se afastar de Haror, indo 1 posição de movimento para frente. Assim, Mendonza e Raron se encontram na mesma posição de movimento e podem se atacar mutuamente corpo a corpo, enquanto ambos ficam a 2 posições de distância de Haror. Caso Haror queira se aproximar e ficar na mesma posição de Mendonza e Raron no próximo turno, ele pode usar sua movimentação e ainda a sua ação do turno, deixando de atacar, mas se aproximando.
+
+
+Ataques à Distância
+Ataques a Distância necessitam de armas e técnicas especiais para serem utilizados. O limite de distância a ser acertada por armas especiais é de 2 posições de movimento (positivas ou negativas, ou seja, na posição 0 poderia atacar quem está até a posição 2 ou até a -2), no entanto, essas armas são raras e ainda vêm com um ônus em seu Poder.
+
+
+Consumíveis
+Durante o combate, o personagem só pode utilizar um total de 3 consumíveis, sejam quais combinações forem.
+
+Os 3 consumíveis de acesso rápido do personagem devem ser preparados e especificados na ficha do jogador. Após a luta o personagem o personagem pode repor esse acesso rápido ou alterar os itens que estejam nele.
+
+
+
+
+6 | Combate Rápido
+
+Caso o jogador deseje acelerar o combate, ele pode narrar até 5 de seus turnos em uma única postagem e realizar as 5 rolagens em um post só. Independente dos resultados dos dados ou ações do inimigo o personagem irá seguir a sequência descrita no combate rápido. Esta sequência é a mesma do combate normal, o Narrador vai alternar os turnos após o primeiro e comparar o resultados do combate, encerrando o mesmo quando não houver mais oponentes em pé, ou iniciando uma nova sequência de turnos. Nesse caso, o personagem deve descrever o uso de consumíveis ou técnicas ou mesmo qualquer outro poder que tenha ou não gasto em Energia.
+
+Nesse modo, caso o jogador não descreva sua movimentação e o inimigo se afaste, o jogador irá automaticamente seguir seu inimigo. Caso por algum motivo o jogador não consiga se aproximar, sua ação de ataque no turno será substituída por outra movimentação de aproximação. Nesse último caso o gasto de energia ofensivo não é contabilizado.
+
+
+
+
+7 | Cura pós-combate
+
+Após um combate, os valores de Energia e Constituição não são recuperados instantaneamente. De maneira natural, a cada 2 postagens do jogador fora do combate, existe a cura de 1 de constituição e 2 de energia, independente do que acontecer narrativamente.
+
+Existem também as maneiras não naturais, com o uso de consumíveis e da profissão médico, cada qual com suas mecânicas específicas descritas em seus respectivos tópicos.
+
+
+
+
+8 | Críticos
+
+Existem duas situações de crítico: quando o personagem tira três dados de face 6 na mesma rolagem ou quando tira três dados de face 1.
+
+Na primeira situação, considerado uma situação de sorte, o jogador pode assumir o papel do GM e narrar o resultado da ação, gerando qualquer vantagem interpretativa ou de movimentação que desejar. Lembrando que o crítico de sorte não altera ferimentos (Constituição) ou destruição de equipamentos.
+
+Já na segunda situação, do crítico de dados 1, a situação é quase o contrário. O GM tem liberdade poética para complicar como quiser a vida de seu jogador, ele vai falhar claro, mas como vai falhar naquilo fica a cargo de seu GM e a situação tende a ser algo humilhante e bizarro.
+
+
+
+
+9 | Fuga de combate e Invasão de aventura
+
+Testes de fuga
+Para fugir de um combate o jogador que deseja fazê-lo o declara, a partir deste momento, a outra contra parte deve decidir se vai tentar nocautear seu oponente ou perseguí-lo.
+
+No caso da primeira opção nocautear, deve-se realizar dois ataques contra a defesa normal do defensor, este não podendo usar técnicas ou quaisquer meios para se defender, salvo Haki caso JÁ esteja ativado ou poderes específicos de akuma no mi. Caso os ataques sejam suficientes para derrubar o alvo, este cai nocauteado, independente do dano do primeiro golpe. Parar uma fuga sempre causa nocaute, caso o personagem decida executar o alvo depois é permitido.
+
+No segundo caso, o de perseguição, ambos rolam 3d6+ 3/4 Nível, caso o atacante ganhe, ele encurrá-la seu adversário que não pode mais tentar fugir, caso o personagem em fuga ganhe, ele cosegue sair do alcance do oponente e despistá-lo.
+
+
+Invasão de aventuras
+Este é um caso simples, o invasor em sua aventura deve realizar o teste de invasão que é 3d6+Poder + Precisão (+3 se o alvo da invasão tiver saído no jornal e estiver na ilha da notícia) devendo alcançar o número de 13+Defesa + Constituição.
+
+Sendo bem sucedido os GMs entram em um acordo de quem deve narrar o confronto, não havendo acordo um Desenvolvedor, Moderador ou mesmo um Administrador deve assumir o combate. O jogador invasor em sua aventura irá postar como chegou ao local onde o invadido está, e dali segue no tópico invadido.
+
+Ao terminar o combate, ambos seguem em seus devidos tópicos caso isso seja cabível. Por exemplo: um caçador pega o pirata entrega na Marinha, ou seja, o invasor caçador segue depois no seu tópico, e o pirata faz o mesmo.
+
+
+Progressão
+
+1 | Introdução
+
+O sistema usado no fórum é baseado na ideia do uso de Experiência para o aumento do Nível do personagem. Os Níveis são definidos de acordo com a quantidade de EXP total do personagem.
+
+Níveis também são base para saber o "quão forte" um personagem é para uma região, sendo que um nível 4 seria considerado muito fraco caso entrasse na Grand Line, enquanto que um personagem nível 14 provavelmente estaria fadado à morte dentro do Novo Mundo.
+
+
+
+
+2 | Requisitos de Level
+
+A quantidade de experiência necessária para se passar de nível varia conforme o personagem evolui, progredindo conforme a tabela a seguir:
+
+
+NÍVEL	EXP NÍVEL	EXP ACUMULADA
+01	00	00
+02	90	90
+03	105	195
+04	120	315
+05	135	450
+06	150	600
+07	165	765
+08	180	945
+09	195	1140
+10	210	1350
+11	225	1575
+12	240	1815
+13	255	2070
+14	270	2340
+15	285	2625
+16	300	2925
+17	315	3240
+18	330	3570
+19	345	3915
+20	360	4275
+21	375	4650
+22	390	5040
+23	405	5445
+24	420	5865
+25	435	6300
+26	450	6750
+27	465	7215
+28	480	7695
+29	495	8190
+30	510	8700
+31	525	9225
+32	540	9765
+33	555	10320
+34	570	10890
+35	585	11475
+36	600	12075
+37	615	12690
+38	630	13320
+39	645	13965
+40	660	14625
+
+
+
+
+
+3 | End Game
+
+Ao atingir o nível 40, a personagem chegou ao ápice de sua evolução. Quem chegar a este ponto estará entre os mais poderosos do fórum, em pé de igualdade aos grandes líderes das facções, como os Yonkou e Almirantes. Neste nível, o jogador pode continuar a jogar normalmente, entretanto, suas aventuras não lhe concederão mais XP e o ganho de gemas cai para 1/3 do que normalmente se receberia.
+
+Ou seja, alcançar o nível máximo de 40 significa uma mudança drástica no estilo de jogo, que não focará mais em progressão, mas em conquistas. Em suas aventuras, jogadores de nível máximo poderão tentar expandir sua influência dentro do jogo com domínio de territórios ou encarando os maiores desafios do mundo, desafiando as grandes instituições do cenário para enfrentar seus líderes.
+
+Essa mudança pode ser frustrante para alguns jogadores. Portanto, uma outra opção é o que chamamos de JUBILAMENTO. Jubilar uma personagem nível 40 funciona da seguinte forma:
+
+1. O jogador entrega a personagem ao cenário do RPG, tornando-a uma NPC permanente;
+2. A personagem jubilada passará a ocupar uma vaga entre os cargos mais altos de sua facção (Yonkou, Almirante, Comandante de CP, Líder Revolucionário ou Imperador do Submundo);
+3. Caso não haja vaga nestes cargos, um evento global será gerado para acomodar essa mudança no cenário;
+4. A ficha deste novo NPC será exatamente a mesma da versão da ficha usada na última aventura do jogador com esta personagem;
+5. O jogador receberá o direito a um reset especial, no qual poderá criar uma nova personagem de nível 10, iniciando em qualquer ilha do Paradise (Grand Line), tendo 100 gemas disponíveis no momento da criação da ficha e terá 50% de desconto na aquisição e evolução de todos os estágios de um único caminho à escolha do jogador (Akuma no Mi, Haki, Ciborgue ou Artes Marciais).

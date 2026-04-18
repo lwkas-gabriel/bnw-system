@@ -1,0 +1,188 @@
+Profissões
+
+1 | Introdução
+
+Todo personagem dentro do universo de One Piece possui uma função pré-determinada (por exemplo: navegadores, médicos, cozinheiros), mas existem aqueles (oi, Zoro!) que não tem nenhuma vantagem funcional e são apenas lutadores. De igual modo, requer mais do que saber fritar um ovo para ser chamado de cozinheiro, ou mais do que colar um band-aid para ser reconhecido como médico. Por mais que tarefas simples possam ser realizadas com testes de Perícia em nosso RPG, é necessário investir gemas em Profissões para realizar atividades concretas, complexas e produtivas que trazem efeitos significativos no sistema de jogo.
+
+
+
+
+2 | Adquirindo profissões
+
+Para se adquirir uma Profissão é preciso investir um determinado valor em gemas, que representa o tempo de estudo e treino das personagens "fora de cena", isto é, ao longo de sua história ou entre o decorrer de aventuras. Esse desenvolvimento pode ser feito ao longo de aventuras, mas em nada isso muda a forma simples e direta de aquisição de uma Profissão.
+
+
+Cada Profissão custa 10 Gemas
+
+
+Em nosso RPG, é possível ter mais que uma profissão por personagem. Entretanto, mesmo que se adquira todas as profissões existentes, isso não significa que sua personagem será expert em todas elas. As atividades profissionais necessárias que se tornam acessíveis ao se adquirir uma Profissão sempre requerem algum tipo de teste ou escala baseados em uma das Perícias. Ou seja, alcançar o topo de uma determinada profissão requer maximizar sua respectiva Perícia.
+
+
+
+
+3 | Criando itens
+
+As profissões que tem a habilidade de criar itens podem criar 2 (dois) itens por tópico. Para isso, é necessário realizar um teste da respectiva Perícia com a dificuldade delineada pela qualidade do item a ser criado. É necessário gastar metade do valor de venda do item, escolher a raridade do item a ser feito em seu post, lançar 3d6 e somar a sua bonificação (+3 por ponto de Perícia), esta sendo alcançada o item é feito, porém em caso de falha, 1/3 do dinheiro é perdido. A jogada é necessária para cada item. Caso o valor da bonificação da personagem +3 seja maior ou igual ao grau de dificuldade, pode-se criar o item sem realizar o teste, pois isso significa que mesmo que se role três vezes o 1, ainda se alcança a dificuldade necessária.
+
+Itens Comuns - dificuldade 9
+Itens Esplêndidos - dificuldade 18
+Itens Lendários - dificuldade 27
+
+
+
+
+4 | Vendendo seus serviços
+
+Sempre que vender seus serviços, o personagem ganha um acréscimo ao seu piso de ganhos financeiros. A venda de serviços só pode ser feita uma vez por aventura completa por personagem, visto que algumas profissões ainda tem os itens que são feitos, então é possível fabricar o que suas profissões lhe permitirem e trabalhar secundariamente apenas uma vez. O personagem deve realizar ao menos dois posts empreendendo a profissão que está sendo pago para realizar, e deve realmente ser contratado ser contratado para tal fim, por NPCs ou mesmo outros jogadores.
+
+
+
+
+5 | As profissões
+
+
+
+ADESTRADOR
+
+ossui empatia diferencia com a vida selvagem, sendo capaz de se conectar a ela para domar e adestrar animais. O trato com animais requer mais do que mera intimidação sobre as criaturas. O adestrador é aquele que entende seus habitats e hábitos, seus gostos e instintos, e usa tudo isso para comandar criaturas selvagens para objetivos diversos. Assim, a Perícia usada em testes para as atividades de adestrador é a Sobrevivência.
+
+Além do adestramento da vida selvagem, Adestradores ganham acesso a um tipo especial de Companheiro, chamado "Mascotes" (confira o respectivo tópico).
+
+Adestramento:
+Os adestradores podem tentar adestrar criaturas selvagens durante suas aventuras. A dificuldade do adestramento depende do porte do animal e requer testes da perícia sobrevivência. A tabela abaixo especifica os portes, a quantidade de cada animal que se pode adestrar por aventura e a dificuldade do teste.
+
+PORTE	QUANTIDADE	DIFICULDADE
+Pequeno (coelhos, corvos, cães etc)	10 vezes o valor da Perícia Sobrevivência	9
+Médio (lobos, onças, águias etc)	2 vezes o valor da Perícia Sobrevivência	18
+Grande (leões, ursos, elefantes etc)	O valor da Perícia Sobrevivência	27
+Colossal (rei dos mares, monstros etc)	Metade do valor da Perícia Sobrevivência (arredonda para baixo)	33
+
+
+Para adestrar grupos de animais, basta um teste de sobrevivência, conquanto que os animais estejam reunidos no momento do teste. É possível levar animais adestrados consigo ao longo das aventuras, desde que se tenha sua própria embarcação. Animais ocupam espaço nas embarcações a depender de seu porte. Os lugares que demandam não representam necessariamente o espaço físico que ocupam, mas também a alimentação e outros recursos necessários para manter essas criaturas.
+
+Pequenos - 1 lugar cada
+Médios - 3 lugares cada
+Grandes - 10 lugares cada
+Colossais - 50 lugares cada
+
+
+O adestramento de animais provê benefícios interpretativos e possíveis bônus temporários em outras perícias, ficando a critério do narrador os conceder conforme a interpretação dos jogadores e a forma como optam usar seus animais.
+
+
+
+
+
+
+
+ARQUEÓLOGO
+
+Possui o conhecimento dos povos antigos a partir da análise de vestígios materiais, incluindo a existência dos povos antigos, sua cultura, lendas etc. Os arqueólogos, embora não vitais para a existência de uma tripulação, são de extrema utilidade na hora de reconhecer culturas. Além disso, são determinantes para o domínio de ilhas, sendo seus bônus os usados para esse fim.
+
+Para se explorar os mistérios da arqueologia é preciso mais do que simplesmente saber ler alguma língua antiga. É necessário ser capaz de realizar pesquisas de alto nível, sabendo onde encontrar fontes e como as interpretar da forma correta. Assim, a Perícia usada em testes para as atividades de arqueólogo é a Investigação.
+
+Arqueólogos também são responsáveis por encontrar informações pertinentes ao lore das ilhas. Com isto, é possível realizar uma ação de investigação para encontrar Poneglyphs na ilha em que se encontra para cada 1 pontos em Investigação, este conjunto de ações de investigação pode ser usado a cada aventura completa.
+
+No caso do domínio ou retirada do domínio, o arqueólogo pode convencer NPC de maneira pacífica a se juntarem a sua causa, para tal ele realiza um teste com a sua bonificação na profissão x O nível máximo dos NPCs da ilha, sendo bem sucedido o dano a ilha é computado para o lado do Arqueólogo.
+
+Além disso, tem influência direta na leitura dos Poneglyphs.
+
+
+
+
+
+
+
+COZINHEIRO
+
+O responsável por garantir que ninguém viaje pelos mares de estômago vazio. Capaz de transformar até mesmo o mais insosso dos alimentos em um verdadeiro banquete, e garantir que todos obtenham os nutrientes necessários para continuarem seguindo em frente. O cozinheiro é o responsável não só por alimentar sua tripulação, mas também por garantir que eles permaneçam fortes e satisfeitos.
+
+A arte da culinária estimula todos os sentidos. Os melhores cozinheiros são aqueles que consegue, por meio de seus pratos, instigar e agradar os cinco sentidos. Assim, a Perícia usada em testes para as atividades de cozinheiro é a Expressão.
+
+Lanches especiais:
+Lanches são simples e rápidos; comidas fáceis de serem preparadas e ainda mais fáceis de serem ingeridas. Pequenos como uma mão, podem variar desde um sanduíche até uma barrinha de cereais, e, justamente por seu tamanho, são ideais para serem consumidos no meio de uma batalha - afinal, quem precisa de talheres para um sanduíche de presunto? É só dar algumas mordidas, e em instantes estará em sua barriga.
+
+Os lanches são os responsáveis por recuperar uma parcela de sua energia - porque ninguém consegue fazer nada de estômago vazio, como o próprio Luffy tantas vezes nos mostrou. Por isso, podem ser preparados para momentos de emergência, recuperando +3, +6 ou +9 de Energia e podem ser usados em combate, desde que se abra mão da ação de ataque. Há um limite para o uso destes durante um combate pela dificuldade em se manuseá-los.
+
+
+Banquetes:
+Ao contrário dos lanches, os banquetes são a verdadeira tradução de abundância e fartura - e talvez sejam até a demonstração do ápice das habilidades de um cozinheiro. Neles, você poderá encontrar todo tipo de prato e comida, ou, a depender do chef, um só prato, mas numa quantidade/qualidade absurda o suficiente para suprir um esquadrão inteiro de marinheiros e deixá-los de barriga cheia por um bom tempo. Devido a toda sua riqueza, eles fornecem bônus diferentes de um mero lanche, e em uma quantidade ou qualidade notavelmente maior.
+
+Os banquetes são os responsáveis por garantir bônus em um ou mais atributo pelo período de uma aventura inteira. Banquetes só podem ser preparados e consumidos uma vez por aventura, e somente fora de combate. Ciborgues podem se beneficiar desses bônus, sendo o valor extra em energia convertido para combustível.
+
+Acrescentam de 1 a 3 pontos de Constituição extra ao personagem que o come, além de +2 a +6 de Energia extra, estes pontos são os primeiros a serem descontados, e acabam assim que o tópico se encerra ou se o personagem dormir durante a aventura. Banquetes cumulativos não geram bônus cumulativos.
+
+
+Recuperação de Energia:
+Um cozinheiro pode recuperar Energia de qualquer personagem que se alimentar com o que ele prepare como refeições normais (café da manhã, almoço, etc). Pode recuperar o valor de sua perícia Expressão multiplicado por 5 em um paciente por turno, apenas fora de combate (com Expressão 3, recupera-se 15, por exemplo). Ciborgues não podem ter sua energia recuperada dessa forma.
+
+
+
+
+
+
+
+ENGENHEIRO
+
+De bugigangas aos mais complexos maquinários, o trabalho de um engenheiro nem sempre é reconhecido, mas esse é um homem que pode fazer a diferença a bordo. Usando sua imaginação e muito estudo, esse profissional é capaz de dar vida à dispositivos capazes de virar o rumo de uma batalha. É também responsável por manter a embarcação sempre no melhor estado possível, garantindo todos os reparos necessários – e eventuais melhorias, quando existir tal possibilidade. Nem sempre é possível ter acesso a oficinas especializadas, e por isso é sempre indicado manter no navio ao menos um engenheiro naval – e muita madeira.
+
+Colocar em prática as mecânicas da engenharia requer domínio sobre cálculos, dinâmicas e princípios físico-matemáticos. Afinal, ninguém quer embarcar em um navio que está prestes a naufragar! Assim, a Perícia usada em testes para as atividades de engenheiro é a Lógica.
+
+Engenheiros podem fabricar barcos de tamanhos variados, a depender de sua capacidade. O processo de fabricação de embarcações é diferente da produção dos demais itens criados por profissões. Esse processo é descrito no tópico Embarcações.
+
+Bugigangas:
+Engenheiros são indivíduos naturalmente criativos, que têm extrema facilidade em pensar fora da caixa e abrir suas mentes para inovações tecnológicas! Sua criatividade é tanta que só eles são capazes de criar bugigangas; aparelhos tecnológicos singulares, com funcionamentos e efeitos próprios que não podem nem ser categorizados.
+
+Bugigangas são feitas para serem acopladas a outros equipamentos, sendo itens que fornecer bônus em Perícias e, portanto, têm grande utilidade no jogo, como propulsores de voo, visores especiais de visão no escuro, dentre outros.
+
+É necessário consciência do que deseja fazer e do nível de complexidade necessário. Bugigangas muito complicadas somente poderão ser feitas com níveis mais altos.
+
+
+
+
+
+
+
+FERREIRO
+
+Especialista na confecção de armamentos e armaduras. Consegue produzir os mais diversos apetrechos, além de ser capaz de fabricar grande variedade de equipamentos, sejam eles ofensivos ou defensivos. O ferreiro é uma profissão importantíssima para uma tripulação, já que ele é o encarregado de fornecer as principais ferramentas de seus membros. Tripulantes com armas frágeis tendem a durar pouco por estes mares!
+
+Criar objetos raros e de qualidade, seja por meio da metalurgia ou de outras técnicas artesanais, existe grande habilidade com as mãos, para lidar com materiais diferentes e aplicar as técnicas corretas. Por mais afiada que uma espada seja, uma epunhadura frouxa pode a inutilizar! Assim, a Perícia usada em testes para as atividades de ferreiro é a Destreza.
+
+Uma arma para se tornar única SEMPRE precisa passar pela mão de um ferreiro, seja ele jogador ou um NPC. No caso de NPC estes não precisam ser capazes de fazer uma arma equivalente a que vão alterar, eles apenas são necessários por saberem dos ritos e técnicas para tornar aquela arma ÚNICA.
+
+
+
+
+
+
+
+MÉDICO
+
+Uma das profissões mais valorizadas em alto-mar, o Médico é o único preparado para cuidar dos ferimentos de batalha e das doenças. Com suas Pastas e Pomadas, é capaz de rapidamente atender a qualquer um no meio do combate; enquanto, em horas mais calmas, consegue curar quase completamente qualquer um que se torne seu paciente. Ser um Médico requer muito estudo, especialmente quando se viaja para lugares desconhecidos. Sem um bom Médico a bordo, qualquer mosquito de uma ilha tropical pode se tornar fatal.
+
+O Médico também possui um vasto conhecimento sobre reações químicas, fórmulas e misturas. Qualquer coisa pode se transformar em um estimulante poderoso em suas mãos, criando os mais diversos efeitos, incluindo venenos e agentes paralisantes.
+
+Seguir o rumo da medicina requer muito estudo e dedicação para se conhecer as minúcias da biologia e química que envolve os seres vivos. Considerando a diversidade racial e anatômica das pessoas no mundo de One Piece, essas demandas de conhecimento específico e amplo é ainda maior! Assim, a Perícia usada em testes para as atividades de médico é a Erudição.
+
+Recuperação de Constituição:,
+Um Médico pode recuperar Constituição perdida de qualquer personagem que estiver sob seus cuidados fora de combate (inclusive de si mesmo). Pode recuperar o valor de sua perícia Erudição em um paciente por turno.
+
+
+Pomadas especiais:
+Podem ser preparadas para momentos de emergência, estas recuperam +1, +2 ou +3 de Constituição e podem ser usados em combate, desde que se abra mão da ação de ataque. E há um limite para o uso destes durante um combate pela dificuldade em se manuseá-los.
+
+
+
+
+
+
+
+NAVEGADOR
+
+É o responsável por fazer com que o barco chegue a seu destino, independente das intempéries que possam surgir durante a viagem. Um bom navegador é fundamental para aqueles que navegam pela Grand Line, caso contrário a viagem pode não durar muito tempo - ou durar uma eternidade.
+
+Navegar pelos Mares requer mais do que saber ler rotas marítimas e manejar um leme. É preciso estar atento às mudanças metereologicas, ventos, pressão atmosférica e até mesmo o que está debaixo d'água. Assim, a Perícia usada em testes para as atividades de navegador é a Percepção.
+
+A cada 1 ponto em Percepção reduz em 1 o número de posts por trajeto em alto mar entre ilhas. Além disso, navegadores são os únicos que podem criar Eternal Poses, log poses que apontam sempre para mesma ilha. Para isso, é necessário estar na ilha da qual se deseja criar um Eternal Pose, ter um log pose a ser aprimorado e realizar um teste de Percepção com dificuldade 27 (lendária). Só é possível realizar um teste por aventura (pode tentar novamente em uma nova aventura na ilha) e caso falhe, o log pose é destruído. Ou seja, caso seja seu único log pose e você estiver em uma ilha sem lojas para se comprar um novo, você estará preso nela, sendo bem sucedido ou não!
+
+Os navegadores são os mais hábeis combatentes marítimos e um Navegador habilidoso pode ser a diferença entre a vitória ou derrota em uma Batalha Naval. Batalha naval, é igual ao combate normal, o navio tem os mesmos atributos e o bônus para esquiva são os do navegador. A única ressalva deste combate é que o navio toma metade do dano se for atacado por um personagem e não por um canhão ou arma de navio.

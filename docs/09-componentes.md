@@ -27,7 +27,7 @@ Todos os componentes ficam em `src/shared/components/index.tsx` e são exportado
 ```tsx
 <Input
   label="Nome"
-  placeholder="Ex: Nagare Shigure"
+  placeholder="Ex: Dogmeat"
   error="Campo obrigatório"
   value={val}
   onChange={fn}

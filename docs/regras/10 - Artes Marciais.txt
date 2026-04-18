@@ -1,0 +1,129 @@
+Artes Marciais
+
+1 | Introdução
+
+Na era dos piratas, combates são comuns e todos os que se arriscam pelos mares acabam desenvolvendo algum tipo de estilo de luta. Entretanto, nem todos se tornam mestres da arte da guerra. O caminho das Artes Marciais representa aqueles que decidem alcançar o topo do mundo com sua habilidade e técnicas marciais. Seja lutando corpo a corpo, com os próprios punhos, com algum tipo específico de equipamento, ou mesmo com armas à distância e com a mira, as Artes Marciais representam o foco e aperfeiçoamento desses estilos de luta. Para ser o Maior Espadachim do Mundo, o Rei dos Atiradores ou um verdadeiro Cavaleiro do Mar, é necessário trilhar o árduo caminho das Artes Marciais
+
+
+
+
+2 | Progressão
+
+Todo bom guerreiro é capaz de avaliar seu crescimento e cada novo combate é uma oportunidade para aprendizagem. Isso se reflete na progressão deste caminho. Assim, os requisitos de subida de faixa sempre envolve realizar sessões de treinamento ou participar ou vencer combates.
+
+O segundo requerimento é o pagamento de gemas. Visto que o estilo de luta acompanha a progressão das personagens, o caminho das Artes Marciais é o que tem menor custo de gemas por estágio.
+
+Um terceiro requerimento para a progressão é enfrentar desafios cada vez maiores. Daí a necessidade de se estar na Grand Line para acessar faixas intermediárias e estar no New World para as faixas avançadas.
+
+
+
+
+2.1 - Faixas Iniciantes
+
+Para iniciar sua jornada no caminho das Artes Marciais, basta a coragem de se arriscar em um combate. Pouco importa o resultado dessa luta, se venceu, perdeu ou fugiu. O importante é testar suas habilidades de combate contra outro oponente. A partir daí, será necessário muito treino para progredir em Artes Marciais.
+
+Realizar uma sessão de treinamento envolve decida um ou mais turnos em aventuras para realizar exercícios de treino. Isso varia conforme o estilo de luta das personagem e a criatividade dos jogadores. Podem ser tanto coisas simples como correr uma quantidade de quilômetros ou levantar pesos, quanto coisas mais complexas, como treinos de mira ou prática de kata. Não há requisitos de qualidade nos postos de treino, pois o turno dedicado a isso já representa o esforço da personagem. Ainda assim, caso o narrador queira, ele pode propor desafios para essas sessões de treinos. Entretanto, o narrador NÃO pode barrar o avanço da personagens contanto que cumpram os requesitos básicos. É possível realizar diversas sessões treinos e subir de mais de uma faixa em uma mesma aventura, desde quesse pague os valores de gemas.
+
+FAIXA BRANCA
+Requisitos: Sobreviver a 1 combate.
+Custo: 10 gemas
+Bônus: +2 de bônus na arma equipada
+Interpretativo: Sua personagem aprendeu a manejar a arma principal (ou membros) de seu estilo de luta.
+
+FAIXA CINZA
+Requisitos: Realizar 1 turno de treinamento como Faixa Branca
+Custo: 10 gemas
+Bônus: +2 de Precisão
+Interpretativo: Sua personagem dominou os fundamentos ofensivos.
+
+FAIXA AZUL CLARA
+Requisitos: Realizar 2 turnos de treinamento como Faixa Cinza
+Custo: 10 gemas
+Bônus: +2 de Defesa
+Interpretativo: Sua personagem dominou os fundamentos defensivos.
+
+FAIXA AZUL ESCURA
+Requisitos: Realizar 3 turnos de treinamento como Faixa Azul Clara
+Custo: 10 gemas
+Bônus: +2 em Poder
+Interpretativo: Sua personagem aprendeu a potencializar seus movimentos com seus músculos.
+
+FAIXA AMARELA
+Requisitos: Realizar 4 turnos de treinamento como Faixa Azul Escura
+Custo: 10 gemas
+Bônus: +2 em Constituição
+Interpretativo: Sua personagem aprendeu a dominar a dor por meio de grande disciplina.
+
+
+
+
+
+2.2 - Faixas Intermediárias
+
+Para alcançar essas faixas é preciso desafios maiores do que os encontrados nos Blues. Por isso, é preciso estar na GRAND LINE para se conquistar uma faixa superior.
+
+A partir daqui, o avanço por meio de combate se torna mais criterioso. Ser um artista marcial significa saber ganhar e perder. Portanto, fugir de uma luta não será suficiente para subir de faixa. É preciso levar a luta até o fim e, se for o caso, sofrer suas consequências.
+
+FAIXA LARANJA
+Requisitos: Finalizar a 1 combate como Faixa Amarela; estar na Grand Line.
+Custo: 10 gemas
+Bônus: +1 de bônus em todos os itens defensivos equipados; recebe 2 técnicas Rank A OU 1 Arma Única Comum (pode ser aplicada a armas já existentes ou a armas de outras qualidades, mas com o devido pagamento de seu valor em berries).
+Interpretativo: Sua personagem já é uma praticante reconhecida de seu estilo de luta, podendo extrair o máximo das armas e movimentos utilizados.
+
+FAIXA VERDE
+Requisitos: Finalizar a 1 combate como Faixa Laranja; estar na Grand Line.
+Custo: 10 gemas
+Bônus: +2 de bônus em técnicas defensivas.
+Interpretativo: Sua personagem alcançou maestria nos movimentos de defesa de seu estilo de luta.
+
+FAIXA ROXA
+Requisitos: Finalizar a 1 combate como Faixa Verde; estar na Grand Line.
+Custo: 10 gemas
+Bônus: +2 de bônus em técnicas ofensivas.
+Interpretativo: Sua personagem alcançou maestria nos movimentos de ataque de seu estilo de luta.
+
+FAIXA MARROM
+Requisitos: Vencer a 1 combate como Faixa Roxa; estar na Grand Line
+Custo: 10 gemas
+Bônus: +1 de bônus em todos os itens defensivos equipados. Recebe uma técnica Rank A.
+Interpretativo: Sua personagem já é uma representante notória de seu estilo de luta.
+
+
+
+
+
+2.3 - Faixas Avançadas
+
+Para alcançar essas faixas é preciso desafios maiores do que os encontrados no Paradise. Por isso, é preciso estar no New World para se conquistar uma faixa superior, até alcançar o grau de Grão-Mestre.
+
+A partir daqui, apenas os melhores avançam e perder uma luta não é mais admissível. Vencer é obrigatório para provar seu valor e alcançar patamares mais altos no caminho das Artes Marciais.
+
+FAIXA PRETA
+Requisitos: Vencer 1 oponente como Faixa Marrom; estar no New World.
+Custo: 10 gemas
+Bônus: Pode equipar uma arma extra (não permite os efeitos de duas armas únicas ao mesmo tempo).
+Interpretativo: Sua personagem se tornou mestre em seu estilo de luta, sendo capaz de ensinar, inovar e aperfeiçoar formas tradicionais.
+
+FAIXA CORAL (PRETA/VERMELHA)
+Requisitos: Vencer 1 oponente como Faixa Preta; estar no New World
+Custo: 10 gemas
+Bônus: +2 de bônus na arma extra
+Interpretativo: Sua personagem transcendeu as habilidades ofensivas de seu estilo de luta e é capaz de usar suas armas de formas únicas.
+
+FAIXA RAJADA (BRANCA/VERMELHA)
+Requisitos: Vencer 1 oponente como Faixa Coral; estar no New World
+Custo: 10 gemas
+Bônus: +1 de bônus nos equipamentos defensivos
+Interpretativo: Sua personagem transcendeu as habilidades defensivas de seu estilo de luta e é capaz de usar tudo ao seu dispor para se defender de formas únicas.
+
+FAIXA VERMELHA
+Requisitos: Vencer 2 oponentes como Faixa Rajada; estar no New World
+Custo: 10 gemas
+Bônus: +2 de bônus em Poder OU Precisão OU Defesa OU Constituição por 2 de energia (a escolha dura o turno inteiro, isto é, ataque e defesa).
+Interpretativo: Sua personagem alcançou o ápice das artes marciais e é capaz de se adaptar à qualquer situação, ajustando suas técnicas para alcançar a vitória.
+
+GRÃO MESTRE
+Requisitos: Vencer 2 oponentes como Faixa Vermelha; estar no New World
+Custo: 10 gemas
+Bônus: Escolher apenas um: +2 nas rolagens de ataque (evita falha crítica e facilita acerto crítico) por 3 de energia OU -2 nas rolagens de ataque do oponente (facilita erro crítico e impede acerto crítico) por 3 de energia.
+Interpretativo: Sua personagem é reconhecida por todos como uma Especialista em Ataque ou Especialista em Defesa.

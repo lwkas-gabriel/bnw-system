@@ -1,0 +1,389 @@
+Itens e Equipamentos
+
+1 | Introdução
+
+Itens são uma gama de objetos, dos mais diversos tipos, e, por isso, também são uma grande parte das coisas com as quais interagimos no dia-a-dia, durante nossas aventuras. Seja uma maçã ou uma armadura, uma mochila ou um lingote de metal, não há verdadeiro limite para o quê podemos chamar de itens - mas podemos classificá-los em tipos, para facilitar o entendimento e simplificar nossas interações com eles.
+
+Um personagem novo começa com B$ 300.000 para gastas com itens e equipamentos.
+
+Dependendo da qualidade do item, e de onde a personagem se encontra, é possível que haja restrições quanto aos itens que se pode encontrar. A tabela abaixo representa o grau de dificuldade em achar itens, variando de acordo com a área em que o personagem se encontra.
+
+É proibido a compra de objetos ou embarcações que estão na categoria lendária de NPCs. A única forma de os conseguir é investindo nas profissões, comprando de outro jogador ou esperar por uma oportunidade em evento.
+
+Qualidade	Blues	Paradise	New World
+Comum	Aventura	Aventura	Aventura
+Esplêndido	Evento	Aventura	Aventura
+Lendário	Inexistente	Evento	Evento
+
+
+Como podem perceber, existem 3 níveis de dificuldade para os níveis do itens, por isso vamos entender melhor o que cada uma significa:
+
+Aventura: Pode ser conseguido em qualquer aventura, missão ou evento naquela região, desde que respeitado o limite de premiação entregue ao jogador.
+
+Evento: Só pode ser conseguido como prêmio de missão ou evento global naquela região.
+
+Inexistente: Não pode ser obtido ou vendido naquela região, somente fabricado por jogadores com profissão apta para tal.
+
+2 | Tipos de itens
+
+2.1 Equipamentos
+Armas e equipamentos são fatores extremamente importantes no universo de One Piece, sendo divididos em vários níveis. A aquisição de uma arma ou equipamento pode ser feita através de várias maneiras, seja comprando, roubando, ou até mesmo achando dentro do jogo. Contudo, em questão de produção de equipamentos, há somente uma profissão é capaz de fazê-los: Ferreiros.
+
+No caso de roupas, como vestidos e blusas, ou acessórios, como colares e perucas, eles também são tratadas como armaduras, mas armaduras “fracas” (comuns) .(+0) Elas podem ser fabricadas por qualquer um, e não contam espaço de slots, mas se tiverem uma bugiganga nelas passam a contar no limite de duas peças . Fora isso, são meramente estéticas.
+
+Armas de longa distância sempre podem atacar a uma ação de movimento, porém, armas da categoria lendária podem atingir o alvo a 2 ações do movimento, porém, se o fizerem, o ataque tem uma penalidade de -1 em Poder.
+
+Para efeitos de regras, apenas dois equipamentos defensivos que bonificam ou que tenham bugigangas podem ser usados simultaneamente GERANDO BÔNUS. Nada impede que vários equipamentos sejam usados por estarem no corpo do personagem, mas deve-se declarar os que estão lhe bonificando, essa bonificação vale para a cena, ou para o combate. Já as armas, apenas uma pode gerar bônus, no entanto, várias podem ser usadas ao mesmo tempo a exemplo do Zoro. Mas caso queira-se trocar a arma que está bonificando, basta gastar uma ação de movimento para isso, lembrando que essa é a mesma ação para sacar outra arma que esteja guardada durante o combate.”
+
+Armas e equipamentos melhores são mais caros, e dependendo da área em que o jogador estiver, são mais difíceis de serem encontrados. Isso aplica-se tanto para qualquer meio de obtenção do equipamento - até mesmo a produção. As tabelas com os custos, bônus e qualidades/categorias podem ser vistas abaixo:
+
+Equipamentos Ofensivos
+Qualidade	Bônus (atributo)	Preço de Mercado	Preço de Custo
+Comum	+0	500.000	250.000
+Esplêndido	+1	10.000.000	5.000.000
+Lendário	+2	80.000.000	40.000.000
+
+
+Equipamentos Defensivos
+Qualidade	Bônus (atributo)	Preço de Mercado	Preço de Custo
+Comum	+0	500.000	250.000
+Esplêndido	+1	5.000.000	2.500.000
+Lendário	+2	40.000.000	20.000.000
+
+
+2.2 | Equipando
+Após adquirir um equipamento, existem certas regras que provêm sobre a maneira que você pode usá-lo:
+
+Cada personagem possui a capacidade de equipar até 3 itens - 2 defensivos e 1 arma.
+
+Dependendo da parte do corpo que o equipamento é usado, os bônus que ele fornece podem mudar. Os slots de equipamento e os atributos que eles podem bonificar são os seguintes:
+
+Cabeça: bônus distribuídos em Precisão ou Constituição
+Braços: bônus distribuídos em Precisão ou Defesa
+Tronco: bônus distribuídos em Constituição ou Defesa
+Pernas: bônus distribuídos em Precisão ou Defesa
+Arma: bônus distribuídos em Precisão ou Poder
+
+
+É importante frisar que o slot de arma não está ligado a nenhuma parte do corpo - Você pode usar botas ou um capacete com espinhos como arma, e o item será ligado a esse slot.
+
+2.3 Consumíveis
+Consumíveis são todos aqueles itens utilizados uma vez só, o efeito depende de qual consumível você está buscando. São considerados consumíveis para efeitos de sistema: pomadas (recuperam Constituição perdida), lanches (restauram Energia gasta) e banquetes (aumenta determinada característica). Obs: Químicos agora devem ser descritos em Técnicas e Bombas tornam-se ataques interpretativos, com a base de dano do personagem.
+
+Todos eles podem ser adquiridos das mesmas maneiras que os Equipamentos, sendo que as Profissões capazes de fabricar consumíveis são: Cozinheiro e Médico. Combustível também é consumível, mas a única forma de o adquirir é via compra no Mercado. Seu preço é maior que os demais consumíveis, mas oferecem uma recuperação maior por uso que nenhum outro consumível provê. Confira a tabela abaixo para mais detalhes sobre valores e bônus de consumíveis fabricáveis:
+
+Pomadas / Lanches
+Qualidade	Bônus (atributo)	Preço de Mercado	Preço de Custo
+Comum	+1 /+3	50.000	25.000
+Esplêndido	+2 / +6	500.000	250.000
+Lendário	+3 /+9	1.000.000	500.000
+
+
+Banquetes
+Qualidade	Bônus (atributo)	Preço de Mercado	Preço de Custo
+Comum	+1	500.000	250.000
+Esplêndido	+2	2.500.000	1.250.000
+Lendário	+3	5.000.000	2.500.000
+
+
+2.4 Bugigangas
+Engenheiros são indivíduos naturalmente criativos, que têm extrema facilidade em pensar fora da caixa e abrir suas mentes para inovações tecnológicas! Sua criatividade é tanta que só eles são capazes de criar bugigangas; aparelhos tecnológicos singulares, com funcionamentos e efeitos próprios que não podem nem ser categorizados. Elas são feitas para serem acopladas a equipamentos defensivos e darem bônus interpretativos extras. Bugigangas de maior qualidade concedem também bônus em Perícias. Cada equipamento defensivo pode receber uma bugiganga, que pode ser substituída ou removida por um Engenheiro. É possível ter mais que dois equipamentos defensivos com bugigangas no inventário, entretanto apenas os dois equipados oferecerão os bônus de bugiganga. Ciborgues também podem acoplar bugigangas aos seus shifts. Bugigangas mais avançadas (lendárias) demandam maior espaço no corpo do ciborgue, portanto ocupam mais shifts.
+
+Para construir uma bugiganga, o Engenheiro pode seguir a tabela da profissão, na qual há alguns modelos de bugigangas já preestabelecidos, ou criar a sua própria, do zero. Contudo, para este último caso, elas devem seguir os valores de bônus relativos à qualidade, bem como os custos adequados de fabricação. As bugigangas têm grande impacto no jogo, como propulsores de voo, visores especiais de visão no escuro, dentre outros.
+
+É necessário consciência do que deseja fazer e do nível de complexidade necessário. Bugigangas muito complicadas somente poderão ser feitas com níveis mais altos.
+
+Preço das Bugigangas
+Qualidade	Bônus (perícia)	Preço de Mercado	Preço de Custo
+Comum	+0	2.000.000	1.000.000
+Esplêndido	+1	10.000.000	5.000.000
+Lendário	+2	60.000.000	30.000.000
+
+
+Bugigangas
+Nome	Qualidade	Bônus	Shifts (Ciborgue)
+Visão Noturna	Comum	Interpretativo	1
+Compartimento inviolável	Comum	Interpretativo	1
+Filtro de Ar	Comum	Interpretativo	1
+Sistema de Perucas Retráteis	Comum	Interpretativo	1
+Sistema de Ganchos	Esplêndido	+1 Atletismo	1
+Ferramentas Embutidas	Esplêndido	+1 de Destreza	1
+Banco de Dados	Esplêndido	+1 de Erudição	1
+Radar	Esplêndido	+1 de Percepção	1
+Calculadora	Esplêndido	+1 de Lógica	1
+Raio X	Esplêndido	+1 de Investigação	1
+Sistema de Voo	Lendário	+2 Atletismo fora d'água	2
+Sistema de Propulsão aquática	Lendário	+2 Atletismo na água	2
+Sistema de Som	Lendário	+2 de Expressão	2
+Sistema de Disfarce	Lendário	+2 de Furtividade	2
+Sistema de Boias	Lendário	+2 de Sobrevivência	2
+Sistema de Bronzeamento Artificial	Lendário	+2 de Persuasão	2
+
+
+
+2.5 Itens interpretativos
+São aqueles itens que podem ser descritos e utilizados em aventuras, mas que não tem qualquer efeito de sistema, apenas interpretativos. O preço de lugar para lugar, logo, não é tabelado. São exemplos de itens deste tipo:
+
+Cosméticos: roupas, como vestidos e sapatos, e acessórios, como brincos e colares;
+
+Ferramentas: martelos, cordas, mochilas, Den Den Mushis, varas de pesca, dentre outros.
+
+3 | Criando Equipamentos e Bugigangas
+
+Para criar itens é necessário, primeiramente, ter a profissão relacionada ao item em questão. As profissões produtoras destes itens são:
+
+Ferreiro: Produzem armas simples, como espadas ou chicotes, e itens defensivos, como escudos e armaduras. São os mestres na manipulação de couro, metais e afins - então tudo aquilo que requer essas matérias-primas para ser criado precisa das mãos e habilidades de um Ferreiro.
+
+Engenheiro: Criam itens tecnológicos, como barcos e bugigangas.
+
+Médico: Pomadas.
+
+Cozinheiro: Lanches e Banquetes.
+
+Para maiores detalhes, checar o tópico de Profissões.
+
+Há um limite de quantos Equipamentos (ofensivos e defensivos), Bugigangas e Consumíveis é possível fabricar em uma aventura, seja em aventura própria ou em spin-offs. Esse limite, que é uma quantidade, é chamado de Slot. Em resumo:
+
+Slots são a quantidade de Itens com uma qualidade específica que uma personagem pode produzir por aventura, seja esse item Equipamento, Bugiganga ou Consumível.
+
+Os slots são sempre 2 por profissão por tópico, se o personagem tem mais de uma profissão, ele tem 2 para cada uma delas, não podendo usar slots de outras profissões acumulando 3 ou 4 itens fabricados em uma mesma profissão. Quanto maior for sua habilidade, melhor será a qualidade dos itens que você poderá produzir. Em caso de falha na fabricação, o slot não é perdido e a tentativa pode ser repetida nos turnos seguintes.
+
+As personagens precisam investir berries em suas criações, o que representa os materiais e insumos necessários para a fabricação. O valor de fabricação é o descrito nas tabelas acima como "Preço de Custo". Ou seja, o lucro das profissões corresponde ao valor de compra menos o preço de custo quando vendido para NPCs ou mercados dentro do jogo. Esse valor, evidentemente, pode subir quando vendido para jogadores, a depender das negociações.
+
+Exemplo: Um Ferreiro com 3 de Destreza, opta por fazer seus itens, como todo detentor de profissão, ele tem dois slots de fabricação, e escolhe fazer um item comum e outro esplêndido. Em seu post descreve a fabricação dos itens e faz as duas jogadas. Uma com dificuldade 9 para o comum e outro com dificuldade 18 para o esplêndido. Ele rola 3d6 duas vezes, uma para cada slot, e obtêm respectivamente os valores de 11 e 15. Desse modo, para o item comum ele alcança o total de 14 e é bem sucedido. Para o item esplêndido, ele consegue o total de 18, também bem sucedido. Sendo assim o item comum pôde ser concluído, o ferreiro gastou 250.000 para fazer a arma comum, ou seja, o preço de custo, e o material para fazer o item esplêndido, o preço de custo sendo 5.000.000, em suma gastando 5.250. Caso estes itens sejam vendidos, o rendimento seria de 11.000.000.
+
+
+4 | Upgrade de itens
+
+Também é possível fazer um upgrade em uma arma, armadura ou bugiganga, a depender da profissão, tornando-a mais forte e aumentando o seu bônus. Porém, para fazê-lo, é necessário gastar o valor referente a nova classificação do item, gastar um dos slots de fabricação do personagem e fazer uma jogada de fabricação com a dificuldade sendo a da nova classificação de raridade do item.
+
+O upgrade pode ser, no máximo, uma qualidade acima da qualidade original do item.
+
+Exemplo: uma espada +0 (arma comum), por exemplo, pode se tornar sem problemas +1 (arma esplêndida), porém esta mesma arma +0 (arma comum) não consegue se tornar +2 (arma lendária), porque seriam duas qualidades acima de sua qualidade original, podendo, no máximo, se tornar +1 (arma esplêndida).
+
+
+Mercado
+
+1 | Introdução
+
+Toda ilha que possui alguma cidade ou vilarejo organizado pode ter algum tipo de loja ou mercado em que é possível encontrar itens comuns do dia a dia, bem como alguns acessórios interpretativos. Caberá sempre aos narradores desenvolverem isso de acordo com o interesse dos jogadores. Em locais sem qualquer estrutura, dificilmente se encontrarão mercados, mas os narradores tem liberdade criativa para lidar com essas situações.
+
+
+
+
+2 | Mercadorias Globais
+
+Abaixo, temos uma lista de itens comuns que podem ser encontrados em todos os mercados de NPCs ao longo das aventuras. Alguns desses itens tem utilidades fundamentais para o jogo, por isso sua listagem abaixo. Outros itens podem ser criados e precificados pelos narradores durante as aventuras, sempre com bônus interpretativos.
+
+
+
+
+2.1 Itens de Navegação
+
+♦ Nome do item: Bússola
+♦ Valor: B$ 50.000
+♦ Bônus: Permite navegar nos Blues.
+♦ Descrição: Instrumento básico de navegação para mares comuns.
+
+♦ Nome do item: Log Pose
+♦ Valor: B$ 500.000
+♦ Bônus: Permite navegar no Paradise.
+♦ Descrição: Uma pequena bússola usada como bracelete ou relógio que possui um mecanismo especial de navegação para a Grand Line. Item de extrema importância e utilidade para qualquer navegador que deseje conduzir uma embarcação de forma correta pela a Grand Line. Diferente das bússolas convencionais utilizadas nos Blues, o Log Pose possui um mecanismo especial de navegação que se adequa e memoriza o campo magnético da ilha onde a pessoa se encontra após um determinado tempo. Dessa forma, após sincronizar com o campo magnético a agulha do equipamento apontará a direção a ser seguida para alcançar a próxima ilha da rota escolhida.
+
+♦ Nome do item: Log Pose Triplo
+♦ Valor: B$ 1.000.000
+♦ Bônus: Permite navegar no New World.
+♦ Descrição: Um Log Pose composto por três indicadores diferentes, capazes de captar as oscilações magnéticas das ilhas do Novo Mundo. Normalmente captam três sinais diferentes e, alguns deles podem se alterar ao longo do trajeto. É preciso grande habilidade para se utilizar tal recurso com precisão.
+
+
+
+
+
+2.2 Itens de Comunicação
+
+♦ Nome do item: Den Den Mushi
+♦ Valor: B$ 100.000
+♦ Bônus: Permite contatar pessoas à distância que tenham outros Den Den Mushi
+♦ Descrição: Um grande caramujo que tem no topo de sua concha um auto-falante. Em ligações o caramujo fala o que a pessoa do outro lado da linha está dizendo, normalmente a personificando.
+
+♦ Nome do item: Den Den Mushi Alto Falante
+♦ Valor: B$ 200.000
+♦ Bônus: Permite ampliar a voz ao falar por meio dele.
+♦ Descrição: Dispositivo de comunicação comum, mas utilizado principalmente em locais públicos ou áreas especificas. Sua principal função é de passar mensagens ou comunicados na área onde foi instalado e por possuir um potente nível sonoro ele é capaz de passar a mensagem transmitida com nitidez a médias distâncias.
+
+♦ Nome do item: Den Den Mushi Câmera
+♦ Valor: B$ 500.000
+♦ Bônus: Permite tirar fotos
+♦ Descrição: Um caramujo de pequeno porque que emite um flash de seus olhos e imprime uma imagem fixa da direção para onde está olhando, ejetando a foto de um lugar suspeito.
+
+♦ Nome do item: Den Den Mushi Preto
+♦ Valor: B$ 1.000.000
+♦ Bônus: Permite interceptar chamadas de outros Den Den Mushis como uma escuta.
+♦ Descrição: Um pequeno caramujo cuja concha pode ser atada ao pulso como um relógio. Sua cor é preta e não consegue enviar mensagens, apenas recebê-las e reproduzi-las. É um instrumento de trabalho básico para os Agentes do Governo e qualquer outra pessoa que for vista com um desses levanta suspeita das autoridades.
+
+♦ Nome do item: Den Den Mushi Branco
+♦ Valor: B$ 2.000.000
+♦ Bônus: Permite proteger ligações de Den Den Mushi, impedindo que sejam interceptadas ou grampeadas.
+♦ Descrição: Um grande caramujo branco e cabisbaixo, que pode ser acoplado a outro Den Den Mushi para redirecionar e proteger seu sinal.
+
+
+
+
+
+2.3 | Utilitários
+
+♦ Nome do item: Algemas
+♦ Valor: B$ 50.000
+♦ Bônus: Garante a captura de uma personagem sem Akuma no Mi após derrotá-la.
+♦ Descrição: Uma algema de aço.
+
+♦ Nome do item: Algemas de Kairoseki
+♦ Valor: B$ 50.000.000
+♦ Bônus: Garante a captura de uma personagem com Akuma no Mi após derrotá-la. Pode ser destruída pelo Haki do Armamento Avançado ou pela Tecnologia Laser.
+♦ Descrição: Uma algema de aço.
+
+♦ Nome do item: Livro de Auto Ajuda
+♦ Valor: B$ 300.000.000
+♦ Bônus: Permite um semi-reset da ficha, podendo remanejar todos os pontos de atributo, perícia e gemas.
+♦ Descrição: Best-seller em todo o mundo. Nunca é tarde para se tornar a melhor versão de você mesmo. Instruções nas primeiras páginas: Após seu uso, esse item é descartado. Não é possível remover Akuma no Mi (pois significaria a morte da personagem), mas é possível regredir em seus Ranks até o Rank em que foi comprada (Uma Logia nunca poderá ser Rank B ou C, por exemplo). É possível remover armas únicas, mas o valor em berries gasto por elas será perdido. O mesmo se dá com embarcações. Ao redistribuir as gemas, é possível ignorar requisitos dos caminhos que não sejam custo em gemas e localização. Entretanto, não é possível investir mais gemas do que o caminho com maior investimento de gemas anteriormente. Por exemplo, havia um investimento de 80 gemas em Haki anteriormente e, ao redistribuir, não será possível investir 100 gemas em Artes Marciais. Assim, o novo estágio do novo caminho selecionado será correspondente a 80 gemas ou menos e, para avançar, será preciso cumprir os requerimentos. A exceção são os shifts de Ciborgue, que pode ser comprado a qualquer momento e lugar. Isso visa restringir a redistribuição de acordo com a progressão das personagens.
+
+
+
+
+
+2.4 | Combustível
+
+♦ Nome do item: Litro de Combustível
+♦ Valor: B$ 100.000
+♦ Qualidade: Comum
+♦ Bônus: Recupera +6 de Combustível para Ciborgues
+♦ Descrição: Um litro de combustível de sua preferência.
+
+♦ Nome do item: Galão de Combustível
+♦ Valor: B$ 1.000.000
+♦ Qualidade: Esplêndido
+♦ Bônus: Recupera +12 de Combustível para Ciborgues
+♦ Descrição: Um galão de combustível de sua preferência.
+
+♦ Nome do item: Barril de Combustível
+♦ Valor: B$ 2.000.000
+♦ Qualidade: Lendário
+♦ Bônus: Recupera +18 de Combustível para Ciborgues
+♦ Descrição: Um barril de combustível de sua preferência.
+
+
+
+
+
+3 | Mercado das Ilhas dos Céus
+
+As Ilhas dos Céus espalhadas por todo o mundo possuem produtos únicos e exclusivos, que não podem ser encontrados nem adquiridos em nenhum outro lugar. Esses itens são chamados de Dials, que possuem utilidades interpretativas diversas. Seu uso básico é descrito no item, mas suas aplicações dependem apenas da criatividade dos jogadores. Para que Dials sejam implementados em armas, é preciso transformá-las em Arma Única (confira o tipo "Dial" no tópico de Arma Única).
+
+Nos mercados das ilhas dos céus é possível encontrar todos os produtos listados acima também.
+
+
+
+
+2.1 | Dials
+
+♦ Nome do item: Axe Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite cortar materiais resistentes
+♦ Descrição: Uma concha que emite uma lâmina de vento extremamente afiada.
+
+♦ Nome do item: Breath Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite mover veículos pequenos.
+♦ Descrição: Uma concha que emite uma corrente de ar contínua de vento com grande força.
+
+♦ Nome do item: Jet Dial
+♦ Valor: B$ 200.000
+♦ Bônus: Permite mover veículos médios.
+♦ Descrição: Uma concha que emite uma corrente de ar contínua de vento muito intensa e muito mais forte que o Breath Dial.
+
+♦ Nome do item: Flame Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite acender uma chama
+♦ Descrição: Uma concha que emite labaredas de fogo a depender da intensidade de liberação escolhida pelo usuário.
+
+♦ Nome do item: Flash Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite desorientar pessoas brevemente.
+♦ Descrição: Uma concha que emite um flash de luz intenso.
+
+♦ Nome do item: Flavor Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite liberar gases.
+♦ Descrição: Uma concha que pode conservar e emitir gases e cheiros diversos.
+
+♦ Nome do item: Heat Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite esquentar coisas a elevadas temperaturas.
+♦ Descrição: Uma concha que emite calor.
+
+♦ Nome do item: Lamp Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite iluminar ambientes
+♦ Descrição: Uma concha que emite luz de forma controlável e moderada, como uma lâmpada.
+
+♦ Nome do item: Milky Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite criar trilha de nuvem, nas quais se pode nadar.
+♦ Descrição: Uma concha que emite as nuvens típicas das ilhas do céu.
+
+♦ Nome do item: Thunder Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite dar choque ou energizar aparelhos elétricos
+♦ Descrição: Uma concha que conserva e emite eletricidade.
+
+♦ Nome do item: Tone Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite gravar sons e reproduzir gravações
+♦ Descrição: Uma concha que capta sons e os grava, podendo reproduzi-los. Ao gravar um novo som, perde-se o antigo.
+
+♦ Nome do item: Vison Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite captar e reproduzir imagens.
+♦ Descrição: Uma concha que capta imagens estáticas e as reproduz nele mesmo. Pode imprimir essas fotos também.
+
+♦ Nome do item: Water Dial
+♦ Valor: B$ 100.000
+♦ Bônus: Permite molhar coisas.
+♦ Descrição: Uma concha que conserva e emite água.
+
+
+
+
+
+2.2 | Veículos Pessoais
+
+♦ Nome do item: Shooters
+♦ Valor: B$ 500.000
+♦ Bônus: Permite transitar por pequenos corpos de água ou ilhas do céu.
+♦ Descrição: Um par de patins sem rodas com dois Breath Dials acoplados neles.
+
+♦ Nome do item: Jet Board
+♦ Valor: B$ 500.000
+♦ Bônus: Permite transitar por pequenos corpos de água ou ilhas do céu.
+♦ Descrição: Um skate sem rodas movido por dois Beath Dials na traseira. Consegue carregar apenas uma pessoa.
+
+♦ Nome do item: Waver
+♦ Valor: B$ 500.000
+♦ Bônus: Permite transitar por pequenos corpos de água ou ilhas do céu.
+♦ Descrição: Um pequeno bote movido por por Breath Dials e controlado por um guidão. Consegue carregar duas pessoas. Útil para levar as compras do mercado.
+
+♦ Nome do item: Shiro Mokuba
+♦ Valor: B$ 1.000.000
+♦ Bônus: Permite realizar viagens entre ilhas de apenas 1 rota.
+♦ Descrição: Uma versão melhorada do waver, movido por Jet Dials. Capaz de levar apenas uma pessoa. Ideal para quando se está atrasado.
+
+
+
+
+
+2.3 | Outros
+
+♦ Nome do item: Balão Polvo
+♦ Valor: B$ 300.000
+♦ Bônus: Permite descer da ilha dos céus sem danificar o navio.
+♦ Descrição: Um polvo que se agarra à embarcação e infla, tornando-se uma espécie de paraquedas que desacelera a queda. Ao pousar, o polvo desinfla e sai voando como um balão furado.

@@ -1,0 +1,84 @@
+Ciborgue
+
+1 | Introdução
+
+Ciborgues são seres humanos que aos poucos trocam partes biológicas por inorgânicas, como metais, madeiras e plásticos. É considerado um aprimoramento de suas capacidades, visto que as próteses são mais fortes, mais resistentes e mais práticas (não sentem dor, podem ser repostas sem maiores complicações, etc).
+
+
+
+
+2 | Shifts
+
+Ciborgues são divididos em "shifts", que nada mais são do que os níveis de modificação que seu corpo passou. Shift 1 significa que você possui uma prótese, enquanto Shift 5, que possui praticamente todo o corpo modificado. Cada shift terá um custo em gemas, ou seja, quanto mais shifts você tiver, mais gemas terá que desembolsar. Cada shift custa o valor de 20 gemas, portanto, para se tornar um ciborgue completo, você terá que investir 120 gemas. Não há restrições de localidade para os shifts, ou seja, é possível se tornar um ciborgue completo de qualquer lugar do mundo, desde que se tenha as gemas necessárias para pagar pelas próteses.
+
+Os shifts são divididos em 6 partes, proporcionais ao número de próteses em um corpo humano comum: dois braços, duas pernas, tronco e cabeça (outras raças podem ter estruturas corporais diferentes, como um tritão polvo, mas o padrão de shifts segue o mesmo, cabendo ao jogador aplicar essas melhorias interpretativamente às peculiaridades de sua personagem). Abaixo os tipos de shift e seus respectivos bônus:
+
+
+Cabeça: +4 em Precisão;
+Braços:+4 em Poder;
+Pernas: +4 em Defesa;
+Tronco: +4 em Constituição.
+
+
+As próteses dos shifts ficam na parte de "itens" em sua ficha, e devem seguir o seguinte modelo:
+
+
+Nome: ex.: prótese metálica, MKX2000, etc
+Descrição: ex. um braço feito de liga de carbono com uma pintura em tons de vermelho
+Local: ex.: braço esquerdo, perna direita, etc
+Bônus: ex.: +4 Poder / +4 Constituição / +4 Defesa
+
+
+No momento em que você executa o shift 6, passa a abrir mão de qualquer forma orgânica em seu corpo, se tornando um robô completo (embora o cérebro se mantenha, obrigatoriamente). A partir do terceiro shift, o corpo do ciborgue passa a operar por meio de combustível e isso lhe permite usar melhor suas próteses em combate, o que se reflete na escolha entre um dos dois bônus abaixo:
+
+Após aplicar o terceiro Shift: Recebe 2 técnicas Rank A OU +20 de Energia
+
+
+
+
+
+2.1 | Energia e combustível
+
+Ao aplicar 3 shifts, os elementos cibernéticos do corpo passam a demandar um tipo de energia diferente para operacionalizar os membros artificiais. É a partir desse ponto que as personagens precisam fazer a transição no sistema energético de seu corpo. Isso acontece automaticamente ao comprar o terceiro shift.
+
+Ao passar por essa transição, o atributo "energia" é substituído por "combustível". Além disso, os consumíveis que restauram energia deixam de funcionar (lanches) e ela não recupera mais energia fora de combate. Por outro lado, a personagem se torna apta a consumir frascos de combustível para repor seu combustível.
+
+Os frascos de combustíveis são itens consumíveis que servem para que a personagem possa restabelecer seus níveis de combustível (nunca ultrapassando o valor máximo de combustível da ficha). O sistema de compra de itens é um valor fixo, que são determinados pelos valores contidos na seção MERCADO do tópico "Itens, Equipamentos e Mercado". A personagem pode os consumir dentro e fora de combate. A quantidade de vezes que essa personagem pode recuperar energia dentro de batalha está na seção 5 Combate do tópico "Atributos, Combate e Progressão", que nesse caso é limitado ao total de 3 consumíveis, independentemente de qual for utilizado. Frascos de combustível recuperam porções muito maiores quando comparados com consumíveis que restauram energia comum.
+
+
+
+
+2.2| Bugigangas
+
+As melhorias mecânicas de um corpo artificial de ciborgue não se limitam aos bônus em combate. Os shifts também servem para aprimorar o corpo para os desafios do dia a dia. Desse modo, cada shift possui uma Bugiganga acoplada. Assim, ao comprar um shift, a personagem pode instalar uma bugiganga à escolha do jogador. Diferente das regras de aplicação e remoção, essas bugiganga não podem ser removidas ou substituídas. As regras e listas de bugiganga podem ser encontradas no tópico Itens, Equipamentos e Mercado.
+
+
+
+
+3 | Cibernética do Novo Mundo
+
+Assim como o New World concentra as pessoas mais fortes do mundo, o mesmo pode se dizer acerca da tecnologia desenvolvida ali. No mar mais perigoso do mundo estão os maiores mistérios do mundo e os melhores pesquisadores do planeta. Consequentemente, novas tecnologias podem ser encontradas lá, capazes de aprimorar todo o sistema de um ciborgue. Essas tecnologias de ponta são chamadas de Gears.
+
+Há quatro modelos de Gears, que substituem quase completamente as peças por outras de uma liga absurdamente mais eficaz, leve e durável, com conduites mais eficazes. Esses modelos só podem ser adquiridos no New World e sua demanda energética requer um corpo totalmente cibernético. Assim, apenas ciborgues com os 6 shifts podem instalar um Gear. Além disso, por conta do espaço que utilizam no corpo, dá demanda energetica e das alterações que promovem nos shifts, só é possível instalar um Gear do New World no corpo. Portanto, é preciso escolher com cuidado!
+
+Cada Gear custa 20 Gemas.
+
+3.1 Overclock
+Este Gear capacita o ciborgue a aumentar a rotação de funcionamento de seus shifts, fazendo-os gastar mais energia em troca de um aumento significativo da potência.
+Bônus: Dobra o custo de combustível de uma técnica por turno para gerar um bônus de 1/2 do efeito desta técnica (arredonda-se para cima). E.g. uma técnica de +5 Poder sobrecarregada receberá +3 de Poder extra.
+
+3.2 Laser
+Este Gear garante ao ciborgue domínio sobre a tecnologia laser, podendo disparar raios de pura luz e os utilizar em seus ataques e armas. O laser é capaz de penetrar qualquer defesa, podendo superar até mesmo a invulnerabilidade dos Logias. Como é usado em ataques, seu efeito requer o acerto do golpe, seja com técnica ou não.
+Bônus: +2 de Dano e causa 2 de Dano direto na CON do oponente (ignora CON temporária) por 5 de combustível.
+
+3.3 Drone
+Este Gear representa uma ou mais unidades externas ao corpo do ciborgue que respondem aos seus comandos. Podem tomar formas diversas, como drones propriamente ditos ou outras formas mecânicas, até mesmo conscientes. Elas ajudam o ciborgue a localizar e rastrear seus oponentes, melhorando suas chances de acerto.
+Bônus: +2 de Precisão e +2 nas rolagens de ataque por 5 de combustível (impede falha crítica e facilita acerto crítico).
+
+3.4 Mecha
+Este Gear estabelece conexão entre o ciborgue e mecanismos externos, permitindo que sejam acoplados formando uma espécie de Megazord. Ao ativar essa conexão, o ciborgue em sua forma Mecha se torna um tanque ambulante.
+Bônus: +4 de Constituição por 5 de combustível (este bônus é o primeiro a ser consumido por um ataque e se mantém enquanto houver o investimento de combustível).
+
+3.5 Stealth
+Este Gear permite ao ciborgue se camuflar perfeitamente no ambiente em que se encontra, podendo se tornar praticamente invisível e ocultar seus rastros em campo de batalha. Assim, o ciborgue se torna extremamente difícil de ser atingido.
+Bônus: Força a rolagem de dois dados de ataque por parte do adversário uma vez por turno e o resultado menor é o escolhido por 5 de combustível.

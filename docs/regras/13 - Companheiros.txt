@@ -1,0 +1,178 @@
+Companheiros
+
+1 | Introdução
+
+Viajar pelos mares do mundo de One Piece é sempre um grande desafio. Porém, a presença de bons companheiros pode tornar isso mais fácil e divertido!
+
+Companheiros é uma mecânica de nosso RPG que oficializa a presença e participação de outras personagens ao jogo de cada jogador que optar por lhes ter. Esses companheiros vão além do interpretativo e podem ser ativos nas aventuras dos jogadores, tendo suas próprias fichas e, por vezes, podendo tomar o protagonismo de aventuras inteiras. É um recurso que visa enriquecer a experiência de jogadores criativos com outras personagens que eles podem interpretar e usar. Além disso, a mecânica dos Companheiros é uma alternativa para os jogadores que cansaram de suas personagens, mas não querem encarar as perdas de um reset.
+
+
+
+
+2 | Mecânica
+
+Cada Companheiro está firmemente vinculado à Personagem de Jogador (PJ) que lhe adquiriu com o custo em gemas. Esse vínculo é tal que os companheiros não recebem XP, Gemas, Prestígio, Berries ou qualquer outro tipo de recompensa decorrente das aventuras em que participam, pois seu desenvolvimento está atrelado à sua PJ.
+
+É responsabilidade do jogador criar e atualizar a ficha do Companheiro adquirido. Fichas de Companheiros devem ser postadas no mesmo tópico de ficha da PJ (usar o mesmo código da ficha de jogador, disponível no tópico Modelo de Focha).
+
+2.1 Vínculo com PJ
+
+Cada Companheiro tem sua própria ficha, cujos elementos de evolução (nível, gemas, cargo de facção etc) estarão atrelado ao desenvolvimento da PJ, como será detalhado mais abaixo, nos ranks e nas limitações. Ainda assim, um Companheiro é uma personagem autônoma e que pode ser montada de forma totalmente personalizada, com sua própria distribuição de pontos de atributos, de perícias, gastos de gemas e equipamentos (estes precisam ser pagos com as berries da PJ). Ao distribuir as gemas, pode-se ignorar requisitos que não sejam o custo em gemas e a localização.
+
+Companheiros podem exercer diversas funções ao longo de uma aventura, podendo ter um conjunto de Perícias e Profissões distintos da PJ. Isso se faz particularmente útil em casos de dominação de ilhas. Um Companheiro pode ser usado de forma autônoma em uma aventura, isto é, até mesmo separado de sua PJ. Entretanto, é preciso verificar se o narrador tem disposição para fazer esse esforço extra, pois não importa quantos Companheiros um jogador tenha e use, a gratificação de narrador não aumenta com a narração para Companheiros. Durante aventuras, Companheiros podem ser enviados para executar tarefas longe da PJ. Nesses casos, ficará à cargo do narrador decidir o resultado de tais tarefas.
+
+2.2 Protagonista
+
+Sendo personagens autônomos, os Companheiros podem ser usados por seu jogador como Protagonistas em aventuras. Isto significa que ele irá controlar o Companheiro como personagem principal e não precisará usar sua PJ, caso queira. Nesses casos em que o Companheiro é usado como Protagonista, ele funciona como se fosse uma PJ, porém todos os ganhos da aventura serão calculados a partir dos critérios do Companheiro (e.g. ganho de berries) e acrescentados à ficha da PJ. Aventuras em que o Companheiro é Protagonista não concede Prestígio e não contam para avanço de Caminhos da PJ.
+
+Quando usado como Protagonista, o Companheiro compartilha dos valores de berries que constam na ficha do PJ.
+
+
+
+
+3 | Ranks e Custos
+
+Para se adquirir um companheiro, basta investir o valor em gemas correspondente ao Rank do Companheiro que deseja, conforme a tabela abaixo:
+
+RANK	CUSTO
+C	10 Gemas
+B	20 Gemas
+A	30 Gemas
+
+
+É possível subir um Companheiro de Rank. Para isso, basta investir a diferença de Gemas entre o Rank desejado e o Rank atual. Ou seja, há um custo de 10 Gemas por Rank. É possível adquirir um Companheiro em qualquer Rank, assim como é possível subir um Companheiro do Rank C direto para o A. Não é possível regredir de Rank com um Companheiro.
+
+
+
+
+4 | Limitações
+
+Não há limites para quantos Companheiros uma personagem pode ter, senão as gemas necessárias para se adquirir um. As limitações principais dos Companheiros se dão à partir de seus Ranks, conforme a tabela abaixo:
+
+RANK	NÍVEL MÁXIMO	GEMAS MÁXIMAS	PERÍCIAS MÁXIMAS
+C	15	100	4
+B	25	200	5
+A	35	300	5
+
+
+Isso não significa que um Companheiro Rank C terá, imediatamente, 100 gemas ao seu dispor. A quantidade de gemas que um Companheiro tem depende da quantidade de gemas ganhas pelo PJ. Ou seja, mesmo que uma PJ com 160 totais adquira um Companheiro Rank A, por exemplo, esse Companheiro terá apenas 160 gemas para usar em sua ficha inicialmente. Conforme a PJ ganha mais gemas, o Ocmpanheiro também ganha acesso à mais gemas, até alcançar seu limite. Neste exemplo, mesmo que a PJ tenha 400 gemas, o Companheiro Rank A nunca terá mais que 300 gemas disponíveis para uso (a única exceção são os Mascotes).
+
+Em relação às Perícias, significa que um Companheiro Rank C nunca poderá ter um valor maior que 4 em qualquer perícia. Em termos de Profissão, significa que apenas Companheiros Rank B ou A podem alcançar o ápice de uma profissão (com Perícia-chave 5).
+
+Para manter o balanço nos sistemas do jogo, os Companheiros possuem uma série de outras limitações importantes listadas abaixo:
+
+4.1 Sempre será, pelo menos, um nível abaixo do PJ, respeitando os limites do seu Rank.
+
+4.2 Terá à disposição a mesma quantidade de gemas que o PJ, respeitando os limites do seu Rank.
+
+4.3 Sempre serão da mesma facção que o PJ e sempre serão um cargo abaixo do PJ na hierarquia das facções (em caso de cargos renegados, são considerados de status sumilar; e.g. Membro da tripulação de um Shichibukai). A única exceção são os Agentes do Governo, caso em que o Companheiro pertence à mesma CP do PJ, mas o PJ terá status de veterano sobre o Companheiro.
+
+4.4 Não recebem desconto de facção.
+
+4.5 Só podem ter uma profissão cada.
+
+4.6 Podem ter qualquer tipo de Akuma no Mi livre no momento de sua criação, entretanto esse fruto será sempre um Smile e não será reservado na lista de Akuma no Mi.
+
+4.7 Não podem adquirir Companheiros (apenas PJ podem adquirir companheiros). A única exceção é caso tenham a profissão Adestrador, podendo ter um mascotes apenas.
+
+4.8 Não podem lutar junto com o PJ contra um mesmo oponente.
+
+4.9 Não podem enfrentar NPCs importantes (não inclui personagens oficiais e defensores de ilhas), a menos que sejam encolhidos como a Protagonista no início da aventura.
+
+4.10 Não podem participar de PVP (enfrentar outra PJ).
+
+4.11 Só podem participar de eventos como acompanhantes da PJ.
+
+4.12 Não podem estar em uma ilha diferente da que o PJ se encontra.
+
+4.13 A única forma de se redistribuir os pontos da ficha de um companheiro é com a aquisição e uso do item "Livro de Auto Ajuda" (Veja tópico de Itens, Equipamentos e Mercado).
+
+4.14 Caso o PJ seja jubilado, todos os seus companheiros são jubilados juntos (se tornam membros do bando ou subordinados do PJ que virou NPC).
+
+4.15 Caso o PJ morra, seus Companheiros são imediatamente dispersos e desaparecem.
+
+4.16 Não podem ser mortos por narradores, a menos que o jogador concorde com tal desfecho. Nesses casos, a PJ deverá ficar uma aventura de luto (sem um novo companheiro) antes de criar um Substituto sem gasto extra de gemas. A morte de um Companheiro não gera reembolso das gemas investidas nele.
+
+
+
+
+
+5 | Recrutamento
+
+Normalmente, os jogadores criam seus próprios Companheiros. Entretanto, há casos em que as aventuras vividas por suas PJs geram vínculos com NPCs do cenário ao ponto de se desejar recrutar essa personagem a seguir viagem juntos. Isso pode ser feito interpretativamente, mas caso o jogador deseje que essa NPC recrutada seja mais ativa, ela pode tomar a forma de um Companheiro. Nesses casos, há um Rank mínimo para cada região do mundo em que se tentar recrutar um NPC do cenário, de modo que não poderá gastar menos ou transformar o NPC em um Rank menor.
+
+MAR	RANK
+Blues	C
+Paradise	B
+New World	A
+
+
+Alem da aquisição via gemas, será preciso convencer o NPC a abandonar sua vida para viajar ao seu lado pelos mares. Isso reflete na obrigatoriedade de vencer um teste de Perícia. Esse teste não precisa ser de Persuasão, pois é possível cativar um NPC de formas diversas. Por exemplo, pode-se apostar uma corrida (teste de Atletismo), tentar ganhar a pessoa pelo estômago (teste de Cozinheiro/Expressão) ou vencendo um jogo de xadrez (teste de Lógica). Cabe ao narrador julgar qual é a dificuldade desses testes (convencer uma princesa é mais difícil do que convencer um gangster, por exemplo), porém é necessário observar as dificuldades mínimas relativas aos mares:
+
+MAR	DIFICULDADE MÍNIMA
+Blues	9
+Paradise	18
+New World	27
+
+
+Em caso de sucesso, o jogador é obrigado a preparar as devidas alterações no cenário (substituição do NPC importante na ilha, por exemplo) e passar para que o narrador submeta tais alterações. Caso isso não seja feito, o NPC não será removido da ilha e o Companheiro será apenas alguém "muito parecido" com o NPC importante (e, talvez, com crise de identidade). Não é possível recrutar NPCs do topo das facções (Yonkou, Almirantes, Comandantes e Imperadores do Submundo).
+
+
+
+
+6 | Mascotes
+
+Personagens que investirem na Profissão Adestrador tem acesso a um tipo exclusivo de Companheiros, que são os Mascotes. Assim como os Companheiros, o único limite para a quantidade de Mascotes é o investimento em gemas. Os Mascotes são animais domesticados que criaram um vínculo diferenciado com o Adestrador, se tornando capaz de lutar ao seu lado. Desse modo, os Mascotes possuem uma característica única:
+
+Adestradores e Mascotes podem intercalar turnos em combates.
+
+
+Em outras palavras, significa que o jogador que tem uma PJ Adestradora com Mascote pode escolher quem tomará a frente do combate à cada turno, lembrando que um turno consiste em rodada de ataque e defesa (independentemente da ordem). Assim, caso um Mascote seja escolhido para lutar no turno, ele atacará e defenderá com sua própria ficha. Entretanto, ao lutarem juntos, Adestrador e Mascotes compartilharão de uma mesma quantidade de Constituição base, que será a Constituição de menor valor entre os dois. Por exemplo, caso o Adestrador tenha 7 de Constituição e seu Mascote tenha 10, ambos compartilharão a Constituição do Adestrador durante a luta, por ser menor. Cada dano sofrido, seja pelo Adestrador ou por Mascotes, reduz essa constituição comum. Caso a constituição zere, Adestrador e Mascotes perdem a luta.
+
+Por outro lado, pode-se optar quem irá lutar determinado combate: Adestrador ou Mascote. Nesse caso, apenas um deles participará da luta com sua ficha completa (usando sua própria Constituição). Em caso de derrota, os dois são derrotados e o outro não poderá reiniciar o combate contra o oponente vitorioso e desgastado.
+
+Além dessa dinâmica exclusiva, os Mascotes tem um bônus em Gemas a depender da aptidão do Adestrador com a Perícia chave para a Profissão (Sobrevivência). Esse bônus é o único que pode ultrapassar as limitações de gemas dos Companheiros. Isto é, com esses bônus, os Mascotes poderão ter mais gemas que seus Adestradores e poderão passar do limite de Gemas por Rank. Abaixo, como se dão esses bônus exclusivos:
+
+RANK DO MASCOTE	BÔNUS EM GEMAS
+C	2x o valor em Sobrevivência
+B	4x o valor em Sobrevivência
+A	6x o valor em Sobrevivência
+
+
+Os Mascotes estão sob as mesmas limitações gerais dos companheiros, senão as limitações de combate (4.8, 4.9 e 4.10). Por outro lado, Mascotes possuem algumas limitações exclusivas que os demais Companheiros não tem:
+
+6.1 Não podem ser Protagonistas em aventuras
+
+6.2 Não possuem Perícias.
+
+6.3 Não podem ter Profissões.
+
+6.4 Não podem ter Haki.
+
+6.5 Não podem equipar bugigangas.
+
+
+Um último detalhe acerca dos Mascotes é sua raça. Ao criar a ficha do Mascote, o jogador deve especificar sua espécie no lugar da raça e escolher um atributo que melhor representa a espécie para ganhar +1 como bônus de raça.
+
+
+
+7 | Autômatos
+
+Automatos são robôs com autonomia de energia e consciência. Eles são um tipo especial de Companheiros exclusivo aos Engenheiros. Podem ser desde robôs propriamente ditos (e.g. Pacifistas) a clones orgânicos (e.g. Seraphins e os clones de Vegapunk). Por conta de sua natureza artificial, eles possuem alguns requerimentos e limitações exclusivos:
+
+7.1 Ser, no mínimo, Rank B.
+
+7.2 O PJ deve ter, no mínimo, 120 gemas.
+
+7.3 O PJ deve ter a Profissão Engenheiro e ter 5 pontos na Perícia Lógica.
+
+7.4 Deve ser Ciborgue completo (6 shifts).
+
+7.5 Não podem ter Haki.
+
+7.6 Podem lutar no lugar de seu Engenheiro (PJ) contra NPCs em aventuras mesmo não sendo Protagonistas. Devem assumir a luta inteira até o fim e sua derrota implica na derrota automática do Engenheiro.
+
+
+Visto que podem ser clones, isso significa que eles podem ser personagens que já morreram. Podem ser tanto PJs mortos (caso a personagem não seja do próprio jogador, é preciso autorização do criador da PJ em questão), quanto NPCs importantes que foram derrotadas pelo jogador. Isso representa a coleta de código genético por parte do Engenheiro. Então sim, se você derrotou o Barba Branca, pode ter um clone do Barba Branca como autômato. Entretanto, não é possível ter um clone de Gol D. Roger.
+
+À parte dessas especificações, os autômatos funcionam como qualquer Companheiro comum, possuindo todas as mesmas limitações e mecânicas.

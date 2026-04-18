@@ -1,0 +1,134 @@
+Gemas
+
+1 | Introdução
+
+Gemas são o "cash/dinheiro" de nosso fórum! Porém, você não tem como comprá-las, nem adquirí-las sob demanda. Para obter gemas, tudo o que você precisa fazer é participar do fórum!
+
+
+
+
+2 | Como as Gemas funcionam
+
+As gemas estão sempre atreladas ao personagem, porém, seguindo o raciocínio de ser o cash do jogo, não são itens físicos. O personagem não possui as gemas em seu inventário, per si; portanto, não é possível perdê-las e nem roubá-las.
+
+Gemas também são intransferíveis, assim como qualquer benefício obtido por meio delas. As suas gemas são exclusivamente próprias. Não é possível transferi-las a outros personagens; além disso, caso você resete seu personagem, ele também perderá todas as gemas, visto que elas são relativas à narração dele (checar o tópico de reset para mais informações).
+
+Todos os personagens começam com 20 gemas, independente da raça ou facção escolhida.
+
+Há um limite de Gemas que uma personagem pode investir em sua ficha:
+
+
+Máximo de 400 Gemas
+
+
+Após alcançar este limite de gemas, as personagens podem continuar a ganhar mais gemas, conforme descrito abaixo. Entretanto, essas gemas não poderão ser usadas na aquisição de novos benefícios. Isso não significa que elas perdem utilidade, pois após alcançarem seu limite, elas passam a acelerar o crescimento das personagens por meio da conversão em XP.
+
+
+Cada Gema excedente equivale a 4 XP
+
+
+Ressalta-se que apenas gemas que passarem do limite de 400 podem ser convertidas em XP, isto é, fazê-lo antes de se alcançar o máximo de 400 ou converter uma quantia que resulte em um valor sobressalente menor que 400. Para realizaraa conversão, basta incluir na sessão de Eventos e Extras no Tracker da Ficha uma única entrada chamada "Conversão de Gemas Excedentes", ao lado da qual se anotar quantas gemas foram convertidas em quanto de XP. Novas conversões podem apenas alterar os valores convertidos ao invés de se criar uma nova entrada. Por exemplo:
+
+
+♦ Conversão de Gemas Excedentes (50 gemas em 200XP)
+
+
+
+
+
+3 | Ganhando gemas
+
+É fácil adquirir gemas. Como dito acima, esperamos apenas que você participe do fórum jogando, seja como jogador ou narrador. Também é possível ganhar gemas contribuindo para o funcionamento e aperfeiçoamento do fórum, seja com funções de Moderação ou Administração, seja propondo projetos para melhora do sistema ou alterações no cenário (esse último é exclusivo para narradores). Abaixo estão as maneiras de se obter gemas:
+
+
+
+
+3.1 Aventuras
+Ao terminar uma aventura completa, todo e qualquer jogador envolvido recebe uma quantidade de gemas, incluindo o narrador. Essa quantidade de gemas pode aumentar ou diminuir, baseado nos critérios e condições da aventura. Dependendo do mar onde sua personagem se encontra e da quantidade de jogadores na aventura, a quantidade de gemas pode subir.
+
+Narradores e jogadores recebem recompensas diferentes. Portanto, vale a pena conferir os tópicos Premiação de Jogadores e Gratificação de Cargos
+
+
+
+
+3.2 Funcionamento do Fórum
+
+Moderadores: Recebem 3 gemas todos os meses pelo serviço de apoio prestado aos jogadores.
+
+Administradores: Recebem 3 gemas todos os meses pelo serviço de apoio prestado aos jogadores. Recebem 3 gemas extras nos meses em que houverem atualizações significativas no sistema do fórum.
+
+Central de Projetos: Todo membro ativo do fórum pode acessar a Central de Projetos na área de Dúvidas e Sugestões, escolher algum projeto ou tarefa pendente no fórum e receber 3 gemas por cada uma delas entregue e aprovada.
+
+Cenário (exclusivo para narradores): Todo narrador pode causar transformações no cenário do jogo a partir das aventuras que narra. Eles podem ganhar 3 gemas por alterações decorrentes de cada aventura narrada e podem ganha 1 gema por cada Manchete publicada.
+
+
+
+
+3.3 Eventos
+Eventos são modos de jogo especiais - ou mecânicas que bonificacam ainda mais as aventuras. Todo e qualquer evento dará gemas ao seu término, e a quantidade varia conforme o tipo de evento, como pode ser visto abaixo:
+
+Mini-Eventos (ou Eventos Pequenos): geralmente envolvem criação off-game de itens, akumas, NPCs ou são puramente baseados na rolagem de um dado. Por padrão, mini-eventos geram 1 gema aos participantes, e 3 gemas ao(s) ganhador(es) caso o evento requeira pódio.
+
+Eventos Médios (ou Eventos de Médio Porte): esses eventos são sempre canônicos (ou seja, on-game), porém não ocorrem dentro das aventuras, mas sim numa área especial do próprio evento. Eles costumam envolver muitos turnos ou ações importantes que afetam o cenário, assim como exigem, do participante, bastante proatividade. Normalmente, são eventos de dia temático ou profissão. Por padrão, eventos médios geram 5 gemas aos participantes.
+
+Eventos Globais: sempre on-game, e na maioria das vezes in-game (dentro de aventura), são eventos de escala global que duram muito tempo e tem muita importância. Por padrão, eventos globais geram 10 gemas aos participantes.
+
+É importante frisar aqui que este é um padrão de apoio, ou seja, os organizadores do evento tem liberdade para modificar estes valores, desde que avisado no início do evento.
+
+
+
+
+3.4 Diário de bordo
+Apos terminar sua aventura, o player tem opção de fazer um resumo sobre os acontecimentos que envolveu seu personagem. E com isso receberá 1 Gema. Diário de bordo só dá recompensa caso tenha cumprido o número de turnos máximo (referente a gemas) na sua ultima aventura.
+
+Deve ser criado um tópico novo para cada aventura finalizada, e todos os players que participaram da aventura podem postar seus resumos nesse mesmo lugar, não sendo preciso criar vários tópicos para resumos da mesma aventura.
+
+O local para criar o tópico se chama Diário de Bordo, que se encontra dentro do Storyteller. Cada resumo deve conter no minimo 600 caracteres e no máximo 6000.
+
+Só aventuras darão gemas por resumo. Mas se o player quiser fazer um resumo de uma missão ou evento que participou esta livre para faze-lo, e ciente que não ganhará nada com isso, só enriquecer esse tópico com suas façanhas. E está permitido adicionar em spoiler na ficha, em baixo do link da aventura cada resumo que corresponde a aventura finalizada.
+
+Esse resumo não precisara ser avaliado para receber a premiação, basta fazer e pedir a adição de Gemas na atualização de fichas. Porém se houver denuncia de irregularidades no resumo, o autor será penalizado.
+
+
+A melhor forma de acumular gemas além das aventuras com sua personagem e se tornando um narrador ativo!
+
+
+
+
+
+4 | Gastando suas gemas
+
+Acumulou uma bela quantidade de gemas, mas não sabe o que fazer com elas? Fique tranquilo, nosso fórum oferece diversas maneiras de gastá-las em troca de benefícios!
+
+
+
+
+4.1 Caminhos
+Atualmente, as gemas podem ser usadas para diversas coisas, porém existem quatro principais benefícios adquiridos apenas com gemas, que são de grande impacto no jogo e que, por isso, requerem um funcionamento especial - são os chamados Caminhos.
+
+Como dito, há quatro caminhos: Akuma no Mi, Haki, Ciborgue e Artes Marciais.
+
+Todos podem adquirir quantos dos quatro caminhos quiser. Entretanto, nem todos serão desenvolvidos por completo. Cada um desses caminhos possui uma linha de evolução progressiva, que permitirá as personagens alcançarem níveis elevados de poder. Todos os caminhos possuem um valor total de 140 gemas para desbloquear todos os seus benefícios. Entretanto, cada um deles possui uma forma de progressão diferente, detalhadas em seus respectivos tópicos. Os quatro Caminhos de Gemas foram balanceados para que todos oferecessem uma quantidade de bônus similares com base na seguinte média:
+
++1 de bônus em combate a cada 5 gemas investidas.
+
+
+A diversidade de Caminhos e seus custos e requerimentos diferentes permitem amplas opções de personalização das personagens. Por exemplo, pode-se dedicar a alcançar o ápice de determinado caminho, ou explorar diversos caminhos diferentes para gerar combinações distintas.
+
+
+
+
+4.2 Outros Benefícios
+
+Alem dos caminhos há outros benefícios que podem ser adquiridos pelos jogadores por meio do investimento de gemas. Diferente dos Caminhos progressivos, esses benefícios normalmente são gastos únicos para desenvolver aspectos das personagens diferentes ou complementares ao combate.
+
+Os benefícios acessíveis por meio de gemas são:
+
+1. Armas Únicas
+2. Profissões
+3. Aumento de energia
+4. Técnicas
+5. Companheiros
+
+
+Consulte o tópico referente a cada um destes itens para mais informações.

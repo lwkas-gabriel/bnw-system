@@ -1,0 +1,275 @@
+Técnicas
+
+1 | Introdução
+
+As técnicas são golpes especiais poderosos que normalmente a personagem utiliza em situação de combate. Além de seus bônus, podem incluir efeitos especiais que aumentam ainda mais suas capacidades caso o jogador acrescente a elas os efeitos aderidos de técnicas, que serão explicados mais para frente.
+
+
+As técnicas funcionam da seguinte forma:
+
+1.1. As técnicas tem 5 ranks que vão de E à A;
+
+1.2. As técnicas se dividem em dois tipos: defensivas que aumentam Defesa, Constituição ou ambos; e ofensivas que aumenta Poder, Precisão ou ambos;
+
+1.3. Técnicas ofensivas se propagam pela arma que se está usando, no entanto devem ser feitas para cada tipo de ataque, longa distância ou corpo a corpo;
+
+1.4. Só é possível executar uma técnica de ataque e uma técnica de defesa no mesmo turno, no entanto, elas podem ser mantidas enquanto se investir energia nelas;
+
+1.5. Técnicas Rank E dão um ponto de bônus no atributo base que ela bonifica. Exemplo: Golpe poderoso: +1 de Poder em golpes corpo a corpo (Gasto 1 de Energia);
+
+1.6. Os bônus e os gastos são feitos da mesma maneira escalando 1 bônus e 1 a mais de Energia
+
+1.7. Técnicas a partir do Rank D podem abandonar 1 ponto de bônus e aderir um efeito;
+
+1.8. Técnicas rank A são as únicas que podem ser aderidos melhoramentos do tipo Especial, algo único que traz novas dinâmicas, como por exemplo causar dano normal a estruturas. Esses efeitos são também bonificações de Akumas no mi, sejam em seus poderes padrões, ou como resultado em técnicas.
+
+1.9. Por fim, técnicas podem ser evoluidas pagando-se apenas a diferença em gemas entre o novo Rank da técnica e o novo Rank desejado.
+
+
+
+
+2 | Bônus, Custo de Gemas e Energia
+
+Para se criar uma técnica, é necessário gastar Gemas, iniciando em 6 Gemas no Rank E e aumentando em +1 Gema a cada nível superior, custando 10 gemas no Rank A.
+
+Os bônus e os gastos são feitos da mesma maneira escalando 1 bônus e 1 a mais de Energia como pode ser observado na tabela abaixo.
+
+Rank	Bônus OU efeito	Gemas (custo)	Energia
+E	+1 (apenas bônus)	06	1
+D	+2	07	2
+C	+3	08	3
+B	+4	09	4
+A	+5	10	5
+
+
+
+
+
+3 | Efeitos aderidos
+
+Efeitos aderidos são bônus de ataque ou defesa, que adicionam efeitos especiais que transformam a técnica em algo único.
+
+Para efeito de regra, um status negativo dura por 2 turnos após sua aplicação e gera 1 ponto de penalidade, seja uma penalidade em atributos ou um efeito que cause dano contínuo, porém efeitos que causam dano contínuo só podem ser colocados em técnicas Rank A.
+
+Efeitos Aderidos se classificam em Ataque e Defesa, sendo assim só podem estar em técnicas que lhe são permitas por sua classificação.
+
+Bônus provenientes de técnicas se acumulam desde que uma seja do receptor e outra técnica feita por um aliado, caso mais de um aliado bonifique um alvo o maior bônus prevalece - a única exceção a essa regra é em batalhas contra Boss.
+
+
+
+
+3.1 | Efeitos gerais
+
+Ataque:
+
+♦ Acerto Múltiplo: O atacante acerta mais um alvo, pode ser colocado várias vezes em uma mesma técnica.
+
+♦ Anti aéreo: caso ataque um inimigo que esteja usando um método de vôo natural ou artificial, acrescenta-se +2 a bonificação que esta técnica fornece. Pode ser colocado várias vezes em uma mesma técnica.
+
+♦ Anti aquático: caso ataque um inimigo que esteja usando um método de locomoção aquática natural ou artificial, acrescenta-se +2 a bonificação que esta técnica fornece. Pode ser colocado várias vezes em uma mesma técnica.
+
+♦ Bônus para aliado(s): Esta técnica fornece seu valor de bônus para um aliado, caso tenha sido colocada mais vezes em uma mesma técnica fornece para outro aliado adicional por vez que este efeito aderido foi acrescentado a técnica.
+
+♦ Confusão: causa a penalidade de -1 em Precisão e dura por 2 turnos. Pode ser colocada mais de uma vez em uma técnica e sua penalidade aumenta a cada nova adição.
+
+♦ Dois gumes: cada vez que este efeito é acrescentado, ele aumenta em +2 o bônus da técnica, no entanto, o personagem sofre 1 em dano direto a sua Constituição, ignorando outras fontes de Constituição.
+
+♦ Fragilidade: causa a penalidade de -1 em Constituição temporária (Haki, técnicas etc) e dura por 2 turnos. Caso não haja a Constituição temporária do oponente for reduzida a menos que zero, não causa dano na Constituição base. Pode ser colocada mais de uma vez em uma técnica e sua penalidade aumenta a cada nova adição.
+
+♦ Fraqueza: causa a penalidade de -1 em Poder e dura por 2 turnos. Pode ser colocada mais de uma vez em uma técnica e sua penalidade aumenta a cada nova adição.
+
+♦ Segurança: Técnicas com este efeito aderido não sofrem o efeito negativo da falha crítica, e se o resultado de 3 nos dados lhe garante o acerto, este acontece.
+
+♦ Vulnerabilidade: causa a penalidade de -1 em Defesa e dura por 2 turnos. Pode ser colocada mais de uma vez em uma técnica e sua penalidade aumenta a cada nova adição.
+
+
+
+
+Defesa:
+
+♦ Aérea: Ao usar este efeito o personagem fica por 2 turnos podendo transpor dificuldades de terreno ou alcançar locais muito difíceis. Recebe +1 de Defesa enquanto está no ar. Aplicar mais de uma vez em técnicas resulta no aumento dos turnos no em 1 para acréscimo.
+
+♦ Bônus para aliado(s): Esta técnica fornece seu valor de bônus para um aliado, caso tenha sido colocada mais vezes em uma mesma técnica fornece para outro aliado adicional por vez que este efeito aderido foi acrescentado a técnica.
+
+
+
+
+3.2 | Efeitos de Rank A
+
+Ataque:
+
+♦ Ataque em área controlado: no espaço que compreende uma ação de movimento, todos os inimigos neste espaço são atingidos pela técnica.
+
+♦ Consecutiva: No primeiro turno que está técnica é usada ela dá seu bônus normal, no segundo ela acrescenta +1 ao bônus que esta fornece e assim sucessivamente a cada turno que é usada consecutivamente.
+
+♦ Exaustão: Aumenta o gasto de energia do oponente em técnicas em 1 e dura por 2 turnos. Pode ser colocada mais de uma vez em uma técnica e seu tempo de duração aumenta em +1 turno a cada nova adição
+
+♦ Ferimento: causa a dano de no máximo 1 direto no atributo Constituição e dura por 2 turnos. Pode ser colocada mais de uma vez em uma técnica e seu tempo de duração aumenta em +1 turno a cada nova adição.
+
+
+
+
+Defesa:
+
+♦ Consecutiva: No primeiro turno que está técnica é usada ela dá seu bônus normal, no segundo ela acrescenta +1 ao bônus que esta fornece e assim sucessivamente a cada turno que é usada consecutivamente.
+
+♦ Postura Defensiva: cada vez que este efeito é acrescentado, ele aumenta em +2 o bônus da técnica, no entanto, o personagem receber -1 de penalidade nos atributos Poder e Precisão.
+
+
+
+
+4 | Exemplos de técnicas
+
+Rank E
+Nome: Golpe Poderoso
+Descrição: xxxx em golpes corpo a corpo
+Efeito: +1 de Poder no turno em que foi ativada e nos demais que se manter o gasto de energia.
+Energia: 1.
+
+
+Rank D
+Nome: Golpe Poderoso em estocada
+Descrição: xxxx em golpes corpo a corpo
+Efeito: +1 de Poder no turno em que foi ativada e nos demais que se manter o gasto de energia. Efeito aderido pode atingir dois alvos com o mesmo ataque.
+Energia: 2.
+
+
+Rank C
+Nome: Golpe Poderoso
+Descrição: xxxx em golpes corpo a corpo
+Efeito: +3 de Poder no turno em que foi ativada e nos demais que se manter o gasto de energia.
+Energia: 3.
+
+
+Rank B
+Nome: Golpe Poderoso debilitante
+Descrição: xxxx em golpes corpo a corpo
+Efeito: +3 de Poder no turno em que foi ativada e nos demais que se manter o gasto de energia. Efeito aderido Penalidade de Poder do inimigo -1, por 2 golpes.
+Energia: 4.
+
+
+Rank A
+Nome: Golpe Poderoso Incendiário
+Descrição: xxxx em golpes corpo a corpo
+Efeito: +4 de Poder no turno em que foi ativada e nos demais que se manter o gasto de energia. Efeito Aderido o alvo pega fogo por 2 turnos, recebendo 1 de dano em Constituição por turno.
+Energia: 5.
+
+
+
+
+
+5 | Rokushiki
+
+O Rokushiki é um conjunto de seis técnicas secretas guardadas e proliferadas pelo Governo Mundial, seja entre as Cipher Pols ou a Marinha. Sendo requisito para se subir nos ranks das CP, elas possuem um valor menor comparado ao bônus que dão. Entretanto, elas não podem ser melhoradas. Ou seja, por parte do jogo elas são uma grande vantagem aos seus usuários, mas posteriormente se tornam ultrapassadas.
+
+Apenas Agentes do Governo e Marinheiros podem adquirir técnicas do Rokushiki, conforme as especificações de cada facção. Caso a personagem venha a abandonar essas facções, elas não perdem as técnicas do Rokushiki. Entretanto, caso venham a remover essas técnicas de alguma forma, não poderão adquiri-las novamente caso estejam em outra facção senão essas duas.
+
+A cada duas técnicas de Rokushiki, recebe-se uma técnica Rank A. Essa técnica deve ter algum vínculo interpretativo com uma das técnicas já adquiridas do Rokushiki. Essa técnica representa uma adaptação e evolução de uma das técnicas básicas do Rokushiki.
+
+É possível adquirir tecnicas do Rokushiki com os bônus dados pelos Caminhos. Nesses casos, cada técnica Rank A dada pelos caminhos equivale a duas técnicas do Rokushiki.
+
+Nome: Shigan
+Descrição: O dedo indicador do usuário se torna tão potente e rígido quanto um projétil de arma de fogo.
+Custo: 5 gemas
+Efeito: +2 de Poder, Consecutiva
+Energia: 3
+
+
+Nome: Tekkai
+Descrição: Os músculos se endurecem como metal, garantindo grande resistência, mas forçando o usuário a ficar imóvel.
+Custo: 5 gemas
+Efeito: +2 de Constituição; Postura Defensiva
+Energia: 3
+
+
+Nome: Soru
+Descrição: Ao se chutar o solo 10 vezes num piscar de olhos, rompe-se a resistência do solo, permitindo alcancqr uma velocidade sem precedentes, praticamente desaparecendo no ar.
+Custo: 5 gemas
+Efeito: +3 de Precisão
+Energia: 3
+
+
+Nome: Kami-e
+Descrição: Ao relaxar o corpo completamente, ele passa a se mover como uma folha de papel no ar, tornando-se extremamente difícil de se acertar.
+Custo: 5 gemas
+Efeito: +3 de Defesa
+Energia: 3
+
+
+Nome: Rankyaku
+Descrição: Um chute com tamanha força e velocidade que projeta uma rajada cortante de vento tão afiada quando uma foice.
+Custo: 5 gemas
+Efeito: +2 de Precisão; Acerto Múltiplo
+Energia: 3
+
+
+Nome: Geppo
+Descrição: Chuta-se o ar com agilidade, permitindo praticamente voar, pulando pelos céus.
+Custo: 5 gemas
+Efeito: +2 de Defesa; Aérea
+Energia: 3
+
+
+Ao se adquirir todas as 6 técnicas do Rokushiki, o jogador pode optar por adquirir a técnica suprema do Rokushiki, o Rokougan. Essa técnica NÃO conta como uma das técnicas Rank A de evolução dos pares de Rokushiki. Pode ser pago com gemas ou com um dos bônus de técnica APENAS do Caminho Artes Marciais. Não é possível adquirir o Rokougan de qualquer outra forma e, caso se remova uma das técnicas do Rokushiki da ficha, perde-se o Rokougan.
+
+Nome: Rokougan
+Descrição: Junta-se os dois punhos para desferir uma onda de choque a curta distância, causando danos internos severos.
+Custo: 10 Gemas (Rank A)
+Efeito: +4 de Poder; causa 1 de Dano direto na Constituição base do oponente (ignora constituição temporária).
+Energia: 5
+
+
+
+
+
+6 | Forma Sulong
+
+Conhecida como a "forma verdadeira" dos Minks, a Forma Sulong é uma transformação que acontece no corpo dos membros puros dessa raça ao olhar diretamente para a luz da lua cheia. De modo geral, o corpo dos Minks na Forma Sulong apresentam pelos alongados e brancos, além de olhos vermelhos.
+
+A Forma Sulong é um benefício exclusivo dos Minks e, por ser uma vantagem muito grande em relação às demais facções, possui uma série de mecânicas específicas para a tornar balanceada com todo o sistema. Na prática, ela funciona como uma espécie de habilidade passiva que influencia as técnicas dos Minks quando seus requerimentos são cumpridos. Por isso, ela deve constar na lista de técnicas das personagens Minks.
+
+Nome: Forma Sulong
+Requerimentos: Raça Mink Pura; Contato visual direto com a luz da lua cheia.
+Descrição: Só a luz da lua cheia, o mink assume uma forma com olhos vermelhos e pelos alongados e brancos. Todos os seus movimentos emitem Electro e suas habilidades físicas são potencializadas.
+Efeito: +1 de Bônus em todas as técnicas.
+Energia: Aumenta o gasto de energia de todas as técnicas em 1.
+
+
+A Forma Sulong é gratuita para todas as personagens da raça Mink. Seu funcionamento depende de uma mecânica especial, que oferecer benefícios relevantes, ao mesmo tempo em que apresenta riscos significativos. Essa mecânica é opcional para os jogadores com personagens Minks. Entretanto, uma vez que se optar usar a mecânica, ela deve ser aplicada ao longo de quatro (4) aventuras seguidas. Somente após o fim da quarta aventura é possível optar por não usar mais a mecânica.
+
+6.1. Rola-se 1d4 no início da primeira aventura. Sempre que o resultado for 1, haverá lua cheia nos períodos noturnos ao longo daquela aventura (fica a cargo do narrador decidir quando ocorrem os períodos noturnos, mas devem ocorrer obrigatoriamente ao longo daquela aventura).
+
+6.2. Caso a rolagem não resulte em lua cheia na primeira aventura, deverá rolar 1d3 na segunda aventura. Caso não haja lua cheia na segunda aventura, deve-se rolar 1d2 na terceira aventura. Caso não haja lua cheia na terceira aventura, a quarta aventura será, obrigatoriamente, lua cheia, sem necessidade de rolar dados.
+
+6.3. Caso haja lua cheia logo na primeira aventura, não será preciso rolar novamente no início das próximas 3 aventuras. Isso indica que as próximas 3 aventuras terão outras fases da lua (minguante, nova e crescente). Caso haja lua cheia na segunda aventura, só poderá rolar 1d4 novamente após outras 2 aventuras. Caso haja lua cheia na terceira aventura, deverá aguardar 1 Aventura para nova rolagem. Caso aconteça apenas na quarta aventura, poderá realizar nova rolagem logo na próxima aventura, reiniciando a mecânica.
+
+6.4. Caso dois ou mais jogadores com personagens minks se juntem em aventura e optem pela mecânica da forma Sulong, deverão reiniciar a contagem de quatro aventuras, rolando 1d4. Caso se separem, a contagem continuará obrigatoriamente nas aventuras separadas.
+
+6.5. Quando houver lua cheia, o Mink deverá ter contato visual direto com ela para se transformar e manter-se acessível à luz da lua para manter a forma ativa.
+
+6.6. É possível impedir a transformação ou a cancelar rompendo o contato visual com a lua de forma interpretativa. Isso inclui obstruir a lua com nuvens ou outros recursos, tapar os olhos ou obscurecê-loes com óculos escuros, por exemplo, ou permanecer em ambientes internos sem janelas por mais de dois turnos.
+
+6.7. Caso a personagem Mink recebe o status Cegueira enquanto estiver na Forma Sulong, a transformação será imediatamente anulada e a personagem sofrerá o prejuízo extra de -1 em técnicas enquanto o efeito Cegueira durar.
+
+6.8. Para se cancelar voluntariamente a transformação durante um combate, gasta-se uma ação de movimento (pois é necessário ocultar os olhos da luz do luar de forma eficaz e segura). Caso a transformação seja desfeita, voluntaria ou forçosamente, não é possível se transformar novamente (mesmo que haja turnos de controle sobrando).
+
+6.9. É preciso ter, no mínimo, o nível 10 para ser capaz de controlar a Forma Sulong. Caso o Mink seja incapaz de controlar a Forma Sulong e se transformar, ele entrará em um modo berserker, no qual deverá rolar 1d2 a cada ataque. Caso tire 1, o Mink berserker errará totalmente o ataque ou atacará algum outro alvo próximo, incluindo aliados e inocentes. Caso tire 2, conseguirá atacar o alvo certo. Ao fim dos turnos transformado no modo berserker, o Mink desmaia imediatamente.
+
+6.10. Quanto mais forte o Mink, mais tempo ele consegue manter controle da Forma Sulong sem perder o controle ou desmaiar. Não é possível manter a Forma Sulong ativa por mais que 5 turnos. A tabela abaixo relaciona o os níveis mínimos, o controle da Forma Sulong e os turnos correspondentes:
+
+Nível Mínimo
+Controle
+Berserker
+Desmaio
+01
+- -
+2 turnos
+após o 2º turno
+10
+3 turnos
+2 turnos
+após o 5º turno
+25
+5 turnos
+- -
+após o 5º turno
