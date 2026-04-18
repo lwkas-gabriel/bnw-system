@@ -136,7 +136,7 @@ export interface ZoanAbility {
   id: string;
   name: string;
   description: string;
-  module: string;
+  modules: string[];
   energyCost: number;
   condition?: string;
   isAwakened?: boolean;

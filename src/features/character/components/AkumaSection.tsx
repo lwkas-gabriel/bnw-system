@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
+import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
+import type { AkumaModuleOption } from "../../../data/akumaModules";
 import type {
   AkumaRank, ZoanAkuma, LogiaAkuma, ParameciaAkuma, ZoanClass, ParameciaClass,
+  ZoanAbility, ParameciaHabilityPassive, ParameciaHabilityActive,
 } from "../../../shared/types/character";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -43,6 +47,13 @@ const PARAMECIA_CLASSES: { id: ParameciaClass; label: string; desc: string }[] =
 const ATTRS = ["power", "precision", "defense", "constitution"] as const;
 const ATTR_LABEL: Record<string, string> = { power: "POD", precision: "PRE", defense: "DEF", constitution: "CON" };
 
+const RANK_ORDER_MAP: Record<AkumaRank, number> = { C: 0, B: 1, A: 2, S: 3 };
+
+// Paramecia slot budget per rank
+const PARAMECIA_PASSIVE_SLOTS: Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 5 };
+const PARAMECIA_ACTIVE_SLOTS:  Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 0 };
+const PARAMECIA_ACTIVE_EN:     Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 0 };
+
 // ─── Small helpers ────────────────────────────────────────────────────────────
 
 function Toggle({ value, onChange }: { value: boolean; onChange: () => void }) {
@@ -74,13 +85,76 @@ function AttrPicker({ value, color, onChange }: { value: string; color: string; 
   );
 }
 
+// Module badge with remove button
+function ModuleBadge({ module, onRemove }: { module: AkumaModuleOption; onRemove: () => void }) {
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-900/40 border border-amber-800/50 rounded text-[10px] text-amber-300">
+      {module.label}
+      <button onClick={onRemove} className="text-amber-500 hover:text-red-400 leading-none">×</button>
+    </span>
+  );
+}
+
+// Module picker dropdown
+function ModulePicker({
+  modules,
+  usedSlots,
+  maxSlots,
+  onAdd,
+  isMythical,
+}: {
+  modules: AkumaModuleOption[];
+  usedSlots: number;
+  maxSlots: number;
+  onAdd: (moduleId: string) => void;
+  isMythical?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const remaining = maxSlots - usedSlots;
+  const available = modules.filter(m => {
+    if (m.mythicalOnly && !isMythical) return false;
+    return m.slots <= remaining;
+  });
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(v => !v)}
+        disabled={remaining <= 0}
+        className="text-[10px] px-2 py-1 rounded border border-dashed border-amber-700/60 text-amber-500 hover:border-amber-600 disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        + Módulo ({remaining} slot{remaining !== 1 ? "s" : ""} livre{remaining !== 1 ? "s" : ""})
+      </button>
+      {open && (
+        <div className="absolute z-10 top-7 left-0 w-64 bg-slate-900 border border-slate-700 rounded-lg shadow-xl py-1 max-h-52 overflow-y-auto">
+          {available.length === 0 ? (
+            <p className="text-[10px] text-slate-500 px-3 py-2">Nenhum módulo disponível para os slots restantes.</p>
+          ) : (
+            available.map(m => (
+              <button
+                key={m.id + m.slots}
+                onClick={() => { onAdd(m.id); setOpen(false); }}
+                className="w-full text-left px-3 py-1.5 hover:bg-slate-800 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-200">{m.label}</span>
+                  <span className="text-[9px] text-slate-500">{m.slots} slot{m.slots !== 1 ? "s" : ""}</span>
+                </div>
+                <p className="text-[9px] text-slate-500">{m.description}</p>
+              </button>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function AkumaSection() {
   const { draft, updateDraft } = useCharacterStore();
   if (!draft) return null;
-
-  // ── Init helpers ──────────────────────────────────────────────────
 
   function initAkuma(type: string) {
     updateDraft(c => {
@@ -96,8 +170,8 @@ export function AkumaSection() {
           type: "zoan", name: "Nova Zoan", rank: "C",
           animalClass: "carnivore", isMythical: false, isAncestral: false,
           points: [
-            { id: "hybrid", primaryAttr: "power",        complementaryAttr: "constitution", bonus: 1 },
-            { id: "animal", primaryAttr: "power",        complementaryAttr: "constitution", bonus: 1 },
+            { id: "hybrid", primaryAttr: "power", complementaryAttr: "constitution", bonus: 1 },
+            { id: "animal", primaryAttr: "power", complementaryAttr: "constitution", bonus: 1 },
           ],
           abilities: [],
           vigorAnimalBonus: 2,
@@ -120,7 +194,6 @@ export function AkumaSection() {
       const zoan = c.akuma as ZoanAkuma;
       zoan.vigorAnimalBonus = VIGOR_ANIMAL[rank];
       const bonus = POINT_BONUS[rank];
-      // Ensure 2 base points exist
       const base = zoan.points.filter(p => p.id !== "awakened");
       if (base.length < 2) {
         zoan.points = [
@@ -130,7 +203,6 @@ export function AkumaSection() {
       } else {
         zoan.points = base.map(p => ({ ...p, bonus }));
       }
-      // Add or remove Awakened point
       if (rank === "S") {
         const ref = zoan.points[0];
         zoan.points.push({
@@ -144,8 +216,6 @@ export function AkumaSection() {
   }
 
   const akuma = draft.akuma;
-
-  // ── Empty state ────────────────────────────────────────────────────
 
   if (!akuma) {
     return (
@@ -171,8 +241,6 @@ export function AkumaSection() {
       </div>
     );
   }
-
-  // ── Active state ───────────────────────────────────────────────────
 
   const typeIcon = akuma.type === "zoan" ? "🐉" : akuma.type === "logia" ? "⚡" : "🌀";
 
@@ -225,7 +293,6 @@ export function AkumaSection() {
           })}
         </div>
 
-        {/* Evolution costs reminder */}
         <div className="flex gap-2 mb-3">
           {[["C→B", "+30g"], ["B→A", "+30g"], ["A→S", "+50g"]].map(([label, cost]) => (
             <div key={label} className="flex-1 text-center p-1.5 bg-slate-800 rounded text-[9px]">
@@ -235,14 +302,12 @@ export function AkumaSection() {
           ))}
         </div>
 
-        {/* Free technique banner */}
         {FREE_TECHS[akuma.rank] && (
           <div className="p-2 bg-green-950/30 border border-green-800/40 rounded-lg text-[10px] text-green-400 mb-2">
             🎁 {FREE_TECHS[akuma.rank]} — adicione na aba Técnicas com source "akuma" (não cobra gemas)
           </div>
         )}
 
-        {/* Rank S awakening note */}
         {akuma.rank === "S" && (
           <div className="p-2 bg-amber-950/30 border border-amber-800/30 rounded-lg text-[10px] text-amber-400/80">
             ✨ Despertar (Rank S) — requer New World + 5 aventuras.
@@ -253,7 +318,7 @@ export function AkumaSection() {
         )}
       </SectionCard>
 
-      {/* ── Zoan ────────────────────────────────────────────────────── */}
+      {/* ── Zoan ───────────────────────────────────────────────────────── */}
       {akuma.type === "zoan" && (
         <ZoanConfig
           zoan={akuma as ZoanAkuma}
@@ -261,7 +326,7 @@ export function AkumaSection() {
         />
       )}
 
-      {/* ── Logia ────────────────────────────────────────────────────── */}
+      {/* ── Logia ───────────────────────────────────────────────────────── */}
       {akuma.type === "logia" && (
         <LogiaConfig
           logia={akuma as LogiaAkuma}
@@ -269,7 +334,7 @@ export function AkumaSection() {
         />
       )}
 
-      {/* ── Paramecia ────────────────────────────────────────────────── */}
+      {/* ── Paramecia ───────────────────────────────────────────────────── */}
       {akuma.type === "paramecia" && (
         <ParameciaConfig
           paramecia={akuma as ParameciaAkuma}
@@ -283,6 +348,54 @@ export function AkumaSection() {
 // ─── Zoan sub-component ───────────────────────────────────────────────────────
 
 function ZoanConfig({ zoan, onUpdate }: { zoan: ZoanAkuma; onUpdate: (fn: (z: ZoanAkuma) => void) => void }) {
+  const rankIdx = RANK_ORDER_MAP[zoan.rank];
+
+  function addAbility(isAwakened = false) {
+    onUpdate(z => {
+      z.abilities.push({
+        id: crypto.randomUUID(),
+        name: isAwakened ? "Habilidade Desperta" : `Habilidade ${z.abilities.filter(a => !a.isAwakened).length + 1}`,
+        description: "",
+        modules: [],
+        energyCost: 1,
+        condition: "",
+        isAwakened,
+      });
+    });
+  }
+
+  function removeAbility(id: string) {
+    onUpdate(z => { z.abilities = z.abilities.filter(a => a.id !== id); });
+  }
+
+  function updateAbility(id: string, patch: Partial<ZoanAbility>) {
+    onUpdate(z => {
+      const idx = z.abilities.findIndex(a => a.id === id);
+      if (idx !== -1) Object.assign(z.abilities[idx], patch);
+    });
+  }
+
+  function addModule(abilityId: string, moduleId: string) {
+    onUpdate(z => {
+      const ab = z.abilities.find(a => a.id === abilityId);
+      if (ab) ab.modules.push(moduleId);
+    });
+  }
+
+  function removeModule(abilityId: string, moduleIdx: number) {
+    onUpdate(z => {
+      const ab = z.abilities.find(a => a.id === abilityId);
+      if (ab) ab.modules.splice(moduleIdx, 1);
+    });
+  }
+
+  const regularAbilities = zoan.abilities.filter(a => !a.isAwakened);
+  const awakenedAbility   = zoan.abilities.find(a => a.isAwakened);
+
+  // Mythical: up to 2 regular abilities at Rank A+; 1 awakened at Rank S
+  const canAddRegular  = zoan.isMythical && rankIdx >= RANK_ORDER_MAP["A"] && regularAbilities.length < 2;
+  const canAddAwakened = zoan.isMythical && rankIdx >= RANK_ORDER_MAP["S"] && !awakenedAbility;
+
   return (
     <>
       <SectionCard title="Configuração Zoan" icon="🐉">
@@ -376,7 +489,151 @@ function ZoanConfig({ zoan, onUpdate }: { zoan: ZoanAkuma; onUpdate: (fn: (z: Zo
           </div>
         )}
       </SectionCard>
+
+      {/* Habilidades Mitológicas */}
+      {zoan.isMythical && (
+        <SectionCard title="Habilidades Mitológicas" icon="✨">
+          <p className="text-[10px] text-slate-500 mb-3">
+            Desbloqueadas no Rank A · 1 módulo cada · 1 EN · Habilidade Desperta no Rank S (2 módulos).
+          </p>
+
+          {rankIdx < RANK_ORDER_MAP["A"] ? (
+            <p className="text-xs text-slate-600 text-center py-3">Disponível a partir do Rank A.</p>
+          ) : (
+            <div className="space-y-3">
+              {regularAbilities.map(ab => (
+                <ZoanAbilityEditor
+                  key={ab.id}
+                  ability={ab}
+                  maxModules={1}
+                  isMythical={zoan.isMythical}
+                  onUpdate={patch => updateAbility(ab.id, patch)}
+                  onRemove={() => removeAbility(ab.id)}
+                  onAddModule={moduleId => addModule(ab.id, moduleId)}
+                  onRemoveModule={idx => removeModule(ab.id, idx)}
+                />
+              ))}
+              {canAddRegular && (
+                <button
+                  onClick={() => addAbility(false)}
+                  className="w-full py-2 rounded-lg border border-dashed border-slate-700 text-[10px] text-slate-500 hover:border-amber-700 hover:text-amber-500 transition-colors"
+                >
+                  + Adicionar Habilidade ({2 - regularAbilities.length} restante{regularAbilities.length < 1 ? "s" : ""})
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Habilidade Desperta */}
+          {rankIdx >= RANK_ORDER_MAP["S"] && (
+            <div className="mt-4 pt-4 border-t border-slate-700">
+              <p className="text-[10px] uppercase tracking-wider text-amber-600/70 mb-2">Habilidade Desperta</p>
+              {awakenedAbility ? (
+                <ZoanAbilityEditor
+                  ability={awakenedAbility}
+                  maxModules={2}
+                  isMythical={zoan.isMythical}
+                  isAwakened
+                  onUpdate={patch => updateAbility(awakenedAbility.id, patch)}
+                  onRemove={() => removeAbility(awakenedAbility.id)}
+                  onAddModule={moduleId => addModule(awakenedAbility.id, moduleId)}
+                  onRemoveModule={idx => removeModule(awakenedAbility.id, idx)}
+                />
+              ) : canAddAwakened ? (
+                <button
+                  onClick={() => addAbility(true)}
+                  className="w-full py-2 rounded-lg border border-dashed border-amber-800/50 text-[10px] text-amber-600/70 hover:border-amber-600 hover:text-amber-400 transition-colors"
+                >
+                  + Adicionar Habilidade Desperta (2 módulos)
+                </button>
+              ) : null}
+            </div>
+          )}
+        </SectionCard>
+      )}
     </>
+  );
+}
+
+function ZoanAbilityEditor({
+  ability, maxModules, isMythical, isAwakened,
+  onUpdate, onRemove, onAddModule, onRemoveModule,
+}: {
+  ability: ZoanAbility;
+  maxModules: number;
+  isMythical: boolean;
+  isAwakened?: boolean;
+  onUpdate: (patch: Partial<ZoanAbility>) => void;
+  onRemove: () => void;
+  onAddModule: (moduleId: string) => void;
+  onRemoveModule: (idx: number) => void;
+}) {
+  const usedSlots = ability.modules.length;
+  const modules = ZOAN_MODULES;
+
+  return (
+    <div className={`p-3 rounded-lg border ${isAwakened ? "border-amber-800/50 bg-amber-950/10" : "border-slate-700 bg-slate-800"}`}>
+      <div className="flex items-start justify-between mb-2">
+        <input
+          className="bg-transparent text-xs font-semibold text-slate-200 focus:outline-none border-b border-transparent focus:border-amber-600 flex-1"
+          value={ability.name}
+          placeholder="Nome da habilidade"
+          onChange={e => onUpdate({ name: e.target.value })}
+        />
+        <button onClick={onRemove} className="text-slate-600 hover:text-red-400 text-xs ml-2">✕</button>
+      </div>
+
+      <input
+        className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1 text-[10px] text-slate-300 focus:outline-none focus:border-amber-600 mb-2"
+        placeholder="Descrição..."
+        value={ability.description}
+        onChange={e => onUpdate({ description: e.target.value })}
+      />
+
+      <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-1">
+          <span className="text-[9px] text-slate-500">EN:</span>
+          <input
+            type="number"
+            min={0} max={10}
+            className="w-10 bg-slate-700 border border-slate-600 rounded px-1 py-0.5 text-[10px] text-center text-slate-200 focus:outline-none"
+            value={ability.energyCost}
+            onChange={e => onUpdate({ energyCost: Number(e.target.value) })}
+          />
+        </div>
+        {!isAwakened && (
+          <input
+            className="flex-1 bg-slate-700/50 border border-slate-600 rounded px-2 py-0.5 text-[10px] text-slate-400 focus:outline-none focus:border-amber-600"
+            placeholder="Condição (opcional)"
+            value={ability.condition ?? ""}
+            onChange={e => onUpdate({ condition: e.target.value })}
+          />
+        )}
+        {isAwakened && (
+          <span className="text-[9px] text-amber-500/70 italic">Condição: forma desperta ativa</span>
+        )}
+      </div>
+
+      {/* Módulos */}
+      <div className="flex flex-wrap gap-1 mb-2">
+        {ability.modules.map((modId, idx) => {
+          const m = modules.find(m => m.id === modId);
+          return m ? (
+            <ModuleBadge key={idx} module={m} onRemove={() => onRemoveModule(idx)} />
+          ) : null;
+        })}
+      </div>
+
+      {usedSlots < maxModules && (
+        <ModulePicker
+          modules={modules}
+          usedSlots={usedSlots}
+          maxSlots={maxModules}
+          onAdd={onAddModule}
+          isMythical={isMythical}
+        />
+      )}
+    </div>
   );
 }
 
@@ -385,7 +642,6 @@ function ZoanConfig({ zoan, onUpdate }: { zoan: ZoanAkuma; onUpdate: (fn: (z: Zo
 function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l: LogiaAkuma) => void) => void }) {
   return (
     <SectionCard title="Configuração Logia" icon="⚡">
-      {/* Natureza Elemental */}
       <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Natureza Elemental (+5 ao atributo)</p>
       <div className="flex gap-2 mb-4">
         {ATTRS.map(a => (
@@ -401,7 +657,6 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
         ))}
       </div>
 
-      {/* Passivos */}
       <div className="grid grid-cols-3 gap-2 mb-4">
         <div className="p-2 bg-slate-800 rounded-lg text-center">
           <p className="text-[10px] text-slate-500">Intangibilidade</p>
@@ -417,7 +672,6 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
         </div>
       </div>
 
-      {/* Status Aprimorado */}
       <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Status Aprimorado</p>
       <div className="space-y-2">
         <input
@@ -442,9 +696,30 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
 
 // ─── Paramecia sub-component ──────────────────────────────────────────────────
 
-const RANK_ORDER_MAP: Record<AkumaRank, number> = { C: 0, B: 1, A: 2, S: 3 };
-
 function ParameciaConfig({ paramecia, onUpdate }: { paramecia: ParameciaAkuma; onUpdate: (fn: (p: ParameciaAkuma) => void) => void }) {
+  const rankIdx = RANK_ORDER_MAP[paramecia.rank];
+
+  function ensureHabilidade(rank: AkumaRank) {
+    const rIdx = RANK_ORDER_MAP[rank];
+    onUpdate(p => {
+      if (!p.passives[rIdx]) {
+        p.passives[rIdx] = {
+          id: `passive_${rank}`, name: `Passiva ${rank}`, description: "",
+          slots: 0, modules: [], condition: "",
+        } as ParameciaHabilityPassive;
+      }
+      if (!p.actives[rIdx] && rank !== "S") {
+        p.actives[rIdx] = {
+          id: `active_${rank}`, name: `Ativa ${rank}`, description: "",
+          slots: 0, energyCost: PARAMECIA_ACTIVE_EN[rank], modules: [], condition: "",
+          isAwakened: false,
+        } as ParameciaHabilityActive;
+      }
+    });
+  }
+
+  const unlockedRanks = (["C", "B", "A"] as AkumaRank[]).filter(r => rankIdx >= RANK_ORDER_MAP[r]);
+
   return (
     <SectionCard title="Configuração Paramecia" icon="🌀">
       {/* Classe */}
@@ -477,33 +752,188 @@ function ParameciaConfig({ paramecia, onUpdate }: { paramecia: ParameciaAkuma; o
       <p className="text-[10px] text-slate-500 mb-4">Técnicas com este efeito aderido recebem +1 ao bônus básico.</p>
 
       {/* Habilidades por rank */}
-      <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Habilidades por Rank</p>
-      <div className="space-y-2">
-        {([
-          { rank: "C" as AkumaRank, passive: "2 slots", active: "2 slots / 2 EN" },
-          { rank: "B" as AkumaRank, passive: "3 slots", active: "3 slots / 3 EN" },
-          { rank: "A" as AkumaRank, passive: "3 slots", active: "3 slots / 3 EN + condição opcional" },
-        ]).map(row => {
-          const unlocked = RANK_ORDER_MAP[paramecia.rank] >= RANK_ORDER_MAP[row.rank];
+      <div className="space-y-4">
+        {unlockedRanks.map(rank => {
+          const rIdx = RANK_ORDER_MAP[rank];
+          const passive = paramecia.passives[rIdx];
+          const active  = paramecia.actives[rIdx];
+          const passiveSlots   = PARAMECIA_PASSIVE_SLOTS[rank];
+          const activeSlots    = PARAMECIA_ACTIVE_SLOTS[rank];
+
           return (
-            <div
-              key={row.rank}
-              className={`p-2 rounded-lg border flex items-start gap-3 ${
-                unlocked ? "border-amber-800/40 bg-amber-950/10" : "border-slate-700 bg-slate-800 opacity-50"
-              }`}
-            >
-              <span className={`text-xs font-bold w-6 shrink-0 ${unlocked ? "text-amber-400" : "text-slate-500"}`}>
-                {row.rank}
-              </span>
-              <div className="text-[10px] text-slate-400 space-y-0.5">
-                <p>Passiva: {row.passive}</p>
-                <p>Ativa: {row.active}</p>
+            <div key={rank} className="border border-amber-800/30 rounded-xl p-3 bg-amber-950/5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold text-amber-400">Rank {rank}</span>
+                {!passive && (
+                  <button
+                    onClick={() => ensureHabilidade(rank)}
+                    className="text-[10px] text-amber-600 hover:text-amber-400"
+                  >
+                    + Inicializar habilidades
+                  </button>
+                )}
               </div>
+
+              {passive && (
+                <ParameciaHabilidadeEditor
+                  label="Passiva"
+                  habilidade={passive}
+                  maxSlots={passiveSlots}
+                  hasCondition={rank === "A"}
+                  onUpdate={patch => onUpdate(p => { Object.assign(p.passives[rIdx], patch); })}
+                  onAddModule={moduleId => onUpdate(p => { p.passives[rIdx].modules.push(moduleId); })}
+                  onRemoveModule={idx => onUpdate(p => { p.passives[rIdx].modules.splice(idx, 1); })}
+                />
+              )}
+
+              {active && rank !== "S" && (
+                <div className="mt-2">
+                  <ParameciaHabilidadeEditor
+                    label={`Ativa (${PARAMECIA_ACTIVE_EN[rank]} EN)`}
+                    habilidade={active}
+                    maxSlots={activeSlots}
+                    hasCondition={rank === "A"}
+                    onUpdate={patch => onUpdate(p => { Object.assign(p.actives[rIdx], patch); })}
+                    onAddModule={moduleId => onUpdate(p => { p.actives[rIdx].modules.push(moduleId); })}
+                    onRemoveModule={idx => onUpdate(p => { p.actives[rIdx].modules.splice(idx, 1); })}
+                  />
+                </div>
+              )}
             </div>
           );
         })}
+
+        {/* Rank S — Despertar */}
+        {rankIdx >= RANK_ORDER_MAP["S"] && (
+          <div className="border border-amber-600/40 rounded-xl p-3 bg-amber-900/10">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold text-amber-400">Rank S — Despertar</span>
+              {!paramecia.passives[RANK_ORDER_MAP["S"]] && (
+                <button
+                  onClick={() => onUpdate(p => {
+                    p.passives[RANK_ORDER_MAP["S"]] = {
+                      id: "passive_S", name: "Habilidade Desperta", description: "",
+                      slots: 0, modules: [], condition: "Modo Desperto ativo",
+                    } as ParameciaHabilityPassive;
+                  })}
+                  className="text-[10px] text-amber-600 hover:text-amber-400"
+                >
+                  + Inicializar Despertar
+                </button>
+              )}
+            </div>
+            {paramecia.passives[RANK_ORDER_MAP["S"]] && (
+              <>
+                <p className="text-[9px] text-amber-500/70 mb-2 italic">Condição fixa: Modo Desperto ativo (5 EN/turno)</p>
+                <ParameciaHabilidadeEditor
+                  label="Habilidade Desperta (5 slots)"
+                  habilidade={paramecia.passives[RANK_ORDER_MAP["S"]]}
+                  maxSlots={5}
+                  hasCondition={false}
+                  onUpdate={patch => onUpdate(p => { Object.assign(p.passives[RANK_ORDER_MAP["S"]], patch); })}
+                  onAddModule={moduleId => onUpdate(p => { p.passives[RANK_ORDER_MAP["S"]].modules.push(moduleId); })}
+                  onRemoveModule={idx => onUpdate(p => { p.passives[RANK_ORDER_MAP["S"]].modules.splice(idx, 1); })}
+                />
+              </>
+            )}
+          </div>
+        )}
+
+        {unlockedRanks.length === 0 && (
+          <p className="text-xs text-slate-500 text-center py-4">Selecione o rank da Paramecia acima.</p>
+        )}
       </div>
-      <p className="text-[9px] text-slate-600 mt-2">Configure módulos com o narrador em tópico de habilidades.</p>
     </SectionCard>
+  );
+}
+
+function ParameciaHabilidadeEditor({
+  label, habilidade, maxSlots, hasCondition, onUpdate, onAddModule, onRemoveModule,
+}: {
+  label: string;
+  habilidade: ParameciaHabilityPassive | ParameciaHabilityActive;
+  maxSlots: number;
+  hasCondition: boolean;
+  onUpdate: (patch: Partial<ParameciaHabilityPassive>) => void;
+  onAddModule: (moduleId: string) => void;
+  onRemoveModule: (idx: number) => void;
+}) {
+  const usedSlots = habilidade.modules.reduce((sum, modId) => {
+    const m = PARAMECIA_MODULES.find(m => m.id === modId);
+    return sum + (m?.slots ?? 1);
+  }, 0);
+
+  const [condActive, setCondActive] = useState(!!habilidade.condition);
+
+  const effectiveMax = hasCondition && condActive ? maxSlots + 1 : maxSlots;
+  const remaining = effectiveMax - usedSlots;
+
+  return (
+    <div className="bg-slate-800/50 rounded-lg p-2 space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-semibold text-slate-400">{label}</span>
+        <span className="text-[9px] font-mono text-amber-500">{usedSlots}/{effectiveMax} slots</span>
+      </div>
+
+      <input
+        className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1 text-[10px] text-slate-300 focus:outline-none focus:border-amber-600"
+        placeholder="Nome da habilidade"
+        value={habilidade.name}
+        onChange={e => onUpdate({ name: e.target.value })}
+      />
+
+      <input
+        className="w-full bg-slate-700/50 border border-slate-600 rounded px-2 py-1 text-[10px] text-slate-400 focus:outline-none focus:border-amber-600"
+        placeholder="Descrição..."
+        value={habilidade.description}
+        onChange={e => onUpdate({ description: e.target.value })}
+      />
+
+      {/* Condition toggle for Rank A */}
+      {hasCondition && (
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id={`cond-${habilidade.id}`}
+            checked={condActive}
+            onChange={() => {
+              setCondActive(v => !v);
+              if (condActive) onUpdate({ condition: "" });
+            }}
+            className="accent-amber-600"
+          />
+          <label htmlFor={`cond-${habilidade.id}`} className="text-[9px] text-slate-500 cursor-pointer">
+            Ativar condição (+1 slot extra)
+          </label>
+          {condActive && (
+            <input
+              className="flex-1 bg-slate-700/50 border border-slate-600 rounded px-2 py-0.5 text-[9px] text-slate-300 focus:outline-none focus:border-amber-600"
+              placeholder="Descreva a condição..."
+              value={habilidade.condition ?? ""}
+              onChange={e => onUpdate({ condition: e.target.value })}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Module badges */}
+      <div className="flex flex-wrap gap-1">
+        {habilidade.modules.map((modId, idx) => {
+          const m = PARAMECIA_MODULES.find(m => m.id === modId);
+          return m ? (
+            <ModuleBadge key={idx} module={m} onRemove={() => onRemoveModule(idx)} />
+          ) : null;
+        })}
+      </div>
+
+      {remaining > 0 && (
+        <ModulePicker
+          modules={PARAMECIA_MODULES}
+          usedSlots={usedSlots}
+          maxSlots={effectiveMax}
+          onAdd={onAddModule}
+        />
+      )}
+    </div>
   );
 }

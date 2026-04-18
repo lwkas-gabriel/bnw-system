@@ -5,3 +5,4 @@ export * from "./uniqueWeapons";
 export * from "./pericias";
 export * from "./professions";
 export * from "./bugigangas";
+export * from "./akumaModules";
