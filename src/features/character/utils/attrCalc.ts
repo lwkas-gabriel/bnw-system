@@ -1,8 +1,22 @@
-import type { Character } from "../../shared/types/character";
+import type { Character, PericiaId, ZoanAkuma, ZoanClass } from "../../../shared/types/character";
 
-/** Total points a character has to distribute: 6 + level + racial bonus slots */
+/** Total péricia points available: 3 at L1, +1 every even level. L40 = 23. */
+export function totalPericiaPoints(level: number): number {
+  return 3 + Math.floor(level / 2);
+}
+
+/** Blank péricias object (all zeroes) */
+export function blankPericias(): Record<PericiaId, number> {
+  return {
+    ambicao: 0, atletismo: 0, destreza: 0, erudicao: 0,
+    expressao: 0, furtividade: 0, investigacao: 0, logica: 0,
+    percepcao: 0, persuasao: 0, sobrevivencia: 0,
+  };
+}
+
+/** Total points a character has to distribute: 1 per level + racial bonus slots */
 export function totalAttributePoints(level: number, racialFreePoints: number = 0): number {
-  return 6 + level + racialFreePoints;
+  return level + racialFreePoints;
 }
 
 /** BPN formula: floor(level * 3/4) */
@@ -93,6 +107,24 @@ export function validateCharacter(char: Character): Record<string, string[]> {
     gems:       validateGems(char),
     haki:       validateHaki(char),
   };
+}
+
+const ZOAN_CLASS_PERICIA: Record<ZoanClass, PericiaId> = {
+  flying:    "atletismo",
+  herbivore: "sobrevivencia",
+  carnivore: "furtividade",
+  rational:  "logica",
+};
+
+/**
+ * Returns the pericias bonus granted by a Zoan animal class, or null if the
+ * character has no Zoan Akuma. This bonus is applied ON TOP of graduated values
+ * and does not count toward the investable pool or the max-5 cap.
+ */
+export function getZoanClassPericiaBonus(char: Character): { pericia: PericiaId; value: 1 } | null {
+  if (char.akuma?.type !== "zoan") return null;
+  const pericia = ZOAN_CLASS_PERICIA[(char.akuma as ZoanAkuma).animalClass];
+  return pericia ? { pericia, value: 1 } : null;
 }
 
 /**

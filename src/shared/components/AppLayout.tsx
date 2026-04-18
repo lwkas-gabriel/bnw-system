@@ -13,9 +13,9 @@ const NAV: NavItem[] = [
   { path: "/characters",  label: "Personagens",    icon: "⚔️" },
   { path: "/combat",      label: "Combate",        icon: "🎲" },
   { path: "/items",       label: "Itens",          icon: "🔧" },
-  { path: "/ships",       label: "Embarcações",    icon: "⛵", soon: true },
-  { path: "/professions", label: "Profissões",     icon: "📜", soon: true },
-  { path: "/pericias",    label: "Perícias",       icon: "🧠", soon: true },
+  { path: "/ships",       label: "Embarcações",    icon: "⛵" },
+  { path: "/professions", label: "Profissões",     icon: "📜" },
+  { path: "/pericias",    label: "Perícias",       icon: "🧠" },
   { path: "/import",     label: "Import / Export", icon: "📦" },
 ];
 
@@ -71,7 +71,7 @@ export function AppLayout({ children }: Props) {
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-800">
-          <p className="text-[10px] text-slate-600 text-center">v0.1.0 — Alpha</p>
+          <p className="text-[10px] text-slate-600 text-center">v0.5.0 — Alpha</p>
         </div>
       </aside>
 

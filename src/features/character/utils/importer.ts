@@ -1,5 +1,6 @@
-import type { Character } from "../../../shared/types/character";
+import type { Character, PericiaId } from "../../../shared/types/character";
 import type { ExportedCharacter } from "./exporter";
+import { blankPericias } from "./attrCalc";
 import { validateCharacterFull, type ValidationReport } from "./validator";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -17,14 +18,6 @@ export interface ImportResult {
 
 // ─── Schema checks ────────────────────────────────────────────────────────────
 
-function isValidCharacter(obj: unknown): obj is Character {
-  if (!obj || typeof obj !== "object") return false;
-  const c = obj as Record<string, unknown>;
-
-  const required = ["id", "name", "level", "race", "investedAttributes", "gemBudget"];
-  return required.every(key => key in c);
-}
-
 function migrateCharacter(raw: Record<string, unknown>): Character {
   // Default missing fields for forward/backward compatibility
   return {
@@ -39,7 +32,22 @@ function migrateCharacter(raw: Record<string, unknown>): Character {
       constitution: Number((raw.investedAttributes as any)?.constitution) || 0,
     },
     racialBonus:    (raw.racialBonus    as any) ?? {},
-    ambition:       Number(raw.ambition) || 0,
+    pericias: (() => {
+      const base = blankPericias();
+      if (raw.pericias && typeof raw.pericias === "object") {
+        // Merge existing péricias
+        for (const key of Object.keys(base) as PericiaId[]) {
+          const v = (raw.pericias as any)[key];
+          if (typeof v === "number") base[key] = v;
+        }
+      } else if (typeof (raw as any).ambition === "number") {
+        // Backward compat: migrate old ambition field
+        base.ambicao = Number((raw as any).ambition) || 0;
+      }
+      return base;
+    })(),
+    humanPericiaChoice: (raw.humanPericiaChoice as any) ?? null,
+    professions: Array.isArray(raw.professions) ? (raw.professions as any[]) : [],
     energy: {
       bpn:             0,
       energy:          Number((raw.energy as any)?.energy)          || 0,
@@ -55,7 +63,7 @@ function migrateCharacter(raw: Record<string, unknown>): Character {
       ? [(raw.equippedDefensive as any[])[0] ?? null, (raw.equippedDefensive as any[])[1] ?? null]
       : [null, null],
     gemsSpent:   Number(raw.gemsSpent)   || 0,
-    gemBudget:   Number(raw.gemBudget)   || 420,
+    gemBudget:   Number(raw.gemBudget)   || 20,
     location:    (raw.location as any)   ?? "blues",
   };
 }
@@ -94,7 +102,7 @@ export function parseImportJSON(raw: string): ImportResult {
         validation: null,
       };
     }
-    rawChar = exported.character as Record<string, unknown>;
+    rawChar = exported.character as unknown as Record<string, unknown>;
   } else if (parsed && typeof parsed === "object") {
     // Accept bare character object
     rawChar = parsed as Record<string, unknown>;

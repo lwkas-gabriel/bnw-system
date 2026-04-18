@@ -1,0 +1,734 @@
+Facções e Prisão
+
+1 | O que é uma Facção
+
+No universo de One Piece temos a presença de vários grupos e/ou facções, onde cada um possui seus próprios propósitos e motivações que os levaram a se consolidarem como uma organização, sendo as mais conhecidas: O Governo Mundial (que se ramifica na Cipher Pol e na Marinha), os Caçadores de Recompensa, os Piratas e o Exército Revolucionário.
+
+Para conferir as características de cada um das facções bem como sua hierarquia e demais detalhes, basta conferir os posts logo abaixo.
+
+
+
+
+2 | Desconto de Facção
+
+Sempre que uma personagem alcança certo renome e posição dentro da hierarquia da facção, ela recebe um benefício que representa essas vantagens. É similar aos agentes da CP9, Kaku e Kalifa, recebendo uma Akuma no Mi por sua missão cumprida após toda sua dedicação. Em termos de facções estruturadas, como Marinha, Governo e Revolucionários, esse benefício representa a facção investindo no desenvolvimento da personagem como um potencial latente. Em termos de facções mais livres, como Piratas e Caçadores de Recompensas, representa a maior acessibilidade a recursos e meios não tão legais para conseguir o que se deseja.
+
+Esse benefício se dá na forma de um desconto em Gemas. Esse desconto não é um montante bruto de gemas (não se acrescenta à quantia de gemas conquistadas pela personagem), de modo que não é incluso no limite de gemas. O benefício é descrito abaixo:
+
+Desconto de 20 Gemas em qualquer Caminho ou recurso adquirível por Gemas ao alcançar o cargo correspondente ao Nìvel 12 e Presítigo 20.
+
+
+Piratas ao se tornarem Supernova, Marinheiros ao alcançarem o posto de Capitão, Caçadores ao conseguir o Colar Ouro (Rank B), Agentes ao ingressarem nas CP 5 ou 6 e Revolucionários ao serem aclamados Heróis. Ao chegarem nesses cargos, as personagens ganham o Desconto de Facção. Esse desconto de 20 gemas pode ser aplicado na aquisição ou evolução de Akuma no Mi, nos Estágio de Haki, na passagem de até 2 faixas (Artes Marciais), em shift de Ciborgue, em Arma Única, em até 2 Técnicas Rank A, na compra (Rank B) ou evolução (Rank C para A) de um Companheiro, no incremento de 20 de energia ou em Navios Despertos, por exemplo.
+
+Mas atenção, esse benefício só pode ser ganho uma única vez por cada personagem, não pode ser perdido, nem multiplicado. Ou seja, mesmo que se mude de facção, não se perde o benefício e nem se ganha novamente ao alcançar o respectivo cargo na nova facção.
+
+
+
+
+3 | Trocando de Facção
+
+O universo de One Piece é orgânico. É comum que pessoas troquem de lado durante suas jornadas, contanto que ela saiba que seus feitos passados não serão esquecidos.
+
+É por isso que trocar de facção no nosso rpg é muito simples, bastando ao jogador assumir sua nova "identidade" in game. Caso o jogador decida se afiliar a uma facção que seja controlada por algum órgão superior, ele precisará se inscrever nessa organização, sendo no governo para agentes, na marinha para marinheiros, no mercado negro para caçadores ou com a revolução para revolucionários.
+
+A única excessão a essa regra são para os personagens criminosos que desejam limpar sua recompensa.
+
+A partir do momento que o jogador é procurado pelos crimes cometidos, precisa limpar seu nome, através de uma punição. Apenas assim será aceito nas facções marinha, governo e caçadores. Essa punição é a prisão.
+
+
+
+
+4 | Prisão
+
+Ao ser preso um criminoso precisa passar por 3 turnos no mar na mesma aventura em que foi preso para chegar na prisão do mar em que está (independentemente do número de turnos até a finalização da aventura, os cinco turnos devem ser realizados nela). Os marinheiros tem uma rota segura que garante a chegada a prisão em pouco tempo, por isso o tempo de viagem é reduzido.
+
+A próxima aventura do jogador deverá ser inteiramente na prisão, onde ele sofrerá as punições devidas, de acordo com o enredo de sua aventura. Essa aventura precisa ter no mínimo 25 turnos (ou de acordo com o número de integrantes).
+
+Finalizando essa aventura, o jogador pode escolher uma das primeiras ilhas de qualquer uma das rotas de Paradise para receber uma carona e chegará na ilha após 3 turnos de viagem.
+
+Ao ser preso, mesmo que tenha se entregado, o jogador perde todos seus itens, barco e todo seu dinheiro como punição e ressarcimento pelos danos causados. Uma exceção a essa regra são os itens adquiridos com Gemas, mas que ficam bloqueados até ele sair da prisão.
+
+Ao ser libertado, o jogador passa a ser um civil, o que lhe permite a troca de facção (reseta prestígio com piratas, recompensa e perde as dominações). O jogador pode ingressar em qualquer facção normalmente, inclusive no governo, mas deve começar de baixo, com 0 prestígio. Caso o jogador queira se manter como criminoso, dentro de sua facção antiga, seu prestígio e sua recompensa são mantidos.
+
+Além das aventuras obrigatórias, é possível que os jogadores se aventurem em nas prisões por livre e espontânea vontade, seja o jogador da facção que quiser. Nesse caso, ao final das aventuras na ilha, ele não receberá itens ou dinheiro (nem salário), mas terá uma bonificação de +1 prestígio além do padrão de sua categoria em sua facção e + 20% da experiência de final da aventura. Essa bonificação é válida para jogadores de qualquer facção que queiram fazer aventuras extras em prisões, obviamente com algum enredo que faça sentido.
+
+A aventura obrigatória para quem for preso não gera nenhum prestígio e nem fornece a recompensa de experiência extra. Aventuras adicionais, além dessa primeira. poderão ser bonificadas caso o jogador queira fazer mais de uma aventura narrando sua estadia como prisioneiro.
+
+
+Piratas
+
+1 | Introdução
+
+Os piratas na maioria dos casos são a escória do mundo. Saqueadores, assassinos para não dizer coisas piores. No entanto, há também aqueles que o são pelo puro fato de não baixarem a cabeça diante de ordens e seu espírito livre os colocou na ilegalidade. Alguns tem um senso de fraternidade tão grande que acabam entrando no mundo do crime com ideias protetivas. Não importa a origem ou o motivo, o Governo Mundial de alguma maneira o considera uma ameaça, e paga o valor de sua periculosidade a quem se arriscar trazer esse indivíduo as autoridades - vivo ou morto.
+
+Para se tornar um pirata, basta cometer um dos atos de pirataria e começar a acumular pontos de prestígio em sua aventura. Você também pode começar na facção, caso tenha acabado de criar sua personagem (seja de ficha nível 1 ou de reset). Neste cenário, você já começa como um Patife com uma recompensa de B$ 50.
+
+
+
+
+2 | Hierarquia
+
+Piratas são conhecidos por sua anarquia, por não respeitar regras. Por essa razão, também não possuem uma grande organização central. Isso não significa, contudo, que não exista um mínimo de ordem entre as tripulações.
+
+O Capitão, de modo geral, é o chefe da tripulação, sendo responsável por coordenar as atividades do navio e garantir que os objetivos da tripulação sejam alcançados.
+
+O Imediato costuma ser o segundo em comando e deve assumir o comando em caso de ausência, incapacidade ou morte do Capitão, a quem também auxilia.
+
+É claro que cada tripulação é livre para definir seus cargos e funções. Dessa forma, as maneiras de organização interna de cada tripulação varia muito.
+
+
+
+
+3 | Progressão
+
+Apesar de não possuírem uma hierarquia propriamente dita, nem todos os piratas são nascidos iguais. Piratas costumam respeitar aqueles com mais renome, independente se for seu capitão ou um rival. Eventualmente, a Marinha e o mundo criaram rótulos para definir o nível de ameaça de cada pirata, conforme seu renome. A relação de renomes pode ser conferida abaixo.
+
+Marujo
+Requisitos: Nível 01 e Prestígio 00;
+Benefícios: Pode ganhar um cartaz com uma recompensa de até B$ 20.000.000 por sua captura vivo ou morto! Seu navio pode abrigar mais 10 tripulantes. Em terra firme, pode recrutar mais 5 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Fora da Lei
+Requisitos: Nível 04 e Prestígio 04;
+Benefícios: Pode ganhar um cartaz com uma recompensa de até B$ 50.000.000 por sua captura vivo ou morto! Seu navio pode abrigar mais 20 tripulantes. Em terra firme, pode recrutar mais 10 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Inimigo Público
+Requisitos: Nível 08 e Prestígio 10;
+Benefícios: Pode ganhar um cartaz com uma recompensa de até B$ 100.000.000 por sua captura vivo ou morto!
+Seu navio pode abrigar mais 30 tripulantes. Em terra firme, pode recrutar mais 15 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Supernova
+Requisitos: Nível 12 e Prestígio 20;
+Benefícios: Ao ser reconhecido como um Supernova, o pirata recebe o Desconto de Facção. Pode ganhar um cartaz com uma recompensa de até B$ 300.000.000 por sua captura vivo ou morto! Seu navio pode abrigar mais 40 tripulantes. Em terra firme, pode recrutar mais 20 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Astro Principal
+Requisitos: Nível 16 e Prestígio 40;
+Benefícios: Pode ganhar um cartaz com uma recompensa de até B$ 700.000.000 por sua captura vivo ou morto!
+Seu navio pode abrigar mais 50 tripulantes. Em terra firme, pode recrutar mais 30 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Magnânimo
+Requisitos: Nível 20 e Prestígio 60;
+Benefícios: Pode ganhar um cartaz com uma recompensa de até B$ 1.500.000.000 por sua captura vivo ou morto!
+Seu navio pode abrigar mais 60 tripulantes. Em terra firme, pode recrutar mais 45 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir.
+
+Calamidade
+Requisitos: Nível 30; Prestígio 85;
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Imperadores que o cenário suporta são 4 (4) e, no momento, há zero (0) vagas disponíveis. Para liberar uma vaga, o jogador deverá derrotar/matar uma das personagens que esteja ocupando o cargo.
+Benefícios: Pode ganhar um cartaz com uma recompensa de mais de B$ 3.000.000.000 por sua captura vivo ou morto! Seu navio pode abrigar mais 70 tripulantes. Em terra firme, pode recrutar mais 70 Seguidores, mesmo que não tenha embarcação, para Pilhar ou Destruir. Ao alcançar tamanho patamar de fama, o pirata pode ser convidado a ocupar um lugar de destaque na tripulação de um dos Yonkou.
+
+Imperador dos Mares (Yonkou)
+Requisitos: Nível 40; Prestígio 100; Jubilamento
+Benefícios: Sua recompensa não tem limites e seus valores ultrapassam a realidade econômica dos cidadãos comuns. São cabeças de vastos territórios e de imensas frotas piratas. Podem conquistar novos territórios com maior facilidade. São os principais concorrentes a se tornarem o novo Rei dos Piratas. Os boatos contam que cada Yonkou possui domínio sobre um dos Road Poneglyphs necessários para se encontrar o One Piece.
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Imperadores que o cenário suporta são quatro (4) e, no momento, há uma (1) vagas disponíveis. Para liberar uma vaga, o jogador deverá derrotar/matar uma das personagens que esteja ocupando o cargo.
+
+
+
+3.1 - Sete Lordes do Mar
+Os Sete Lordes do Mar, no original Shichibukai, são piratas que aceitaram receber permissão para cometer crimes em troca de obedecer a algumas leis burláveis e agradar aos poderosos, vulgo políticos. Contém 7 membros que eram piratas, mas toparam trabalhar para o Governo Mundial por regalias.
+
+Shichibukais têm permissão para cometer seus crimes como piratas, mas não precisam se preocupar com alguém os caçando. Contudo nem sempre são bem vistos pelo resto da comunidade pirata, chamados de "cães do governo" (muitas vezes pelas costas), enquanto a Marinha e o Governo os vê com quase o mesmo desgosto.
+
+Lorde do Mar (Shichibukai)
+Requisitos: Nível 18 e Prestígio 50.
+Caso um jogador recuse ou seja expulso do cargo, será aberto um tópico para inscrição de interesse, será somado o prestígio e nível dos candidatos para fazer um ranking e decidir o próximo convidado. Esse cargo é um cargo à parte da progressão normal da facção. Para o jogador obtê-lo, basta cumprir com os requisitos. Não é necessário ser de um cargo de nível anterior. O jogador mantém os benefícios do último cargo onde estava, com exceção do ganho de prestígio.
+Benefícios: Recompensa suspensa e congelada; ganha imunidade contra a Marinha e Governo, não podendo ser preso pela Marinha ou Governo, nem caçado por Caçadores de Recompensa. Seus feitos também não fazem a recompensa aumentar, sendo que a recompensa pode ser revista caso o pirata perca o cargo.
+Deveres: Em momentos de necessidade, a Marinha pode chamar os Shichibukais para fazerem algum serviço (serviços solicitados pelo cenário). A origem ou os motivos desses serviços podem ou não ser revelados. Isso obriga que o jogador lute pelo lado do governo, sendo sua traição ou recusa de seguir as ordens considerada crime punível com a expulsão do grupo. Sistemicamente, o jogador pode derrotar marinheiros e agentes, mas não pode matá-los. Caso faça isso será automaticamente expulso do cargo. Não pode dominar ilhas com base da marinha. Além disso, o personagem não pode dominar mais de 5 territórios diferentes. Todos os integrantes da tripulação do Lorde do Mar devem seguir essas regras e, caso matem marinheiros, devem ser expulsos da tripulação ou o lorde do mar perderá sua vaga.
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Shichibukai que o cenário suporta são sete (7) e, no momento, há uma (1) vagas disponíveis. Para liberar uma vaga, o jogador deverá derrotar/matar uma das personagens que esteja ocupando o cargo.
+
+
+
+3.2 - Tripulantes e Seguidores
+A maior qualidade que um pirata pode ter é o poder de convencer (ou coagir) outros a ajudá-lo. Esses outros são divididos entre Tripulantes e Seguidores. Todos esses são NPCs sem ficha e podem ser distribuídos para realizar as tarefas de pilhagem ou destruição, mas cada NPC pode realizar apenas uma das tarefas por aventura.
+
+Tripulantes são os marujos que o acompanharão pelos mares, ajudando nas tarefas diárias da embarcação. Um pirata pode recrutar tantos tripulantes quanto caibam em sua embarcação. Num grupo de jogadores piratas, apenas o jogador que é comandante do navio (que não necessariamente é quem navega, mas sim aquele que administra a embarcação) fornece seu bônus do cargo para a quantidade de tripulantes.
+
+Já os Seguidores não irão acompanhá-lo em viagem e podem ser recrutados em cada ilha. Esse recrutamento não possui dificuldade, podendo acontecer uma vez por aventura. Num grupo de jogadores piratas, todos os jogadores podem recrutar a quantidade permitida por seu cargo.
+
+A Pilhagem, também chamada de saque, é o furto ou roubo indiscriminado de bens alheios. É uma das vantagens de ser pirata - e uma de suas maneiras de ganhar dinheiro. Uma vez por aventura, o pirata pode enviar um número de seus tripulantes e seguidores para saquear, recebendo B$ 50.000 para cada NPC enviado. Esse valor não conta no teto de recompensa do jogador.
+
+
+
+
+3.2 - Recompensa
+As recompensas oferecidas pela captura e pela cabeça dos piratas é extremamente dinâmica. Para saber qual é o valor oferecido em seu cartas de procurado, usamos o seguinte cálculo:
+
+NÍVEL * PRESTÍGIO * 1.000.000
+
+
+Toda recompensa de personagem não pode passar o teto, delimitado pelo seu atual renome (Marujo, Bucaneiro etc). Por exemplo, um pirata nível 6, com 8 de prestígio, teria uma recompensa equivalente a B$48.000.000. Esse valor é o resultado do nível multiplicado pelo prestígio, multiplicado por um milhão. Entretanto, caso esse mesmo pirata tivesse 9 de prestígio, sua recompensa seria R$50.000.000. A razão disso é que, apesar do resultado da soma ser 54 milhões, sua recompensa está limitada pelo seu renome como Bucaneiro, que permite até 50 milhões de recompensa.
+
+
+
+
+4 | Prestígio
+
+Renome e infâmia, no mundo da pirataria, são conquistados ao se cometer crimes e atrocidades. Ou, simplesmente, desagradar o Governo Mundial por ser livre demais. Isso tudo é representado pelos Pontos de Prestígio.
+
+Prestígio é adquirido quando um pirata comete um crime ou contraria diretamente o Governo Mundial. Esses atos de pirataria podem envolver derrotar ou matar um inimigo de qualquer facção, destruir o cenário, pilhar, roubar, sequestrar, traficar ou derrubar o governo de uma ilha afiliada ao Governo Mundial, entre outros. Ao concluir uma aventura em que foram cometidos atos desse gênero, o pirata recebe Pontos de Prestígio conforme a tabela a seguir:
+
+Renome	Pontos de Prestígio
+Marujo	+2 por aventura
+Fora da Lei	+3 por aventura
+Inimigo Público	+5 por aventura
+Supernova	+7 por aventura
+Astro Principal	+9 por aventura
+Magnânimo	+11 por aventura
+Calamidade	+13 por aventura
+Shichibukai	+4 por aventura
+
+
+Marinha
+
+1 | Introdução
+
+A Marinha é uma das maiores, se não a maior, instituição no mundo de One Piece. Defensores da lei e da ordem, os marinheiros buscam manter as ilhas e cidades seguras de todo e qualquer perigo - sejam eles piratas, revolucionários ou pequenos malfeitores.
+
+Para ingressar nela, é requisitado que os candidatos façam um teste de aptidão física e, em alguns casos, até estratégico. Sua progressão, no entanto, é segura, com salários fixos, alimentação e estadia garantidas pela instituição, caso o Marinheiro esteja em sua Base de atuação.
+
+
+
+
+2 | Hierarquia
+
+Todas as organizações possuem sua própria organização e regimento hierárquico. Contudo, em questão do Governo Mundial que possui duas subdivisões em sua organização, Cipher Pol e Marinha, esse tópico tem como intuito estabelecer a dinâmica dessa vasta e poderosa facção. Portanto, apresentaremos a seguir como funciona o regimento interno e hierarquia dessa facção e suas ramificações.
+
+Com isso, fica estabelecido que nenhum marinheiro, assim como nenhum membro da cipher pol, possui autonomia ou autoridade sobre membros da outra ramificação independentemente da posição que ocupem em suas respectivas ramificações. No entanto, ambas estão obrigatoriamente a serviço e ordens do Gorousei e do Comandante Chefe do Governo Mundial.
+
+Obs: Contudo, em casos especiais e exclusivos, onde exista autoridade concedida pelo Gorousei ou pelo Comandante Chefe do Governo Mundial, o detentor dessa autoridade temporária terá autonomia total sobre ambas as ramificações.
+
+2.1 Gorousei
+O posto de maior autoridade e poder dessa organização é ocupada pelo Gorousei (literalmente Cinco Estrelas Anciãs) são as autoridades máximas do Governo Mundial, e como tal, essencialmente, governam o mundo inteiro. Eles são os cinco homens que governam acima da Marinha e da Cipher Pol.
+
+2.2 Comandante Chefe do Governo Mundial
+O Comandante Chefe do Governo Mundial, é o maior cargo da Marinha e o comandante que cuida de toda a organização. É um pouco acima do Almirante de Frota, mas abaixo do Gorousei. Portanto, ocupada a segunda maior posição de poder hierárquico dentro dessa facção.
+
+Após esses dois postos, o Governo mundial se ramifica em duas divisões distintas e independes uma da outra, onde cada qual possui seu próprio regimento, atribuições, deveres e hierarquias próprias, sendo elas: A Cipher Pol e a Marinha.
+
+
+
+
+
+3 | Progressão
+
+A progressão da Marinha é uma das mais seguras do fórum. É um único sistema de hierarquia, simples e direto que, conforme a personagem cresce na instituição, garante mais benefícios e independência.
+
+Para subir de cargo, o marinheiro deverá cumprir com certos requisitos, sendo eles Pontos de Prestígio e Nível. Ao cumprir com todas as exigências necessárias, ao final de sua aventura, a personagem receberá sua promoção para o próximo cargo; este que passará a valer a partir da aventura seguinte.
+
+Em questão de salário, independente do cargo no qual a personagem esteja, ele deve ser entregue todo final de aventura completa — em caso de progressão de cargos, é dado o cargo que o personagem possuía ao iniciar a aventura. Seu valor é tabelado e, este sim, dependente do cargo da personagem.
+
+A relação dos cargos, seus benefícios e seus requisitos pode ser vista abaixo.
+
+Grumete - Rank 11
+Requisitos: Nível 01 e Prestígio 00;
+Salário: B$ 100.000,00;
+Benefícios: O jogador recebe uma arma de qualidade esplêndida (+1) da Marinha, sendo seu tipo à escolha do jogador. Em sua base, o marinheiro poderá sempre contar com alimentação e estadia gratuitos, isto é valido para os marinheiros de qualquer patente. Uniforme padrão: uma camisa branca com botões e o símbolo da marinha estampado nas costas, uma "tag" de identificação com seu código na instituição, um lenço azul em volta do pescoço, calça azul marinho, bota preta, e um boné escrito "marine" (esses itens são estéticos, e não fornecem bônus numérico algum)
+Pejorativamente chamados de “buchas de canhão”, os grumetes constituem a maior parte da força da Marinha, sendo encontrados em todas as bases pelo mundo seja protegendo as pessoas do mal da pirataria com seus sabres e rifles ou limpando a latrina da base quando necessário.
+
+Cabo - Rank 10
+Requisitos: Nível 02 e Prestígio 02;
+Salário: B$ 250.000,00;
+Benefícios: -x-
+Sendo a primeira promoção oficial na marinha, a subida a Cabo mostra a resolução do marinheiro em pertencer a esta organização e a ambição de querer mais que limpar latrinas e fazer trabalhos rotineiros.
+
+Sargento - Rank 09
+Requisitos: Nível 04 e Prestígio 04;
+Salário: B$ 500.000,00
+Benefícios: -x-
+Com a chegada nessa categoria, os marinheiros ganham liberdade de usar menos o uniforme o tempo inteiro, apenas lhes sendo requisitado o boné ou o casaco, estes até que podem ser customizados. Sargentos são, muitas vezes, responsáveis por missões independentes por já terem demonstrado capacidade dentro da facção. É o cargo mais comum entre os membros do setor burocrático fora da Grand Line.
+
+Tenente - Rank 08
+Requisitos: Nível 08 e Prestígio 10;
+Salário: B$ 1.500.000,00;
+Benefícios: -x-
+O caminho de destaque na Marinha começa quando o marinheiro chega nesta categoria. Agora com mais destaque, os tenentes são auxiliares diretos dos capitães na maior parte dos seus serviços — seja cuidando de missões especiais ou auxiliando no trabalho burocrático. A liberdade de uniforme se torna ainda maior agora, mas ainda é requisitado a utilização de pelo menos uma parte do uniforme padrão, normalmente sendo o casaco branco com os dizeres de “JUSTIÇA”, em kanji, atrás.
+
+Comandante - Rank 07
+Pré-Requisitos: Nível 10 e Prestígio 15;
+Salário: B$ 2.000.000,00;
+Benefícios: -x-
+Comandantes normalmente ficam destacadas numa base e tomam a responsabilidade de gerir o seu funcionamento normal, sendo o cargo mais comum dos marinheiro que decidem não se aventurar mais pelos mares e se acomodam pelos Blues. É a partir desta patente que se separa o joio do trigo, pois marinheiros mais fortes e ambiciosos não se acomodam e procuram seguir e evoluir na sua carreira.
+
+Capitão - Rank 06
+Pré-Requisitos: Nível 12 e Prestígio 20;
+Salário: B$ 3.000.000,00;
+Benefícios: Ao alcançar o cargo de Capitão, o marinheiro recebe o Desconto de Facção. A personagem pode comissionar permanentemente um navio da Marinha, conforme descrita nas regras de Embarcações. Em sua base, o marinheiro poderá sempre contar com alimentação e estadia gratuitos.
+Membros da facção que chegam nesses ranks tornam-se a elite entre os marinheiros, conseguindo subordinados e também até tripulações para lhes seguirem em suas missões pelo mundo. A partir dessa categoria, os marinheiros podem começar a liderar bases da facção pelo mundo caso venham a desejar, desde que estejam disponíveis ou que tenham cargo maior do que o líder anterior — eles também ganham prioridade caso sejam responsáveis pela construção da base na ilha em questão.
+
+Comodoro - Rank 05
+Requisitos: Nível 16 e Prestígio 40;
+Salário: B$ 4.000.000,00;
+Benefícios: -x-
+Comodoros comandam qualquer marinheiro de patente menor, e lidam com questões de autoridade importantes demais para a patente Capitão.
+
+Contra-almirante - Rank 04
+Requisitos: Nível 20 e Prestígio 60;
+Salário: B$ 7.000.000,00;
+Benefícios: -x-
+Como o próprio nome diz, os membros dessa categoria representam não só o contingente líder da facção mas também uma força militar própria pelo poder acumulado que cada um deles possui. Além de fazerem a defesa dos territórios de maior importância para a Marinha, os membros dessa categoria possuem uma grande liberdade em suas ações.
+
+Vice-almirante - Rank 03
+Requisitos: Nível 30 e Prestígio 85;
+Salário: B$ 15.000.000,00;
+Benefícios: -x-
+Como o próprio nome diz, os membros dessa categoria representam não só o contingente líder da facção mas também uma força militar própria pelo poder acumulado que cada um deles possui. Além de fazerem a defesa dos territórios de maior importância para a Marinha, os membros dessa categoria possuem uma grande liberdade em suas ações.
+
+Almirante - Rank 02
+Requisitos: Nível 40 e Prestígio 100; Jubilamento
+Salário: B$ 20.000.000,00
+Benefícios: -x-
+A segunda maior patente da Marinha. Apenas três marinheiros recebem esse título ao mesmo tempo, e eles são coroados como os "Maiores Poderes Militares". Eles são os únicos marinheiros, ao lado do Almirante da Frota, a terem permissão de emitir um Buster Call em qualquer ilha que considerar uma ameaça. Apesar de sua elevada autoridade na Marinha, sua proximidade com os altos cargos de comando do Governo Mundial lhe tiram praticamente toda liberdade de atuação. Por isso, são considerados os cães do governo por excelência.
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Almirantes que o cenário suporta é três (3) e, no momento, há uma (1) vagas disponíveis.
+
+Almirante de Frota - Rank 01
+Requisitos: Nível 40 e Prestígio 100; Jubilamento
+Salário: B$ 30.000.000,00;
+Benefícios: Neste cargo, a personagem possui controle sobre a Marinha, tal como sobre os Shichibukais (e pelas suas nomeações), podendo decidir um sucessor para ocupar uma das vagas dos Lordes dos Mares, oferecendo anistia perante o Governo (que pode ser revista).
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Almirante de Frota que o cenário suporta é um (1) e, no momento, há zero (0) vagas disponíveis.
+
+
+
+3.1. | Corregedoria
+
+Toda organização de grande porte como a Marinha, que oferece tamanha autoridade aos seus membros e com visões distantes de justiça entre si, corre o risco de perder o controle ou fugir de seu propósito. Sejam capitães que se tornam ditadores, comandantes que são cruéis e extremos no exercício de sua justiça, contra-almirantes que negligenciam suas tarefas ou mesmo vice-almirantes que se corromperam com negócios do submundo, toda a hierarquia está sujeita a irregularidades. A Corregedoria da Marinha é responsável por prevenir e apurar essas irregularidades.
+
+Respondendo diretamente ao Almirante-de-Frota, a Corregedoria da Marinha seleciona membros de seus tanques que provaram seu valor, moral e coragem, mas que estão descontentes com a estrutura burocrática e rígida da instituição. Ser um corregedor não é um cargo em si na hierarquia, mas uma função especial oferecida à membros selecionados a dedo. Um corregedor continua seu progresso normal na hierarquia da Marinha, desfrutando da autoridade direta do Almirante-da-Frota em casos de suspeita de irregularidades institucionais ou em relação ao cumprimento da missão da Marinha. Na prática, isso permitiria até mesmo sobrepor a autoridade de uma patente maior com as devidas evidências e justificativas. Entretanto, essa liberdade tem um preço. Por ser um estorvo para as altas patentes, seu progresso dentro da hierarquia da Marinha é severamente desacelerado.
+
+Corregedor
+Pré-Requisitos: Nível 18 e Prestígio 50;
+Salário: O mesmo da patente.
+Benefícios: Você faz parte da polícia interna da Marinha. Você é muitas vezes visto como um problema para parte alta hierarquia. Por mais que ainda se encontre na escala de comando, pode agir com autonomia, podendo utilizar os benefícios da facção e seguir a hierarquia formal, como também pode recusar uma promoção ou missão, se assim desejar. Sob apresentação de provas contundentes, pode até mesmo sobrepor ordens de oficias de patente mais alta, caso sejam suspeitos de irregularidades. Isso permite que um corregedor promova a justiça nos Mares de forma excepcional, inclusive afetando a dinâmica interna da Marinha.
+
+
+
+
+
+4 | Rokushiki
+
+Rokushiki é uma arte marcial que visa amplificar os poderes do corpo humano à níveis extremos, e também é a principal forma de combate dos agentes da Cipher Pol e da Marinha. Ele foi desenvolvido pelos cientistas mais renomados dessas duas corporações no formato de um conjunto de soros, consumido por seus Agentes e Soldados conforme alcançam certos níveis. Tal soro é administrado em doses pequenas na comida e água do agente, sem que esse precise de fato ingeri-lo conscientemente.
+
+O Rokushiki é composto por seis técnicas com diferentes ênfases e benefícios, e para membros das facções do Governo Mundial e Marinha, elas custam 1 gema a menos, podendo moldá-las e deixá-las personalizadas. No entanto, marinheiros devido a diferença de treinamento só podem desenvolver 3 destas técnicas.
+
+
+
+
+5 | Prestígio
+
+Não é preciso apenas de habilidades excepcionais e fama para subir na hierarquia da Marinha. Como um terceiro requisito, é necessário que o Marinheiro adquira uma certa quantidade de Pontos de Prestígio.
+
+No caso da Marinha, Prestígio é uma contagem de pontos adquiridos ao se concluir uma aventura completa. Cada cargo da Marinha recebe uma quantidade definida de pontos por aventura. Conforme o marinheiro progride na facção, mais pontos de prestígio serão necessários para subir de cargo; porém também mais pontos de prestígio o marinheiro receberá por aventura.
+
+A relação de quantos pontos se recebe por cargo e contrato pode ser vista na tabela abaixo:
+
+Renome	Pontos de Prestígio
+Grumete/Cabo	+2 por aventura
+Sargento	+3 por aventura
+Tenente/Comandante	+5 por aventura
+Capitão	+7 por aventura
+Comodoro	+9 por aventura
+Contra-almirante	+11 por aventura
+Vice-Almirante	+13 por aventura
+Corregedor	+4 por aventura
+
+
+Caçadores de Recompensa
+
+1 | Introdução
+
+Os caçadores de recompensa são mercenários que realizam serviços em troca de dinheiro - e isso, em um universo cheio de crimes e desavenças, normalmente envolve caçar piratas. Eles compõem uma das maiores forças independentes do universo de One Piece, visto que não fazem parte de uma organização definida, mesmo trabalhando a mando da Marinha na maioria de seus contratos.
+
+Caçadores são movidos pelas mais diversas causas e motivações: alguns possuem um apurado senso de justiça, enquanto outros simplesmente estão no negócio pelo dinheiro; mas o fato é que, independente de motivo e razão, essa facção não é muito bem vista por ninguém. O lado da lei, como Agentes e Marinheiros, os veem como charlatões irresponsáveis e desprovidos de dever e senso moral. O lado dos foras da lei, por sua vez, veem os caçadores como cães da Marinha - pessoas desprovidas de liberdade e independência, que só estão ali para fazer o trabalho sujo que os marinheiros não querem. Apesar de todos esses desafios, nenhuma outra facção tem membros tão ricos quanto esta. Em uma época de grande criminalidade e pirataria, os contratos de caça são numerosos e as oportunidades permitem os Caçadores de Recompensas acumularem grandes riquezas, que podem investir em seus equipamentos, embarcações ou até mesmo seus próprios negócios no Submundo.
+
+Se você, apesar de tudo isso, ainda deseja se tornar um Caçador de Recompensas, o processo é bem simples: basta completar um contrato e requisitar seu colar de caçador com um dos olheiros do Mercado do Submundo. Esse colar serve como uma credencial que te identifica como caçador de recompensas, seja para conseguir novos contratos ou acessar, de fato, o Mercado do Submundo. No colar, constará seu nome e um número de registro único, que ninguém jamais possuirá um igual. O colar é individual e intransferível.
+
+Você também pode começar na facção, caso tenha acabado de criar sua personagem (seja de ficha nível 1 ou de reset). Neste cenário, você já começa como um Caçador Rank E.
+
+
+
+
+2 | Hierarquia
+
+Caçadores não possuem uma hierarquia definida. Normalmente, são lobos solitários, que mais preferem caçar sozinhos do que em bando. Contudo, isso também não é regra, vide a existência do Sindicato dos Caçadores e dos Clãs de caçadores.
+
+O Sindicato dos Caçadores é uma grande organização composta pelos próprios mercenários, visando discutir, organizar e coordenar a opinião e interesses comuns dos caçadores. É claro, nem todos concordam com a existência do Sindicato ou participam de suas reuniões, porém o funcionamento estável da organização até hoje demonstra que uma grande maioria apoia o movimento e sua prevalência para fins mediadores..
+
+O Sindicato normalmente é acionado quando há polêmicas envolvendo a facção como um todo, ou quando os caçadores sentem-se de alguma maneira debilitados por instituições como a Marinha e o Governo. É raro, porém não impossível, que o Sindicato também seja acionado para tomar alguma medida contra Piratas e Revolucionários que estejam intervindo nos interesses e no trabalho dos mercenários. Quando o Sindicato é acionado, os caçadores são notificados por meio do Mercado do Submundo e convocados/convidados para reunirem-se em uma localidade secreta do mercado, que muda de tempo em tempo, conforme necessidade, e discutirem seus dilemas.
+
+Os Clãs de Caçadores, por sua vez, são grupos menores, com seus próprios interesses e objetivos -- como uma tripulação pirata e um esquadrão da Marinha são. Sua quantidade de membros pode variar de dois até mais de vinte, a depender apenas do líder do Clã. Cada Clã também costuma possuir um nome próprio, escolhido por seus membros, e não há limites para como deve ser seu nome.
+
+
+
+
+3 | Progressão
+
+Ainda que não tenham de fato uma estrutura hierárquica, os próprios mercenários estabeleceram um sistema de ranks a fim de medir o nível de habilidade de cada caçador de recompensas e organizar a rotação de contratos. Os ranks são representados por colares registrados, que todo mercenário carrega consigo, e que escalam do Rank E, o mais baixo, ao Rank SS, o mais alto.
+
+Como toda progressão de facção, cada rank fornece benefícios únicos, como a oferta de contratos com maiores valores de recompensa e descontos de gemas para a compra de Akumas, Haki e Ciborgue. Os benefícios escalam conforme o mercenário progride nós Ranks da facção..
+
+Para subir de rank, o caçador deve cumprir com certos requisitos, sendo eles Pontos de Prestígio e Nível. Ao cumprir com todas as exigências necessárias, o caçador precisará acessar o Mercado do Submundo, onde deverá requisitar sua mudança de rank, devolver seu colar antigo e resgatar um colar novo.
+
+A relação dos ranks, suas recompensas e seus requisitos pode ser vista abaixo.
+
+Colar de Latão - Rank E
+Requisitos: Nível 01 e Prestígio 00;
+Benefícios: Pode caçar alvos/objetos/bestas com até 15kk de recompensa. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite. Recebe a assinatura mensal do Jornal do Oceano, entregue pontualmente dentro de sua aventura toda vez que uma nova edição for lançada sem qualquer custo.
+
+Colar de Bronze - Rank D
+Requisitos: Nível 04 e Prestígio 04; Completar ao menos uma caçada Rank E
+Benefícios: Pode caçar alvos/objetos/bestas com até 30kk de recompensa. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite. Ganha acesso aos serviços exclusivos do Mercado do Submundo, podendo utilizar de seu colar para utilizar dos benefícios especiais de sua facção, como contratar NPCs e aplicar uma Cabeça-Bounty.
+
+Colar de Prata - Rank C
+Requisitos: Nível 08 e Prestígio 10; Completar ao menos uma caçada Rank D
+Benefícios: Pode caçar alvos/objetos/bestas com até 75kk de recompensa. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite.
+
+Colar de Ouro - Rank B
+Requisitos: Nível 12 e Prestígio 20; Completar ao menos uma caçada Rank C
+Benefícios: Pode caçar alvos/objetos/bestas com até 200kk de recompensa. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite.
+Ao alcançar o Rank B, o caçador recebe o Desconto de Facção.
+
+Colar de Platina - Rank A
+Requisitos: Nível 16 e Prestígio 40; Completar ao menos uma caçada Rank B
+Benefícios: Pode caçar alvos/objetos/bestas com até 750kk de recompensa. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite.
+
+Colar de Paládio - Rank S
+Requisitos: Nível 20 e Prestígio 60; Completar ao menos uma caçada Rank A
+Benefícios: Pode caçar alvos/objetos/bestas com até 1,5bi de recompensa. Vale lembrar que recompensas acima na casa dos bilhões são extremamente raras e normalmente limitadas a Yonkous e seus comandantes. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite.
+
+Colar de Diamante - Rank SS
+Requisitos: Nível 30 e Prestígio 85; Completar ao menos uma caçada Rank S
+Benefícios: Pode caçar alvos/objetos/bestas com até 4bi de recompensa o GM pode fazer o NPC, qualquer valor acima deste o GM deve requisitar a ficha para o desenvolvimento, caso este não seja um NPC de cenário. Vale lembrar que recompensas acima na casa dos bilhões são extremamente raras e normalmente limitadas a Yonkous e seus comandantes. Caso o alvo seja um outro jogador ou um NPC com bounty criado pela equipe do cenário, esse valor poderá ser extrapolado e não possuirá limite.
+
+Imperador do Submundo
+Requisitos: Nível 40 e Prestígio 100; Jubilamento.
+Benefícios: Pode divulgar e promover a caça a alvos/objetos/bestas com qualquer valor de recompensa. É responsável por negociar com autoridades legais e do submundo para garantir os melhores contratos para os caçadores. Pode oferecer contratos legais e ilegais com consequências capazes de mudar o rumo da história. Participam do conselho administrativo do Sindicato e, por trás dos panos, conduzem operações legais (como o Jornal do Oceano) e ilegais (como a venda de armamentos proibidos) no Submundo. Sua influência é tamanha que fazem até mesmo a Marinha e o Governo Mundial ter receio em os confrontar diretamente.
+Especial: Atualmente, o número máximo de Imperadores do Submundo que o cenário suporta são seis (6) e, no momento, há zero (3) vagas disponíveis. Para liberar uma vaga, o jogador deverá derrotar/matar uma das personagens que esteja ocupando o cargo ou arruinar seus negócios no Submundo.
+
+
+
+
+3.1 - Agentes do Submundo
+Por mais que o Sindicato de Caçadores seja uma organização legal e outorgada pelo Governo Mundial, ela serve de fachada para os negócios com os Imperadores do Submundo. Assim, há toda uma demanda oculta que chega ao Sindicato, com contratos para serviços ilegais diversos. Para atender esses clientes, o conselho administrativo recruta caçadores que já provaram seu valor e eficácia, ao mesmo tempo que demonstraram sua moralidade dúbia.
+
+Caçadores que se tornam Agentes do Submundo rompem as limitações morais tradicionais da facção e, por conta disso, sua progressão nos Ranks acaba sendo mais difícil por ser visto com maus olhos por seus pares. Por mais que todos saibam que eles existem e, por vezes, saibam que são, ninguém é capaz de incriminá-los pois sempre cobrem seus rastros com perfeição e contam com a proteção dos Imperadores do Submundo, o que leva à vista grossa por parte das autoridades. Ainda assim, se não forem cuidadosos, os Agentes do Submundo podem ser descobertos e quando isso acontece, são completamente abandonados pelo Sindicato e destinados a viver uma vida como criminosos (na prática, se tornam piratas).
+
+Agente do Submundo
+Requisitos: Nível 18 e Prestígio 50.
+Benefícios: Prossegue o ranqueamento comum dos Caçadores de Recompensas, com suas limitações e benefícios, porém podem assumir contratos ilegais e prestar serviços no Submundo.
+Deveres: Não pode deixar rastros das atividades ilegais.
+
+
+
+
+3.2 - Prestígio
+A vida de um caçador pode ser resumida seus contratos bem-sucedidos - e em toda fama proveniente disso, é claro. Entretanto, a forma como um caçador se comporta ao longo de suas caças também é fundamental para sua boa reputação e prestígio, tanto entre outros caçadores como com os civis e Governo Mundial. Prestígio é uma contagem de pontos adquiridos por um caçador ao longo de suas caças e contratos. Cada rank de caçador recebe uma quantidade por aventura definida por seu rank. Conforme você progredir na facção, mais pontos de prestígio você precisará para subir de rank, porém também mais pontos de prestígio você receberá por caça/contrato completado.
+
+A relação de quantos pontos se recebe por rank e contrato pode ser vista na tabela abaixo:
+
+Rank	Pontos de Prestígio
+E	+2 por aventura
+D	+3 por aventura
+C	+5 por aventura
+B	+7 por aventura
+A	+9 por aventura
+S	+11 por aventura
+SS	+13 por aventura
+Agente do Submundo	+4 por aventura
+
+
+
+
+
+4 | Caçando
+Como explicado mais acima, há três principais tipos de caça diferentes: caças de indivíduos, caça de itens e caça de animais. Nesta parte do tópico, no entanto, explicaremos a fundo como cada uma dessas caças funciona, o que é preciso fazer que uma caça seja classificada como "bem-sucedida" e as consequências que elas podem ter.
+
+É importante ressaltar que um caçador apenas poderá fazer, no máximo, uma (1) caça/contrato por aventura completa, independente do tipo de caça. Uma aventura é considerada completa quanto ela possui a quantidade de turnos mínima para se gerar a recompensa máxima de XP e gemas.
+
+
+4.1 - Itens
+Quando um contrato requisita a busca e a devolução de um pertence pessoal, normalmente a causa do desaparecimento desse item é roubo. Contudo, há também aqueles contratantes que querem, na verdade, roubar um item de alguém. Para qualquer que seja o caso, os contratantes sempre exigem que o item seja devolvido inteiro e sem danos. Um item que seja entregue parcialmente danificado sofre uma redução de 50% da recompensa, e um item totalmente danificado não gerará recompensa, tratando a caça como "malsucedida" e não gerando prestígio.
+
+
+4.2 - Pessoas e Animais
+No caso de caça de pessoas e animais, por sua vez, o quê a pessoa ou qual tipo de criatura é não faz diferença, mas sim seu estado de saúde no momento da entrega. Tendo isso em vista, existem três tipos de contrato, a depender da exigência do cliente referente ao bem-estar do alvo:
+
+Resgate (vivo/sem danos): aqui o alvo a ser caçado não deve ser ferido de forma alguma. O caçador foi contratado para trazer o alvo vivo e em boas condições, não importando os motivos do contratante. No caso do não atendimento desta cláusula, o caçador pode receber 50% (consideravelmente ferido) ou 20% (excessivamente ferido) do valor total. Ferimentos levianos, como arranhões, não contam. Se o alvo estiver morto, o contrato não gerará recompensa e será considerado "malsucedido", não gerando prestígio.
+
+Captura (apenas vivo): diferente do tipo anterior de contrato, aqui a única cláusula é que o alvo seja entregue vivo, não importando seu estado de saúde. É claro, caso o alvo seja entregue em condições críticas de vida-ou-morte, onde não se tem certeza se sobreviverá, o contratante tem total direito de negar o pagamento ou forçar o caçador a aguardar até que o alvo se recupere. Aqui ou se recebe 100% do valor, ou nada. Se receber nada, o contrato/caça será considerado "malsucedido" e não gerará prestígio.
+
+Caça (vivo ou morto): o tipo mais clássico de contrato, onde não faz diferença se o alvo está vivo ou morto. Aqui as coisas são bem simples e diretas: o único modo de provar que você cumpriu o contrato é trazendo a cabeça do alvo ao seu contratante, esteja ela sobre um pescoço ou não. Semelhante ao contrato de Captura, aqui ou se recebe o valor integral ou nada. A maioria dos piratas se encaixam sob este contrato.
+
+
+4.3 - Caçando em Grupos e Clãs
+Embora não seja tão comum, caçadores podem caçar em grupos - normalmente, constituindo clãs, como já falamos mais acima. Para qualquer que seja o caso, o valor pago da recompensa ao grupo é entregue em um único montante, cabendo aos jogadores dividirem o valor, da forma que acharem melhor, caso tenham escolhido caçar em grupo.
+
+O valor do montante recebido não pode ultrapassar a soma das recompensas máximas que cada caçador do grupo pode receber. Lembrando que a recompensa máxima que cada caçador recebe é definida por seu rank. Por exemplo: caso haja três caçadores num grupo, sendo um Rank E, outro Rank D e o terceiro Rank C, o montante máximo que o grupo poderá receber será de B$ 120.000.000,00. Isso pois um caçador Rank E recebe até B$ 15.000.000,00, um Rank D recebe até B$ 30.000.000,00 e um Rank C recebe até B$ 75.000.000,00.
+
+Quanto ao prestígio, cada caçador do grupo receberá a quantidade de prestígio referente ao seu rank de caçador, conforme as regras estipuladas neste tópico, mais acima; e independente de haver caçadores de rank mais alto ou mais baixo no grupo.
+
+
+Agentes do Governo
+
+
+1 | Introdução
+
+Os agentes do governo são mais conhecidos como Cipher Pol, sendo divididos em 8 categorias oficiais e 2 não-oficiais. As células da Cipher Pol estão espalhadas por todo o mundo e agem como investigadores e Agentes secretos para o Governo Mundial. Embora na maioria das vezes trabalhem paralelamente à Marinha, as duas organizações possuem laços, já que ambas obedecem às ordens dos Gorousei. É importante mencionar que o objetivo da Cipher Pol não é caçar piratas diretamente, mas sim trabalhar com ameaças diretas ao Governo Mundial. Se você é um pirata, porém, não fique aliviado: a Cipher Pol irá lhe causar sérios problemas caso cruzem caminhos.
+
+Nem todo agente pertence a uma CP em si, existem aqueles cujo poder é baixo demais. Estes servem de apoio aos membros da CP e aos Comandantes. Agentes que não estiverem em nenhuma CP, podem ser enviados como reforços em missões que estejam ocorrendo em qualquer local, ou mesmo serem encarregados de missões de pequeno porte visando o seu desenvolvimento.
+
+
+
+
+2 | Hierarquia
+Todas as organizações possuem sua própria organização e regimento hierárquico. Contudo, em questão do Governo Mundial que possui duas subdivisões em sua organização, Cipher Pol e Marinha, esse tópico tem como intuito estabelecer a dinâmica dessa vasta e poderosa facção. Portanto, apresentaremos a seguir como funciona o regimento interno e hierarquia dessa facção e suas ramificações.
+
+Com isso, fica estabelecido que nenhum marinheiro, assim como nenhum membro da cipher pol, possui autonomia ou autoridade sobre membros da outra ramificação independentemente da posição que ocupem em suas respectivas ramificações. No entanto, ambas estão obrigatoriamente a serviço e ordens do Gorousei e do Comandante Chefe do Governo Mundial.
+
+Obs: Contudo, em casos especiais e exclusivos, onde exista autoridade concedida pelo Gorousei ou pelo Comandante Chefe do Governo Mundial, o detentor dessa autoridade temporária terá autonomia total sobre ambas as ramificações.
+
+
+2.1 Gorousei
+O posto de maior autoridade e poder dessa organização é ocupada pelo Gorousei (literalmente Cinco Estrelas Anciãs) são as autoridades máximas do Governo Mundial, e como tal, essencialmente, governam o mundo inteiro. Eles são os cinco homens que governam acima da Marinha e da Cipher Pol.
+
+2.2 Comandante Chefe do Governo Mundial
+O Comandante Chefe do Governo Mundial, é o maior cargo da do governo mundial (Apenas abaixo dos Anciões). O comandante que cuida de toda a organização da marinha e Cipher Pol. É um pouco acima do Almirante de Frota, mas abaixo do Gorousei. Portanto, ocupada a segunda maior posição de poder hierárquico dentro dessa facção.
+
+Após esses dois postos, o Governo mundial se ramifica em duas divisões distintas e independes uma da outra, onde cada qual possui seu próprio regimento, atribuições, deveres e hierarquias próprias, sendo elas: A Cipher Pol e a Marinha.
+
+2.3 Cipher Pol
+2.3.1 Comandante Chefe da Cipher Pol
+O posto de Comandante Chefe da Cipher Pol é ocupado pelo responsável de comandar todas as unidades da Cipher Pol conhecidas pelo público, sendo elas: CP1, CP2, CP3, CP4, CP5, CP6, CP7 e CP8.
+
+2.3.2 Comandante de CP
+Após o cargo de Comandante Chefe da Cipher Pol, cada unidade da Cipher Pol conhecida possui um cargo destinado para comando daquela unidade, visto que todas as CP’s de 1 a 8, agem independentes umas das outras devido a suas áreas de atuação e atribuições.
+
+2.3.3 Agentes da Cipher Pol
+É o cargo de menor relevância hierárquica dentro da Cipher Pol. Basicamente são todos os funcionários que não possuem um cargo de comando dentro da CP a qual ele integra.
+
+Além desses cargos descritos acima, existem duas unidades secretas ao público e consideradas como lendas para os agentes de menor importância dentro das CP’s, que são: CP9 e CP0.
+
+2.3.4 CP9
+A CP9, diferente das demais CP’s descritas são uma unidade especial e secreta da Cipher Pol. Além disso, ela é uma unidade que não possui um comandante interino oficial, mas ela pode ser representada por um “líder” escolhido entre seus próprios membros. Isso pois, essa unidade responde de forma única e exclusiva ao Gorousei e ao Comandante Chefe do Governo Mundial. Por fim, essa unidade possui como atribuições tarefas de grande importância e impacto para organização, uma vez que ela sempre está envolvida com missões de: Infiltração, Espionagem e Assassinato.
+
+Obs: Contudo, em casos específicos, o Gorousei ou o Comandante Chefe do Governo Mundial, podem ceder temporariamente autoridade suficiente para qualquer membro do Governo Mundial (Cipher Pol ou Marinha), de forma a possibilitá-los a comandar essa unidade de elite.
+
+2.3.5 CP0
+A CP0, possui basicamente as mesmas descrições e atribuições da CP9. No entanto, essa organização não responde ao Gorousei e nem mesmo ao Comandante Chefe do Governo Mundial. Uma vez que eles estão a serviço direto e exclusivo dos nobres conhecidos como Tenryūbitos.
+
+
+
+
+
+3 | Progressão
+
+A progressão dos Agentes do Governo Mundial, assim como na Marinha, é uma das mais seguras e mais simples de todas as facções. Contudo, seu diferencial é possuir um cargo especial, assim como os piratas possuem a posição de shichibukai, relativo ao cargo de Comando. Em ambos os casos, os agentes recebem o seu salário sempre que finalizarem uma aventura completa (onde recebem o valor integral de Gemas).
+
+Aspirante do Governo
+Pré-requisitos: Nível 01 e Prestígio 00;
+Salário: B$ 150.000,00;
+Benefício: Interpretativo; O jogador recebe um Den Den Muchi capaz de rastrear outros que ele tenha o número, caso estejam na mesma ilha. Suas ações e suas habilidades atraem olhares curiosos desse grupo secreto, talvez já tenham colocado alguém para segui-lo.
+
+Recruta
+Pré-requisito: Nível 04 e Prestígio 04;
+Salário: B$ 500.000,00;
+Benefícios: Uniforme do Governo Mundial e Credencial de Recruta.
+Você agora faz parte do Governo Mundial, mas ainda é um mero Recruta. Com trabalhos bem feitos e relações com as pessoas certas na hierarquia interna, tornará-se alguém fixo em uma das tropas, e não somente um substituto.
+
+Agente Cipher Pol 1 a 4
+Pré-requisitos: Nível 08 e Prestígio 10;
+Salário: B$ 1.500.000,00;
+Benefícios: Kuro Den Den Mushi; Den-Den Mushi Sensor; Uniforme do Governo Mundial e Credencial de CP.
+Den-Den Mushi Sensor: Um den-den mushi retirado de seu habitat logo após seu nascimento e exposto a testes secretos do governo mundial, de forma a despertar em si uma visão capaz de definir o poder bruto de seu alvo. O sensor necessita de uma visão clara de seu alvo, e faz a comunicação de forma verbal. Por isso, é moldado de forma a ser acoplado na orelha de seu usuário, como um pequeno comunicador em formato de uma mini concha, do tamanho de um brinco médio.
+Bônus: É capaz de saber o nível e os atributos primários de um alvo do qual tenha visão clara, comunicando verbalmente ao usuário.
+
+Agente Cipher Pol 5 e 6
+Pré-requisitos: Nível 12 e Prestígio 20;
+Salário: B$ 3.000.000,00;
+Benefícios: Credencial de CP.
+Desconto em Caminho: Ao alcançar o cargo de Agente da CP5 ou CP6, o agente recebe o Desconto de Facção.
+
+Agente Cipher Pol 7 e 8
+Pré-requisitos: Nível 16 e Prestígio 40;
+Salário: B$ 4.000.000,00;
+Benefícios: Credencial de CP.
+
+Agente Cipher Pol 9
+Pré-requisitos: Nível 20 e Prestígio 60; Ter as 6 técnicas do Rokushiki
+Salário: B$ 10.000.000,00;
+Benefícios: Credencial de CP9.
+
+Agente Cipher Pol 0
+Pré-requisitos: Nível 30 e Prestígio 85; Ter sido CP9
+Salário: B$ 25.000.000,00;
+Benefícios: Credencial de CP0. Ao se tornar membro da CP0, a existência do agente é praticamente apagada dos arquivos. Sendo uma divisão ultra secreta sob comando direto dos Tenryuubito, o Prestígio ganho por esses agentes é quase nulo devido ao completo desconhecimento de suas ações por parte das autoridades do governo.
+
+Comandante Cipher Pol
+Pré-requisitos: Ter sido agente de uma das CPs; Nível 40 e Prestígio 100; Jubilamento.
+Salário: B$ 45.000.000,00;
+Navio: Ao alcançar o cargo de Comandante de uma CP, a personagem recebe um Navio no modelo Galeão do Governo Mundial como uma Embarcação Emprestada;
+Comando: Ao alcançar o cargo de Comandante da CP, a personagem recebe o comando da Base do Governo respectiva, bem como poderio sobre todos os Agentes da CP. O comandante tem que atuar na ilha da base, não podendo realizar missões fora de sua área de atuação. O comandante da CP9 recebe controle total de Enies Lobby.
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Comandantes de CP que o cenário suporta é nove (9) e, no momento, há zero (0) vagas disponíveis.
+
+
+
+
+3.1 - Agente Duplo
+Agentes do Governo que se destaquem podem ser recrutados para operações de infiltração nas demais facções. Isso normalmente se dá em função de uma missão específica, mas, uma vez infiltrado, é vantajoso para o Governo Mundial manter agentes duplos em todas as organizações. Assim, mesmo após cumprir a missão inicial, esses agentes duplos podem ser solicitados a permanecer por mais tempo nas outras facções, aguardando o momento em que tal posição seja útil para o Governo Mundial.
+
+Ao se tornar um agente duplo, a personagem rompe o máximo de vínculos possíveis com as CPs para evitar ser descoberto. Caso seja descoberto ou convocado pelo comando das CPs, a personagem volta ao cargo que ocupava anteriormente entre os agentes.
+
+Todas as demais facções podem ser infiltradas, inclusive a Marinha.
+
+Enquanto infiltrado, a personagem desfruta de todos os benefícios da facção que infiltrou, com exceção do ganho de prestígio, que continuará a ser contabilizado a partir do ganho de Agentes Duplos por aventura. Isso representa a dificuldade de se infiltrar e ganhar a confiança em um ambiente inédito, bem como a ruptura de contato com o Governo Mundial e a cúpula de agentes.
+
+Agente Duplo
+Requisitos: Nível 18 e Prestígio 50.
+Salário: Passa a receber o valor do cargo correspondente na facção em que se infiltrou (em caso de Piratas ou CR, os devidos benefícios)
+Benefícios: Pode jogar como se fosse um membro oficial de alguma outra facção. O cargo que ocupará nessa facção em que se infiltrar corresponde ao que seria possível alcançar com seu nível e prestígio atuais. Pode ser promovido dentro da facção infiltrada.
+Deveres: Não pode ser descoberto.
+
+
+
+4 | Rokushiki
+
+Rokushiki é uma arte marcial que visa amplificar os poderes do corpo humano à níveis extremos, e também é a principal forma de combate dos agentes da Cipher Pol e da Marinha. Ele foi desenvolvido pelos cientistas mais renomados dessas duas corporações no formato de um conjunto de soros, consumido por seus Agentes e Soldados conforme alcançam certos níveis. Tal soro é administrado em doses pequenas na comida e água do agente, sem que esse precise de fato ingeri-lo conscientemente.
+
+O Rokushiki é composto por seis técnicas com diferentes ênfases e benefícios, e para membros das facções do Governo Mundial e Marinha, elas custam 1 gema a menos, podendo moldá-las e deixá-las personalizadas.
+
+
+
+
+5 | Prestígio
+
+Nem só de política e segredos obscuros se vive dentro da hierarquia dos Agentes. Como requisito, é necessário que o Agente adquira uma certa quantidade de Pontos de Prestígio.
+
+No caso dos Agentes, Prestígio é uma contagem de pontos durante o exercício das missões. Cada posição no governo recebe uma quantidade definida de pontos por missão. Conforme o agente progride na facção, mais pontos de prestígio serão necessários para subir de cargo; porém também mais pontos de prestígio o agente receberá por aventura.
+
+A relação de quantos pontos se recebe por cargo e contrato pode ser vista na tabela abaixo:
+
+Renome	Pontos de Prestígio
+Aspirante do Governo	+2 por aventura
+Recruta	+3 por aventura
+Agente CP 1 a 4	+5 por aventura
+Agente CP 5 e 6	+7 por aventura
+Agente CP 7 e 8	+9 por aventura
+Agente CP 9	+11 por aventura
+Agente CP 0	+13 por aventura
+Agente Duplo	+4 por aventura
+
+
+
+Revolucionários
+
+1 | Introdução
+
+Pouco se sabe a respeito do Exército Revolucionário. O que é entendido até agora sobre eles é que se trata de uma organização que se opõem firmemente não só ao Governo Mundial, mas também à seus ideais. Liderados por Monkey D. Dragon, esta organização possui uma malha de informantes por praticamente o mundo todo, sendo difícil existir uma ilha sem algum membro infiltrado. Quer se opor ao Governo Mundial e sua tirania? Aqui é seu lugar!
+
+
+
+
+2 | Hierarquia
+
+A hierarquia entre os revolucionários é muito simples: há um líder, 6 comandantes, sendo um para cada hemisfério, um braço direito e um braço esquerdo do líder e o resto dos membros. Entretanto, entre os membros, há títulos que honra que representam sua dedicação à causa. Tanto os comandantes respondem diretamente à Monkey D. Dragon, o líder absoluto dos revolucionários.
+
+Membros que não ocupam nenhum destes cargos são considerados iguais, chamados de "companheiros", e devem sempre seguir as ordens destes superiores.
+
+
+
+
+3 | Progressão
+
+Aos olhos da revolução, todos os seus membros são irmãos, independente de origem, raça, aparência ou passado. Por isso, a progressão e os cargos na facção são quase inexistentes, com exceção dos cargos de comando - pois até eles precisam manter alguma organização a fim de evitar vazamento de informações e mediar melhor as investidas e ataques. Abaixo, estão todos os cargos, com seus benefícios e pré-requisitos.
+
+Voluntário
+Requisitos: Nível 01 e Prestígio 00;
+Benefícios: -x-
+
+Companheiro
+Requisitos: Nível 02 e Prestígio 02;
+Benefícios: Item de identificação de membro dos revolucionários e Den Den Mushi exclusivo da facção (só recebe chamadas).
+
+Informante
+Requisitos: Nível 08 e Prestígio 10;
+Benefícios: Recebe a autoridade de solicitar a ajudar da célula revolucionária (até 10 companheiros) mais próxima em troca de informações importantes coletadas.
+
+Herói
+Requisitos: Nível 12 e Prestígio 20 ;
+Benefícios: Você não foi exatamente promovido, mas sim condecorado. Recebe uma medalha de honra por seus serviços à causa. Além disso, ao receber a medalha, o revolucionário também recebe o Desconto de Facção.
+Graças à sua honra ao mérito, recebe a possibilidade de mobilizar até 5 novos informantes a partir de NPCs na ilha em que se encontra. Esses novos informantes podem auxiliar nas demandas das missões.
+
+Veterano
+Requisitos: Nível 16 e Prestígio 40;
+Benefícios: Recebe um De Den Mushi que lhe permite contatar o comandante da região em que se encontra para solicitar informações privilegiadas uma vez por aventura. Pode convocar a ajuda de 1 herói do Exército Revolucionário por missão para auxiliar nas demandas da missão. Esse herói convocado recebe uma ficha de NPC (criada pelo narrador) com o nível base (12) e pode ser usado em combate contra outros NPCs.
+
+Vice-Comandante
+Requisitos: Nível: 20 e Prestigio: 60;
+Benefícios: Pode convocar, sempre que desejar, todos os revolucionários presentes na região (um dos Blues, uma rota de Paradise ou um trecho de New World) para ajudá-lo no que for preciso. Isso inclui até 3 Veteranos com nível básico (16) que podem ajudar nas demandas da missão e participar de lutas contra outros NPCs. Ao fim da missão, esses Veteranos são dispersos.
+
+Mobilizador
+Requisitos: Nível: 30 e Prestigio: 85;
+Benefícios: Pode convocar, sempre que desejar, todos os revolucionários presentes no cenário para ajudá-lo no que for preciso. Pode doutrinar até 3 NPCs oficiais da ilha em que se encontra para que se tornem revolucionários e participem ativamente da missão em andamento (incluindo combate contra outros NPCs). Esses NPCs doutrinados mantém uma ficha no nível máximo permitido pela ilha. Ao fim da missão, eles permanecem como membros do Exército Revolucionário, mas não podem deixar a ilha.
+
+Comandante
+Requisitos: Nível: 40; Prestigio: 100; Jubilamento
+Benefícios: Pode elaborar planos que envolvem regiões inteiras, bem como influenciar os rumos do Exército Revolucionário. Suas ações definem o futuro da revolução! São responsáveis por áreas especificas do mundo, havendo um para cada Blue, dois para o Paraíso e dois para o Novo Mundo.
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Comandantes que o cenário suporta é oito (8) e, no momento, há uma (1) vagas disponíveis.
+
+Comandante Supremo
+Requisitos: Nível: 40; Prestigio: 100; Jubilamento
+Benefícios: Determina o rumo ideológico e estratégico do Exército Revolucionário, tornando-se a maior ameaça contra o Governo Mundial. É considerada a pessoa mais perigosa do mundo!
+Especial: Esse cargo possui um número limitado de vagas. Atualmente, o número máximo de Comandantes que o cenário suporta é um (1) e, no momento, há zero (0) vagas disponíveis.
+
+
+
+3.1 - Radicais
+O Exército Revolucionário é guiado pela ideologia de seu líder. Entretanto, a forma de pensar instaurada por Monkey D. Dragon não é a única visão para o mundo dentro do movimento revolucionário. Por sua escassez em voluntários e recursos para se opor ao Governo Mundial, o Exército Revolucionário não pode se dar ao luxo de rejeitar pessoas dispostas a ajudar a causa, mesmo quando pensam de forma diferente. Assim, dentre os revolucionários há aqueles que são considerados radicais por adotarem métodos que destoam da abordagem ponderada de Dragon.
+
+Os revolucionários radicais são aqueles que já se envolveram com o movimento revolucionário o bastante a ponto de terem suas próprias opiniões e que já mostraram resultados o suficientes para serem considerados colaboradores valorosos para a causa, apesar de seus métodos. Assim, eles reivindicam a liberdade e influenciam outros revolucionários a estratégias que tendem a ser mais arriscadas e violentas, não se preocupando tanto com as possíveis consequências ou mesmo vítimas, desde que os resultados sejam alcançados. Por vezes, são tidos como extremistas, com as práticas por vezes julgadas como terroristas. Outros simplesmente desejam atitudes mais drásticas e medidas mais intensas que o ritmo proposto pela liderança do Exército Revolucionário, tomando as ações e decisões em suas próprias mãos. Em troca dessa liberdade, sua reputação dentro da revolução acaba sendo afetada, sendo mal vistos pela liderança que lhes concede menos prestígio nos ranques dos revolucionários.
+
+Radical
+Requisitos: Nível 18 e Prestígio 50.
+Benefícios: Pode agir independentemente da liderança do Exército Revolucionário. Pode planejar suas próprias missões, conforme o Rank permitido por seu nível e prestígio. Pode recrutar até 3 heróis do Exército Revolucionário para formar sua célula radical que lhe auxiliará nas demandas da missão e continuarão lhe acompanhando até serem mortas ou dispensadas. Esses heróis convocados recebem uma ficha de NPC (criada pelo narrador) e podem ser usado em combate contra outros NPCs. Enquanto a personagem permanecer como Radical, esses 3 heróis podem evoluir, recebendo as bonificações recebidas pela personagem ao fim das aventuras. Caso um desses heróis extremistas morra, pode ser substituído, porém reiniciando com o nível básico (12).
+
+
+
+
+4 | Missões
+
+Por se oporem ao governo mundial, os revolucionários estão sempre em alguma missão de inteligência, sabotagem ou infiltração. Estas missões são divididas em categorias de dificuldade e importância, e cada missão bem sucedida garante Pontos de Prestígio ao usuário.
+
+Os revolucionários são uma organização clandestina e não possuem uma fonte de renda fixa, a princípio. Mas com a ajuda de alguns contatos e doações de civis, a facção consegue se manter andando na medida do possível. No final de cada missão, os membros revolucionários recebem um valor fixo de dinheiro para compensar por todo seu trabalho e luta contra o governo. O valor de dinheiro recebido depende da missão exercida. Quanto mais difícil a missão for, mais dinheiro o membro receberá.
+
+É importante ressaltar que um revolucionário apenas poderá fazer, no máximo, uma (1) missão por aventura completa, independente do rank da missão. Uma aventura é considerada completa quanto ela possui a quantidade de turnos mínima para se gerar a recompensa máxima de XP e gemas.
+
+A tabela a seguir mostra os níveis de missão, uma breve descrição de suas características, a quantidade de Pontos de Prestígio e Beries que elas dão, assim como suas exigências para que o Revolucionário possa adquirir tal missão:
+
+Missão Rank E: Missões de pouca importância. Geralmente se tratam de investigar algum local e passar as informações obtidas aos superiores. Costumam ser utilizadas para treinar novatos.
+
+Missão Rank D: Missões moderadamente importantes. Aqui já é possível engajar diretamente em combate em nome da revolução.
+
+Missão Rank C: Missões relativamente importantes. Tratam com infiltrações em outras organizações e missões de resgate, dentre outras.
+
+Missão Rank B: Missões importantes. Se você chegou aqui, significa que já tem prestígio alto na organização. Os novatos te olham com admiração
+
+Missão Rank A: Missões de grande importância e periculosidade. Você só será convidado a participar dela se for extremamente forte, competente e confiável.
+
+Missão Rank S: Missões extremamente secretas e vitais à organização. Se você foi convidado a participar de uma destas, pode se considerar um dos membros de alta cúpula.
+
+Missão Rank SS: Missões normalmente proibidas, senão para os revolucionários mais corajosos e eficazes. Sua periculosidade é tal que são consideradas missões suicidas.
+
+
+Missões de Infiltração são perigosas, as vezes requerem uma reclusão por parte do infiltrado - que pode ter que passar anos sob uma identidade falsa - e sempre resultam em membros exaustos pelo esforço mental. Quando se há a convocação de uma Missão de Infiltração, membros com prestígio o suficiente são chamados para uma reunião fechada, na qual somente aqueles que se envolverão podem estar presentes. Após isso, os espiões recebem alguns dias de preparação antes de serem enviados para o local de trabalho.
+
+Na maioria dos casos, são necessários anos para que o espião se torne efetivamente infiltrado, sem mais causar estranhamentos ou desconfiança nos moradores locais ou daqueles ao seu redor. Ele só é permitido voltar quando a missão for concluída ou quando há risco quase certo de morte.
+
+Só é possível infiltrar-se na Marinha ou no Governo Mundial. Os alvos de um revolucionário sempre foram a Marinha e o Governo, por isso somente eles são atacados. Também não é possível se infiltrar como Comandante de uma das CPs ou os dois últimos cargos da Marinha. Durante a infiltração, é necessário que se tenha o nível e o prestigio requeridos pelo cargo que se almeja infiltrar. Ou seja, caso deseje infiltrar-se na Marinha como Subtenente, é necessário que a personagem tenha, no mínimo, Nível 05 e 20 de prestígio.
+
+Segue abaixo a tabelas com requisitos e ganhos por missão:
+
+Rank da Missão	Prestígio Mínimo	Berries ganhos	Pontos de Prestígio
+E	0	B$ 100.000,00 por aventura	+2 por aventura
+D	4	B$ 500.000,00 por aventura	+3 por aventura
+C	10	B$ 1.900.000,00 por aventura	+5 por aventura
+B	20	B$ 4.000.000,00 por aventura	+7 por aventura
+A	40	B$ 6.000.000,00 por aventura	+9 por aventura
+S	60	B$ 10.000.000,00 por aventura	+11 por aventura
+SS	85	B$ 20.000.000,00 por aventura	+13 por aventura
+Missões como Radical	Conforme Rank da Missão	Conforme o Rank da Missão	+4 por aventura

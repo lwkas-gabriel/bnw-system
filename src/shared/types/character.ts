@@ -6,7 +6,7 @@ export type RaceId =
 
 export type HakiType = "armament" | "observation" | "king";
 
-export type HakiStage = 1 | 2 | 3 | 4 | 5 | "advanced_partial" | "advanced_complete";
+export type HakiStage = 0 | 1 | 2 | 3 | 4 | 5 | "advanced_partial" | "advanced_complete";
 
 export type AdvancedHakiVariant =
   | "ryuo" | "repulsion"          // Armament Advanced
@@ -33,6 +33,23 @@ export type UniqueWeaponCharacteristic =
   | "napoleon" | "nonosama" | "oto_kogarashi" | "pretzel" | "raid_suit"
   | "shusui" | "tsuji_shibai" | "yakuza_kasen" | "yoru" | "wado_ichimonji"
   | "warabide";
+
+// ─── Perícias ─────────────────────────────────────────────────────────────────
+
+export type PericiaId =
+  | "ambicao" | "atletismo" | "destreza" | "erudicao"
+  | "expressao" | "furtividade" | "investigacao" | "logica"
+  | "percepcao" | "persuasao" | "sobrevivencia";
+
+export type CharacterPericias = Record<PericiaId, number>; // 0–5 each
+
+export interface CharacterProfession {
+  id: string;
+  name: string;
+  linkedPericias: PericiaId[];
+}
+
+// ─── Ciborgue ─────────────────────────────────────────────────────────────────
 
 export type CyborgShift = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -71,7 +88,7 @@ export type AdherenceEffect =
   | "multiple_hit" | "anti_air" | "anti_aquatic" | "ally_bonus"
   | "confusion" | "double_edge" | "fragility" | "weakness"
   | "safety" | "vulnerability" | "aerial"
-  | "area_controlled" | "consecutive" | "exhaustion"
+  | "area_controlled" | "consecutive_atk" | "consecutive_def" | "exhaustion"
   | "wound" | "defensive_posture";
 
 export interface TechniqueAdherence {
@@ -119,7 +136,7 @@ export interface ZoanAbility {
   id: string;
   name: string;
   description: string;
-  module: string;
+  modules: string[];
   energyCost: number;
   condition?: string;
   isAwakened?: boolean;
@@ -235,6 +252,22 @@ export interface UniqueWeapon extends Equipment {
   characteristic: UniqueWeaponCharacteristic;
 }
 
+// ─── Faction ──────────────────────────────────────────────────────────────────
+
+export type FactionType =
+  | "pirata" | "marinha" | "cacador" | "governo" | "revolucionario";
+
+export interface FactionData {
+  type: FactionType;
+  /** Rank ID within the faction (e.g. "supernova", "capitao", "ouro_b") */
+  rank: string;
+  prestige: number;
+  /** Faction Discount (20g outside 400g cap) — earned once, never lost */
+  discountUsed: boolean;
+  /** Which item the discount was applied to (display only) */
+  discountAppliedTo?: string;
+}
+
 // ─── Character ────────────────────────────────────────────────────────────────
 
 export interface Character {
@@ -246,7 +279,11 @@ export interface Character {
   investedAttributes: BaseAttributes;
   /** Racial bonus (not counted in invested total) */
   racialBonus: Partial<BaseAttributes>;
-  ambition: number; // 0–5, used by King Haki Advanced
+  /** Perícias (11 skills, 0–5 each). Pool = 3 + floor(level/2). No gem cost. */
+  pericias: CharacterPericias;
+  /** Human race: one free péricia +1 bonus of player's choice */
+  humanPericiaChoice: PericiaId | null;
+  professions: CharacterProfession[];
   energy: DerivedAttributes;
   haki: HakiPath | null;
   akuma: AkumaNoMi | null;
@@ -258,4 +295,5 @@ export interface Character {
   gemsSpent: number;
   gemBudget: number;
   location: "blues" | "grand_line" | "new_world";
+  faction?: FactionData;
 }

@@ -1,0 +1,231 @@
+Navegação
+
+1 | Introdução
+
+Em um mundo como o de One Piece, a navegação é o principal meio de deslocamento. Ela é de extrema importância para os aventureiros e nenhuma facção está isenta dessa prática quando o assunto é desbravar o oceano.
+
+Para viajar de uma ilha para a outra, os jogadores precisarão cumprir com algumas normas e demandas. As regras variam desde um Custo de Viagem - caso a personagem esteja viajando com carona; até Turnos em Alto-Mar - porque o que seria um RPG de piratas sem aventuras em mar aberto?
+
+
+
+
+2 | Turnos em Alto-mar
+
+Viagens de uma ilha a outra sempre precisam de um certo tempo para percorrer a Rota Marítima, assim tendo que cumprir um mínimo de turnos em alto-mar.
+
+A quantidade de turnos em alto-mar entre duas ilhas vizinhas é 5 turnos, independentemente do mar em que se navega.
+
+
+Viagens com Eternal Pose funcionam como uma espécie de fast travel em nosso RPG. Os Eternal Pose apontam sempre para a mesma ilha e nunca falham, independentemente de qual parte do mundo você estiver navegando. Assim, ele permite ir diretamente para o destino apontado, não precisando avançar de ilha em ilha até o ponto final. viagens com Eternal Pose duram sempre 10 turnos, independentemente do mar em que o jogador está e no qual a ilha destino de encontra. A única forma de realizar viagens com Eternal Pose é possuindo uma embarcação própria, devido à distância percorrida.
+
+Turnos em alto-mar são obrigatórios. Contudo, é possível reduzir a quantidade de turnos em uma viagem em alto-mar por meio da profissão Navegador, conforme descrito no tópico de Profissões. Entretanto, sempre será necessário cumprir, no mínimo, 1 turno de viagem em alto-mar entre ilhas.
+
+
+
+
+3 | Meios de transporte
+
+Para se viajar pelos Mares de One Piece é obrigatório algum meio de transporte. Abaixo, os diferentes tipos disponíveis em nosso RPG.
+
+
+
+
+3.1 Embarcações próprias
+
+Por meio do sistema de Embarcações, os jogadores podem comprar seus próprios barcos. Personagens ou grupos que tiverem suas próprias embarcações poderão viajar pelos mares sem preocupações com custos adicionais. Embarcações cedidas por facções como a Marinha são consideradas embarcações próprias.
+
+
+
+
+3.2 Veículos alternativos
+
+Alguns veículos alternativos estão espalhados pelo mundo e podem ser adquiridos e usados como meio de transporte pelos mares. O lugar em que se encontram e seu custo fica à cargo dos jogadores descobrirem.
+
+
+
+
+3.3 Habilidades especiais
+
+Algumas personagens possuem habilidades especiais que lhes permite viajar pelos mares sem um meio de transporte propriamente dito. As raças Tritão e Sereiano podem viajar entre duas ilhas gastando 1/3 de sua energia total. Algumas Akuma no Mi Paramecia possuem habilidades ativas que lhes permite viajar entre ilhas (caso escolham o slot correspondente durante a criação da tabela). Usuários de Akuma no Mi Zoan de animais voadores podem viajar entre ilhas gastando metade de sua energia total. Em todos esses casos, o desconto de turnos de viagem proveniente da profissão navegador não é aplicado, pois as habilidades náuticas dessa profissão são substituídas pelas habilidades especiais durante a viagem.
+
+
+
+
+3.4 Carona
+
+Ao longo das aventuras é possível conseguir caronas em barcos de NPCs, seja contratando ou como gaiato. Em todo caso, essa é uma opção restrita aos Blues e ao Paradise e sempre terá um custo a ser pago pelo jogador. Mesmo que sua personagem consiga embarcar ilegalmente em um navio, esse valor será deduzido do teto de ganhos daquela aventura. A única exceção são Marinheiros e Agentes do Governo, que podem viajar em navios da Marinha comandados por superiores. Nesse caso, não há custo extra para os Marinheiros. Os valores de viagem por carona nos Blues e no Paradise são padronizados, conforme a tabela abaixo:
+
+Mar	Custo
+Blues	B$ 30.000
+Paradise	B$ 300.000
+
+
+
+
+
+3.5 Eventos
+
+Em alguns eventos, em que for necessário o deslocamento das personagens para determinada ilha, a necessidade de um meio de transporte e os turnos em alto mar serão ignorados e justificados in-game pela Staff. Nesses casos, as personagens serão conduzidas até o local do evento e, posteriormente, de volta à ilha em que se encontravam antes do evento.
+
+
+
+
+4 | Combate em Alto Mar
+
+Os Mares de One Piece são lugares perigosos. Seja por ataque de monstros marinhos, piratas ou o que for, o risco de entrar em combate em alto mar é constante. Quando isso acontece, a habilidade dos navegadores e qualidade das embarcações podem fazer a diferença. Entretanto, diante dos poderes sobre humanos das personagens que transitam essas águas, o grande diferencial é a força individual de cada tripulante. Por mais potente que seu canhão seja, em nada se compara com os poderes de uma Akuma no Mi, de um usuário de Haki, de um Ciborgue ou de um mestre em Artes Marciais.
+
+Desse modo, combates em alto mar funcionam como qualquer outro combate em nosso sistema. Isto é, utilizando as fichas das personagens envolvidas. Entretanto, o cenário marítimo, tendo como campo de batalha as próprias embarcações, promove algumas pequenas alterações, conforme listadas abaixo:
+
+
+
+
+4.1 Distância
+
+Diferente dos combates comuns, que se inicia a 1 ação de distância, combates em alto mar sempre se iniciam a 2 ações de distância. Essa é uma oportunidade para combatentes que usam armas a distância se beneficiarem. Além disso, alguns aprimoramentos das embarcações oferecem benefícios que permitem explorar ainda mais essa vantagem de distância. No segundo turno do combate, os navios ficam, inevitavelmente, a uma ação de distância, permitindo às personagens 8nvadirem o barco inimigo.
+
+
+
+
+4.2 Iniciativa
+
+Diferente dos combates comuns, em que lutas PVP os jogadores atacam e defendem ao mesmo tempo no primeiro turno ou, contra NPCs, a iniciativa é sempre do jogador, em combates em alto mar à iniciativa e sempre dá embarcação maior. Alguns aprimoramentos de embarcação podem roubar a iniciativa. A ordem de prioridades para desempate é a seguite: aprimoramento > tamanho da embarcação > quantidade de canhões ou similares > quantidade de personagens de jogador (inclui Companheiros) > quantidade total de gemas (somatório das personagens de jogador, sem incluir Companheiros). Se, ainda assim, houver impate, o procedimento de iniciativa segue como qualquer combate comum.
+
+
+
+
+4.3 Acerto Crítico
+
+Diferente dos combates comuns, em que o acerto crítico, basicamente, significa apenas acerto automático, em combates em alto mar, acerto crítico faz com que o alvo seja jogado ao mar, para fora do navio. Personagens jogadas para fora do navio precisam gastar um turno completo para subir de volta ao navio. Personagens de raças aquáticas podem fazer isso gastando apenas uma ação de movimento. Usuários de Akuma no Mi que caírem ao mar ficam imobilizados e precisam ser resgatados. Caso não sejam resgatados em até 3 turnos, são nocauteados.
+
+
+
+
+4.4 Derrota
+
+Diferente dos combates comuns em que só se é derrotado quando sua personagem chega a 0 de constituição, em combates em alto mar só se é derrotado definitivamente quando todas as personagens de jogador, Companheiros e NPCs importantes da embarcação são nocauteados. Quando isso acontece, significa que os principais defensores da embarcação foram derrotados e o navio não tem mais como se defender, podendo ser apreendido (no caso da Marinha) ou naufragado. Quando naufragado, uma embarcação é seus tripulantes voltam à ilha anterior de onde saíram e precisarão reparar o navio antes de voltar a navegar. Alguns aprimoramentos amenizam as consequências da derrota em combates em alto mar.
+
+
+
+
+5 | Rotas Marítimas
+
+De nada adianta saber o tempo de viagem e ter um meio de transporte se não souber para onde ir. Por isso, em nosso RPG, toda viagem em alto mar deve seguir as Rotas Marítimas.
+
+
+
+
+5.1 Blues
+
+Cada Blue é isolado um do outro, de modo que só é possível navegar entre as ilhas do Blue em que sua personagem se encontra. Para navegar pelos Blues é preciso ter uma bússola, que pode ser adquirida em qualquer Mercado. Além disso, é preciso seguir as rotas que conectam as ilhas, conforme o Mapa dos Blues. Nem todas as ilhas dos Blues estão conectadas, de forma que, em alguns casos, será preciso parar em outras ilhas até chegar no destino desejado. A cada parada, os turnos em alto mar reiniciam sua contagem e podem ser diminuídos novamente pelos bônus da profissão Navegador.
+
+Por exemplo, para se chegar a Logue Town a partir de Mirror Ball, há algumas opções. Os caminhos mais curtos passariam por Dawn Island ou por Finalle. Caso opte pela rota Mirror Ball > Dawn Island > Shell Town > Logue Town, seria necessário gastar 5 turnos em alto-mar até chegar em Dawn Island, depois mais 5 até Shell Town e mais 5 até Logue Town. Caso a personagem tenha a profissão Navegador e 3 pontos na Perícia Percepção, seria necessário gastar apenas 2 turnos até Dawn Island, depois 2 turnos até Shell Town e mais 2 até Logue Town.
+
+
+
+
+5.2 Reverse Mountain
+
+A Reverse Mountain pode ser acessada por Lvneel (North Blue), Beast Point (West Blue), Extanliun (South Blue) e Logue Town (East Blue). Ela é um obstáculo natural inevitável para todo aquele que quer adentrar a Grand Line. Ela conta como "fronteira" da ilha "Cabos Gêmeos" e deve ser superada via teste da Profissão Navegador para se adentrar no Paradise. O número mínimo de turnos para se chegar até os Cabos Gêmeos a partir dessas ilhas é 5 turnos, podendo ser descontado com a profissão Navegador.
+
+É possível atravessar a Reverse Mountain com qualquer meio de transporte. No caso de Carona, é possível comissionar uma embarcação em uma das quatro ilhas para atravessar essa fronteira natural. Nesse caso, o custo da viagem é triplicado e o jogador terá que ser bem sucedido em um teste de Ambição para concluir a travessia.
+
+Tanto o teste de Navegador quanto o de Ambição tem a dificuldade 16. Cada jogador ou grupo tem duas chances. Caso falhe nas duas, voltará imediatamente para a ilha em que estava e terá que organizar uma nova viagem para tentar novamente.
+
+
+
+
+5.3 Paradise
+
+Após cruzar a Reverse Mountain, todos os jogadores chegam à Primeira Ilha da Grand Line, Cabos Gêmeos. Ali, os jogadores deverão escolher uma das sete rotas do Paradise a seguir e poderão zarpar quando quiserem.
+
+Os Mares da Grand Line são muito mais desafiadores do que os Blues. Além do clima instável, cada ilha possui seu próprio rastro magnético, de modo que bússolas não funcionam na Grand Line. Para navegar no Paradise, é necessário ter um Log Pose, que pode ser adquirida em qualquer Mercado. O Log Pose é capaz de captar o magnetismo da próxima ilha e continuar apontando para ela até se chegar nela. Desse modo, viajar pelo Paradise é sempre uma viagem avante, pois o Log Pose só apontará para a ilha seguinte na rota em que se encontra e nada mais. Ou seja, não é possível mudar de rota no Paradise via navegação comum.
+
+Os Log Poses demoram até captar o magnetismo da próxima ilha e calibrar a direção. Esse tempo é padronizado para todas as ilhas do Paradise.
+
+É necessário finalizar uma aventura completa para o Log Pose calibrar e apontar a próxima ilha.
+
+
+
+
+
+5.4 Expresso do Oceano
+
+A única forma de se atravessar de um Blue para outro e de uma rota do Paradise para outra é por meio do Expresso do Oceano (com exceção do Eternal Pose). Sua tarifa é maior que os custos de viagem comuns via Carona e seu tempo de viagem é de 5 turnos, podendo aplicar desconto de navegador. Ele pode ser acessado de ilhas específicas, tanto nos Blues quando no Paradise.
+
+Trecho	Custo individual	Custo para embarcações	Ilhas
+Entre dois Blues	B$ 50.000	B$ 100.000	Barskr (N); L'arcan (W); Arkhen (S); Alberta (E)
+Entre duas rotas do Paradise	B$ 500.000	B$ 1.000.000	7ª ilha de cada rota
+
+
+
+
+
+5.5 Ilhas do Céu
+
+Ao longo de cada rota do Paradise há uma Ilha do Céu. Essas ilhas flutuam em grandes nuvens - o chamado "mar branco" - sobre suas respectivas "Ilhas-mãe" (e.g. Jaya é a Ilha-mãe de Skypiea). Assim que os jogadores desembarcam em uma dessas ilhas-mãe, seus Log Pose passam a apontar para cima. Com isso, os jogadores podem tentar acessar ao longo da aventura a ilha do céu. Não é preciso finalizar uma aventura completa para partir rumo à ilha do céu.
+
+Há algumas formas de se chegar em uma ilha do céu. Personagens com habilidades que lhe permitam voar podem fazer isso gastando metade de sua energia total. Também é possível alcançar uma ilha do céu caso possua uma embarcação voadora. Na ausência desses meios, é necessário navegar pela Knock-Up Stream.
+
+A Knock-Up Stream é um imenso pilar de água que jorra do mar e alcança os céus com tamanha força que sua correnteza gera correntes de vento que permitem navios navegarem verticalmente. Entretanto, controlar um navio para realizar tal feito é um dos maiores desafios que um Navegador pode enfrentar. Assim, é preciso ter uma embarcação própria e ser bem sucedido em um teste de Navegação de dificuldade 28.
+
+Cada jogador ou grupo tem três tentativas para passar no teste. Caso seja bem sucedido no teste, o jogador consegue chegar na ilha do céu. Caso falhe, seu navio cai de volta no mar, sofrendo danos que lhe impedem de navegar imediatamente. Será necessário completar a aventura na Ilha-mãe e, caso queira tentar de novo, iniciar uma nova aventura na Ilha-mãe para realizar nova tentativa ou seguir viagem para próxima ilha.
+
+Para retornar ao mar azul, basta navegar até os limites do mar branco. A queda pode ser brusca e, caso os tripulantes não façam algo para proteger o navio, ele sofrerá sérios danos. Se isso acontecer, será preciso fazer uma nova aventura completa na Ilha-mãe, para dar tempo de reparo ao navio. Felizmente, os Mercados nas Ilhas do Céu possuem acessórios que podem amenizar e amortecer essa queda, tornando-a segura.
+
+
+
+
+5.6 Red Line
+
+Todas as Rotas do Paradise culmina na mesma ilha: Sabaody. Localizada ao pé da Red Line, ela é parada obrigatória para todos que queiram seguir para o New World. A partir de Sabaody, há duas opções de caminho: por cima ou por baixo da Red Line.
+
+Por cima, atravessa-se Mariejois, a capital do mundo, onde todos os Tenryuubitos moram. É um dos lugares mais fortificado do mundo e qualquer pessoa não convidada enfrentará severa perseguição. Marinheiros e Agentes do Governo tem acesso livre à Mariejois, enquanto Piratas, Revolucionários e Caçadores de Recompensa não são bem-vindos.
+
+Por baixo, é preciso mergulhar até o fundo do mar e atravessar a Ilha dos Homens Peixes. Qualquer facção pode trilhar essa rota submarina, desde que consiga navegar debaixo d'água. Personagens das raças Tritão ou Sereiano podem percorrer esse trajeto a nado (gastando 1/3 da energia total) e navios submarinos podem navegar livremente por essa rota.
+
+É possível contratar um profissional para revestir seu navio com a resina. Uma vez submersa, essa resina se expande e forma uma grande bolha ao redor do navio, permitindo-o navegar debaixo d'água. Esse revestimento tem o custo de 500 mil berries e dura por dois trechos de viagem. Ou seja, com ele é possível chegar até a Ilha dos Homens Peixes e seguir para uma ilha no New World.
+
+
+
+
+5.7 New World
+
+No New World, a navegação consegue ser ainda mais caótica que no Paradise. Devido às muitas interferências magnéticas, o Log Pose tradicional perde sua eficiência por não conseguir manter o mesmo campo magnético calibrado ao longo de toda a viagem. Navegantes que se arriscaram a usar um Log Pose comum no New World ficaram perdidos para sempre no mar, sem nunca conseguir chegar a ilha alguma. Para navegar no New World, é necessário ter um Log Pose Triplo, que pode ser adquirido em qualquer Mercado.
+
+O Log Pose Triplo possui três agulhas, que captam campos magnéticos distintos. Uma vez iniciada a navegação, essas três agulhas se recalibram constantemente, garantindo que não se perca o campo magnético da ilha aumejada. Ao mesmo tempo, essas três agulhas proporcionam sempre três destinos para o jogador: (1) para a ilha seguinte no trecho em que se encontra; (2) para a ilha correspondente no trecho vizinho (no trecho 2, o jogador pode escolher se aponta para o trecho 1 ou 3); e (3) para a ilha anterior no trecho em que se encontra. O jogador pode escolher qualquer um desses três destinos, de modo que a navegação e exploração no New World é bem mais dinâmica do que no Paradise.
+
+Essa dinâmica se inicia a partir de Mariejois e da Ilha dos Homens Peixes. A partir dessas ilhas, é possível escolher diretamente a primeira ilha de cada um dos três trechos do New World. Ainda é necessário finalizar uma aventura completa na ilha para que o Log Pode Triplo se calibre.
+
+
+
+
+5.8 Calm Belt
+
+Para aqueles que não desejam passar pela Reverse Mountain e pelos Cabos Gêmeos, o Calm Belt é uma opção, porém somente com Embarcação Própria ou Emprestada. Além disso, é preciso lidar com os desafios do Calm Belt que são a infestação de Rei dos Mares de tamanhos colossais e a ausência total de vento. Desse modo, é preciso que a embarcação tenha alguma alternativa de propulsão que não seja as velas. Para lider com os Reis dos Mares, o mais indicado é o Revestimento de Kairoseki, que permite que a embarcação não seja percebida pelos Reis dos Mares.
+
+Devido as condições do Calm Belt, as vantagens da profissão Navegador perdem seus efeitos, a menos que as embarcações tenham as melhorias Revestimento de Kairoseki e um meio de propulsão alternativo. Caso não se tenha essas melhorias, será necessário emfrentar um Rei dos Mares para cada turno em alto-mar da viagem. Cada Rei do Mar enfrentado terá o nível da Personagem de Jogador mais forte na embarcação e pode ser afugentada via um teste de Ambição de dificuldade 28.
+
+Há algumas ilhas localizadas no Calm Belt, como a Ilha das Amazonas. Para se acessar uma dessas ilhas é necessário adquirir um Eternal Pose delas, pois nunca um Log Pose se calibrará na direção dela. Esses Eternal Poses podem ser encontrados com a profissão Arqueólogo ou comprados via Submundo.
+
+Atravessar o Calm Belt permite sair de qualquer ilha dos Blues para a primeira ilha de qualquer Rota do Paradise ou de qualquer ilha do Paradise para a ilha dos Blues que dá acesso à Reverse Mountain citadas acima. Desse modo, atravessar o Calm Belt funciona como uma espécie de atalho entre o Paradise e os Blues, ajudando a contornar a rigidez da navegação nas Rotas do Paradise.
+
+
+
+
+6 | Fronteiras
+
+Algumas ilhas na Grand Line possuem fronteiras que tornam difícil seu acesso. Essas fronteiras podem ser naturais ou artificiais e podem ser acrescentadas por jogadores em seus territórios. Alguns exemplos de fronteiras em ilhas são: a cachoeira em Wano; e a cerca ao redor de Impel Down. Para acessar ilhas com fronteiras, não basta cumprir os turnos em alto mar. É preciso ser bem sucedido em testes de navegação.. As dificuldades desses testes são padronizadas pelos mares em que se encontram:
+
+Mar	Dificuldade
+Paradise	20
+New World	30
+
+
+
+
+
+7 | Exceção
+
+As regras de navegação visam enriquecer o cenário e estabelecer limites para direcionar os jogadores conforme a progressão esperada para nosso RPG. Entretanto, elas não podem ser um empecilho ao jogo. Assim, a única exceção às regras de navegação é a formação de grupos. Sempre que algum jogador se juntar a algum grupo que se encontre em uma ilha diferente da que sua personagem está, ele poderá, imediatamente, se juntar à aventura do grupo, independentemente de qual ilha se encontram ou qual o nível da personagem. Por exemplo, um jogador acabou de iniciar o jogo com sua personagem e se encontra em Dawn Island, no East Blue. Ele foi aceito em um grupo de jogadores que estão, atualmente em Alabasta, na Quarta Rota do Paradise. Esse novo jogador poderá se juntar à aventura do grupo sem qualquer restrição de viagem.
+
+Fica à cargo dos jogadores justificarem - ou não - esses deslocamentos dentro do cenário. Recomendamos o uso de AAs para isso, de modo que não se interrompa o jogo com o grupo e possibilita uma história coesa para as personagens.

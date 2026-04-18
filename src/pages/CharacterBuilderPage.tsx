@@ -7,14 +7,21 @@ import { HakiSection } from "../features/character/components/HakiSection";
 import { AkumaSection } from "../features/character/components/AkumaSection";
 import { ArtesMarciaisSection } from "../features/character/components/ArtesMarcaisSection";
 import { TechniquesSection } from "../features/character/components/TechniquesSection";
+import { PericiasSection } from "../features/character/components/PericiasSection";
+import { ProfissoesSection } from "../features/character/components/ProfissoesSection";
+import { EquipmentSection } from "../features/character/components/EquipmentSection";
+import { FaccoesSection } from "../features/character/components/FaccoesSection";
 
 const TABS = [
   { id: "attributes",    label: "Atributos",    icon: "📊" },
+  { id: "pericias",      label: "Perícias",     icon: "🧠" },
   { id: "haki",          label: "Haki",         icon: "🌊" },
   { id: "akuma",         label: "Akuma no Mi",  icon: "🍎" },
   { id: "artes",         label: "Artes Marciais", icon: "🥋" },
   { id: "techniques",   label: "Técnicas",     icon: "⚡" },
+  { id: "profissoes",   label: "Profissões",   icon: "📜" },
   { id: "equipment",    label: "Equipamentos", icon: "🛡️" },
+  { id: "faccao",      label: "Facção",       icon: "⚑" },
 ];
 
 export default function CharacterBuilderPage() {
@@ -35,7 +42,7 @@ export default function CharacterBuilderPage() {
 
   function handleCreate() {
     if (!nameInput.trim()) return;
-    newCharacter(nameInput.trim(), 420);
+    newCharacter(nameInput.trim(), 20);
     setShowNameModal(false);
   }
 
@@ -51,7 +58,7 @@ export default function CharacterBuilderPage() {
           <h2 className="text-base font-bold text-slate-200 mb-4">Novo Personagem</h2>
           <Input
             label="Nome do personagem"
-            placeholder="Ex: Nagare Shigure"
+            placeholder="Ex: Dogmeat"
             value={nameInput}
             onChange={e => setNameInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleCreate()}
@@ -126,16 +133,14 @@ export default function CharacterBuilderPage() {
       {/* Tab content */}
       <div className="flex-1 overflow-y-auto px-6 py-5">
         {activeTab === "attributes"  && <AttributesSection />}
+        {activeTab === "pericias"    && <PericiasSection />}
         {activeTab === "haki"        && <HakiSection />}
         {activeTab === "akuma"       && <AkumaSection />}
-        {activeTab === "artes"       && <ArtesMarcials Section />}
+        {activeTab === "artes"       && <ArtesMarciaisSection />}
         {activeTab === "techniques"  && <TechniquesSection />}
-        {activeTab === "equipment"   && (
-          <div className="text-center py-16 text-slate-500">
-            <p className="text-3xl mb-2">🛡️</p>
-            <p>Seção de equipamentos em breve.</p>
-          </div>
-        )}
+        {activeTab === "profissoes"  && <ProfissoesSection />}
+        {activeTab === "equipment"   && <EquipmentSection />}
+        {activeTab === "faccao"      && <FaccoesSection />}
       </div>
     </div>
   );

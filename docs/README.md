@@ -19,6 +19,22 @@
 10. [Módulos Coming Soon](./10-coming-soon.md)
 11. [Princípios de Desenvolvimento](./11-principios.md)
 12. [Glossário](./12-glossario.md)
+13. [Progressão de Nível e Gemas](./13-progressao.md)
+14. [Sistema de Perícias](./14-pericias.md)
+15. [Raças](./15-racas.md)
+16. [Haki](./16-haki.md)
+17. [Akuma no Mi](./17-akuma.md)
+18. [Artes Marciais](./18-artes-marciais.md)
+19. [Técnicas e Efeitos Aderidos](./19-tecnicas.md)
+20. [Armas Únicas](./20-armas-unicas.md)
+21. [Ciborgue](./21-ciborgue.md)
+22. [Facções e Prisão](./22-faccoes.md)
+23. [Gemas](./23-gemas.md)
+24. [Profissões](./24-profissoes.md)
+25. [Companheiros](./25-companheiros.md)
+26. [Navegação](./26-navegacao.md)
+27. [Embarcações](./27-embarcacoes.md)
+28. [Itens, Equipamentos e Mercado](./28-itens.md)
 
 ---
 
@@ -48,7 +64,9 @@ Fichas criadas manualmente em fórum têm alta incidência de erros de cálculo,
 | Calculadora de Combate | ✅ Disponível | Simulação com 3d6 real ou média, log narrável |
 | Importar / Exportar | ✅ Disponível | JSON tipado + texto para fórum + validação |
 | Validação de Fichas | ✅ Disponível | 9 categorias de regras, sugestões de correção |
-| Construtor de Itens | ⚙️ Parcial | Dados catalogados, UI pendente |
-| Embarcações | 🔜 Coming soon | Aguardando arquivo de regras |
-| Profissões | 🔜 Coming soon | Aguardando arquivo de regras |
-| Perícias | 🔜 Coming soon | Aguardando arquivo de regras |
+| Construtor de Itens | ✅ Disponível | Catálogo de bugigangas + equipamentos no builder |
+| Embarcações | ✅ Disponível | Rota /ships — mecanismos, cômodos, Klabautermann |
+| Profissões | ✅ Disponível | Rota /professions — 7 profissões, craft, perícias vinculadas |
+| Perícias | ✅ Disponível | Rota /pericias — 11 perícias, DCs, pontos por nível |
+| Companheiros | 📋 Regras documentadas | Implementação pendente — ver docs/25 |
+| Navegação | 📋 Regras documentadas | Implementação pendente — ver docs/26 |

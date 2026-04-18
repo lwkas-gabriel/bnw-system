@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { ValidationReport, ValidationIssue, ValidationSeverity } from "../utils/validator";
-import { useCharacterStore } from "../store/characterStore";
 import type { Character } from "../../../shared/types/character";
 
 // ─── Severity styles ──────────────────────────────────────────────────────────

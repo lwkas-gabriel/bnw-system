@@ -9,7 +9,9 @@ const CharacterBuilderPage = lazy(() => import("../pages/CharacterBuilderPage"))
 const CombatPage           = lazy(() => import("../pages/CombatPage"));
 const ItemsPage            = lazy(() => import("../pages/ItemsPage"));
 const ImportPage           = lazy(() => import("../pages/ImportPage"));
-const ComingSoonPage       = lazy(() => import("../pages/ComingSoonPage"));
+const ShipsPage            = lazy(() => import("../pages/ShipsPage"));
+const PericiasPage         = lazy(() => import("../pages/PericiasPage"));
+const ProfissoesPage       = lazy(() => import("../pages/ProfissoesPage"));
 
 function SuspenseLayout() {
   return (
@@ -33,9 +35,9 @@ export const router = createBrowserRouter([
       { path: "combat",             element: <CombatPage /> },
       { path: "items",              element: <ItemsPage /> },
       { path: "import",             element: <ImportPage /> },
-      { path: "ships",              element: <ComingSoonPage module="Embarcações" /> },
-      { path: "professions",        element: <ComingSoonPage module="Profissões" /> },
-      { path: "pericias",           element: <ComingSoonPage module="Perícias" /> },
+      { path: "ships",              element: <ShipsPage /> },
+      { path: "professions",        element: <ProfissoesPage /> },
+      { path: "pericias",           element: <PericiasPage /> },
     ],
   },
 ]);

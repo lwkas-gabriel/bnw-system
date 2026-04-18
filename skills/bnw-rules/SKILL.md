@@ -12,10 +12,11 @@ description: >
 ```ts
 BPN          = Math.floor(level * 3 / 4)
 energia      = level * 3 + gemasInvestidas
-pontosAttr   = 6 + level + bonusRaciais
+pontosAttr   = level + bonusRaciais   // base 6 já fixos na ficha, não investíveis
 rollAtaque   = PRE + BPN + modificadores + 3d6
 thresholdDef = DEF + BPN + modificadores + 10
 danoBase     = POD + modificadores   // vs CON (temp first, depois base)
+rollPericias = (pericia × 3) + 3d6
 ```
 
 **Probabilidade de acerto com PRE = DEF (mesmo nível): ~58%** — sistema é levemente pró-ofensivo por design.
@@ -28,7 +29,7 @@ danoBase     = POD + modificadores   // vs CON (temp first, depois base)
 src/data/races.ts          → RaceData: attrBonus, periciaBonus, specialAbility
 src/data/haki.ts           → HAKI_ARMAMENT_STAGES[], HAKI_OBSERVATION_STAGES[], ADVANCED_HAKI[], KING_HAKI
 src/data/techniques.ts     → TECHNIQUE_RANKS{}, ADHERENCES[], ROKUSHIKI[]
-src/data/uniqueWeapons.ts  → UNIQUE_WEAPONS{} — todas as 25 armas com UniqueWeaponMechanics
+src/data/uniqueWeapons.ts  → UNIQUE_WEAPONS{} — todas as 26 armas com UniqueWeaponMechanics
 ```
 
 Estes arquivos são **imutáveis em runtime**. Se uma regra mudar, edite o arquivo de dados.
@@ -50,9 +51,24 @@ GEM_COSTS.cyborg          = { perShift:20, gear:20 }
 GEM_COSTS.uniqueWeapon    = 20
 GEM_COSTS.technique       = { E:6, D:7, C:8, B:9, A:10 }
 GEM_COSTS.energyPerGem    = 1
+GEM_COSTS.profession      = 10  // por profissão
 ```
 
 **Não inclui Arma Única se `laranjaChoice === 'unique_weapon'`.**
+
+### Orçamento de Gemas
+
+```
+gemBudget inicial (nível 1) = 20g
+máximo investível           = 400g
+excesso → 4 XP por gema (só após atingir 400g)
+```
+
+**Desconto de Facção:** `+20g` **fora** do limite de 400g. Disponível no cargo de Prestígio 20 de cada facção
+(Supernova, Capitão, Ouro B, CP 5–6, Herói). `computeFactionDiscount(char)` retorna `{ hasDiscount, used, bonus }`.
+`GemBudgetResult.factionDiscountBonus` soma ao total efetivo — exibir separado do cap na UI.
+
+~~**Bug pendente:** `createBlankCharacter` inicializa `gemBudget: 420`~~ — **corrigido para `20`**.
 
 ---
 
@@ -94,9 +110,12 @@ GEM_COSTS.energyPerGem    = 1
 
 ```ts
 // CombatantState.retemUsed: boolean
-// Condição: isKnockout && !retemUsed && akuma.type === 'zoan' && akuma.isMythical
+// Condição: isKnockout && !retemUsed && (
+//   (akuma.type === 'zoan' && akuma.isMythical) || equippedWeapon.characteristic === 'murakumogiri'
+// )
 // Efeito: newCon = 1, retemUsed = true
 // Registrado em DamageResult.retemActivated = true
+// Fontes: Zoan Mitológica (passivo de raça) e Murakumogiri (arma única)
 ```
 
 ---
@@ -149,10 +168,91 @@ function checkMinhaRegra(char: Character): ValidationIssue[] {
 
 ---
 
+## Bônus de AM por Faixa (flat nos atributos base)
+
+```ts
+// src/features/combat/engine/combatEngine.ts → getFaixaBonuses()
+branca:      {}               // nenhum flat (mas ver mecânica Haissaikai)
+cinza:       { precision: 2 }
+azul_clara:  { defense: 2 }
+azul_escura: { power: 2 }
+amarela:     { constitution: 2 }
+// laranja..grao_mestre: bônus via resolveTechniqueBonus() ou mecânicas ativas:
+laranja: +1 em cada item defensivo equipado; 2 Técnicas Rank A OU 1 Arma Única gratuita
+verde:   +2 bônus em técnicas DEFENSIVAS
+roxa:    +2 bônus em técnicas OFENSIVAS
+marrom:  +1 adicional em cada item defensivo equipado (total +2 desde Laranja); 1 Técnica Rank A gratuita
+preta:   pode equipar 1 arma extra (não permite 2 armas únicas simultâneas)
+coral:   +2 bônus na arma extra
+rajada:  +1 adicional em todos os itens defensivos (total +3 desde Laranja)
+vermelha: +2 em POD/PRE/DEF/CON por 2 EN (escolha dura o turno) — mecânica ativa pendente na engine
+grao_mestre: +2 rolls de ataque por 3 EN OU -2 rolls oponente por 3 EN — mecânica ativa pendente na engine
+```
+
+Laranja/Marrom/Rajada somam bônus cumulativos em itens defensivos. Vermelha e Grão Mestre têm mecânicas ativas pendentes de implementação no combatEngine.
+
+---
+
+## Bônus de Técnica por Tipo de Akuma
+
+Os bônus específicos de Zoan/Logia/Paramecia em técnicas (`+1 base`) estão **desabilitados no engine** até serem confirmados nas regras. Quando confirmados, adicionar em `resolveTechniqueBonus()` em `combatEngine.ts`.
+
+---
+
+## Perícias — Referência Rápida
+
+```
+11 perícias: ambicao, atletismo, destreza, erudicao, expressao,
+             furtividade, investigacao, logica, percepcao, persuasao, sobrevivencia
+Graduação: 0–5
+Roll: 3d6 + (gradação × 3)
+Pontos iniciais: 3
+Ganho: +1 a cada nível par (total 23 no nível 40)
+Custo em gemas: 0 (progressão por nível)
+```
+
+**Atenção na implementação:** `char.ambition` existe como campo isolado — migrar para `char.pericias.ambicao` e atualizar referência em `combatEngine.ts`.
+
+---
+
+## Progressão XP
+
+```
+XP para nível N (N ≥ 2) = 75 + 15 × N
+Tabela resumida: L2=90, L10=225 cumul, L20=360 cumul, L40=660 (total 14625)
+Após nível 40: aventuras NÃO concedem mais XP; ganho de gemas cai para 1/3 do normal.
+Jubilamento disponível: entrega personagem como NPC, cria nova PJ no nível 10 em Paradise com 100g + 50% desconto em 1 caminho.
+```
+
+---
+
+## Facções — Desconto e Comissão de Navio
+
+```ts
+// src/data/factions.ts
+// FACTIONS[type].ranks — hierarquia completa de cada facção
+// grantsDiscount: true → cargo de Prestígio 20 (Supernova, Capitão, Ouro B, CP 5-6, Herói)
+// shipCommission: "navy_permanent" | "cp_temporary" | "cp_galeon" | null
+
+// Comissão permanente (Marinha Capitão+):
+//   COMMISSIONED_SHIP_PRESET → Médio + revestimento_de_kairoseki + cabine_do_capitao + canhao + arsenal + brigue
+
+// Desconto de Facção:
+computeFactionDiscount(char)   // → { hasDiscount, used, appliedTo, bonus: 0|20 }
+// bonus é sempre 20 quando disponível e não usado — fora do cap de 400g
+// discountUsed e discountAppliedTo NUNCA são resetados ao trocar de rank/facção
+```
+
+**Pirata — bônus de tripulação:** `shipCrewBonus` aplica-se **por navio**; em grupos, apenas o cargo do **comandante** conta. Não acumula com outros piratas do grupo.
+
+---
+
 ## migrateCharacter — Ao Adicionar Campo no Character
 
 ```ts
 // src/features/character/utils/importer.ts → migrateCharacter()
 // SEMPRE adicionar o default para o novo campo:
 novoCampo: (raw.novoCampo as any) ?? defaultSeguro,
+// Exemplo do campo faction (adicionado recentemente):
+faction: (raw.faction as any) ?? undefined,
 ```

@@ -1,0 +1,313 @@
+Embarcações
+
+1 | Introdução
+
+Em um mundo dominado por ilhas e oceanos, os navios se tornaram o principal meio de transporte. Isso significa que pessoas e mercadorias circulam livremente pelos mares - e, claro, oferecem uma excelente oportunidade de lucro fácil para os piratas e revolucionários.
+
+Por outro lado, cabe aos agentes da lei (Agentes do Governo, Marinheiros e Caçadores de Recompensa) patrulhar os oceanos em seus próprios navios, combatendo a pirataria e trazendo segurança para os civis transitarem sem medo.
+
+Então, não importa de que lado você esteja, suba a bordo e se prepare para emocionantes aventuras em alto mar.
+
+
+
+
+2 | Tamanhos
+
+Em nosso fórum, os navios funcionam como verdadeiras bases móveis. Além de possibilitarem o deslocamento em alto-mar, eles servem que Quartel General das personagens onde quer que estiverem, oferecendo uma série de benefícios a partir das estruturas que hospedam. Eles são divididos conforme seus tamanhos. Quanto maior o navio, mais cômodos ele possui e mais melhorias ele pode receber. Os tamanhos dos navios e suas especificações encontram-se abaixo:
+
+Tamanho	Valor	Passageiros	Cômodos	Exemplo
+Individual	B$ 300.000	2	1	Striker; Hitsugibune
+Pequeno	B$ 600.000	6	4	Going Merry
+Médio	B$ 15.000.000	15	8	Thousand Sunny
+Grande	B$ 40.000.000	25	12	Moby Dick
+Gigante	B$ 75.000.000	50	16	Noah
+Colossal	R$ 150.000.000*	100	20	Thriller Bark
+
+
+Todas as embarcações requerem uma personagem com a profissão Navegador para navegar, com exceção das embarcações individuais. Por serem menores, muitas vezes dependem mais das capacidades físicas de seu dono do que de habilidades náuticas para navegar pelos mares. Assim, embarcações de tamanho individual são as únicas que podem navegar sem uam personagem com a profissão navegador. Por outro lado, quanto maior o barco, mais capaz o navegador no comando da embarcação deve ser. A tabela abaixo indica o valor na perícia Percepção necessária ao navegador para pilotar cada tamanho de embarcação:
+
+Tamanho	Navegador	Percepção
+Individual	Não	0
+Pequeno	Sim	1
+Médio	Sim	2
+Grande	Sim	3
+Gigante	Sim	4
+Colossal	Sim	5
+
+
+As embarcações em nosso RPG possuem estética totalmente interpretativa, ficando à cargo de cada jogador personalizar a aparência de seu barco como achar melhor.
+
+
+
+
+3 | Aquisição
+
+Ha duas formas principais de se adquirir uma embarcação. A primeiro é a compra e a segunda é a fabricação.
+
+Para se comprar uma embarcação, basta ter o valor correspondente ao tamanho de embarcação que se deseja comprar e encontrar algum estaleiro em sua aventura para encomendar a embarcação. Caberá ao narrador introduzir na aventura dos jogadores um estaleiro adequado, levando em conta o cenário das ilhas. Por exemplo, caso o jogador se encontre em uma ilha deserta, não faz sentido ter um estaleiro ali.
+
+Para adquirir uma embarcação via compra, tambem é preciso respeitar a limitação de cada mar. Ou seja, nem todos os tamanhos de navio estão disponíveis à venda em todos os mares. A tabela a seguir especifica em quais Mares cada tamanho está disponível para se comprar.
+
+Tamanho	Blues	Paradise	New World
+Individual	Sim	Sim	Sim
+Pequeno	Sim	Sim	Sim
+Médio	Não	Sim	Sim
+Grande	Não	Sim	Sim
+Gigante	Não	Não	Sim
+Colossal	Sim*	Sim*	Sim*
+
+
+Barcos Colossais podem ser adquiridos em qualquer lugar do mundo, pois sua aquisição depende do upgrade "ilha móvel". Esse processo será detalhado adiante.
+
+Por fim, para se adquirir um navio, é preciso aguardar seu tempo de fabricação. Cada embarcação, independentemente de seu tamanho, deverá ser encomendada durante uma aventura completa e só ficará pronta no início da próxima aventura. Ou seja, comprando-se de NPCs, não há embarcações pronta entrega. Não importa em que momento a embarcação é encomendada, seja no começo ou no fim da aventura. O importante é que a aventura em que o navio for encomendado deve ser completa, isto é, cumprir os requerimentos mínimos de turno.
+
+
+
+
+3.1. Fabricação
+
+Além da compra, jogadores que possuam a profissão Engenheiro podem construir seus próprios barcos. A fabricação de embarcações difere um pouco do sistema de criação de itens e consumíveis. Cada personagem com a profissão Engenheiro pode apenas construir um navio por aventura, independentemente do tamanho construído.
+
+O custo de produção de um navio por jogadores é 30% mais barato que o valor de mercado, indicado na tabela referente aos tamanhos. o desconto de 30% representa a mão de obra na construção da embarcação. Isso significa que a margem de lucro na construção de navios é menor que os demais tipos de fabricação por profissão. Entretanto, é importante lembrar que Engenheiros também podem fabricar bugigangas, que segue a margem de lucro padrão. Assim, essa medida visa balancear os ganhos por profissão.
+
+Além disso, para se fabricar embarcações, não é preciso realizar um teste de profissão, como na criação de itens e consumíveis. Basta ter a pontuação indicada abaixo na Perícia Lógica para ser capaz de construir cada tamanho de embarcação:
+
+Tamanho	Lógica
+Individual	1
+Pequeno	2
+Médio	3
+Grande	4
+Gigante	5
+Colossal	5*
+
+
+Isso significa que a fabricação de embarcações é sempre bem sucedida, desde que ela atenda seu requerimento mais importante. Para fabricar uma embarcação, a personagem com a profissão engenheiro deve dedicar 5 turnos da aventura para isso. Nesses 5 turnos, deve ser descrito, ainda que sem rigor técnico, como o navio foi fabricado. Cabe a cada jogador aplicar sua imaginação para tal. Nesses turnos, por exemplo, pode se explicar como conseguiu os materiais para construção, quais foram as partes do navio mais difíceis de se criar ou quais foram os detalhes que o Engenheiro introduziu na criação da embarcação, para que ela fosse uma obra com sua assinatura. Esses 5 turnos de fabricação podem ser realizados em AA, paralelos à aventura do jogador. Entretanto, o navio só ficará disponível para uso ou venda após a finalização dos 5 turnos de fabricação em AA.
+
+
+
+
+3.2. Comissão
+
+As facções do governo (Agentes do Governo e Marinha) tem suas necessidades básicas para o exercício de suas tarefas supridas pelo próprio governo. Isso inclui embarcações. Ao alcançar a CP 5 ou 6 (algum alguma superior), agentes podem comissionar embarcações do governo para o cumprimento de suas missões, desde que isso não interfira em seus disfarces ou infiltrações. Essa comissão dura por uma aventura apenas e os agentes não podem realizar qualquer forma de aprimoramento nelas. Marinheiros que alcancem a patente de Capitão ou superior podem comissionar permanentemente uma embarcação para si. No caso dos marinheiros, essa embarcação se torna como se fosse sua propriedade, podem receber qualquer forma de aprimoramento, desde que a personagem pague com seus próprios recursos.
+
+
+As embarcações passíveis de comissão serão sempre de tamanho médio, com o mecanismo avançado "Revestimento de Kairoseki" e com os cômodos "Cabine do Capitão", dois "Canhões", "Arsenal" e "Brigue".
+
+
+
+
+
+3.3. Reparos
+
+Embarcações podem requerer reparo caso os jogadores sejam derrotados em um Combate em Alto Mar (veja regras de Navegação). Nesses casos, o processo de reparo é similar ao de fabricação. É possível encomendar os reparos com algum NPC, desde que a ilha seja coerente, tendo que realizar uma aventura completa para receber o navio reparado no início da próxima. Dessa forma, gasta-se metade do valor de mercado da embarcação, de acordo com seu tamanho.
+
+Uma personagem com profissão Engenheiro pode reparar uma embarcação. Para isso, gasta-se 30% do valor deercado do navio, de acordo com seu tamanho, e é preciso realizar 5 turnos interpretando os reparos a serem feitos, o que pode ser realizado em aventura normal ou via AA.
+
+
+
+
+3.4. Propriedade
+
+Diferente de outros itens, navios podem ser pagos em conjunto; ou seja, vários jogadores podem dividir o valor total de berries, da maneira que quiserem, tornando-se todos donos do navio.
+
+Neste caso, os jogadores deverão escolher uma pessoa para ter a posse factual do barco. Se um dos jogadores que participou da compra decidir sair da tripulação, então os jogadores terão que chegar a um acordo formal sobre quem ficará com o barco, seja em uma luta, pagando a diferença pra quem ficar com o barco, ou quaisquer forma os jogadores acharem justo. Se um acordo formal não puder ser estabelecido, entretanto, a posse do barco será concedida ao jogador registrado como proprietário no momento da separação.
+
+O proprietário do barco pode passar a propriedade para qualquer outro jogador quando desejar. Caso o dono do barco se ausente por mais de 90 dias, a propriedade do barco deverá ser decidida entre os jogadores restantes. Se não forem capazes de chegar a um acordo, a propriedade do barco irá para o membro ativo que pagou o maior valor da parcela; falhando nisso, será definido por meio da rolagem de um dado com faces equivalentes ao número de jogadores envolvidos e designando um número a cada jogador.
+
+
+
+
+4 | Aprimoramentos
+
+As embarcações podem receber aprimoramentos de diversos tipos. É possível aprimorar um navio para que se torne um tamanho maior, bem como acrescentar mecanismos especiais que facilitarão a exploração do cenário e a instalação de cômodos únicos, que oferecerão uma série de vantagens para os jogadores. São os aprimoramentos que consolidam o papel das embarcações como bases móveis ou quartéis generais ambulantes das personagens.
+
+
+
+
+4.1. Aumento de tamanho
+
+Sempre é possível aumentar o tamanho de uma embarcação. Para isso, é necessário seguir as regras de aquisição, de modo que um aumento de tamanho é considerado uma reconstrução. Assim, é preciso observar o intervalo de aventura no caso de compra ou cumprir os 5 turnos de criação, no caso de fabricação. Além disso, é necessário pagar o valor de mercado do novo tamanho aumejado, subtraindo o valor já pago pelo tamanho antigo da embarcação.
+
+Em casos de aumento de tamanho, a embarcação mantém todos os outros aprimoramentos de mecanismos e cômodos aplicados anteriormente.
+
+
+
+
+4.2. Mecanismos Avançados
+
+Outra forma de aprimoramento das embarcações é aplicar um mecanismo avançado. Esses mecanismos alteram a estrutura física da embarcação, de modo que só é possível aplicar dois mecanismos especiais por embarcação e, uma vez aplicados, não podem ser removidos.
+
+Para se instalar um mecanismo avançado, basta pagar seu valor correspondente e ele passará a funcionar imediatamente na embarcação, com exceção do mecanismo "Anexo Insular", que será explicado adiante. Fica à cargo dos jogadores aplicarem mudanças estéticas decorrentes desses mecanismos em suas embarcações.
+
+Os mecanismos avançados disponíveis estão listados abaixo:
+
+Mecanismo	Efeito	Valor
+Submarino	Permite navegar submerso sem limitações e fugir de combates em alto mar contra outras embarcações.	B$50.000.000
+Aeronave	Permite acessar ilhas do céu sem limitações e fugir de combates em alto mar contra Reis dos Mares.	B$50.000.000
+Tanque	Permite viajar sobre a terra sem limitações.	B$50.000.000
+Docas	Permite armazenar até 5 embarcações que sejam dois tamanhos menores (e.g. Médio armazena 3 Individuais).	B$50.000.000
+Revestimento de Kairoseki	Permite navegar no Calm Belt em segurança.	B$100.000.000
+Madeira de Adam	Evita que o navio naufrague em caso de derrota no Combate em Alto Mar (não requer reparos)	B$100.000.000
+Mecha	Permite acoplar-se a um Ciborgue com Gear Mecha, concedendo +1 de Constituição por 3 de Combustível (acumula até +2).	B$100.000.000
+Tração Animal	Substitui a profissão Navegador pela profissão Adestrador em todo o sistema de Navegação e Embarcações.	B$100.000.000
+Anexo Insular	Transforma a embarcação em tamanho colossal e em uma "ilha móvel" Rank E.	B$150.000.000
+
+
+
+
+
+4.3 Ilhas Móveis
+
+Ilhas Móveis são o produto da aplicação do mecanismo avançado "Anexo Insular", única forma de se adquirir uma embarcação de tamanho colossal. Como descrito na tabela acima, ao aplicar esse mecanismo, a embarcação deixa de ser um simples barco. Ela passa a funcionar como uma ilha móvel, parte do domínio da personagem proprietária. Essa ilha móvel é considerada um território Rank E, conforme os parâmetros das regras de Territórios, podendo ser melhorada até o Rank C. Essa ilha móvel não é contada dentro do limite de 5 territórios dominados e não pode ser libertada. Ela ainda pode naufragar, mas enfrentar um Combate em Alto Mar contra uma Ilha Móvel significa também derrotar seus defensores!
+
+Qualquer tamanho de embarcação pode receber o mecanismo "Anexo Insular" e se tornar uma ilha móvel. Para isso, é necessário (1) pagar o valor de 150 milhões de berries pelo mecanismo "Anexo Insular" e (2) realizar uma aventura completa ou AAA com 3 desafios em que se justificará como a embarcação se tornou uma ilha.
+
+Fica à cargo da criatividade do jogador definir como sua embarcação ganhou a proporção de uma ilha. Ela pode, simplesmente, ser um barco gigante como Thriller Bark, um pedaço de terra que flutua com os poderes de uma Akuma o Mi como o barco de Shiki, um aglomerado de embarcações menores como a cede da Germa 66, um animal marinho colossal adaptado como Crocus fez com Laboon ou o que mais o jogador julgar divertido!
+
+
+
+
+4.4 Cômodos
+
+Uma terceira forma de aprimoramento em embarcações é a instalação de cômodos. Esses cômodos representam o espaço interno útil em cada barco e a quantidade de cômodos disponível depende do tamanho da embarcação (confira a tabela de tamanhos no início do tópico).
+
+Para se instalar uma estrutura nesses cômodos, basta investir o valor em berries correspondente. É possível remover cômodos instalados para aplicar outros. Entretanto, não há reembolso de cômodos removidos, nem desconto na substituição de cômodos.
+
+Algumas opções de estruturas ocupam mais de um cômodo. Assim, cada estrutura tem valores diferentes, a depender de quantos cômodos ela ocupa, conforme a tabela abaixo:
+
+Cômodos	Valor
+1	20.000.000
+2	40.000.000
+3	60.000.000
+
+
+Além disso, não é possível ter dois cômodos iguais em uma mesma embarcação. As vantagens oferecidas pelos cômodos podem ser usadas quando as personagens estiverem na embarcação ou em sua proximidade, de modo que possam se beneficiar dessas estruturas. Não precisam ser, necessariamente, usadas em alto mar, funcionando também quando o navio estiver atracado.
+
+Abaixo, as listas de estruturas por cômodos que ocupam:
+
+
+UM CÔMODO
+
+Cômodo	Descrição	Bônus
+Cozinha Industrial	Um cômodo adaptado com fornos e equipamentos culinários de ponta.	+1 nas rolagens de criação de lanches
+Oficina	Um cômodo adaptado com toda forma de ferramentas e ferragens necessárias para projetos de engenharia.	+1 nas rolagens de criação de bugigangas
+Forja	Um cômodo adaptado com um forno de alta temperatura e equipamentos necessários para metalurgia.	+1 nas rolagens de criação de equipamentos
+Laboratório	Um cômodo adaptado com instrumentos farmacológicos e químicos diversos.	+1 nas rolagens de criação de pomadas
+Escritório	Cômodo dedicado para o estudo e elaboração de cartas náuticas e mapas.	+1 nas rolagens de criação de Eternal Pose
+Biblioteca	Um cômodo dedicado ao armazenamento e estudo de livros diversos.	+1 nas rolagens para localizar Poneglyph.
+Picadeiro	Um cômodo moldado para ter espaço e utensílios que auxiliem a domesticação de animais.	+1 em testes de adestramento
+Motor	Um cômodo ocupado pela estrutura de um motor movido a combustível.	Permite Personagens Ciborgues navegar no Calm Belt gastando 30% de seu combustível total por viagem.
+Remos	Um cômodo adaptado para projeta R remos em ambos os lados da embarcação e remar.	Permite Personagens usuários de Haki ou Artes Marciais navegar no Calm Belt gastando 30% de sua energia total por viagem.
+Turbina	Um cômodo que hospeda um mecanismo especial capaz de usar os poderes de Akuma no Mi para funcionar.	Permite Personagens com Akuma no Mi navegar no Calm Belt gastando 30% de sua energia total por viagem.
+Cabine do Capitão	Um cômodo de luxo, capaz de causar a melhor da impressões em qualquer um.	+1 em testes de Persuasão.
+Academia	Um cômodo adaptado com todo tipo de equipamentos para treinamentos físicos diversos.	+1 em testes de Atletismo.
+Camarim	Um cômodo designado para o armazenamento de figurinos e aplicação de maquiagem para disfarces.	+1 em testes de Furtividade.
+Canhão	Um cômodo reservado ao armazenamento e manuseio de um canhão e seus projéteis.	Permite um ataque à duas ações de distância contra alvos na superfície ou no ar por Combate em Alto Mar. Caso acerte, impede fuga aérea.
+Torpedo	Um cômodo reservado ao mecanismo de disparo de torpedos subaquáticos.	Permite um ataque à duas ações de distância contra alvos na superfície ou submersasos por Combate em Alto Mar. Caso acerte, impede fuga submarina.
+
+
+
+
+
+DOIS CÔMODOS
+
+Cômodo	Descrição	Bônus
+Aquário	Tanque de água que se pode armazenar todo tipo de peixes e frutos do mar.	-10% no preço de custo de lanches e banquetes
+Arsenal	Espaço para armazenar e expor armas de tipos e tamanhos variados.	-10% no preço de custo de equipamentos
+Enfermaria	Ala equipada para atender enfermidades e ferimentos, bem como operações médicas mais complexas.	Dobra a recuperação de Constituição por Médicos fora de combate.
+Estábulo	Área adaptada para a hospedagem e cuidado de animais adestrados.	+10 de passageiros exclusivo para animais adestrados.
+Gancho Retrator	Um aparato capaz de perfurar outras embarcações e as puxar para perto.	Rouba a iniciativa em Combates em Alto Mar e permite um ataque à duas ações de distância contra qualquer alvos marítimo. Caso acerte, aproxima as embarcações imediatamente a 0 ações de distância.
+Horta	Área fertilizada para a plantação e cultivo de hortaliças.	-10% no preço de custo de pomadas
+Museu	Espaço adaptado para a exposição e estudo de relíquias e outras fontes materiais.	Realiza duas rolagens para definir relíquias e escolha o resultado.
+Observatório	Espaço elevador e equipado para a observação das estrelas.	1 rolagem extra por aventura para a criação de Eternal Pose
+Usina de Reciclagem	Sistema que permite reaproveitar materiais para criações diversas.	-10% no preço de custo de bugigangas
+
+
+
+
+
+TRÊS CÔMODOS
+
+Cômodo	Descrição	Bônus
+Concha Acústica	Palco envolto por redoma que amplifica o som e garante visibilidade para apresentações artísticas a grandes públicos.	+10% no teto de ganhos da aventura quando realizar uma apresentação artística
+Brigue	Uma série de pequenas celas em que se pode prender pessoas.	+10% no valor da recompensa por procurados
+Antena	Aparato que amplifica a comunicação e controle de dispositivos e unidades externas conectadas a um Ciborgue.	+1 de precisão no Gear Drone.
+Loja	Área que pode ser aberta ao público para a exposição e venda de produtos diversos.	+10% no valor de todos os itens vendidos a NPCs.
+Sonar	Equipamento de e o localização e garra de extração que permite localizar e coletar tesouros submersos.	Recebe 1d100*100.000 em berries a cada viagem em alto mar./td>
+Tanque Reserva	Um grande tanque de combustível capaz de armazenar grandes volumes.	Recupera 50% do Combustível total uma vez por aventura.
+
+
+
+
+
+4.5 Despertar (Klabautermann)
+
+À última forma de aprimoramento de uma embarcação é o seu despertar. Navios que foram amados e bem cuidados despertam o espírito da água que habita neles, chamado Klabautermann. Com a aparencia de uma criança, o Klabautermann é a manifestação da alma do navio. Foi o Klabautermann do Going Merry que o concertou em Skypiea e que o conduziu de Water 7 a Ennies Lobby, salvando o Bando do Chapéu de Palha.
+
+Após completar 10 viagens em alto mar, uma embarcação desperta seu Klabautermann.
+
+
+Após despertar, a embarcação ganha vida e, caso interesse aos jogadores, poderão interpretar e conversar com o navio como se fosse um Companheiro. Além desses aspecto interpretativo, um navio desperto recebe as seguintes habilidades:
+
+4.5.1. Em casos de naufrágio, o Klabautermann repara o navio de forma gratuita. Ainda é preciso aguardar uma aventura completa para que os reparos sejam realizados. Personagens com a profissão Engenheiro podem investir os 5 turnos em Aventura ou AA para reparar o navio junto com o Klabautermann.
+
+4.5.2. Em caso de separação do jogador ou bando de seu navio, o Klabautermann conduzirá o navio para onde seus donos estão. Isso inclui situações de prisão, de modo que o navio se deslocar à sozinho até a ilha em que seus donos estiverem presos.
+
+4.5.3. Em caso de Combate em Alto Mar, o Klabautermann fortalece seus donos em combate, de modo que todas as técnicas utilizadas por personagens aliadas gastam 1 de energia a menos.
+
+
+
+
+5 | Ficha
+
+Ao adquirir uma embarcação, independetemente da forma, caberá ao jogador proprietário elaborar a ficha do navio e o postar junto ao seu tópico de ficha. Ao fim deste post há um modelo de ficha a ser usado. No final deste tópico, há alguns exemplos de ficha preenchida.
+
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">NOME DO NAVIO</div><br>
+
+<img src="IMAGEM OU GIF" width="500px" height="279px"/></img><br>
+
+
+<div class="post"><t>1 | Informações gerais</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>Nome do navio.
+<e>Despertar: </e> 00/10
+<e>Tamanho:</e> Individual, pequeno, médio, grande, gigante ou colossal.
+<e>Valor:</e> Preço da embarcação sem qualquer aprimoramento
+<e>Cômodos:</e> Quantidade máxima
+<e>Passageiros:</e> Quantidade máxima
+<e>Descrição:</e> Aparência é detalhes interpretativos
+</div>
+
+
+
+
+<t>2 | Mecanismos Avançados</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Efeito:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Efeito:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+
+
+
+<t>3 | Cômodos</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Espaço:</e> 1, 2 ou 3
+<e>Bônus:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+
+</div><div class="versao">STAFF BNW 2024</div></div>[/dohtml]

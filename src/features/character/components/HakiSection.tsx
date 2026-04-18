@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI } from "../../../data/haki";
@@ -13,7 +12,6 @@ function StageProgress({ stages, current, onSelect, type }: {
   type: "armament" | "observation";
 }) {
   const currentNum = typeof current === "number" ? current : 0;
-  const colors = { armament: "amber", observation: "blue" };
   const colorClass = type === "armament"
     ? "bg-amber-600 border-amber-500 text-white"
     : "bg-blue-700 border-blue-600 text-white";
@@ -22,7 +20,6 @@ function StageProgress({ stages, current, onSelect, type }: {
     <div className="space-y-2">
       <div className="flex gap-1">
         {STAGE_LABELS.map(s => {
-          const stage = stages[s - 1];
           const isActive = s <= currentNum;
           const isCurrent = s === currentNum;
           return (
@@ -52,7 +49,7 @@ function StageProgress({ stages, current, onSelect, type }: {
           </div>
           <p className="text-[10px] text-slate-600 mt-1">{stages[currentNum - 1].description}</p>
           {stages[currentNum - 1].freeTechniqueRank && (
-            <Badge variant="amber" className="mt-1">1 técnica Rank A grátis</Badge>
+            <div className="mt-1"><Badge variant="amber">1 técnica Rank A grátis</Badge></div>
           )}
         </div>
       )}
@@ -104,7 +101,7 @@ export function HakiSection() {
   }
 
   function setKingAdvanced() {
-    if (draft.location !== "new_world") return;
+    if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.kingStage = "advanced";
@@ -113,7 +110,7 @@ export function HakiSection() {
   }
 
   function setAdvanced(variant: AdvancedHakiVariant) {
-    if (draft.location !== "new_world") return;
+    if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.advancedType = variant;
@@ -125,7 +122,7 @@ export function HakiSection() {
   const canHaveKing = primaryStageNum >= 5 || (typeof haki?.secondaryStage === "number" && haki.secondaryStage >= 5);
   const canHaveAdvanced = draft.location === "new_world";
 
-  // Gem cost calculation
+  // Both Armament and Observation cost 20g/stage as primary; only secondary is free
   const gemCost = (primaryStageNum * 20)
     + (haki?.hasKing ? 20 : 0)
     + (haki?.advancedType === "king_advanced" ? 20 : 0)
@@ -227,7 +224,7 @@ export function HakiSection() {
                     >
                       <p className="text-xs font-medium text-amber-400">Imbuir do Rei</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">Adiciona valor de Ambição ao bônus de todas as técnicas com o Rei ativo.</p>
-                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.ambition}: +{draft.ambition} por técnica</p>
+                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.pericias.ambicao}: +{draft.pericias.ambicao} por técnica</p>
                     </button>
                   </div>
                 )}

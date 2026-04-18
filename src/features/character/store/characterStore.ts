@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type { Character } from "../../shared/types/character";
-import { validateCharacter } from "./utils/attrCalc";
-import { computeGemBudget, type GemBudgetResult } from "./utils/gemBudget";
+import type { Character } from "../../../shared/types/character";
+import { validateCharacter, blankPericias } from "../utils/attrCalc";
+import { computeGemBudget, type GemBudgetResult } from "../utils/gemBudget";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
 
@@ -35,7 +35,7 @@ interface CharacterActions {
 
 // ─── Default character factory ────────────────────────────────────────────────
 
-function createBlankCharacter(name: string, gemBudget: number = 420): Character {
+function createBlankCharacter(name: string, gemBudget: number = 20): Character {
   return {
     id: crypto.randomUUID(),
     name,
@@ -43,7 +43,9 @@ function createBlankCharacter(name: string, gemBudget: number = 420): Character 
     race: "human",
     investedAttributes: { power: 0, precision: 0, defense: 0, constitution: 0 },
     racialBonus: {},
-    ambition: 0,
+    pericias: blankPericias(),
+    humanPericiaChoice: null,
+    professions: [],
     energy: { bpn: 0, energy: 3, energyInvested: 0 },
     haki: null,
     akuma: null,
@@ -68,7 +70,7 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
       errors: {},
       budget: null,
 
-      newCharacter: (name, gemBudget = 420) => {
+      newCharacter: (name, gemBudget = 20) => {
         const char = createBlankCharacter(name, gemBudget);
         set(state => {
           state.draft = char;
@@ -78,12 +80,22 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
       },
 
       loadCharacter: (id) => {
-        const found = get().saved.find(c => c.id === id) ?? null;
+        let found = get().saved.find(c => c.id === id) ?? null;
         if (!found) return;
+        // Backward compat: migrate pre-pericias characters saved in localStorage
+        if (!(found as any).pericias) {
+          const legacy = found as any;
+          found = {
+            ...found,
+            pericias: { ...blankPericias(), ambicao: Number(legacy.ambition) || 0 },
+            humanPericiaChoice: null,
+            professions: [],
+          };
+        }
         set(state => {
           state.draft = found;
-          state.errors = validateCharacter(found);
-          state.budget = computeGemBudget(found);
+          state.errors = validateCharacter(found!);
+          state.budget = computeGemBudget(found!);
         });
       },
 

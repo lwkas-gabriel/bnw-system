@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { importFromFile, importFromClipboard, type ImportResult } from "../features/character/utils/importer";
+import { downloadCharacterJSON, exportToJSONString, exportToForumText, copyToClipboard } from "../features/character/utils/exporter";
 import { PageHeader, Button } from "../shared/components";
 import { ValidationPanel } from "../features/character/components/ValidationPanel";
 
@@ -9,7 +10,7 @@ type DragState = "idle" | "over" | "loading";
 
 export default function ImportPage() {
   const navigate = useNavigate();
-  const { saved, saveDraft, updateDraft, loadCharacter } = useCharacterStore();
+  const { saved } = useCharacterStore();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [drag, setDrag]         = useState<DragState>("idle");
@@ -237,7 +238,6 @@ export default function ImportPage() {
 
 function ExportRow({ char }: { char: import("../shared/types/character").Character }) {
   const [copied, setCopied] = useState(false);
-  const { downloadCharacterJSON, exportToJSONString, exportToForumText, copyToClipboard } = require("../features/character/utils/exporter");
 
   async function handleCopyJSON() {
     await copyToClipboard(exportToJSONString(char));

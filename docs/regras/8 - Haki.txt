@@ -1,0 +1,241 @@
+Haki
+
+1 | Introdução
+
+Para alguns, o Haki é o principal poder do universo de One Piece.
+
+O Haki é a ambição manifesta das pessoas em poder de combate e habilidades extraordinárias. Ainda de muitos possam despertar essas habilidades, poucos são os que perseveram em seu domínio e aperfeiçoamento. Há três "colorações" de Haki:
+
+Kenbunshoku Haki (Haki da Observação): O Kenbunshoku Haki ou Haki da Observação, conhecido como Mantra em Skypiea, é um tipo de Haki que permite ao usuário sentir a presença de outras pessoas, mesmo que estejam longe ou fora de visão. Também pode servir para prever ataques e prever o futuro no ápice de seu poder. Quando treinado, pode-se identificar a pessoa por uma espécie de aura, que se diferencia pessoa por pessoa. Por este motivo, concede bônus em Defesa e Precisão;
+
+Busoshoku Haki (Haki do Armamento): Como o nome sugere, o Haki do armamento permite ao usuário criar uma armadura de energia com a capacidade única de causar danos a todos os usuários de Akuma no Mi - incluindo os tipos Logia. Desse modo, concede bônus em Poder e Constituição;
+
+Haoshoku Haki (Haki do Rei): É a canalização da vontade/ambição do usuário, portanto embora não aumente nenhum atributo físico, mune a pessoa com uma vontade de ferro e a impõe sobre as que não tem força para aguentá-la. Dizem que quem possui esse tipo de Haki tem as qualidades de um rei.
+
+O Haki é, sem dúvida, o caminho mais árduo e requer persistência e determinação para o dominar.
+
+
+
+
+2 | Progressão
+
+Para começar a desenvolver o Haki em sua personagem, basta pagar o valor de 20 gemas e escolher com qual Haki deseja começar, Armamento ou Observação. A partir daí, é necessário galgar os requerimentos para evoluir seu Haki. A aquisição, progresso e funcionamento do Haki do Rei é paralelo aos dois tipos básicos de Haki e será descrito mais abaixo.
+
+O Haki é dividido em sete estágios e cada um deles concede bônus numérico. Destes sete estágios, os dois últimos são considerados avançados e só são acessíveis a partir do Novo Mundo. Para se evoluir no uso do Haki, é necessário o colocar em prática, de modo que há um número determinado de aventuras a ser cumprido em que há uso do Haki. Toda aventura que o personagem utilizar o haki em algum momento (funcionando ou não) será contada como aventura para o requisito para passar de estágio. Após alcançar o número necessário de aventuras, será necessário pagar o valor em gemas do próximo estágio. O terceiro requerimento é a localização. Estágios mais altos de Haki só são possíveis de se desenvolver em ambientes que estimulem os usuários a crescer. Assim, enquanto estiver nos Blues, o usuário de Haki só poderá alcançar o estágio 2. Ao chegar na Grand Line (Paradise), poderá desenvolver seu Haki até o estágio 5. Os estágios avançados são restritos ao Novo Mundo.
+
+Apesar da limitação geográfica, os jogadores poderão cumprir as aventuras necessárias de uso em qualquer lugar do mundo. Entretanto, deverão respeitar os requisitos de localização para a aquisição do próximo estágio. Fazer mais aventuras do que é pedido não acumula para o próximo estágio, no caso de ficar trancado por não se deslocar ao próximo mar (Paradise e Novo Mundo). Uma personagem que está nos Blues e já alcançou os requisitos para subir ao estágio 3 de Haki, por exemplo, caso ela continue nos Blues, suas aventuras seguintes não serão contabilizadas para os requisitos do estágio 4.
+
+É importante notar que, ao aderir ao caminho do Haki, ganha-se acesso aos dois tipos básicos de Haki, isto é, do Armamento e da Observação. Entretanto, é preciso escolher um desses dois tipos de Haki como inicial, pois só terá acesso ao próximo após alcançar o estágio 2 com seu Haki inicial. Assim, não é preciso pagar valor em gemas para evoluir seu Haki secundário. Basta cumprir as aventuras necessárias e respeitar os requisitos de localização. Nada impede que o Haki secundário alcance o estágio do Haki inicial. Caso os dois Hakis se equiparem em termos de Estágios e requerimentos, poderão subir de nível ao mesmo tempo.
+
+A progressão dos estágios e seus requisitos (gemas e aventuras) podem ser vistos abaixo:
+
+ESTÁGIO 1
+Custo: 20 gemas
+Requisitos: No estágio 1, o personagem não tem controle sobre o Haki. Será necessário passar em um teste médio de Ambição (9 no teste de Perícia) para que seja ativado, dentro ou fora de combate. Pode-se realizar uma tentativa por turno e, uma vez ativado, ele pode ser usado livremente ao longo da aventura (tópico). Mesmo em caso de falha neste teste, haverá o consumo de energia. Caso a personagem esteja abaixo do nível 5, é necessário um teste de Ambição difícil (18 no teste de Perícia) para ativar.
+
+ESTÁGIO 2
+Requisitos: 1 Aventura completa com Haki estágio 1
+Custo: 20 gemas
+
+ESTÁGIO 3
+Requisitos: 1 Aventuras completas com Haki estágio 2; estar na Grand Line
+Custo: 20 gemas
+Recebe uma técnica Rank A.
+
+ESTÁGIO 4
+Requisitos: 2 Aventuras completas com Haki estágio 3; Estar na Grand Line
+Custo: 20 gemas
+
+ESTÁGIO 5
+Requisitos: 2 Aventuras completas com Haki estágio 4; Estar na Grand Line
+Custo: 20 gemas
+
+ESTÁGIO AVANÇADO - PARCIAL
+Requisitos: 3 Aventuras completas com Haki estágio 5; Estar no Novo Mundo
+Custo: 20 Gemas
+
+ESTÁGIO AVANÇADO - COMPLETO
+Requisitos: 3 Aventuras completas com Haki Avançado Parcial; Estar no Novo Mundo
+Custo: 20 Gemas
+
+
+
+
+
+3 | Bônus e Gastos
+
+O Haki age como uma passiva que, quando ativada, consome sua energia em troca de bonificações relativas ao seu poder. Como mencionado, Haki da observação apenas pode aumentar Precisão e Defesa, enquanto o do armamento apenas Poder e Constituição.
+
+O Haki não garante apenas uma amplificação em seus atributos, no entanto. Ao adquirir o haki, além dos bônus numéricos, a personagem receberá bônus interpretativos exclusivos.
+
+Além disso, ativar e manter o Haki ativo também custa energia por turno, que estará especificado mais abaixo, ainda neste tópico. Abaixo, todos os bônus e gastos poderão ser vistos, divididos pelo tipo de Haki adquirido:
+
+
+
+
+3.1 - Haki do Armamento
+
+HAKI DO ARMAMENTO - ESTÁGIO 1
+Bônus: +1 em Poder e +1 em Constituição (esta Constituição é a primeira a ser consumida por um golpe). Estes valores se mantém enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 1 de Energia por Turno
+Interpretativo: Você sente sua pele ficar com uma densidade maior, mas é apenas uma sensação. Não consegue manifestar o Haki por vontade própria, aplicá-lo em técnicas ou objetos afetados por poderes de Akuma, aplicá-lo em objetos comuns, muito menos acertar Logias.
+
+HAKI DO ARMAMENTO - ESTÁGIO 2
+Bônus: +2 em Poder e +2 em Constituição (esta Constituição é a primeira a ser consumida por um golpe). Estes valores se mantém enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 2 de Energia por Turno
+Interpretativo: Você tem controle melhor de sua própria energia espiritual de modo que partes do corpo ou armas/itens sejam revestidas com sua força de vontade, fazendo com que a área focada fique mais forte tanto no ataque quanto na defesa. As vezes a pele pode ficar levemente avermelhada, mas quase que imperceptível. Apesar do uso deste poder de forma mais intensa e recorrente, o usuário ainda não tem a plena consciência de como usar essas habilidades de modo eficiente. Tanto que, mesmo tendo um maior nível de controle, o personagem ainda não é capaz de acertar usuários de Akuma no mi do tipo logia por ainda estar em seu processo de desenvolvimento.
+
+HAKI DO ARMAMENTO - ESTÁGIO 3
+Bônus: +3 em Poder e +3 em Constituição (esta Constituição é a primeira a ser consumida por um golpe). Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 3 de Energia por Turno
+Interpretativo: Você tem plena consciência do uso deste poder e já consegue fazer o uso do Haki como bem entender. A personagem revestir apenas regiões pequenas e específicas, como um punho, para endurecê-la de forma mais rápida e eficiente. Estas partes revestidas se tornam totalmente negras e são tão intensas que os golpes desferidos são mais destrutivos e perigosos. A intensidade é tanta que se torna possível tocar/acertar o corpo de um usuário de Akuma no Mi do tipo Logia ou com outras invulnerabilidades. Nesse nível, o personagem consegue deixar partes de seu corpo com a cor negra.
+
+HAKI DO ARMAMENTO - ESTÁGIO 4
+Bônus: +4 em Poder e +4 em Constituição (esta Constituição é a primeira a ser consumida por um golpe). Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 4 de Energia por Turno
+Interpretativo: Você possui um entendimento muito maior sobre o Haki devido à sua experiência no campo de batalha. Consegue revestir áreas maiores do corpo, bem como diversas áreas em específico, podendo até mesmo aplicar o Haki no corpo todo. Assim, pode fazer grandes ataques e defesas sempre que desejar, mostrando-se um poderoso usuário. (Exemplo: Vergo vs Smoker)
+
+HAKI DO ARMAMENTO - ESTÁGIO 5
+Bônus: +5 em Poder e +5 em Constituição (esta Constituição é a primeira a ser consumida por um golpe). Estes valores se mantém enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 5 de Energia por Turno
+Interpretativo: Você dominou o uso do Haki do Armamento, podendo usá-lo até mesmo de forma a se ajustar a características específicas do corpo do usuário, como poderes de Akuma no Mi e Ciborgue (Exemplo: Luffy vs Doflamingo)
+
+
+
+
+
+3.2 - Haki da Observação
+
+HAKI DA OBSERVAÇÃO - ESTÁGIO 1
+Bônus: +1 em Precisão e +1 em Defesa. Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 1 de Energia por Turno.
+Interpretativo: Você é incapaz de perceber nitidamente as pessoas ao seu redor, mas já consegue sentir objetos inanimados que estão próximos, além de apurar todos os 5 sentidos. Age numa distância de 1 ação de movimento.
+
+HAKI DA OBSERVAÇÃO - ESTÁGIO 2
+Bônus: +2 em Precisão e +2 em Defesa. Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 2 de Energia por Turno
+Interpretativo: Você é capaz de sentir pessoas ao seu redor, embora não saiba dizer sua posição específica. Mesmo que a alguma distância, consegue "ver" as silhuetas das pessoas, mesmo que esteja até mesmo de olhos fechados ou seja cego. Age numa distância de 2 ações de movimento.
+
+HAKI DA OBSERVAÇÃO - ESTÁGIO 3
+Bônus: +3 em Precisão, +3 em Defesa e +1 Percepção. Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 3 de Energia por Turno.
+Interpretativo: Você consegue perceber as verdadeiras emoções/sentimentos de uma pessoa ou animal, podendo sentir até mesmo a dor que estes já passaram. Também consegue sentir o poder de luta (doriki) de quem está dentro do seu alcance do haki. Age numa distância de 3 ações de movimento.
+
+HAKI DA OBSERVAÇÃO - ESTÁGIO 4
+Bônus: +4 em Precisão, +4 em Defesa e +2 de Percepção. Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 4 de Energia por Turno
+Interpretativo: Você desenvolve maior aptidão para sentir pessoas e objetos, podendo ver claramente todas as pessoas e objetos (e suas localizações) num determinado raio ao seu redor. É capaz de ver com clareza mesmo a grandes distâncias (Exemplo: Usopp em Dressrosa) Age numa distância de 3 ações de movimento.
+
+HAKI DA OBSERVAÇÃO - ESTÁGIO 5
+Bônus: +5 em Precisão, +5 em Defesa e +3 de Percepção. Estes valores se mantêm enquanto houver o pagamento de energia para sua manutenção.
+Gastos: 5 de Energia por Turno
+Interpretativo: Você é um usuário poderoso no haki da Observação. Consegue até mesmo pressentir as intenções das pessoas, ajudando a prevenir ataques (Exemplo: Mantra em Skypiea). Age numa distância de 3 ações de movimento.
+
+
+
+
+
+4 | Haki avançado
+
+O Novo Mundo é o mar em que os mais fortes navegam. Assim, ao alcançar tal ponto, os usuários de Haki se tornam capazes de alcançar novos patamares com seu poder. Entretanto, só é possível escolhe um tipo de Haki Avançado (Armamento OU Observação OU Rei), portanto é preciso escolher com cuidado. Além disso, cada tipo de Haki possui duas opções de especialidade, cada uma focada em um atributo de combate diferente, diante dos quais o jogador deve optar por apenas uma opção.
+
+O estágio avançado dos Hakis atua como uma habilidade complementar, podendo ou não se aplicada. Ela ainda requer que o respectivo Haki esteja ativado para seu utilizada. Assim, o uso do Haki Avançado acrescenta um novo bônus ao respectivo Haki, por um acréscimo no gasto de energia. Cada tipo de Haki Avançado possui dois estágios de desenvolvimento: parcial e completo. Cada estágio tem o custo de 20 gemas cada.
+
+
+
+
+4.1 Haki Armamento Avançado
+
+O princípio do Haki do Armamento Avançado é a emissão do poder para além do corpo. O aperfeiçoamento dessa habilidade leva a aplicações protetivas (relacionadas à Constituição) ou agressivas (relacionadas ao Poder). O usuário de Haki do Armamento Avançado deve optar por apenas uma dessas aplicações.
+
+
+
+
+4.1.1 Repulsão
+
+PARCIAL: Você se torna capaz de emanar o poder de seu Haki do Armamento como uma camada invisível ao redor de partes de seu corpo. Essa camada funcina como uma barreira capaz de amortecer os golpes inimigos, reduzindo seu dano. Essa habilidade de Haki Avançado permite que o Haki do usuário evite danos internos de ataques mais robustos (Exemplo: Sentomaru defendendo do ataque do Luffy em Sabaody).
+Bônus: +4 de Constituição
+Gastos: 5 de Energia por Turno
+
+COMPLETO: Você aperfeiçoou a emanação do poder de seu Haki do Armamento fora de seu corpo, ao ponto de ser capaz de o projetar para áreas distantes de seu corpo e, assim proteger outros (Exemplo: Almirantes defendendo ataque do Barba Branca em conjunto). Além disso, quando aplicado em si mesmo, esta habilidade do Haki Avançado permite defletir o ataque inimigo, repelindo-o.
+Bônus: +4 de Constituição; Pode aplicar os seguintes Efeitos Aderidos de forma adicional e gratuita nas técnicas defensivas: Bônus para Aliado, Ataque em Área Controlado e Postura Defensiva Especial (sem prejuízo no Poder e Precisão).
+Gastos: 5 de Energia por Turno
+
+
+
+
+
+4.1.2 Ryuo
+
+PARCIAL: Você se torna capaz de emanar o poder de seu Haki do Armamento como uma camada fora de partes de seu corpo ou de suas armas. Essa camada age como uma extensão de seu corpo ou armas, fazendo com que o ataque atinja o alvo antes mesmo de encostar nele. Essa emissão de energia fragiliza as superfícies atingidas para o golpe, aumentando muito seu poder (Exemplo: Luffy treinando em Wano, Rayleigh destruindo algemas/colares explosivos, etc).
+Bônus: +4 de Poder
+Gastos: 5 de Energia por Turno
+
+COMPLETO: Você aperfeiçoou a emanação do poder de seu Haki do Armamento fora de seu corpo ao ponto de atingir seu alvo por dentro, perfurando a resistência de seu alvo com a energia de seu Haki Avançado (Exemplo: Luffy vs Kaidou). Esse fluxo de energia do corpo do usuário para dentro do corpo de seu alvo é o que dá o nome de Ryuo a essa habilidade em Wano, que significa "Sakura Fluindo".
+Bônus: +4 de Poder; Causa 4 de Dano diretamente na Constituição do alvo (ignora Constituição Temporária).
+Gastos: 5 de Energia por Turno
+
+
+
+
+
+4.2 Haki Observação Avançado
+
+O princípio do Haki da Observação Avançado é a transcendência do tempo e do espaço com seus sentidos. O aperfeiçoamento dessa habilidade leva a aplicações defensivas (relacionadas à Defesa) ou ofensivas (relacionadas à Precisão). O usuário de Haki do Observação Avançado deve optar por apenas uma dessas aplicações.
+
+
+
+
+4.2.1 Visão do Futuro
+
+PARCIAL: Com essa habilidade o usuário de Haki da Observação se torna capaz de enxergar alguns segundos no futuro, sendo capaz predizer seus ataques. Ainda não acostumado com tal habilidade, o usuário desta vertente do Haki Avançado precisa dedicar total concentração, o que torna reagir à presciência um grande desafio.
+Bônus: +4 de Defesa
+Gastos: 5 de Energia por Turno
+
+COMPLETO: Sua capacidade de prever o futuro imediato se torna algo natural, de modo que reagir aos ataques inimigos fica muito mais fácil. As decisões tomadas pelo usuário que dominou está vertente do Haki da Observação Avançada parecem até mesmo mudar a história prevista por ele.
+Bônus: +4 de Defesa; Força o oponente a fazer duas rolagens de 3d6 para ataque, selecionando a rolagem com menor valor como válida.
+Gastos: 5 de Energia por Turno
+
+
+
+
+
+4.2.2 Mantra
+
+PARCIAL: Ao alcançar o patamar elevado do Haki da Observação Avançado, sua personagem passa a dominar a disciplina conhecida nas Ilhas do Céu como Mantra, que significa literalmente "Rede Mental". Essa capacidade sobre-humana permite que seu usuário pressinto todos os estímulos sensoriais em constante transformação no espaço. Assim, é como se ele "ouvisse" o exato local no espaço para onde seu oponente está se movendo, ou qual posição seu corpo assumirá, facilitando o acerto de ataques. Entretanto, tal habilidade demanda extrema concentração e, à princípio, torna agir em função dessa presciência algo pesaroso.
+Bônus: +4 de Precisão
+Gastos: 5 de Energia por Turno
+
+COMPLETO: A sensibilidade extrassensorial do usuário desta vertente do Haki da Observação Avançado alcança o auge e, em combate, é como se ele pudesse enxergar todas as opções possíveis de deslocamento e posicionamento de seu alvo no espaço. Assim, é como se o usuário pudesse escolher a melhor opção para garantir o acerto de seu ataque.
+Bônus: +4 de Precisão; Pode realizar duas rolagens de 3d6 ao atacar, selecionando a rolagem de maior valor como válida.
+Gastos: 5 de Energia por Turno
+
+
+
+
+
+5 | Haki do Rei
+
+O Haki do Rei é o tipo mais raro e mais difícil de se dominar. É possível adquiri-lo independente dos demais pelo valor de 20 gemas em qualquer momento e lugar. Entretanto, seu funcionamento é diferente dos demais tipos de Haki, demandando maior dedicação daqueles que almejam dominá-lo.
+
+Após adquirido, o Haki do Rei permanece dormente até que seu usuário alcance a maestria (estágio 5) em um dos outros tipos de Haki. Somente então poderá desfrutar da forma controlada do Haki do Rei. Apenas um grupo seleto de pessoas no mundo conseguem dominar o Haki do Rei Avançado. Caso o usuário de Haki já tenha optado por um dos outros tipos de Haki Avançado, não poderá desenvolver o Haki do Rei Avançado.
+
+HAKI DO REI - DORMENTE
+
+Você nasceu com a marca do conquistador e desde cedo a demonstra, porém você não tem controle nenhum dele até que um de seus outros hakis (armamento ou observação) alcance o estágio 5, ou seja, enquanto estiver no estágio 1, 2, 3 e 4 de Haki (armamento ou observação), você não terá controle nenhum sobre o Haki do Rei e muito menos consciência acerca desse poder. Ainda assim, o jogador pode tentar o ativar uma vez por aventura por meio de um teste difícil de Ambição (18 no teste de Perícia). Outra forma de ativar o Haki do Rei dormente é caso se tire um acerto crítico em combate, fazendo com que seja manifestado imediatamente até o fim do tópico. Ao ser bem sucedido no teste de Ambição, ganha-se acesso temporário aos efeitos do Haki do Rei Controlado (até o fim da aventura)
+Custo: 20 Gemas.
+Requerimentos: Teste Dificil de Ambição ou Acerto Crítico para ativar.
+
+HAKI DO REI - CONTROLADO
+
+Presença do Rei: É possível usar este poder para dominar temporariamente a psique dos outros e intimidá-los. Essa dominação pode acabar fazendo com que a vítima perca a consciência pouco tempo depois, incapacitando-os para o combate, devido ao fato de que se domina a vontade daqueles que estão ao seu redor. Quanto maior for a força de vontade do usuário, maior será a quantidade de pessoas que ele conseguirá sobrepor. Ao ativar este poder, o usuário do Haki do Rei consegue sobrepor sua presença sobre a de toda e qualquer pessoa. Isso significa dizer que o alvo irá desmaiar quando tiver 5 níveis a menos de level do personagem usuário do Rei e o alvo ficará abatido pelo tempo de 2 turnos. Caso os atingidos estiverem com Haki de observação nível 3 ativado, eles sentirão uma sensação o que afetará seu equilíbrio e poderão se defender, mas não poderão fazer uso de ação de ataque para quaisquer fins (atacar, comer lanche, usar pomada, etc). Qualquer um que não desmaie (não for 5 níveis abaixo ou resistir com Haki ativo) sofre com a pressão e intimidação do conquistador, gerando certo receio em enfrentá-lo.
+Requerimentos: Alcançar o estágio 5 com um dos outros Hakis (Armamento ou Observação)
+Bônus: +4 de Persuasão.
+Gastos: 5 de Energia por Turno
+
+HAKI DO REI - AVANÇADO
+
+Imbuir do Rei: É possível infundir o poder do rei em suas técnicas. Depois de fazer esta infusão, o Haki é emitido da área de foco, onde são gerados relâmpagos negros, e sua aplicação fornece um impulso imenso/denso de poder ao usuário a ponto de fazer com que o ataque cause danos a seus oponentes sem ter a necessidade de ter contato físico com objetos/oponentes. A impressão que se tem é de que “os ataques não os tocam”. Quando há colisão entre usuários e ambos sendo usuários deste tipo de Haki, os “ataques não se tocam” e a pressão é tão poderosa que resulta em uma enorme fenda no céu acima dos usuários (Exemplo: Roger vs Barba Branca).
+Custo: 20 gemas
+Requerimentos: 3 aventuras com o Haki do Rei Controlado; estar no Novo Mundo.
+Bônus: Acrescenta o bônus das técnicas com o valor da Perícia Ambição enquanto o Haki do Rei estiver ativo.

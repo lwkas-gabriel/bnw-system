@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 20 npm run dev)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

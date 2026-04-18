@@ -1,0 +1,99 @@
+Perícias
+
+1 | O que são perícias?
+
+De acordo com o glossário do sistema Daemon ela: “determina o que seu Personagem sabe fazer. Ele pode saber usar uma espada, ou ser um excelente carpinteiro. É a Perícia que diz o quão bom ele é em determinado ofício”. De acordo com o próprio D&D 3ª edição, as Perícias são “Habilidades que evoluem com treinamento” e que elas “governam tudo, desde a habilidade de se mover silenciosamente de um ladino ao conhecimento mágico”. Em GURPS, Perícias são “um tipo particular de conhecimento. Judô, Física Nuclear, Mecânica de automóveis, e a língua inglesa são todas perícias. As perícias são independentes, apesar de que algumas delas ajudam no aprendizado de outras”.
+
+Para ser bem direto: Perícias, dentro do BNW, são os feitos dos personagens que não tem relação direta com o combate.
+
+Afinal, sem só de descer a porrada nos inimigos se vive - que me desculpem o Luffy e o Zoro - num bom RPG. A ideia do uso de perícias é justamente tangibilizar melhor quais as habilidades fora de combate dos personagens em campos bem abrangentes de atuação. Ou seja, o nome das perícias acabam abrangendo áreas correlatas e que podem se encaixar em diferentes contexto.
+
+Elas são agrupadas em classes de uma lista fixa:
+
+♦ Ambição: Esta perícia representa a força de vontade. É fundamental para as personagens alcançarem seus sonhos e persistirem em seus objetivos em meio aos muitos desafios. Funciona como uma Perícia "coringa" e seu uso se assemelha ao atributo "sorte" em outros sistemas de RPG. O uso dos testes de Ambição são ferramentas que podem gerar bônus diversos nas mãos de um narrador criativo. Tem um vínculo especial com o Haki.
+
+♦ Atletismo: Esta perícia representa a inteligência corporal-cinética. É capacidade física das personagens para executar movimentos complexos e que demandam grande coordenação motora. Enquanto as personagens no mundo de One Piece apresentam força e velocidade sobre-humana, isso não significa que sejam hábeis para escalar, realizar acrobacias, correr de forma técnica e coordenada, nadar bem, dentre outras disciplinas atléticas.
+
+♦ Destreza: Esta perícia representa a inteligência visual-espacial. É a capacidade manual de sua personagem para a criação de coisas e execução de outras atividades que requerem coordenação motora fina. Permite ao Personagem desenhar, costurar, atar nós, fazer artesanato e outras coisas que requer detalhe e precisão com as mãos. Tem um vínculo especial com a Profissão Ferreiro.
+
+♦ Erudição: Esta perícia representa a inteligência linguística. Abrange a compreensão e formulação de ideias, normalmente recebidas ou transmitidas de forma escrita ou verbal. Reflete o estudo de algum tipo de assunto, possivelmente uma disciplina acadêmica ou científica. Um teste de perícia deve ser realizado para tentar lembrar algum conhecimento sobre um assunto específico ou técnico, por exemplo. Também pode ser usado para testar a transmissão conhecimento de conhecimento de forma eficaz. Tem um vínculo especial com a Profissão Médico.
+
+♦ Expressão: Esta perícia representa a inteligência intrapessoal e musical. Através da Expressão, é possível utilizar os talentos do Personagem para impressionar uma multidão ou ganhar a vida. Além de produzir uma obra, um teste bem-sucedido também pode permitir ao Personagem avaliar a qualidade de um trabalho artístico de outra pessoa. Um acerto crítico durante um uso prático da Perícia indica que o Personagem produziu uma grande obra de arte, que será muito apreciada e poderá render um bom dinheiro. Tem um vínculo especial com a Profissão Cozinheiro.
+
+♦ Furtividade: Esta perícia representa o quão discreto alguém pode ser. Habilidade de evitar detecção, permitindo que o personagem passe despercebido por adversários, se esconda e consiga escapar do campo visual de alguém. Também permite ao Personagem se mover em silêncio. Usar Furtividade exige algum tipo de cobertura ou camuflagem entre você e seus alvos. Ou ainda, deve haver outras pessoas em cena com as quais você consiga se misturar (para sumir na multidão ou seguir alguém nas ruas, por exemplo). Inclui realizar ações sutis sem ser notado. Pode ser usada para realizar furtos, armar armadilhas, arrombar fechaduras dentre outras atividades que demandam discrição.
+
+♦ Investigação: Esta perícia representa capacidade de coletar e processar informações novas, relacionando-as com antigas para chegar a novas conclusões. Permite que a personagem encontre pistas, desvende mistérios, realize pesquisas e seja eficaz em interrogatórios, por exemplo. Tem um valor especial para Agentes do Governo, mas é útil para qualquer um que quer descobrir os segredos do mundo. Tem um vínculo especial com a Profissão Arqueólogo.
+
+♦ Lógica: Esta perícia representa a inteligência lógico-matemática. Reflete suas capacidades com processos racionais. A lógica influencia o manuseio e compreensão de sistemas mecânicos e sociais. Possibilita planejar ações, deduzir as dos outros e executar estratégias traçadas com alta eficiência. Envolve as ciências militares da tática, estratégia e logística, e saber comandar grupos de soldados. Tem um vínculo especial com a Profissão Engenheiro.
+
+♦ Percepção: Esta perícia representa a sensibilidade sensorial e, por vezes, extrassensorial. Mede a habilidade de estar alerta ao ambiente, perceber algo que está acontecendo e usar esta informação como vantagem. Personagens devem notar pistas que de outra forma passariam despercebidas, localizar inimigos escondidos numa multidão, ou fazer deduções acuradas baseadas em seus instintos. Esta perícia é utilizada para perceber coisas através dos sentidos – normalmente visão ou audição, embora outras coisas possam contar com sentidos diferentes. Tem um vínculo especial com a Profissão Navegador.
+
+♦ Persuasão: Esta perícia representa a inteligência interpessoal. É a habilidade de convencer outros, normalmente por meio da fala. Possibilita obter favores de outras pessoas por diversos meios, seja contra a sua vontade, seja convencendo-a de que essa é realmente sua vontade. Pode ser usada para conseguir informações, documentos secretos, acesso a locais proibidos e outras “coisinhas”, tudo por meio da lábia. Caso o objetivo do personagem seja mentir, esta também é a Perícia a ser testada. Além da lábia, esta perícia também inclui dar aos outros a impressão certa de si e de negociar eficientemente. Permite ao Personagem saber se vestir e se comportar de acordo com a situação. Você pode negociar por melhores acordos, ou dialogar para mudar a opinião de outras pessoas. Um Teste bem-sucedido de Persuasão não sempre garante que a personagem vai se livrar de uma encrenca, mas pelo menos evita que seja mal interpretado. O conteúdo do diálogo deve ser resolvido através da atuação do Jogador por meio de sua personagem.
+
+♦ Sobrevivência: Esta perícia representa a inteligência naturalística. O Personagem sabe o que é preciso para sobreviver em alto mar e outros locais longe da civilização. Testes bem-sucedidos desta Perícia permitem pescar, lidar com cordas e funcionalidades de um navio e, em outros ambientes, construir um abrigo, encontrar água ou comida, orientar-se, fazer uma armadilha para capturar animais e assim por diante. Um Personagem com essa Perícia pode garantir não apenas a própria sobrevivência, mas também a de um pequeno grupo que o acompanhar. A dificuldade depende do tipo de ambiente: regiões especialmente áridas ou estéreis e clima ruim (neve, tempestade, etc.). Inclui o trato hábil com a natureza e vida selvagem. Tem um vínculo especial com a Profissão Adestrador.
+
+
+
+
+
+2 | Evolução, rolagens e bônus
+
+Temos, atualmente, 11 (onze) perícias. Surge, então, duas questões básicas:
+1) Como se evolui nas perícias?;
+2) Como é possível saber se um personagem é melhor do que o outro numa determinada perícia?
+
+Sendo bem objetivo, as perícias evoluem em cinco níveis. Ou seja, do nível 1 ao 5. Personagens recém-criados, recebem três pontos para distribuir em suas perícias. A cada nível par, a personagem recebe um ponto para evoluir suas perícias da forma como desejar, ou seja, um ponto equivale a dois níveis de personagem. Isso significa que não será possível maximizar todas as perícias e os jogadores terão que optar em quais delas decidem investir mais ou menos. Até o nível máximo das personagens (40), serão acumulados um total de 23 pontos de Perícia.
+
+Além desse ganho regular de pontos de Perícia conforme as personagens evoluem, também é possível ganhar bônus em Perícias por meio de alguns Caminhos e bugigangas.
+
+O dado padrão das rolagens de perícia, quando necessárias, são 3d6 + (bônus). Os bônus se refletem nos níveis das perícias. Cada nível de perícia equivale a +3 pontos na rolagem. Ou seja, eles escalam de +0 à +15.
+
+
+
+
+3 | Teste de dificuldade e parametrização
+
+Já ficou claro porquê as perícias existem e como elas evoluem. Agora chegou a hora de entender no que elas podem ajudar no seu jogo. As perícias são um recurso para parametrizar o jogo, para tirar subjetividades. Ou seja, é uma ferramenta de decisão para os Narradores e de confirmação para os jogadores.
+
+Exemplo: Vamos supor que numa aventura você está investigando um covil pirata. O narrador pode pedir um teste para que o jogador consiga identificar se as pessoas estão armadas ou não e quantos são. Ou, melhor, o próprio jogador em sua postagem, pede o referido teste para obter "forçadamente" essa informação.
+
+Desta forma, é um recurso valioso e que precisa ser usado com sabedoria e sem abuso. Aqui valem algumas premissas:
+♦ NÃO É NECESSÁRIO FAZER TESTES DE DIFICULDADES PARA ACENDER CIGARRO, SACAR ESPADA, QUEBRAR PORTAS OU QUALQUER EXEMPLO EXTREMO;
+♦ NÃO É OBRIGATÓRIO USAR ROLAGENS O TEMPO TODO, SE O Narrador JULGAR QUE NÍVEL DE MAESTRIA DO JOGADOR JÁ SUPERA O DESAFIO;
+
+Tudo que não for relacionado, propriamente, a combate, pode-se utilizar o sistema de perícia como acessório, desde que faça sentido e ajude a resolver a questão de uma forma mais desafiadora (ou neutra, por assim dizer).
+
+Os testes de dificuldade são realizados, normalmente, em situações em que o jogador realiza uma tarefa em situação de risco — você tem tempo limitado ou está em perigo, por exemplo. É importante entender os parâmetros chamados de Classe de Dificuldade (CD), ou seja, o valor a ser batido no teste:
+
+♦ Até 3: Este é o resultado mínimo que se pode tirar na rolagem de 3d6 sem ter perícia. Logo, qualquer teste de dificuldade até 3 não precisa de teste.
+♦ De 4 a 10: Até esta dificuldade, qualquer humano adulto genérico habitante de Blue é capaz de realizar a atividade, com chance média de falhar ou ter sucesso. Por isso, se for perigoso, já convém cogitar se vale a pena ou não fazer tal ação.
+♦ De 11 a 18: Uma tarefa de alto risco de falha para um ser humano comum. Atividades que separam uma pessoa comum de um aventureiro.
+
+♦ 18: A dificuldade 18 é um marco notável pois é a dificuldade mais alta que uma pessoa sem perícia consegue realizar, apenas numa rolagem de 3D6. A partir daqui, é impossível ter sucesso sem perícia. Também é o ponto em que, com a perícia no máximo, o personagem precisa tirar a rolagem mínima (3) para ter sucesso.
+♦ De 18 a 25: Atividades que requerem não apenas treinamento, mas também alguma sorte.
+♦ Acima de 25: Mesmo um especialista nessa perícia tem uma chance grande de falhar nesse teste. Um feito realmente épico.
+
+♦ 33: Este é o número máximo de dificuldade que um jogador pode alcançar, tendo 15 de perícia e tirando 6 em todos os 3D6. Isso não significa que não existem testes mais difíceis que este.
+
+
+Como vocês podem ter depreendido, o número 33 (trinta e três) é a última dificuldade que um jogador pode ter sucesso em um teste. Mas isso não significa que não pode existir dificuldade maior! EXISTE! Caberá ao jogador, através de interpretação, da ajuda de aliados, de uso de suas vantagens e profissões, e qualquer outro fator relevante, tentar reduzir a dificuldade.
+O Narrador poderá facilitar OU DIFICULTAR uma dificuldade de teste se o jogador trouxer elementos para isso.
+
+Quando este não é o caso, você pode alcançar resultados mais confiáveis. Estas regras aceleram os testes sob circunstâncias rotineiras, diminuindo o número de rolagens que os jogadores precisam fazer durante o jogo.
+
+♦ Escolher 3: quando seu bônus total em um teste é igual ou maior que a CD menos 3, mesmo sob pressão, você é automaticamente bem-sucedido mesmo sem fazer o teste. A tarefa é um esforço trivial para alguém com suas habilidades. Caso o teste tenha variados níveis de sucesso, você obtém o mínimo possível (como se tivesse rolado 1 no dado). Você ainda pode fazer uma rolagem para alcançar um nível maior de sucesso, se quiser.
+
+♦ Escolher 9: quando não há pressão para realizar uma tarefa, você pode escolher 9. Isso significa realizar uma tarefa com calma, sem chance de erros. Em vez de rolar 3d6, considere um resultado 9 automático. Isso costuma bastar para muitas tarefas, pois significa gastar todo o tempo do mundo e tentar todas as possibilidades, até ser bem-sucedido.
+
+
+
+
+4 | Testes entre jogadores
+
+Entre jogadores, pode tanto ser feito tanto uma comparação simples:
+Exemplo 1:
+Zezinho tem 5 de expressão (bandolim) e Huguinho tem 3 na mesma perícia. Numa disputa de quem faz a melhor performance, Zezinho leva vantagem automática.
+
+Como também pode ser feito através de um teste, acrescentando uma camada de aleatoriedade:
+Exemplo 2:
+Usando os mesmos parâmetros acima, deve-se rolar: 3d6+15 (Zezinho) x 3d6+9 (Huginho), o maior resultado absoluto vence. Em caso de empate, quem tem o bônus maior vence.

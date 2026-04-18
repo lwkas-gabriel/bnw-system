@@ -6,9 +6,9 @@ const MODULES = [
   { path: "/characters", icon: "⚔️", title: "Personagens", desc: "Crie e gerencie fichas completas com todos os caminhos do sistema.", available: true },
   { path: "/combat",     icon: "🎲", title: "Calculadora de Combate", desc: "Simule combates com 3d6, log narrável e análise de probabilidades.", available: true },
   { path: "/items",      icon: "🔧", title: "Construtor de Itens", desc: "Monte equipamentos, armas únicas e bugigangas.", available: true },
-  { path: "/ships",      icon: "⛵", title: "Embarcações", desc: "Construa e atualize navios.", available: false },
-  { path: "/professions",icon: "📜", title: "Profissões", desc: "Gerencie profissões e fabricação de itens.", available: false },
-  { path: "/pericias",   icon: "🧠", title: "Perícias", desc: "Distribuição de graduações e testes.", available: false },
+  { path: "/ships",      icon: "⛵", title: "Embarcações", desc: "Construa e atualize navios.", available: true },
+  { path: "/professions",icon: "📜", title: "Profissões", desc: "Gerencie profissões e fabricação de itens.", available: true },
+  { path: "/pericias",   icon: "🧠", title: "Perícias", desc: "Distribuição de graduações e testes.", available: true },
 ];
 
 export default function HomePage() {
@@ -77,7 +77,7 @@ export default function HomePage() {
       {/* CTA */}
       <div className="mt-8 p-5 rounded-xl border border-amber-800/40 bg-amber-950/20">
         <p className="text-sm text-amber-400 font-semibold mb-1">Pronto para zarpar?</p>
-        <p className="text-xs text-slate-400 mb-3">Crie seu primeiro personagem com 420 gemas e todas as mecânicas do sistema.</p>
+        <p className="text-xs text-slate-400 mb-3">Crie seu primeiro personagem com 20 gemas e todas as mecânicas do sistema.</p>
         <Button variant="primary" onClick={() => navigate("/characters/new")}>
           + Novo Personagem
         </Button>

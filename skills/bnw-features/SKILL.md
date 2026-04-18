@@ -135,32 +135,57 @@ const TABS = [
 
 ---
 
-## Módulos Pendentes — O que Cada Um Precisa
+## Módulos — Status Atual
 
-### Profissões
-- **Arquivo de regras necessário:** lista de profissões, mecânicas de teste, fabricação, slots
-- **Tipo a adicionar:** `ProfessionId`, `CharacterProfession[]` em `Character`
-- **Integração:** no `characterStore` (fica na ficha)
-- **Validação:** checar se número de profissões não excede o máximo permitido por orçamento
-- **Nota:** `GEM_COSTS.profession = 10` já existe
+### Profissões ✅ Implementado
+- **Regras em:** `docs/24-profissoes.md`
+- **7 profissões:** Adestrador, Arqueólogo, Cozinheiro, Engenheiro, Ferreiro, Médico, Navegador
+- **Dados em:** `src/data/professions.ts`
+- **UI Builder:** `src/features/character/components/ProfissoesSection.tsx`
+- **Página de referência:** `src/pages/ProfissoesPage.tsx` (rota `/professions`)
+- **GEM_COSTS.profession = 10** (cada profissão)
 
-### Perícias
-- **Arquivo de regras necessário:** lista completa, graduações, DCs, testes fora de combate
-- **Tipo a adicionar:** `PericiaId`, `CharacterPericias` em `Character`
-- **Cuidado:** `ambition` já existe como campo isolado em `Character` — ao implementar perícias, **migrar** esse campo para o sistema de perícias em vez de duplicar
-- **Integração:** `combatEngine.ts` já lê `char.ambition` — ao migrar, atualizar a referência
+### Perícias ✅ Implementado
+- **Regras em:** `docs/14-pericias.md`
+- **11 perícias:** ambicao, atletismo, destreza, erudicao, expressao, furtividade, investigacao, logica, percepcao, persuasao, sobrevivencia
+- **Dados em:** `src/data/pericias.ts`
+- **UI Builder:** `src/features/character/components/PericiasSection.tsx`
+- **Página de referência:** `src/pages/PericiasPage.tsx` (rota `/pericias`)
+- **Cuidado:** `ambition` existe como campo isolado em `Character` — ao usar, preferir `char.pericias.ambicao`
 
-### Embarcações
-- **Arquivo de regras necessário:** tipos, atributos, upgrades, tripulação
-- **Store:** separado (`shipStore.ts`) — embarcações não são parte da ficha do personagem
-- **Tipo:** novo arquivo `src/shared/types/ship.ts`
-- **Nota:** não impacta `combatEngine.ts` diretamente
+### Facções ✅ Implementado
+- **Regras em:** `docs/22-faccoes.md`
+- **5 facções:** Piratas, Marinha, Caçadores de Recompensa, Governo (CP), Revolucionários
+- **Dados em:** `src/data/factions.ts` — `FACTIONS`, `FactionRankData`, `COMMISSIONED_SHIP_PRESET`
+- **Helpers:** `getFactionRank()`, `getAvailableRanks()`, `pilhagemIncome()`
+- **UI Builder:** `src/features/character/components/FaccoesSection.tsx`
+- **gemBudget:** `computeFactionDiscount()` — retorna +20g fora do limite de 400g quando disponível
+- **Tipos em:** `src/shared/types/character.ts` — `FactionType`, `FactionData`, `faction?` no `Character`
+- Cada facção tem ranks com `grantsDiscount: true` no cargo Nível 12/Prestígio 20 (Supernova, Capitão, etc.)
+- `discountUsed` e `discountAppliedTo` são **nunca perdidos** ao trocar de rank
 
-### Construtor de Itens (UI)
-- **Dados:** já existem em `src/data/uniqueWeapons.ts` (25 armas com todas as mecânicas)
-- **O que falta:** apenas os componentes de UI e a página
-- **Rota:** `/items` já existe, página `ItemsPage.tsx` existe como placeholder
-- **Prioridade:** mais fácil de implementar — dados prontos, só criar a UI
+### Embarcações ✅ Implementado
+- **Regras em:** `docs/27-embarcacoes.md`
+- **Dados em:** `src/data/ships.ts` (SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS)
+- **Tipos em:** `src/shared/types/ship.ts` — inclui `ShipOwnership` (owned/navy_permanent/cp_temporary/cp_galeon)
+- **Store:** `src/features/ships/store/shipStore.ts` — inclui `updateOwnership()` e `unlockKlabautermannWithDiscount()`
+- **Página:** `src/pages/ShipsPage.tsx` (rota `/ships`) — badges de profissão nos cômodos, badges de comissão
+- Tamanhos: individual/pequeno/medio/grande/**gigante**/colossal
+- Max 2 mecanismos por navio; cômodos limitados por slots do tamanho
+- `COMMISSIONED_SHIP_PRESET` em `factions.ts`: Médio + Kairoseki + Cabine + Canhão + Arsenal + Brigue
+
+### Companheiros 📋 Documentado, não implementado
+- **Regras em:** `docs/25-companheiros.md`
+- Ranks C(10g)/B(20g)/A(30g), Mascotes, Autômatos
+
+### Itens e Equipamentos ✅ Implementado
+- **Regras em:** `docs/28-itens.md`
+- **Dados bugigangas:** `src/data/bugigangas.ts` (16 bugigangas, `BugigangaEffect = "pericia_bonus" | "interpretive"`)
+- **Dados armas únicas:** `src/data/uniqueWeapons.ts` (25 armas com `UniqueWeaponMechanics`)
+- **UI Builder:** `src/features/character/components/EquipmentSection.tsx` — slots arma + 2 defensivos, picker de Arma Única com 25 opções, bugigangas
+- **UI Catálogo:** `src/pages/ItemsPage.tsx` — abas "Bugigangas" e "Armas Únicas" com mecânicas
+- Arma Única via Faixa Laranja (`laranjaChoice === "unique_weapon"`) **não entra no gemBudget**
+- Arma Única comprada custa `GEM_COSTS.uniqueWeapon = 20g`
 
 ---
 

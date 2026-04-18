@@ -1,0 +1,152 @@
+Armas Únicas
+
+1 | Introdução
+
+A definição de um item único representa uma obra de arte marcial, o magnum opus (grande obra) de um artesão bélico ou uma criação excepcional e sem igual. Para o bem ou para o mal, este itens representam poder — poder de vencer seus adversários, poder de subjugar seus inimigos, poder na sua forma mais pura. Sistematicamente, armas únicas são peças que possuem um número determinado de características que as diferencia de armas normais.
+
+Armas únicas são itens que despertaram um poder inato, seja pelo seu uso frequente, personalidade de seu dono que a despertou, ou mesmo a alta capacidade de seu criador que deu a ela sua característica inata.
+
+Exemplos de armas únicas são as Meitou, classe de espadas com qualidade suprema e características únicas a elas. Em nosso sistema, entretanto, qualquer arma pode atingir o status de única, mesmo que não seja especificamente uma Meitou. Para simplificar, toda Meitou é uma arma única, mas nem toda arma única é uma Meitou.
+
+
+
+
+2 | Funcionamento
+
+Armas únicas são itens que ficam no inventário das personagens como qualquer outro e podem ser equipadas exclusivamente como armas. Só é possível se beneficiar das características de uma arma única por vez. Ou seja, é possível ter mais que uma arma única, mas a personagem só receberá o benefício da arma única equipada. É possível alternar entre armas únicas durante um combate sem ter que gastar uma ação. Entretanto, só ó possível trocar de arma uma vez no início da rodada, o que inclui turno de ataque e defesa (independentemente da ordem). Em caso de se possuir mais de uma arma única, é necessário explicitar ao narrador qual delas está equipada e, portanto, ativa.
+
+Personagens avançadas no caminho de Artes Marciais podem equipar duas armas, podendo as duas ser únicas. Ainda assim, apenas as características de uma será válido por rodada.
+
+
+
+
+3 | Aquisição
+
+Armas Únicas são obtidas em duas etapas que podem muito bem ser executadas de uma só vez.
+
+A primeira etapa é adquirir a arma que será única. Essa arma segue os custos e demandas de fabricação ou compra descritos no no tópico Itens, Equipamentos e Mercado. A segunda etapa é o pagamento do valor em gemas pela arma única e seu aprimoramento pelas mãos de um ferreiro.
+
+
+Toda Arma Única custa 20 gemas.
+
+
+Considerando essas duas etapas, é possível criar uma arma única do zero ou aperfeiçoar uma arma já existente. Em todos os casos, é preciso que essa arma passe pelas mãos de alguma personagem com a profissão Ferreiro, seja um NPC ou Personagem de Jogador. Esses NPCs ferreiros podem ser contratados via Submundo. Para o aperfeiçoamento de uma arma única, não é necessário o teste de profissão padrão que se usa para a criação de um equipamento. Entretanto, caso se crie a arma única do zero, ainda será necessário o teste de profissão para a fabricação do armamento.
+
+Cumprindo-se os critérios descritos acima, o jogador que adquirir uma arma única poderá acrescentá-la à ficha por meio do modelo abaixo:
+
+Nome: todas as armas únicas devem possuir um nome próprio.
+Valor: Valor em gemas e em beries
+Bônus: bônus da qualidade da arma (caso alguma característica aumente o bônus, computar aqui também).
+Característica: todas as características da arma.
+Descrição: aqui entra a descrição física da arma e sua história, caso tenha. imagens podem ser postas aqui, embora não seja obrigatório.
+
+
+
+
+
+4 | Características
+
+Cada Arma Única possui apenas UMA característica. As características de Armas únicas em nosso sistema adaptam para nosso sistema os aspectos de armas que apareceram ao longo da série de One Piece. São características de armas únicas:
+
+Ace: Característica da espada de Gol D. Roger, o Rei dos Piratas. Ela ajuda seu portador a ultrapassar seus limites e chegar a níveis acima de todos.
+Bônus: Garante um aumento de três níveis ao seu portador (podendo ultrapassar o nível máximo).
+
+
+Ame no Habakiri: Característica de uma das espadas de Oden, herdada por Momonosuke, dita ter a capacidade de "cortar os céus".
+Bônus: Dobra o bônus das armas equipadas.
+
+
+Daisenso: Característica da lança versátil formada a partir da armadura do pirata Don Krieg. Ela se utiliza de equipamentos defensivos para potencializar ataques.
+Bônus: Permite converter os bônus de equipamentos defensivos em seu atributo oposto (DEF x PRE; CON x POD) no turno de ataque.
+
+
+Durandal: Característica da rapieira do pirata Cavendish. Ela auxilia seu portador a alcançar fama e fortuna.
+Bônus: Dobra o valor de Prestígio e do salário recebido ao fim da aventura. Para Piratas, dobra-se o valor da pilhagem. Para Caçadores de Recompensa, aumenta o valor da recompensa recolhida em 1/3.
+
+
+Eisen: Característica da estranha espada de Ohm, um dos sacerdotes de Enel. Equipada com um Dial especial, chamado Iron Cloud Dial, ela possui a capacidade de mudar seu formato conforme a vontade de seu portador.
+Bônus: Aplica o bônus da arma a dois outros atributos diferentes dos que já são bonificados por ela.
+
+
+Enma: Característica de uma das espadas de Oden, herdada por Zoro, dita ter a capacidade de "cortar o inferno". Ela extrai o potencial do Haki do Armamento de seu portador.
+Bônus: Dobra o bônus em Poder do Haki do Armamento.
+
+
+Gryphon: Característica do sabre de Shanks.
+Bônus: Aumenta a eficácia da Presença do Rei para 3 níveis abaixo do portador e reduz a precisão daqueles que resistirem à Presença do Rei com o valor da Ambição do portador.
+
+
+Haissaikai: Característica do enorme porrete de Kaido, o Rei das Feras. Ela ressoa com a bestialidade do seu portador usuário de Akuma no Mi Zoan, fortalecendo-se.
+Bônus: Esta arma recebe os mesmos bônus dos points em que o portador se encontra (em caso de Point Desperto, recebe metade dos bônus).
+
+
+Kabuto: Característica do estilingue de Sogeking, o Rei dos Atiradores. Equipada com um Breath Dial ou Jet Dial, aumenta o alcance de seus ataques e disparos.
+Bônus: Aumenta o alcance desta arma em 1 ação de movimento e concede o valor do bônus da arma em Precisão. Não pode realizar ações de movimento enquanto ataca à distância.
+
+
+Kirisama: Característica da lâmina em formato de barbatana de Hody Jones. Ela potencializa as capacidades combativas do portador quando usada em ambientes aquáticos.
+Bônus: Acrescenta o valor da Perícia Atletismo do portador ao seu BPN quando estiver lutando em ambientes aquáticos.
+
+
+Kitetsu: Característica das espadas amaldiçoadas criadas pelo pelo lendário ferreiro Kitetsu. Sua qualidade rivaliza a maldição que impõe sobre seus portadores, condenados a sofrer uma morte prematura e terrível.
+Bônus: Dobra o bônus base em atributos das técnicas (não inclui outros bônus adicionais em técnicas, como Caminhos). Sofre 1 de dano direto na constituição base por cada técnica usada. Esse dano não pode ser regenerado até o fim do combate.
+
+
+Lassoo: Característica da pistola de Mr. 4 do Baroque Works, que "comeu" a Inu Inu no Mi, Model: Dachshund. Por meio de um processo desenvolvido pelo Dr. Vegapunk, ela adquiriu os poderes de uma Akuma no Mi Zoan, ganhando vida.
+Bônus: Funciona como um Mascote Rank A, mesmo se seu portador não possuir a profissão Adestrador.
+
+
+Murakumogiri: Característica da nagigata de Barba Branca, o homem mais forte do mundo. Ela apoia seu portador a permanecer em pé diante dos maiores desafios.
+Bônus: Triplica a Constituição inicial e retém 1 de Constituição na primeira vez em que seu portador for nocauteado na aventura (não se acumula com benefícios similares).
+
+
+Mogura: Característica do tridente de Katakuri. Sua extensão permite ao portador antecipar
+Bônus: Reduz o bônus básico em atributo da técnica dos oponentes pela metade (arredondando para cima; e.g. 5 vira 3) e aumenta o custo das técnicas do oponente em 1 de energia.
+
+
+Nanashaku: Caracteristica do jitte usado por Smoker para caçar piratas usuários de Akuma no Mi. Possui um fragmento de kairoseki em sua constituição, que anula os poderes das Akuma no Mi.
+Bônus: Anula a Invulnerabilidade e Intangilibidade de Logias, as três Habilidades Passivas de Paramecia e os points comuns de Zoan (Point Desperto tem seus bônus reduzidos pela metade). Só afeta um oponente por turno, sendo aquele contra quem o o portador da arma atacar diretamente corpo-a-corpo (em ataques em área, só afeta o alvo primário).
+
+
+Napoleon: Característica do chapéu que se transforma em espada de Big Mom. Ela manifesta o poder conquistador de seu portador, defendendo e conquistando novos territórios.
+Bônus: Triplica o bônus dessa arma durante processos de Libertação, Domínio ou Proteção de Territórios.
+
+
+Nonosama: Característica do bastão de Enel. Ela interage com o poder elemental de seu portador, potencializando-o e o expandindo.
+Bônus: Dobra o bônus da Intangibilidade do portador usuário de Akuma no Mi Logia.
+
+
+Oto Kogarashi: Característica do par de espadas de Shiki, o leão dourado. Ela potencializa as capacidades combativas do portador enquanto voa.
+Bônus: Acrescenta o valor da Perícia Atletismo do portador ao seu BPN quando estiver voando em combate.
+
+
+Pretzel: Característica da espada de Cracker. Ela pode replicar seu poder para Companheiros, fortalecendo-os.
+Bônus: Concede 20 Gemas extras (além do limite de Rank) aos Companheiros de seu portador.
+
+
+Raid Suit: Característica dos trajes tecnológicos utilizados pelos membros principais da Germa 66. Potencializam as capacidades de androide de seus portadores, provendo habilidades inéditas.
+Bônus: Dobra o bônus de um dos shifts de Ciborgue instalado e permite que um Ciborgue Completo tenha acesso a um Gear extra gratuito.
+
+
+Shusui: Característica da espada do lendário samurai Ryuma. Ela é extremamente resistente, pesada e levemente temperamental, aumentando a força do portador, mas exigindo maior esforço para ser manjada.
+Bônus: Aplica o valor da Ambição do portador ao seu BPN e consome 2 de energia por turno.
+
+
+Tsuji Shibai: Característica da espada com bainha em forma de pincel do traidor Kanjuro. Ela integra as habilidades profissionais e combativas de seu portador.
+Bônus: Aplica o valor do bônus desta arma à rolagem de teste de profissão; Aplica o valor da Perícia correspondente a uma das Profissões do portador em sua Precisão.
+
+
+Yakuza Kasen: Característica da espada em formato de bengala do Almirante Fujitora. Ela potencializa as capacidades defensivas do Haki da Observação de seu portador.
+Bônus: Dobra o bônus em Defesa do Haki da Observação.
+
+
+Yoru: Característica da grande espada de Dracule Mihawk, o maior espadachim do mundo. Ela garante ao seu portador grande versatilidade, podendo adaptar suas técnicas às diversidades dos duelos.
+Bônus: Reduz pela metade o gasto de energia em técnicas (arredondando o gasto para baixo, com gasto mínimo de 1; e.g. 5 se torna 2) e permite alternar os bônus em atributos ofensivos (POD ou PRE) ou defensivos (DEF ou CON).
+
+
+Wado Ichimonji: Característica da espada que Zoro herdou de Kuina e que lhe acompanha desde o início de sua jornada. Ela estimula o desenvolvimento de seu portador.
+Bônus: Ao fim de uma aventura, seu portador recebe a premiação equivalente a se fizesse a aventura com um jogador a mais (e.g. aventura solo recebe bônus de dupla; aventura em quarteto recebe bônus de quinteto).
+
+
+Warabide: Característica da espada feita de palha do Supernova Basil Hawkins. Ela interage com o poder amaldiçoado da Paramecia de seu portador, potencializando-o e o expandindo.
+Bônus: Duplica os bônus das Habilidades Ativas das Akuma no Mi Paramecia sem gasto extra de energia.

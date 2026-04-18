@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { Character } from "../../shared/types/character";
-import type { CombatantState, TurnChoice, CombatSummary, CombatMode } from "../../shared/types/combat";
-import { simulateCombat, calcEnergy } from "../combat/engine/combatEngine";
+import type { Character } from "../../../shared/types/character";
+import type { TurnChoice, CombatSummary, CombatMode } from "../../../shared/types/combat";
+import { simulateCombat } from "../engine/combatEngine";
 
 interface CombatState {
   mode: CombatMode;
@@ -40,17 +40,6 @@ function defaultChoice(): TurnChoice {
       logiaElementalDomain: false,
     },
     useElementalista: false,
-  };
-}
-
-function makeInitialState(char: Character): CombatantState {
-  return {
-    character: char,
-    currentCon: 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0),
-    currentEnergy: calcEnergy(char.level, char.energy.energyInvested),
-    retemUsed: false,
-    tempConStack: [],
-    statusEffects: [],
   };
 }
 

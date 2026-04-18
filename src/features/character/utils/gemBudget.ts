@@ -1,4 +1,5 @@
-import type { Character, AMFaixaId, HakiStage, AkumaRank } from "../../shared/types/character";
+import type { Character, AMFaixaId, AkumaRank } from "../../../shared/types/character";
+import { getFactionRank } from "../../../data/factions";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
 
@@ -52,10 +53,30 @@ export interface GemBreakdown {
 
 export interface GemBudgetResult {
   total: number;
+  /** +20g from Faction Discount (outside the 400g cap) */
+  factionDiscountBonus: number;
   spent: number;
   remaining: number;
   breakdown: GemBreakdown[];
   isOverBudget: boolean;
+}
+
+/** Returns faction discount info: whether it's available, used, and the bonus value */
+export function computeFactionDiscount(char: Character): {
+  hasDiscount: boolean;
+  used: boolean;
+  appliedTo?: string;
+  bonus: number;
+} {
+  if (!char.faction) return { hasDiscount: false, used: false, bonus: 0 };
+  const rankDef = getFactionRank(char.faction.type, char.faction.rank);
+  const hasDiscount = rankDef?.grantsDiscount ?? false;
+  return {
+    hasDiscount,
+    used: char.faction.discountUsed,
+    appliedTo: char.faction.discountAppliedTo,
+    bonus: hasDiscount && !char.faction.discountUsed ? 20 : 0,
+  };
 }
 
 /** Computes the full gem budget breakdown for a character */
@@ -81,7 +102,7 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
     breakdown.push({
       category: "Haki",
-      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-5)`,
+      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-${typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5})`,
       cost: primaryCost,
     });
 
@@ -151,6 +172,15 @@ export function computeGemBudget(char: Character): GemBudgetResult {
     });
   }
 
+  // ── Professions ───────────────────────────────────────────────────
+  for (const prof of char.professions ?? []) {
+    breakdown.push({
+      category: "Profissão",
+      detail: prof.name,
+      cost: GEM_COSTS.profession,
+    });
+  }
+
   // ── Energy Investment ─────────────────────────────────────────────
   if (char.energy.energyInvested > 0) {
     breakdown.push({
@@ -161,12 +191,15 @@ export function computeGemBudget(char: Character): GemBudgetResult {
   }
 
   const spent = breakdown.reduce((sum, b) => sum + b.cost, 0);
+  const factionDiscountBonus = computeFactionDiscount(char).bonus;
+  const effectiveTotal = char.gemBudget + factionDiscountBonus;
 
   return {
     total: char.gemBudget,
+    factionDiscountBonus,
     spent,
-    remaining: char.gemBudget - spent,
+    remaining: effectiveTotal - spent,
     breakdown,
-    isOverBudget: spent > char.gemBudget,
+    isOverBudget: spent > effectiveTotal,
   };
 }
