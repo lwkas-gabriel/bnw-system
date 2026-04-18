@@ -1,6 +1,6 @@
-import type { Character, ZoanAkuma } from "../../../shared/types/character";
+import type { Character, ZoanAkuma, PericiaId } from "../../../shared/types/character";
 import { computeGemBudget } from "./gemBudget";
-import { totalAttributePoints } from "./attrCalc";
+import { totalAttributePoints, totalPericiaPoints } from "./attrCalc";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -90,7 +90,7 @@ function checkAttributes(char: Character): ValidationIssue[] {
       category: "Atributos",
       title: "Pontos de atributo excedidos",
       description: `${totalInvested} pontos distribuídos, máximo para nível ${char.level} é ${maxPoints}.`,
-      fix: `Reduza ${totalInvested - maxPoints} ponto(s) dos atributos. Fórmula: 6 + Nível + Bônus Raciais.`,
+      fix: `Reduza ${totalInvested - maxPoints} ponto(s) dos atributos. Fórmula: Nível + Bônus Raciais.`,
     });
   }
 
@@ -118,15 +118,49 @@ function checkAttributes(char: Character): ValidationIssue[] {
     });
   }
 
-  if (char.ambition > 5) {
+
+  return issues;
+}
+
+function checkPericias(char: Character): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const maxPoints = totalPericiaPoints(char.level);
+
+  const totalInvested = Object.values(char.pericias).reduce((a, b) => a + b, 0);
+  if (totalInvested > maxPoints) {
     issues.push({
-      id: "ambition_over_max",
+      id: "pericias_over_limit",
       severity: "error",
-      category: "Atributos",
-      title: "Ambição acima do máximo",
-      description: `Ambição é ${char.ambition}, máximo é 5.`,
-      fix: "Reduza Ambição para 5 ou menos.",
-      autoFix: (c) => ({ ...c, ambition: 5 }),
+      category: "Perícias",
+      title: "Pontos de perícia excedidos",
+      description: `${totalInvested} pontos distribuídos, máximo para nível ${char.level} é ${maxPoints}.`,
+      fix: `Reduza ${totalInvested - maxPoints} ponto(s) das perícias.`,
+    });
+  }
+
+  for (const [id, value] of Object.entries(char.pericias) as [PericiaId, number][]) {
+    if (value > 5) {
+      issues.push({
+        id: `pericia_over_max_${id}`,
+        severity: "error",
+        category: "Perícias",
+        title: `Perícia "${id}" acima do máximo`,
+        description: `Graduação ${value}, máximo é 5.`,
+        fix: `Reduza "${id}" para 5 ou menos.`,
+        autoFix: (c) => ({ ...c, pericias: { ...c.pericias, [id]: 5 } }),
+      });
+    }
+  }
+
+  if (totalInvested < maxPoints) {
+    const diff = maxPoints - totalInvested;
+    issues.push({
+      id: "pericias_underspent",
+      severity: "info",
+      category: "Perícias",
+      title: `${diff} ponto(s) de perícia não distribuídos`,
+      description: `Você tem ${maxPoints} pontos disponíveis mas só usou ${totalInvested}.`,
+      fix: `Distribua os ${diff} pontos restantes em Perícias.`,
     });
   }
 
@@ -354,6 +388,28 @@ function checkTechniques(char: Character): ValidationIssue[] {
       });
     }
 
+    // consecutive_atk only on offensive; consecutive_def only on defensive
+    if (tech.type === "defensive" && tech.adherences.some(a => a.effect === "consecutive_atk")) {
+      issues.push({
+        id: `tech_consec_atk_wrong_${tech.id}`,
+        severity: "error",
+        category: "Técnicas",
+        title: `"Consecutiva (Ataque)" em técnica defensiva "${tech.name}"`,
+        description: "Consecutiva de Ataque é exclusiva de técnicas ofensivas.",
+        fix: `Use "Consecutiva (Defesa)" ou mude o tipo de "${tech.name}" para ofensiva.`,
+      });
+    }
+    if (tech.type === "offensive" && tech.adherences.some(a => a.effect === "consecutive_def")) {
+      issues.push({
+        id: `tech_consec_def_wrong_${tech.id}`,
+        severity: "error",
+        category: "Técnicas",
+        title: `"Consecutiva (Defesa)" em técnica ofensiva "${tech.name}"`,
+        description: "Consecutiva de Defesa é exclusiva de técnicas defensivas.",
+        fix: `Use "Consecutiva (Ataque)" ou mude o tipo de "${tech.name}" para defensiva.`,
+      });
+    }
+
     // Defensive adherences on offensive techniques
     const defOnlyEffects = ["aerial", "defensive_posture"];
     const atkOnlyEffects = ["multiple_hit", "anti_air", "anti_aquatic", "confusion", "double_edge", "fragility", "weakness", "vulnerability", "area_controlled", "exhaustion", "wound"];
@@ -488,6 +544,26 @@ function checkCyborg(char: Character): ValidationIssue[] {
   return issues;
 }
 
+function checkProfessions(char: Character): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  if (!char.professions?.length) return issues;
+
+  const names = char.professions.map(p => p.name.toLowerCase().trim());
+  const dups = names.filter((n, i) => names.indexOf(n) !== i);
+  if (dups.length > 0) {
+    issues.push({
+      id: "professions_duplicates",
+      severity: "warning",
+      category: "Profissões",
+      title: "Profissões duplicadas",
+      description: `Profissões com mesmo nome: ${[...new Set(dups)].join(", ")}`,
+      fix: "Remova a profissão duplicada.",
+    });
+  }
+
+  return issues;
+}
+
 function checkEnergy(char: Character): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
@@ -540,10 +616,12 @@ export function validateCharacterFull(char: Character): ValidationReport {
   const allIssues: ValidationIssue[] = [
     ...checkGems(char),
     ...checkAttributes(char),
+    ...checkPericias(char),
     ...checkHaki(char),
     ...checkAkuma(char),
     ...checkArtesMarciais(char),
     ...checkTechniques(char),
+    ...checkProfessions(char),
     ...checkEquipment(char),
     ...checkCyborg(char),
     ...checkEnergy(char),
