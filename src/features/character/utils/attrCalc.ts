@@ -1,8 +1,22 @@
-import type { Character } from "../../../shared/types/character";
+import type { Character, PericiaId } from "../../../shared/types/character";
 
-/** Total points a character has to distribute: 6 + level + racial bonus slots */
+/** Total péricia points available: 3 at L1, +1 every even level. L40 = 23. */
+export function totalPericiaPoints(level: number): number {
+  return 3 + Math.floor(level / 2);
+}
+
+/** Blank péricias object (all zeroes) */
+export function blankPericias(): Record<PericiaId, number> {
+  return {
+    ambicao: 0, atletismo: 0, destreza: 0, erudicao: 0,
+    expressao: 0, furtividade: 0, investigacao: 0, logica: 0,
+    percepcao: 0, persuasao: 0, sobrevivencia: 0,
+  };
+}
+
+/** Total points a character has to distribute: 1 per level + racial bonus slots */
 export function totalAttributePoints(level: number, racialFreePoints: number = 0): number {
-  return 6 + level + racialFreePoints;
+  return level + racialFreePoints;
 }
 
 /** BPN formula: floor(level * 3/4) */

@@ -224,7 +224,7 @@ export function HakiSection() {
                     >
                       <p className="text-xs font-medium text-amber-400">Imbuir do Rei</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">Adiciona valor de Ambição ao bônus de todas as técnicas com o Rei ativo.</p>
-                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.ambition}: +{draft.ambition} por técnica</p>
+                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.pericias.ambicao}: +{draft.pericias.ambicao} por técnica</p>
                     </button>
                   </div>
                 )}

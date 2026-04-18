@@ -151,6 +151,15 @@ export function computeGemBudget(char: Character): GemBudgetResult {
     });
   }
 
+  // ── Professions ───────────────────────────────────────────────────
+  for (const prof of char.professions ?? []) {
+    breakdown.push({
+      category: "Profissão",
+      detail: prof.name,
+      cost: GEM_COSTS.profession,
+    });
+  }
+
   // ── Energy Investment ─────────────────────────────────────────────
   if (char.energy.energyInvested > 0) {
     breakdown.push({

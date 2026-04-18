@@ -151,11 +151,10 @@ export function AttributesSection() {
         </div>
 
         {/* Derived */}
-        <div className="grid grid-cols-3 gap-3 mt-4 pt-4 border-t border-slate-800">
+        <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-800">
           {[
             { label: "BPN",     value: charBPN,                       sub: `3/4 × Lv.${draft.level}` },
             { label: "Energia", value: draft.level * 3 + draft.energy.energyInvested, sub: `Lv×3 + ${draft.energy.energyInvested}g` },
-            { label: "Ambição", value: draft.ambition,               sub: "0–5" },
           ].map(d => (
             <div key={d.label} className="bg-slate-800 rounded-lg p-3 text-center">
               <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{d.label}</p>
@@ -179,19 +178,6 @@ export function AttributesSection() {
           />
         </div>
 
-        {/* Ambition */}
-        <div className="mt-2 flex items-center justify-between p-3 bg-slate-800 rounded-lg">
-          <div>
-            <p className="text-xs font-medium text-slate-300">Ambição</p>
-            <p className="text-[10px] text-slate-500">Usado pelo Haki do Rei Avançado</p>
-          </div>
-          <NumberStepper
-            value={draft.ambition}
-            min={0}
-            max={5}
-            onChange={v => updateDraft(c => { c.ambition = v; })}
-          />
-        </div>
       </SectionCard>
 
       {/* Budget breakdown */}
