@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Input, Badge } from "../../../shared/components";
 import { BUGIGANGAS } from "../../../data/bugigangas";
+import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import type {
   Equipment,
+  UniqueWeapon,
   EquipmentSlot,
   EquipmentQuality,
   BaseAttributes,
@@ -244,6 +246,114 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
   );
 }
 
+// ─── Unique Weapon Picker ─────────────────────────────────────────────────────
+
+interface UniqueWeaponPickerProps {
+  current: UniqueWeapon | null;
+  onSave: (eq: UniqueWeapon) => void;
+  onClear: () => void;
+}
+
+function UniqueWeaponPicker({ current, onSave, onClear }: UniqueWeaponPickerProps) {
+  const weaponList = Object.values(UNIQUE_WEAPONS).sort((a, b) => a.name.localeCompare(b.name));
+  const [selectedId, setSelectedId] = useState(current?.characteristic ?? weaponList[0].id);
+  const [quality, setQuality]       = useState<EquipmentQuality>(current?.quality ?? "common");
+  const [bonusAttr, setBonusAttr]   = useState<keyof BaseAttributes>(current?.bonusAttr ?? "precision");
+
+  const weapon = UNIQUE_WEAPONS[selectedId];
+
+  function handleSave() {
+    if (!weapon) return;
+    onSave({
+      id: current?.id ?? crypto.randomUUID(),
+      name: weapon.name,
+      uniqueName: weapon.name,
+      characteristic: weapon.id,
+      description: weapon.effect,
+      slot: "weapon",
+      quality,
+      bonusAttr,
+      bonusValue: QUALITY_BONUS[quality],
+    });
+  }
+
+  return (
+    <div className="space-y-3">
+      <p className="text-xs font-medium text-slate-400 uppercase tracking-widest">Arma Única</p>
+
+      {/* Weapon select */}
+      <div>
+        <label className="block text-[10px] text-slate-500 mb-1">Arma</label>
+        <select
+          value={selectedId}
+          onChange={e => setSelectedId(e.target.value as typeof selectedId)}
+          className="w-full bg-slate-700 border border-slate-600 rounded text-xs text-slate-300 px-2 py-1.5 focus:outline-none focus:border-amber-600"
+        >
+          {weaponList.map(w => (
+            <option key={w.id} value={w.id}>{w.name}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Effect + origin */}
+      {weapon && (
+        <div className="p-2 bg-slate-800 rounded-lg space-y-1">
+          <p className="text-[10px] text-amber-400">{weapon.effect}</p>
+          <p className="text-[9px] text-slate-500 italic">{weapon.origin}</p>
+          <p className="text-[9px] text-amber-600/70 font-mono">20g</p>
+        </div>
+      )}
+
+      {/* Quality */}
+      <div>
+        <label className="block text-[10px] text-slate-500 mb-1">Qualidade</label>
+        <div className="flex gap-1.5">
+          {(["common", "splendid", "legendary"] as EquipmentQuality[]).map(q => (
+            <button
+              key={q}
+              onClick={() => setQuality(q)}
+              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
+                quality === q ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+              }`}
+            >
+              {QUALITY_LABELS[q]}
+              {QUALITY_BONUS[q] > 0 && <span className="ml-1 opacity-75">+{QUALITY_BONUS[q]}</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Bonus attribute */}
+      <div>
+        <label className="block text-[10px] text-slate-500 mb-1">Atributo bônus</label>
+        <div className="flex gap-1.5">
+          {(["precision", "power"] as (keyof BaseAttributes)[]).map(attr => (
+            <button
+              key={attr}
+              onClick={() => setBonusAttr(attr)}
+              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
+                bonusAttr === attr ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+              }`}
+            >
+              {ATTR_LABELS[attr]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2">
+        {current && (
+          <Button variant="danger" size="sm" onClick={onClear}>Remover</Button>
+        )}
+        <Button variant="primary" size="sm" className="flex-1" onClick={handleSave}>
+          Confirmar
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Equipment Card ───────────────────────────────────────────────────────────
 
 interface EquipCardProps {
@@ -268,11 +378,9 @@ function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps)
 
   return (
     <button
-      onClick={isUniqueWeapon ? undefined : onEdit}
-      className={`w-full text-left p-3 bg-slate-800 rounded-lg border transition-colors ${
-        isUniqueWeapon
-          ? "border-amber-700/50 cursor-default"
-          : "border-slate-700 hover:border-slate-500"
+      onClick={onEdit}
+      className={`w-full text-left p-3 bg-slate-800 rounded-lg border transition-colors hover:border-slate-500 ${
+        isUniqueWeapon ? "border-amber-700/50" : "border-slate-700"
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -295,8 +403,8 @@ function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps)
       {equipment.bugiganga && (
         <p className="text-[10px] text-amber-600/70 mt-1 truncate">✦ {equipment.bugiganga.name}</p>
       )}
-      {isUniqueWeapon && (
-        <p className="text-[10px] text-amber-500/60 mt-1">Arma Única — gerida pelo módulo de Akuma/AM</p>
+      {isUniqueWeapon && (equipment as UniqueWeapon).description && (
+        <p className="text-[10px] text-amber-400/80 mt-1 truncate">✦ {(equipment as UniqueWeapon).description}</p>
       )}
     </button>
   );
@@ -309,12 +417,23 @@ type EditTarget = "weapon" | "def0" | "def1" | null;
 export function EquipmentSection() {
   const { draft, updateDraft } = useCharacterStore();
   const [editing, setEditing] = useState<EditTarget>(null);
+  const [uniqueMode, setUniqueMode] = useState(false);
 
   if (!draft) return null;
 
   const isUniqueWeapon = !!draft.equippedWeapon && "characteristic" in draft.equippedWeapon;
 
+  function openWeaponEditor() {
+    setUniqueMode(isUniqueWeapon);
+    setEditing("weapon");
+  }
+
   function saveWeapon(eq: Equipment) {
+    updateDraft(c => { c.equippedWeapon = eq; });
+    setEditing(null);
+  }
+
+  function saveUniqueWeapon(eq: UniqueWeapon) {
     updateDraft(c => { c.equippedWeapon = eq; });
     setEditing(null);
   }
@@ -378,7 +497,7 @@ export function EquipmentSection() {
               label="Arma"
               equipment={draft.equippedWeapon}
               isUniqueWeapon={isUniqueWeapon}
-              onEdit={() => setEditing("weapon")}
+              onEdit={openWeaponEditor}
             />
           </div>
           {/* Defensive 1 */}
@@ -402,16 +521,43 @@ export function EquipmentSection() {
         </div>
 
         {/* Edit form */}
-        {editing === "weapon" && !isUniqueWeapon && (
-          <div className="p-4 bg-slate-800/60 border border-slate-700 rounded-lg">
-            <SlotForm
-              title="Configurar Arma"
-              slotOptions={["weapon"]}
-              current={draft.equippedWeapon}
-              isWeapon
-              onSave={saveWeapon}
-              onClear={() => clearSlot("weapon")}
-            />
+        {editing === "weapon" && (
+          <div className="p-4 bg-slate-800/60 border border-slate-700 rounded-lg space-y-3">
+            {/* Toggle unique / common */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setUniqueMode(false)}
+                className={`flex-1 py-1.5 rounded text-xs transition-colors ${
+                  !uniqueMode ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+                }`}
+              >
+                Arma Comum
+              </button>
+              <button
+                onClick={() => setUniqueMode(true)}
+                className={`flex-1 py-1.5 rounded text-xs transition-colors ${
+                  uniqueMode ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+                }`}
+              >
+                Arma Única <span className="text-[10px] opacity-75">20g</span>
+              </button>
+            </div>
+            {uniqueMode ? (
+              <UniqueWeaponPicker
+                current={isUniqueWeapon ? draft.equippedWeapon as UniqueWeapon : null}
+                onSave={saveUniqueWeapon}
+                onClear={() => clearSlot("weapon")}
+              />
+            ) : (
+              <SlotForm
+                title="Configurar Arma"
+                slotOptions={["weapon"]}
+                current={!isUniqueWeapon ? draft.equippedWeapon : null}
+                isWeapon
+                onSave={saveWeapon}
+                onClear={() => clearSlot("weapon")}
+              />
+            )}
           </div>
         )}
         {editing === "def0" && (

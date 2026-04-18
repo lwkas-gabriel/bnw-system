@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PageHeader, SectionCard, Badge } from "../shared/components";
 import { BUGIGANGAS } from "../data/bugigangas";
+import { UNIQUE_WEAPONS } from "../data/uniqueWeapons";
 import type { BugigangaEffect } from "../data/bugigangas";
 import type { EquipmentQuality } from "../shared/types/character";
 
@@ -41,7 +42,12 @@ const SLOT_INFO = [
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+type Tab = "bugigangas" | "armas_unicas";
+
+const uniqueWeaponList = Object.values(UNIQUE_WEAPONS).sort((a, b) => a.name.localeCompare(b.name));
+
 export default function ItemsPage() {
+  const [tab, setTab] = useState<Tab>("bugigangas");
   const [effectFilter, setEffectFilter] = useState<BugigangaEffect | "all">("all");
   const [qualityFilter, setQualityFilter] = useState<EquipmentQuality | "all">("all");
 
@@ -55,7 +61,7 @@ export default function ItemsPage() {
     <div className="flex flex-col h-full">
       <PageHeader
         title="Itens & Equipamentos"
-        subtitle="Catálogo de bugigangas, preços e regras de slot"
+        subtitle="Catálogo de bugigangas, armas únicas, preços e regras de slot"
       />
 
       <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
@@ -68,7 +74,6 @@ export default function ItemsPage() {
               Qualidade Esplêndida = +1 atributo; Lendária = +2. <span className="text-amber-400/80">Sem custo em gemas.</span>
             </p>
 
-            {/* Slot → Attrs table */}
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
@@ -135,88 +140,160 @@ export default function ItemsPage() {
           </p>
         </SectionCard>
 
-        {/* Bugigangas catalog */}
-        <SectionCard
-          title="Catálogo de Bugigangas"
-          icon="🔧"
-          action={<Badge variant="amber">{filtered.length} itens</Badge>}
-        >
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            <div className="flex gap-1">
-              {(["all", "pericia_bonus", "interpretive"] as const).map(f => (
-                <button
-                  key={f}
-                  onClick={() => setEffectFilter(f)}
-                  className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                    effectFilter === f
-                      ? "bg-amber-600 text-white"
-                      : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                  }`}
-                >
-                  {f === "all" ? "Todos" : EFFECT_LABELS[f]}
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-1">
-              {(["all", "common", "splendid", "legendary"] as const).map(f => (
-                <button
-                  key={f}
-                  onClick={() => setQualityFilter(f)}
-                  className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                    qualityFilter === f
-                      ? "bg-amber-600 text-white"
-                      : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                  }`}
-                >
-                  {f === "all" ? "Todas qualidades" : QUALITY_LABELS[f]}
-                </button>
-              ))}
-            </div>
+        {/* Catalog tabs */}
+        <div>
+          {/* Tab bar */}
+          <div className="flex gap-1 mb-4">
+            {([
+              { id: "bugigangas",   label: "Bugigangas",   count: BUGIGANGAS.length },
+              { id: "armas_unicas", label: "Armas Únicas", count: uniqueWeaponList.length },
+            ] as const).map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`px-4 py-2 rounded-t-lg text-xs font-medium transition-colors ${
+                  tab === t.id
+                    ? "bg-amber-900/30 border border-b-transparent border-amber-800/50 text-amber-400"
+                    : "text-slate-500 hover:text-slate-300"
+                }`}
+              >
+                {t.label}
+                <span className="ml-1.5 text-[9px] opacity-60">{t.count}</span>
+              </button>
+            ))}
           </div>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 gap-2">
-            {filtered.map(b => (
-              <div
-                key={b.id}
-                className="flex items-start gap-3 p-3 bg-slate-800/60 rounded-lg border border-slate-700/50"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-medium text-slate-200">{b.name}</span>
-                    <span className={`text-[10px] font-medium ${QUALITY_COLORS[b.quality]}`}>
-                      {QUALITY_LABELS[b.quality]}
-                    </span>
-                    <span className="text-[10px] text-slate-500 bg-slate-700 px-1.5 py-0.5 rounded-full">
-                      {EFFECT_LABELS[b.effect]}
-                    </span>
-                  </div>
-                  <p className="text-[10px] text-slate-500 mt-1">{b.description}</p>
-                  {b.periciaBonus && (
-                    <p className="text-[10px] text-green-400 mt-0.5">
-                      +{b.periciaBonus.value} {b.periciaBonus.pericia}
-                    </p>
-                  )}
-                  {b.interpretive && (
-                    <p className="text-[10px] text-sky-400/80 mt-0.5">{b.interpretive}</p>
-                  )}
+          {/* Bugigangas tab */}
+          {tab === "bugigangas" && (
+            <SectionCard
+              title="Catálogo de Bugigangas"
+              icon="🔧"
+              action={<Badge variant="amber">{filtered.length} itens</Badge>}
+            >
+              {/* Filters */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex gap-1">
+                  {(["all", "pericia_bonus", "interpretive"] as const).map(f => (
+                    <button
+                      key={f}
+                      onClick={() => setEffectFilter(f)}
+                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
+                        effectFilter === f
+                          ? "bg-amber-600 text-white"
+                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+                      }`}
+                    >
+                      {f === "all" ? "Todos" : EFFECT_LABELS[f]}
+                    </button>
+                  ))}
                 </div>
-                <div className="text-right shrink-0 space-y-0.5">
-                  <p className="text-[10px] font-mono text-slate-400">
-                    ₿{b.price.toLocaleString("pt-BR")}
-                  </p>
-                  <p className="text-[10px] text-slate-600">
-                    {b.ciborgueShifts} shift{b.ciborgueShifts > 1 ? "s" : ""} ciborgue
-                  </p>
+                <div className="flex gap-1">
+                  {(["all", "common", "splendid", "legendary"] as const).map(f => (
+                    <button
+                      key={f}
+                      onClick={() => setQualityFilter(f)}
+                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
+                        qualityFilter === f
+                          ? "bg-amber-600 text-white"
+                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
+                      }`}
+                    >
+                      {f === "all" ? "Todas qualidades" : QUALITY_LABELS[f]}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
-            {filtered.length === 0 && (
-              <p className="text-xs text-slate-600 text-center py-6">Nenhum item com esses filtros.</p>
-            )}
-          </div>
-        </SectionCard>
+
+              {/* Grid */}
+              <div className="grid grid-cols-1 gap-2">
+                {filtered.map(b => (
+                  <div
+                    key={b.id}
+                    className="flex items-start gap-3 p-3 bg-slate-800/60 rounded-lg border border-slate-700/50"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs font-medium text-slate-200">{b.name}</span>
+                        <span className={`text-[10px] font-medium ${QUALITY_COLORS[b.quality]}`}>
+                          {QUALITY_LABELS[b.quality]}
+                        </span>
+                        <span className="text-[10px] text-slate-500 bg-slate-700 px-1.5 py-0.5 rounded-full">
+                          {EFFECT_LABELS[b.effect]}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-slate-500 mt-1">{b.description}</p>
+                      {b.periciaBonus && (
+                        <p className="text-[10px] text-green-400 mt-0.5">
+                          +{b.periciaBonus.value} {b.periciaBonus.pericia}
+                        </p>
+                      )}
+                      {b.interpretive && (
+                        <p className="text-[10px] text-sky-400/80 mt-0.5">{b.interpretive}</p>
+                      )}
+                    </div>
+                    <div className="text-right shrink-0 space-y-0.5">
+                      <p className="text-[10px] font-mono text-slate-400">
+                        ₿{b.price.toLocaleString("pt-BR")}
+                      </p>
+                      <p className="text-[10px] text-slate-600">
+                        {b.ciborgueShifts} shift{b.ciborgueShifts > 1 ? "s" : ""} ciborgue
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {filtered.length === 0 && (
+                  <p className="text-xs text-slate-600 text-center py-6">Nenhum item com esses filtros.</p>
+                )}
+              </div>
+            </SectionCard>
+          )}
+
+          {/* Armas Únicas tab */}
+          {tab === "armas_unicas" && (
+            <SectionCard
+              title="Armas Únicas"
+              icon="⚔️"
+              action={<Badge variant="amber">{uniqueWeaponList.length} armas · 20g cada</Badge>}
+            >
+              <p className="text-xs text-slate-500 mb-4">
+                Todas as Armas Únicas custam <span className="text-amber-400">20g</span>. Cada uma possui uma mecânica exclusiva de combate.
+                Podem ser obtidas no Character Builder na aba Equipamentos.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {uniqueWeaponList.map(w => {
+                  const activeFlags = Object.entries(w.mechanics)
+                    .filter(([, v]) => v === true)
+                    .map(([k]) => k);
+                  return (
+                    <div
+                      key={w.id}
+                      className="p-3 bg-slate-800/60 rounded-lg border border-amber-800/30 space-y-1.5"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="text-xs font-semibold text-slate-200">{w.name}</p>
+                        <span className="text-[10px] font-mono text-amber-500 shrink-0">20g</span>
+                      </div>
+                      <p className="text-[10px] text-slate-500 italic">{w.origin}</p>
+                      <p className="text-[10px] text-amber-300/80">{w.effect}</p>
+                      {activeFlags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 pt-0.5">
+                          {activeFlags.map(flag => (
+                            <span
+                              key={flag}
+                              className="inline-block px-1.5 py-0.5 bg-amber-900/30 border border-amber-800/40 rounded text-[9px] text-amber-500/80"
+                            >
+                              {flag.replace(/([A-Z])/g, ' $1').trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </SectionCard>
+          )}
+        </div>
       </div>
     </div>
   );
