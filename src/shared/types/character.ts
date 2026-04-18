@@ -34,6 +34,23 @@ export type UniqueWeaponCharacteristic =
   | "shusui" | "tsuji_shibai" | "yakuza_kasen" | "yoru" | "wado_ichimonji"
   | "warabide";
 
+// ─── Perícias ─────────────────────────────────────────────────────────────────
+
+export type PericiaId =
+  | "ambicao" | "atletismo" | "destreza" | "erudicao"
+  | "expressao" | "furtividade" | "investigacao" | "logica"
+  | "percepcao" | "persuasao" | "sobrevivencia";
+
+export type CharacterPericias = Record<PericiaId, number>; // 0–5 each
+
+export interface CharacterProfession {
+  id: string;
+  name: string;
+  linkedPericias: PericiaId[];
+}
+
+// ─── Ciborgue ─────────────────────────────────────────────────────────────────
+
 export type CyborgShift = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type CyborgShiftLocation =
@@ -71,7 +88,7 @@ export type AdherenceEffect =
   | "multiple_hit" | "anti_air" | "anti_aquatic" | "ally_bonus"
   | "confusion" | "double_edge" | "fragility" | "weakness"
   | "safety" | "vulnerability" | "aerial"
-  | "area_controlled" | "consecutive" | "exhaustion"
+  | "area_controlled" | "consecutive_atk" | "consecutive_def" | "exhaustion"
   | "wound" | "defensive_posture";
 
 export interface TechniqueAdherence {
@@ -246,7 +263,11 @@ export interface Character {
   investedAttributes: BaseAttributes;
   /** Racial bonus (not counted in invested total) */
   racialBonus: Partial<BaseAttributes>;
-  ambition: number; // 0–5, used by King Haki Advanced
+  /** Perícias (11 skills, 0–5 each). Pool = 3 + floor(level/2). No gem cost. */
+  pericias: CharacterPericias;
+  /** Human race: one free péricia +1 bonus of player's choice */
+  humanPericiaChoice: PericiaId | null;
+  professions: CharacterProfession[];
   energy: DerivedAttributes;
   haki: HakiPath | null;
   akuma: AkumaNoMi | null;
