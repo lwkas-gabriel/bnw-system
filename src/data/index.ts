@@ -2,3 +2,6 @@ export * from "./races";
 export * from "./haki";
 export * from "./techniques";
 export * from "./uniqueWeapons";
+export * from "./pericias";
+export * from "./professions";
+export * from "./bugigangas";
