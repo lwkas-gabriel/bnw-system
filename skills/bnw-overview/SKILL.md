@@ -22,12 +22,17 @@ description: >
 ## Mapa de Arquivos Críticos
 
 ```
-src/shared/types/character.ts     ← TIPOS: Character, Haki, Akuma, AM, Cyborg, Technique
+src/shared/types/character.ts     ← TIPOS: Character, Haki, Akuma, AM, Cyborg, Technique, PericiaId
 src/shared/types/combat.ts        ← TIPOS: CombatantState, TurnChoice, DiceRoll, CombatSummary
+src/shared/types/ship.ts          ← TIPOS: Ship, ShipSize, ShipMechanism, ShipComodo, Klabautermann
 src/data/                         ← DADOS IMUTÁVEIS do sistema (nunca modificar em runtime)
   races.ts, haki.ts, techniques.ts, uniqueWeapons.ts
+  pericias.ts     ← PERICIAS (11), PERICIAS_DC, periciaRollBonus()
+  professions.ts  ← PROFESSIONS (7), PROFESSIONS_BY_ID, ProfessionData
+  bugigangas.ts   ← BUGIGANGAS (16), BugigangaData
+  ships.ts        ← SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS
 src/features/character/utils/
-  attrCalc.ts     ← bpn(), energyMax(), totalAttributePoints(), validateCharacter()
+  attrCalc.ts     ← bpn(), energyMax(), totalAttributePoints(), totalPericiaPoints()
   gemBudget.ts    ← GEM_COSTS (FONTE ÚNICA), computeGemBudget()
   validator.ts    ← validateCharacterFull(), ValidationIssue, ValidationReport
   exporter.ts     ← exportToJSON(), exportToForumText()
@@ -35,9 +40,14 @@ src/features/character/utils/
 src/features/character/store/characterStore.ts  ← updateDraft(), saveDraft(), loadCharacter()
 src/features/combat/engine/combatEngine.ts      ← ENGINE PURA (sem React)
 src/features/combat/store/combatStore.ts        ← simulate(), setCharA/B(), setChoice()
+src/features/ships/store/shipStore.ts           ← CRUD de navios, mecanismos, cômodos, viagens
 src/shared/components/index.tsx                 ← TODOS os componentes reutilizáveis
 src/router/index.tsx                            ← rotas com lazy loading
 src/shared/components/AppLayout.tsx             ← sidebar nav (array NAV)
+src/pages/
+  HomePage.tsx, CharacterListPage.tsx, CharacterBuilderPage.tsx
+  CombatPage.tsx, ItemsPage.tsx, ImportPage.tsx
+  ShipsPage.tsx, PericiasPage.tsx, ProfissoesPage.tsx
 ```
 
 ---
@@ -50,7 +60,7 @@ src/shared/components/AppLayout.tsx             ← sidebar nav (array NAV)
 4. **Engine de combate é TypeScript puro** — não importar React, não importar stores
 5. **Types primeiro** — qualquer nova mecânica começa em `shared/types/character.ts`
 6. **Validação sempre em PT-BR** com campo `fix` preenchido
-7. **Coming soon = `ComingSoonPage`** — nunca remover rota, só substituir o componente
+7. **Módulos implementados usam páginas reais** — substituir `<Navigate>` ou `ComingSoonPage` por lazy-loaded pages em `router/index.tsx` e marcar `available: true` no `MODULES` de `HomePage.tsx`
 
 ---
 

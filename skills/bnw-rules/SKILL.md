@@ -51,6 +51,7 @@ GEM_COSTS.cyborg          = { perShift:20, gear:20 }
 GEM_COSTS.uniqueWeapon    = 20
 GEM_COSTS.technique       = { E:6, D:7, C:8, B:9, A:10 }
 GEM_COSTS.energyPerGem    = 1
+GEM_COSTS.profession      = 10  // por profissão
 ```
 
 **Não inclui Arma Única se `laranjaChoice === 'unique_weapon'`.**
@@ -105,9 +106,12 @@ excesso → 4 XP por gema (só após atingir 400g)
 
 ```ts
 // CombatantState.retemUsed: boolean
-// Condição: isKnockout && !retemUsed && akuma.type === 'zoan' && akuma.isMythical
+// Condição: isKnockout && !retemUsed && (
+//   (akuma.type === 'zoan' && akuma.isMythical) || equippedWeapon.characteristic === 'murakumogiri'
+// )
 // Efeito: newCon = 1, retemUsed = true
 // Registrado em DamageResult.retemActivated = true
+// Fontes: Zoan Mitológica (passivo de raça) e Murakumogiri (arma única)
 ```
 
 ---
@@ -169,13 +173,19 @@ cinza:       { precision: 2 }
 azul_clara:  { defense: 2 }
 azul_escura: { power: 2 }
 amarela:     { constitution: 2 }
-// laranja..grao_mestre: bônus via resolveTechniqueBonus(), não flat de atributo:
-verde:  +2 bônus em técnicas DEFENSIVAS
-roxa:   +2 bônus em técnicas OFENSIVAS
-// marrom..grao_mestre: ← bônus das faixas avançadas pendentes de documentação
+// laranja..grao_mestre: bônus via resolveTechniqueBonus() ou mecânicas ativas:
+laranja: +1 em cada item defensivo equipado; 2 Técnicas Rank A OU 1 Arma Única gratuita
+verde:   +2 bônus em técnicas DEFENSIVAS
+roxa:    +2 bônus em técnicas OFENSIVAS
+marrom:  +1 adicional em cada item defensivo equipado (total +2 desde Laranja); 1 Técnica Rank A gratuita
+preta:   pode equipar 1 arma extra (não permite 2 armas únicas simultâneas)
+coral:   +2 bônus na arma extra
+rajada:  +1 adicional em todos os itens defensivos (total +3 desde Laranja)
+vermelha: +2 em POD/PRE/DEF/CON por 2 EN (escolha dura o turno) — mecânica ativa pendente na engine
+grao_mestre: +2 rolls de ataque por 3 EN OU -2 rolls oponente por 3 EN — mecânica ativa pendente na engine
 ```
 
-**Pendente:** confirmar bônus das faixas Marrom, Preta, Coral, Rajada, Vermelha, Grão Mestre.
+Laranja/Marrom/Rajada somam bônus cumulativos em itens defensivos. Vermelha e Grão Mestre têm mecânicas ativas pendentes de implementação no combatEngine.
 
 ---
 

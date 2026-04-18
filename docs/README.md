@@ -64,9 +64,9 @@ Fichas criadas manualmente em fórum têm alta incidência de erros de cálculo,
 | Calculadora de Combate | ✅ Disponível | Simulação com 3d6 real ou média, log narrável |
 | Importar / Exportar | ✅ Disponível | JSON tipado + texto para fórum + validação |
 | Validação de Fichas | ✅ Disponível | 9 categorias de regras, sugestões de correção |
-| Construtor de Itens | ⚙️ Parcial | Dados catalogados, UI pendente |
-| Embarcações | ⚙️ Parcial | Regras em docs/27; UI disponível |
-| Profissões | ⚙️ Parcial | Regras em docs/24; UI disponível |
+| Construtor de Itens | ✅ Disponível | Catálogo de bugigangas + equipamentos no builder |
+| Embarcações | ✅ Disponível | Rota /ships — mecanismos, cômodos, Klabautermann |
+| Profissões | ✅ Disponível | Rota /professions — 7 profissões, craft, perícias vinculadas |
+| Perícias | ✅ Disponível | Rota /pericias — 11 perícias, DCs, pontos por nível |
 | Companheiros | 📋 Regras documentadas | Implementação pendente — ver docs/25 |
 | Navegação | 📋 Regras documentadas | Implementação pendente — ver docs/26 |
-| Perícias | 📋 Regras documentadas | Implementação pendente — ver docs/14-pericias.md |

@@ -107,13 +107,18 @@ A função `absorbDamage()` drena a pilha sequencialmente, retornando quanto foi
 
 ---
 
-## Retém 1 CON — Mecânica de Zoans Mitológicas
+## Retém 1 CON
 
-Zoans Mitológicas têm acesso ao módulo exclusivo **"Retém 1 CON na primeira vez que for nocauteado"**.
+Duas fontes ativam "Retém 1 CON na primeira vez que for nocauteado":
+
+| Fonte | Tipo |
+|-------|------|
+| Zoan Mitológica | Passivo do Akuma no Mi |
+| Murakumogiri | Arma Única (mecânica `triplesBaseConAndRetains`) |
 
 **Implementação no `combatEngine.ts`:**
 - `retemUsed: boolean` no `CombatantState` rastreia se já foi usado na aventura.
-- Quando `isKnockout` seria `true` E `retemUsed` é `false` E a Akuma é Zoan Mitológica, o dano é limitado a deixar a CON em 1.
+- Quando `isKnockout` seria `true` E `retemUsed` é `false` E (Zoan Mitológica OR Murakumogiri equipada), o dano é limitado a deixar a CON em 1.
 - `retemActivated: true` é retornado no `DamageResult` para o log de combate registrar o evento.
 
 ---

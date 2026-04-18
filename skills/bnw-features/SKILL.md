@@ -137,27 +137,29 @@ const TABS = [
 
 ## Módulos — Status Atual
 
-### Profissões ✅ Documentado + UI Parcial
+### Profissões ✅ Implementado
 - **Regras em:** `docs/24-profissoes.md`
 - **7 profissões:** Adestrador, Arqueólogo, Cozinheiro, Engenheiro, Ferreiro, Médico, Navegador
 - **Dados em:** `src/data/professions.ts`
-- **UI em:** `src/features/character/components/ProfissoesSection.tsx`
+- **UI Builder:** `src/features/character/components/ProfissoesSection.tsx`
+- **Página de referência:** `src/pages/ProfissoesPage.tsx` (rota `/professions`)
 - **GEM_COSTS.profession = 10** (cada profissão)
 
-### Perícias ✅ Documentado + Implementado
+### Perícias ✅ Implementado
 - **Regras em:** `docs/14-pericias.md`
 - **11 perícias:** ambicao, atletismo, destreza, erudicao, expressao, furtividade, investigacao, logica, percepcao, persuasao, sobrevivencia
 - **Dados em:** `src/data/pericias.ts`
-- **UI em:** `src/features/character/components/PericiasSection.tsx`
+- **UI Builder:** `src/features/character/components/PericiasSection.tsx`
+- **Página de referência:** `src/pages/PericiasPage.tsx` (rota `/pericias`)
 - **Cuidado:** `ambition` existe como campo isolado em `Character` — ao usar, preferir `char.pericias.ambicao`
 
-### Embarcações ✅ Documentado + UI Parcial
+### Embarcações ✅ Implementado
 - **Regras em:** `docs/27-embarcacoes.md`
 - **Dados em:** `src/data/ships.ts` (SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS)
 - **Tipos em:** `src/shared/types/ship.ts`
 - **Store:** `src/features/ships/store/shipStore.ts`
-- **Página:** `src/pages/ShipsPage.tsx`
-- Tamanhos: individual/pequeno/medio/grande/gigante/colossal
+- **Página:** `src/pages/ShipsPage.tsx` (rota `/ships`)
+- Tamanhos: individual/pequeno/medio/grande/**imenso**/colossal
 - Max 2 mecanismos por navio; cômodos limitados por slots do tamanho
 
 ### Companheiros 📋 Documentado, não implementado
