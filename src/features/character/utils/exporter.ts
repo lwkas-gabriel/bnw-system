@@ -405,9 +405,9 @@ export function exportToForumHTML(char: Character): string {
 
   if (char.equippedWeapon) {
     const w = char.equippedWeapon as any;
-    const uniqueEffect = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { effect: string }>)[w.characteristic]?.effect : null;
-    const bonusStr = uniqueEffect
-      ? `+${w.bonusValue} ${attrLabel(w.bonusAttr)}; ${uniqueEffect}`
+    const uniqueData = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { name: string; effect: string }>)[w.characteristic] : null;
+    const bonusStr = uniqueData
+      ? `+${w.bonusValue} ${attrLabel(w.bonusAttr)}; ${uniqueData.effect}`
       : `+${w.bonusValue} ${attrLabel(w.bonusAttr)}`;
     ln(`<e>Equipamentos Ofensivos</e>`);
     ln(`[b]Nome: [/b]${w.name}.`);
@@ -415,6 +415,7 @@ export function exportToForumHTML(char: Character): string {
     ln(`[b]Bônus: [/b]${bonusStr}.`);
     ln(`[b]Valor: [/b]B$ [PREENCHER].`);
     ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
+    if (uniqueData) ln(`[b]Característica Única: [/b]${uniqueData.name}.`);
     ln();
   }
 
