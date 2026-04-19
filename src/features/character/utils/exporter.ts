@@ -317,10 +317,13 @@ export function exportToForumHTML(char: Character): string {
 
     // Akuma no Mi
     if (char.akuma) {
+      const AKUMA_COSTS: Record<string, number> = { C: 30, B: 60, A: 90, S: 140 };
+      const akumaCost = AKUMA_COSTS[char.akuma.rank] ?? 0;
       ln(`<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi</d>`);
       ln(`[b]Nome:[/b] ${char.akuma.name}.`);
       ln(`[b]Tipo:[/b] ${AKUMA_TYPE_LABELS[char.akuma.type] ?? char.akuma.type}.`);
       ln(`[b]Rank:[/b] ${char.akuma.rank}.`);
+      ln(`[b]Custo:[/b] ${akumaCost} gemas.`);
       ln(`[b]Tabela:[/b] [PREENCHER].`);
       ln(`</div>`);
       ln();
