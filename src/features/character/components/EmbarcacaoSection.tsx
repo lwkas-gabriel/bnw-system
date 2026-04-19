@@ -4,7 +4,6 @@ import { useCharacterStore } from "../store/characterStore";
 import { useShipStore } from "../../ships/store/shipStore";
 import { getFactionRank, COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
 import { SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS_BY_ID } from "../../../data/ships";
-import { computeFactionDiscount } from "../utils/gemBudget";
 import { Button, Input, Badge, SectionCard } from "../../../shared/components";
 import type { ShipOwnership } from "../../../shared/types/ship";
 
@@ -32,7 +31,7 @@ const OWNERSHIP_LABELS: Record<Exclude<ShipOwnership, "owned">, { label: string;
 
 export function EmbarcacaoSection() {
   const navigate = useNavigate();
-  const { draft, setCommissionedShip } = useCharacterStore();
+  const { draft, setCommissionedShip, saveDraft } = useCharacterStore();
   const { ships, addCommissionedShip } = useShipStore();
   const [shipName, setShipName] = useState("");
 
@@ -43,7 +42,6 @@ export function EmbarcacaoSection() {
   if (!commission) return null;
 
   const ownershipInfo = OWNERSHIP_LABELS[commission];
-  const discount      = computeFactionDiscount(draft);
   const linkedShip    = draft.commissionedShipId
     ? ships.find(s => s.id === draft.commissionedShipId)
     : null;
@@ -85,7 +83,7 @@ export function EmbarcacaoSection() {
             </Button>
             <Button
               variant="danger"
-              onClick={() => setCommissionedShip(undefined)}
+              onClick={() => { setCommissionedShip(undefined); saveDraft(); }}
             >
               Desvincular
             </Button>
@@ -106,6 +104,7 @@ export function EmbarcacaoSection() {
     if (!shipName.trim() || !draft) return;
     const shipId = addCommissionedShip(shipName.trim(), commission!, draft.id);
     setCommissionedShip(shipId);
+    saveDraft();
     setShipName("");
   }
 
@@ -144,14 +143,6 @@ export function EmbarcacaoSection() {
           </div>
         </div>
 
-        {/* Faction discount hint */}
-        {discount.hasDiscount && !discount.used && (
-          <div className="mb-4 p-2.5 bg-amber-950/20 border border-amber-700/30 rounded-lg">
-            <p className="text-[10px] text-amber-400">
-              ✦ Desconto de Facção disponível — pode ser usado para despertar o Klabautermann instantaneamente (aba Facção).
-            </p>
-          </div>
-        )}
 
         {/* Commission form */}
         <Input
