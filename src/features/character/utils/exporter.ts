@@ -2,6 +2,7 @@ import type { Character, PericiaId } from "../../../shared/types/character";
 import { bpn } from "./attrCalc";
 import { computeGemBudget } from "./gemBudget";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
+import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -404,13 +405,16 @@ export function exportToForumHTML(char: Character): string {
 
   if (char.equippedWeapon) {
     const w = char.equippedWeapon as any;
+    const uniqueEffect = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { effect: string }>)[w.characteristic]?.effect : null;
+    const bonusStr = uniqueEffect
+      ? `+${w.bonusValue} ${attrLabel(w.bonusAttr)}; ${uniqueEffect}`
+      : `+${w.bonusValue} ${attrLabel(w.bonusAttr)}`;
     ln(`<e>Equipamentos Ofensivos</e>`);
     ln(`[b]Nome: [/b]${w.name}.`);
     ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
-    ln(`[b]Bônus: [/b]+${w.bonusValue} ${attrLabel(w.bonusAttr)}.`);
+    ln(`[b]Bônus: [/b]${bonusStr}.`);
     ln(`[b]Valor: [/b]B$ [PREENCHER].`);
     ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
-    if (w.characteristic) ln(`[b]Característica Única: [/b]${w.characteristic}.`);
     ln();
   }
 
