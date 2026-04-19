@@ -9,6 +9,7 @@ import {
   SHIP_COMODOS,
   SHIP_COMODOS_BY_ID,
 } from "../data/ships";
+import { COMMISSIONED_SHIP_PRESET } from "../data/factions";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
 
 // Comodo → profession badge mapping
@@ -313,6 +314,9 @@ function MechanismsTab({ shipId }: { shipId: string }) {
         {SHIP_MECHANISMS.map(mech => {
           const isSelected = ship.mechanisms.includes(mech.id);
           const isFull = !isSelected && ship.mechanisms.length >= maxMech;
+          const isCommissionGrant =
+            ship.ownership !== "owned" &&
+            COMMISSIONED_SHIP_PRESET.mechanisms.includes(mech.id);
           return (
             <div
               key={mech.id}
@@ -327,7 +331,10 @@ function MechanismsTab({ shipId }: { shipId: string }) {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <p className="text-xs font-medium text-slate-200">{mech.name}</p>
-                  <span className="text-[10px] font-mono text-slate-500">₿{(mech.price / 1_000_000).toFixed(0)}M</span>
+                  {isCommissionGrant && isSelected
+                    ? <span className="text-[10px] font-semibold text-amber-500">Incluído na comissão</span>
+                    : <span className="text-[10px] font-mono text-slate-500">₿{(mech.price / 1_000_000).toFixed(0)}M</span>
+                  }
                 </div>
                 <p className="text-[10px] text-slate-500 mt-0.5">{mech.description}</p>
               </div>
