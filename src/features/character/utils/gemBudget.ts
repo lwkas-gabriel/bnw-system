@@ -1,5 +1,5 @@
 import type { Character, AMFaixaId, AkumaRank } from "../../../shared/types/character";
-import { getFactionRank } from "../../../data/factions";
+import { FACTIONS } from "../../../data/factions";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
 
@@ -61,22 +61,24 @@ export interface GemBudgetResult {
   isOverBudget: boolean;
 }
 
-/** Returns faction discount info: whether it's available, used, and the bonus value */
+/** Returns faction bonus info: +20g added to the gem pool for ranks at or above the grant rank */
 export function computeFactionDiscount(char: Character): {
   hasDiscount: boolean;
-  used: boolean;
-  appliedTo?: string;
   bonus: number;
 } {
-  if (!char.faction) return { hasDiscount: false, used: false, bonus: 0 };
-  const rankDef = getFactionRank(char.faction.type, char.faction.rank);
-  const hasDiscount = rankDef?.grantsDiscount ?? false;
-  return {
-    hasDiscount,
-    used: char.faction.discountUsed,
-    appliedTo: char.faction.discountAppliedTo,
-    bonus: hasDiscount && !char.faction.discountUsed ? 20 : 0,
-  };
+  if (!char.faction) return { hasDiscount: false, bonus: 0 };
+
+  const fac = FACTIONS[char.faction.type];
+  const grantIdx = fac.ranks.findIndex(r => r.grantsDiscount);
+  const currentIdx = fac.ranks.findIndex(r => r.id === char.faction!.rank);
+
+  // For lateral ranks (currentIdx = -1), check by required level
+  const hasDiscount = grantIdx >= 0 && (
+    currentIdx >= grantIdx ||
+    (currentIdx < 0 && char.level >= fac.ranks[grantIdx].requiredLevel)
+  );
+
+  return { hasDiscount, bonus: hasDiscount ? 20 : 0 };
 }
 
 /** Computes the full gem budget breakdown for a character */
@@ -195,7 +197,7 @@ export function computeGemBudget(char: Character): GemBudgetResult {
   const effectiveTotal = char.gemBudget + factionDiscountBonus;
 
   return {
-    total: char.gemBudget,
+    total: effectiveTotal,
     factionDiscountBonus,
     spent,
     remaining: effectiveTotal - spent,

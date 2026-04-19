@@ -9,20 +9,6 @@ import {
 import { computeFactionDiscount } from "../utils/gemBudget";
 import type { FactionType } from "../../../shared/types/character";
 
-// ─── Discount target labels ───────────────────────────────────────────────────
-
-const DISCOUNT_TARGETS = [
-  "Akuma no Mi",
-  "Haki",
-  "Artes Marciais (2 faixas)",
-  "Ciborgue",
-  "Arma Única",
-  "2 Técnicas Rank A",
-  "Companheiro",
-  "+20 EN",
-  "Navio Desperto",
-];
-
 // ─── Faction picker ───────────────────────────────────────────────────────────
 
 function FactionPicker() {
@@ -169,47 +155,18 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
 // ─── Discount block ───────────────────────────────────────────────────────────
 
 function DiscountBlock() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft } = useCharacterStore();
   if (!draft?.faction) return null;
 
   const discountInfo = computeFactionDiscount(draft);
   if (!discountInfo.hasDiscount) return null;
 
-  if (discountInfo.used) {
-    return (
-      <div className="mt-3 p-3 bg-slate-800/40 border border-slate-700/40 rounded-lg">
-        <p className="text-xs font-medium text-slate-400 mb-1">Desconto de Facção</p>
-        <p className="text-[10px] text-slate-500">
-          Utilizado em: <span className="text-slate-400">{draft.faction.discountAppliedTo ?? "—"}</span>
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="mt-3 p-3 bg-amber-950/20 border border-amber-800/30 rounded-lg">
-      <p className="text-xs font-bold text-amber-400 mb-1">Desconto de Facção — +20g</p>
-      <p className="text-[10px] text-slate-400 mb-3">
-        20 gemas adicionais, fora do limite de 400g. Uso único por personagem.
+      <p className="text-xs font-bold text-amber-400 mb-1">Bônus de Facção — +20 gemas</p>
+      <p className="text-[10px] text-slate-400">
+        20 gemas adicionais somadas ao seu pool total. Podem ser usadas em qualquer caminho da ficha.
       </p>
-      <label className="block text-[10px] text-slate-400 mb-1.5">Aplicar em:</label>
-      <select
-        defaultValue=""
-        className="w-full bg-slate-800 border border-slate-700 rounded text-xs text-slate-300 px-2 py-1.5 mb-2 focus:outline-none focus:border-amber-600"
-        onChange={e => {
-          if (!e.target.value) return;
-          updateDraft(c => {
-            if (!c.faction) return;
-            c.faction.discountUsed = true;
-            c.faction.discountAppliedTo = e.target.value;
-          });
-        }}
-      >
-        <option value="">Selecionar destino...</option>
-        {DISCOUNT_TARGETS.map(t => (
-          <option key={t} value={t}>{t}</option>
-        ))}
-      </select>
     </div>
   );
 }
@@ -263,13 +220,13 @@ export function FaccoesSection() {
             className={`w-full bg-slate-800 border ${fac.borderClass} rounded-lg text-sm text-slate-200 px-3 py-2 focus:outline-none focus:border-amber-600`}
           >
             {fac.ranks.map(r => (
-              <option key={r.id} value={r.id} disabled={r.requiredLevel > draft.level}>
+              <option key={r.id} value={r.id}>
                 {r.label}{r.requiredLevel > draft.level ? ` (Nível ${r.requiredLevel}+)` : ""}
                 {r.grantsDiscount ? " ★" : ""}
               </option>
             ))}
             {fac.lateralRank && (
-              <option value={fac.lateralRank.id} disabled={fac.lateralRank.requiredLevel > draft.level}>
+              <option value={fac.lateralRank.id}>
                 {fac.lateralRank.label} (Lateral)
                 {fac.lateralRank.requiredLevel > draft.level ? ` — Nível ${fac.lateralRank.requiredLevel}+` : ""}
               </option>
@@ -295,12 +252,9 @@ export function FaccoesSection() {
           )}
         </div>
 
-        {/* Discount badges */}
-        {discountInfo.hasDiscount && !discountInfo.used && (
-          <Badge variant="amber">★ Desconto de Facção Disponível (+20g)</Badge>
-        )}
-        {discountInfo.used && (
-          <Badge variant="slate">Desconto utilizado em: {draft.faction.discountAppliedTo}</Badge>
+        {/* Discount badge */}
+        {discountInfo.hasDiscount && (
+          <Badge variant="amber">★ Bônus de Facção +20g</Badge>
         )}
       </SectionCard>
 

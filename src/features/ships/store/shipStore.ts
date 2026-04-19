@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { Ship, ShipSize, ShipOwnership, CrewMember } from "../../../shared/types/ship";
-import { SHIP_MAX_HULL, SHIP_SIZES } from "../../../data/ships";
+import { SHIP_MAX_HULL, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
+import { COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
 import { SHIP_COMODOS_BY_ID } from "../../../data/ships";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
@@ -39,6 +40,16 @@ interface ShipActions {
 
   // Ownership
   updateOwnership: (shipId: string, ownership: ShipOwnership) => void;
+
+  // Commissioned ships (created via faction rank in Character Builder)
+  addCommissionedShip: (
+    name: string,
+    ownership: Exclude<ShipOwnership, "owned">,
+    characterOwnerId: string,
+  ) => string;
+
+  // Size upgrade (cost = new price − old price, keeps all improvements)
+  upgradeShipSize: (shipId: string, newSize: ShipSize) => void;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -186,6 +197,34 @@ export const useShipStore = create<ShipState & ShipActions>()(
         set(state => {
           const ship = state.ships.find(s => s.id === shipId);
           if (ship) ship.ownership = ownership;
+        });
+      },
+
+      addCommissionedShip: (name, ownership, characterOwnerId) => {
+        const id = crypto.randomUUID();
+        const base = createBlankShip(name, COMMISSIONED_SHIP_PRESET.size, false);
+        const ship: Ship = {
+          ...base,
+          id,
+          mechanisms: [...COMMISSIONED_SHIP_PRESET.mechanisms],
+          comodoIds:  [...COMMISSIONED_SHIP_PRESET.comodoIds],
+          ownership,
+          characterOwnerId,
+        };
+        set(state => { state.ships.push(ship); state.activeShipId = id; });
+        return id;
+      },
+
+      upgradeShipSize: (shipId, newSize) => {
+        set(state => {
+          const ship = state.ships.find(s => s.id === shipId);
+          if (!ship) return;
+          const currentIdx = SHIP_SIZES_ORDERED.indexOf(ship.size);
+          const newIdx     = SHIP_SIZES_ORDERED.indexOf(newSize);
+          if (newIdx <= currentIdx) return;
+          ship.size    = newSize;
+          ship.maxHull = SHIP_MAX_HULL[newSize];
+          // currentHull kept as-is; mechanisms and comodoIds preserved
         });
       },
     })),

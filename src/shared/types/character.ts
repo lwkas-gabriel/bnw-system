@@ -296,4 +296,6 @@ export interface Character {
   gemBudget: number;
   location: "blues" | "grand_line" | "new_world";
   faction?: FactionData;
+  /** ID of the ship commissioned via faction rank (links to ShipStore) */
+  commissionedShipId?: string;
 }
