@@ -132,6 +132,7 @@ function migrateCharacter(raw: Record<string, unknown>): Character {
     gemsSpent:   Number(raw.gemsSpent)   || 0,
     gemBudget:   Number(raw.gemBudget)   || 20,
     location:    (raw.location as any)   ?? "blues",
+    companions:  Array.isArray(raw.companions) ? (raw.companions as any[]) : [],
   };
 }
 

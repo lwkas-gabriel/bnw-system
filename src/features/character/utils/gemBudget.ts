@@ -1,4 +1,4 @@
-import type { Character, AMFaixaId, AkumaRank } from "../../../shared/types/character";
+import type { Character, AMFaixaId, AkumaRank, CompanionRank } from "../../../shared/types/character";
 import { FACTIONS } from "../../../data/factions";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
@@ -39,6 +39,8 @@ export const GEM_COSTS = {
   technique: { E: 6, D: 7, C: 8, B: 9, A: 10 },
   // Profession
   profession: 10,
+  // Companions
+  companion: { C: 10, B: 20, A: 30 } as Record<CompanionRank, number>,
   // Energy investment (1g = 1 EN)
   energyPerGem: 1,
 } as const;
@@ -180,6 +182,15 @@ export function computeGemBudget(char: Character): GemBudgetResult {
       category: "Profissão",
       detail: prof.name,
       cost: GEM_COSTS.profession,
+    });
+  }
+
+  // ── Companheiros ──────────────────────────────────────────────────
+  for (const companion of char.companions ?? []) {
+    breakdown.push({
+      category: "Companheiros",
+      detail: `${companion.name || "Companheiro"} — Rank ${companion.rank}`,
+      cost: GEM_COSTS.companion[companion.rank],
     });
   }
 

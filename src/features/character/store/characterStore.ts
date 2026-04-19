@@ -59,6 +59,7 @@ function createBlankCharacter(name: string, gemBudget = 20, level = 1): Characte
     gemsSpent: 0,
     gemBudget,
     location: "blues",
+    companions: [],
   };
 }
 
