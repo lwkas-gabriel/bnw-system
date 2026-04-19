@@ -38,7 +38,7 @@ export default function PericiasPage() {
 
         {/* Progressão por nível */}
         <SectionCard title="Pontos por Nível" icon="📈">
-          <div className="grid grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
             {LEVEL_EXAMPLES.map(lv => (
               <div key={lv} className="bg-slate-800 rounded-lg p-2.5 text-center">
                 <p className="text-[10px] text-slate-500 mb-1">Nv. {lv}</p>

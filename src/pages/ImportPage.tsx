@@ -251,7 +251,7 @@ function ExportRow({ char }: { char: import("../shared/types/character").Charact
         <p className="text-sm font-medium text-slate-200">{char.name}</p>
         <p className="text-xs text-slate-500">Nível {char.level}</p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button size="sm" variant="ghost" onClick={() => downloadCharacterJSON(char)}>
           ⬇ JSON
         </Button>
