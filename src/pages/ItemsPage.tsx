@@ -40,9 +40,53 @@ const SLOT_INFO = [
   { slot: "legs",   label: "Pernas",    attrs: "PRE ou DEF" },
 ];
 
+// ─── Consumíveis data ─────────────────────────────────────────────────────────
+
+const CONSUMIVEIS = [
+  {
+    category: "Pomada",
+    craftor:  "Médico",
+    skill:    "Erudição",
+    effect:   "Cura CON",
+    items: [
+      { quality: "common",    label: "Comum",      bonus: "+1 CON",      price: 50_000   },
+      { quality: "splendid",  label: "Esplêndido", bonus: "+2 CON",      price: 500_000  },
+      { quality: "legendary", label: "Lendário",   bonus: "+3 CON",      price: 1_000_000 },
+    ],
+  },
+  {
+    category: "Lanche",
+    craftor:  "Cozinheiro",
+    skill:    "Expressão",
+    effect:   "Restaura EN",
+    items: [
+      { quality: "common",    label: "Comum",      bonus: "+3 EN",       price: 50_000   },
+      { quality: "splendid",  label: "Esplêndido", bonus: "+6 EN",       price: 500_000  },
+      { quality: "legendary", label: "Lendário",   bonus: "+9 EN",       price: 1_000_000 },
+    ],
+  },
+  {
+    category: "Banquete",
+    craftor:  "Cozinheiro",
+    skill:    "Expressão",
+    effect:   "CON temporária (descontada primeiro; some ao dormir ou ao fim do tópico)",
+    items: [
+      { quality: "common",    label: "Comum",      bonus: "+1 CON temp", price: 500_000   },
+      { quality: "splendid",  label: "Esplêndido", bonus: "+2 CON temp", price: 2_500_000 },
+      { quality: "legendary", label: "Lendário",   bonus: "+3 CON temp", price: 5_000_000 },
+    ],
+  },
+] as const;
+
+const CONSUMIVEL_QUALITY_COLORS: Record<string, string> = {
+  common:    "text-slate-400",
+  splendid:  "text-sky-400",
+  legendary: "text-amber-400",
+};
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-type Tab = "bugigangas" | "armas_unicas";
+type Tab = "bugigangas" | "armas_unicas" | "consumiveis";
 
 const uniqueWeaponList = Object.values(UNIQUE_WEAPONS).sort((a, b) => a.name.localeCompare(b.name));
 
@@ -60,8 +104,8 @@ export default function ItemsPage() {
   return (
     <div className="flex flex-col h-full">
       <PageHeader
-        title="Itens & Equipamentos"
-        subtitle="Catálogo de bugigangas, armas únicas, preços e regras de slot"
+        title="Catálogo de Craft"
+        subtitle="Bugigangas, consumíveis, armas únicas e regras de fabricação por profissão"
       />
 
       <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
@@ -108,35 +152,29 @@ export default function ItemsPage() {
         {/* Craft rules */}
         <SectionCard title="Regras de Craft" icon="🔨">
           <div className="grid grid-cols-2 gap-4 text-xs text-slate-400">
-            <div className="space-y-1.5">
-              <p className="font-medium text-slate-300">Ferreiro</p>
-              <p>Perícia: <span className="text-amber-400">Destreza</span></p>
-              <p>Cria armas e peças defensivas.</p>
-              <div className="grid grid-cols-3 gap-1 mt-2">
-                {[{l:"Comum", dc:9},{l:"Esplêndido",dc:18},{l:"Lendário",dc:27}].map(t => (
-                  <div key={t.l} className="bg-slate-800 rounded p-1.5 text-center">
-                    <p className="text-[10px] text-slate-500">{t.l}</p>
-                    <p className="font-mono font-bold text-amber-400">DC {t.dc}</p>
-                  </div>
-                ))}
+            {[
+              { name: "Ferreiro",    skill: "Destreza",  crafts: "Armas e peças defensivas." },
+              { name: "Engenheiro",  skill: "Lógica",    crafts: "Bugigangas e embarcações (30% desconto)." },
+              { name: "Cozinheiro",  skill: "Expressão", crafts: "Lanches (+EN) e banquetes (+CON temporária)." },
+              { name: "Médico",      skill: "Erudição",  crafts: "Pomadas (+CON)." },
+            ].map(p => (
+              <div key={p.name} className="space-y-1.5">
+                <p className="font-medium text-slate-300">{p.name}</p>
+                <p>Perícia: <span className="text-amber-400">{p.skill}</span></p>
+                <p>{p.crafts}</p>
+                <div className="grid grid-cols-3 gap-1 mt-2">
+                  {[{l:"Comum",dc:9},{l:"Esplêndido",dc:18},{l:"Lendário",dc:27}].map(t => (
+                    <div key={t.l} className="bg-slate-800 rounded p-1.5 text-center">
+                      <p className="text-[10px] text-slate-500">{t.l}</p>
+                      <p className="font-mono font-bold text-amber-400">DC {t.dc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="space-y-1.5">
-              <p className="font-medium text-slate-300">Engenheiro</p>
-              <p>Perícia: <span className="text-amber-400">Lógica</span></p>
-              <p>Cria bugigangas e embarcações (30% desconto).</p>
-              <div className="grid grid-cols-3 gap-1 mt-2">
-                {[{l:"Comum", dc:9},{l:"Esplêndido",dc:18},{l:"Lendário",dc:27}].map(t => (
-                  <div key={t.l} className="bg-slate-800 rounded p-1.5 text-center">
-                    <p className="text-[10px] text-slate-500">{t.l}</p>
-                    <p className="font-mono font-bold text-amber-400">DC {t.dc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
           <p className="text-[10px] text-slate-600 mt-3">
-            Teste de Craft: 3d6 + (graduação da perícia × 3) · 2 slots por aventura.
+            Teste de Craft: 3d6 + (graduação da perícia × 3) · 2 slots por aventura · em falha o slot não é perdido.
           </p>
         </SectionCard>
 
@@ -146,6 +184,7 @@ export default function ItemsPage() {
           <div className="flex gap-1 mb-4">
             {([
               { id: "bugigangas",   label: "Bugigangas",   count: BUGIGANGAS.length },
+              { id: "consumiveis",  label: "Consumíveis",  count: CONSUMIVEIS.length },
               { id: "armas_unicas", label: "Armas Únicas", count: uniqueWeaponList.length },
             ] as const).map(t => (
               <button
@@ -246,6 +285,45 @@ export default function ItemsPage() {
                 )}
               </div>
             </SectionCard>
+          )}
+
+          {/* Consumíveis tab */}
+          {tab === "consumiveis" && (
+            <div className="space-y-4">
+              <p className="text-xs text-slate-500">
+                Limite em combate: <span className="text-slate-300">3 consumíveis totais</span> por personagem (qualquer combinação).
+              </p>
+              {CONSUMIVEIS.map(c => (
+                <SectionCard key={c.category} title={c.category} icon={c.category === "Pomada" ? "💊" : c.category === "Lanche" ? "🍖" : "🍽️"}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[10px] text-slate-500">Criado por</span>
+                    <span className="text-xs font-medium text-amber-400">{c.craftor}</span>
+                    <span className="text-[10px] text-slate-600">·</span>
+                    <span className="text-[10px] text-slate-500">Perícia:</span>
+                    <span className="text-[10px] font-medium text-slate-300">{c.skill}</span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mb-3">{c.effect}</p>
+                  <div className="grid grid-cols-3 gap-3">
+                    {c.items.map(item => (
+                      <div key={item.quality} className="bg-slate-800/60 rounded-lg p-3 border border-slate-700/40">
+                        <p className={`text-[10px] font-semibold mb-1 ${CONSUMIVEL_QUALITY_COLORS[item.quality]}`}>
+                          {item.label}
+                        </p>
+                        <p className="text-sm font-bold text-slate-200 mb-2">{item.bonus}</p>
+                        <div className="space-y-0.5">
+                          <p className="text-[10px] text-slate-500">
+                            Mercado: <span className="font-mono text-slate-400">₿{item.price.toLocaleString("pt-BR")}</span>
+                          </p>
+                          <p className="text-[10px] text-slate-500">
+                            Custo: <span className="font-mono text-slate-400">₿{(item.price / 2).toLocaleString("pt-BR")}</span>
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </SectionCard>
+              ))}
+            </div>
           )}
 
           {/* Armas Únicas tab */}
