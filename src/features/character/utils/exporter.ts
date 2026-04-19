@@ -1,7 +1,7 @@
 import type { Character, PericiaId } from "../../../shared/types/character";
-import { bpn, getZoanClassPericiaBonus } from "./attrCalc";
+import { bpn } from "./attrCalc";
 import { computeGemBudget } from "./gemBudget";
-import { validateCharacterFull } from "./validator";
+import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -37,167 +37,351 @@ export function downloadCharacterJSON(char: Character): void {
   URL.revokeObjectURL(url);
 }
 
-// ─── Forum text export ────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function attrLabel(key: string): string {
-  const map: Record<string, string> = {
-    power: "Poder", precision: "Precisão", defense: "Defesa", constitution: "Constituição",
-  };
-  return map[key] ?? key;
+  return ({ power: "POD", precision: "PRE", defense: "DEF", constitution: "CON" })[key] ?? key;
 }
 
-export function exportToForumText(char: Character): string {
-  const charBPN   = bpn(char.level);
-  const energy    = char.level * 3 + char.energy.energyInvested;
-  const budget    = computeGemBudget(char);
-  const report    = validateCharacterFull(char);
+function qualityLabel(q: string): string {
+  return ({ common: "Comum", splendid: "Esplêndido", legendary: "Extraordinário" })[q] ?? q;
+}
 
-  const lines: string[] = [];
+const RACE_LABELS: Record<string, string> = {
+  human: "Humano", fishman: "Tritão", siren: "Sireno", lunar: "Lunar",
+  mink: "Mink", dwarf: "Anão", giant: "Gigante", half_giant: "Meio-Gigante",
+};
 
-  lines.push(`╔════════════════════════════════════╗`);
-  lines.push(`║  FICHA — ${char.name.toUpperCase().padEnd(26)}║`);
-  lines.push(`╚════════════════════════════════════╝`);
-  lines.push("");
+const LOCATION_LABELS: Record<string, string> = {
+  blues: "Blues", grand_line: "Grand Line", new_world: "New World",
+};
 
-  // ── Informações gerais
-  lines.push("[ INFORMAÇÕES GERAIS ]");
-  lines.push(`Nome: ${char.name}`);
-  lines.push(`Nível: ${char.level}  |  BPN: ${charBPN}  |  Energia: ${energy}`);
-  lines.push(`Raça: ${char.race}  |  Localização: ${char.location}`);
-  lines.push(`Gemas: ${budget.spent}/${budget.total}g`);
-  lines.push("");
+const FACTION_LABELS: Record<string, string> = {
+  pirata: "Pirata", marinha: "Marinha", cacador: "Caçador de Recompensas",
+  governo: "Governo", revolucionario: "Revolucionário",
+};
 
-  // ── Atributos
-  lines.push("[ ATRIBUTOS ]");
+const HAKI_TYPE_LABELS: Record<string, string> = {
+  armament: "do Armamento", observation: "da Observação",
+};
+
+const CYBORG_LOCATION_LABELS: Record<string, string> = {
+  head: "Cabeça", right_arm: "Braço Direito", left_arm: "Braço Esquerdo",
+  right_leg: "Perna Direita", left_leg: "Perna Esquerda", torso: "Tronco",
+};
+
+const CYBORG_LOCATION_BONUS: Record<string, string> = {
+  head: "+4 PRE", right_arm: "+4 POD", left_arm: "+4 POD",
+  right_leg: "+4 DEF", left_leg: "+4 DEF", torso: "+4 CON",
+};
+
+const FAIXA_LABELS: Record<string, string> = {
+  branca: "Branca", cinza: "Cinza", azul_clara: "Azul Clara", azul_escura: "Azul Escura",
+  amarela: "Amarela", laranja: "Laranja", verde: "Verde", roxa: "Roxa", marrom: "Marrom",
+  preta: "Preta", coral: "Coral", rajada: "Rajada", vermelha: "Vermelha", grao_mestre: "Grão Mestre",
+};
+
+const AKUMA_TYPE_LABELS: Record<string, string> = {
+  zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
+};
+
+const TECH_COSTS: Record<string, number> = { E: 6, D: 7, C: 8, B: 9, A: 10 };
+
+const PERICIAS_LABELS: Record<PericiaId, string> = {
+  ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
+  erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
+  investigacao: "Investigação", logica: "Lógica",
+  percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
+};
+
+// ─── Forum HTML export (dohtml) ───────────────────────────────────────────────
+
+export function exportToForumHTML(char: Character): string {
+  const charBPN = bpn(char.level);
+  const energy  = char.level * 3 + char.energy.energyInvested;
+  const budget  = computeGemBudget(char);
+
   const racialPow = char.racialBonus.power        ?? 0;
   const racialPre = char.racialBonus.precision    ?? 0;
   const racialDef = char.racialBonus.defense      ?? 0;
   const racialCon = char.racialBonus.constitution ?? 0;
-  lines.push(`Poder:        ${1 + char.investedAttributes.power + racialPow}  (1 base + ${racialPow} racial + ${char.investedAttributes.power} investido)`);
-  lines.push(`Precisão:     ${1 + char.investedAttributes.precision + racialPre}  (1 base + ${racialPre} racial + ${char.investedAttributes.precision} investido)`);
-  lines.push(`Defesa:       ${1 + char.investedAttributes.defense + racialDef}  (1 base + ${racialDef} racial + ${char.investedAttributes.defense} investido)`);
-  lines.push(`Constituição: ${3 + char.investedAttributes.constitution + racialCon}  (3 base + ${racialCon} racial + ${char.investedAttributes.constitution} investido)`);
-  lines.push("");
+  const totalPow  = 1 + char.investedAttributes.power        + racialPow;
+  const totalPre  = 1 + char.investedAttributes.precision    + racialPre;
+  const totalDef  = 1 + char.investedAttributes.defense      + racialDef;
+  const totalCon  = 3 + char.investedAttributes.constitution + racialCon;
 
-  // ── Perícias
-  lines.push("[ PERÍCIAS ]");
-  const periciaLabels: Record<PericiaId, string> = {
-    ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
-    erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
-    investigacao: "Investigação", logica: "Lógica",
-    percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
-  };
-  const hakiObsStage = char.haki
-    ? (char.haki.primaryType === "observation"
-        ? (typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5)
-        : (typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0))
-    : 0;
-  const percepcaoHakiBonus = hakiObsStage >= 3 ? hakiObsStage - 2 : 0;
-  const zoanPericiaBonus = getZoanClassPericiaBonus(char);
+  const racialParts: string[] = [];
+  if (racialPow) racialParts.push(`+${racialPow} POD`);
+  if (racialPre) racialParts.push(`+${racialPre} PRE`);
+  if (racialDef) racialParts.push(`+${racialDef} DEF`);
+  if (racialCon) racialParts.push(`+${racialCon} CON`);
+  const racialStr = racialParts.length > 0 ? racialParts.join(", ") : "Nenhum";
+
+  const techTotalCost = char.techniques
+    .filter(t => t.source === "purchased")
+    .reduce((s, t) => s + (TECH_COSTS[t.rank] ?? 0), 0);
+
+  const caminhoCost = budget.breakdown
+    .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
+    .reduce((s, b) => s + b.cost, 0);
+
+  const equipCost = budget.breakdown
+    .filter(b => b.category === "Arma Única")
+    .reduce((s, b) => s + b.cost, 0);
+
+  const hasCaminho = !!(char.akuma || char.cyborg || char.haki || char.artesMarciais?.currentFaixa);
+
+  const L: string[] = [];
+  const ln = (...parts: string[]) => L.push(parts.join(""));
+
+  // ── Wrapper
+  ln(`[dohtml] <div id="BNWPOSTOFICIAL"><br><br>`);
+  ln();
+  ln(`<div class="toptitle">${char.name}</div><br>`);
+  ln();
+  ln(`<img src="[URL DA IMAGEM]" width="500px" height="279px"/></img><br>`);
+  ln();
+  ln(`<div class="post"><t>1 | Informações gerais</t>`);
+  ln();
+
+  // ── Seção 1 — Info Geral
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>${char.name}.`);
+  ln(`<e>Idade: </e>[PREENCHER].`);
+  ln(`<e>Raça: </e>${RACE_LABELS[char.race] ?? char.race}.`);
+  ln(`<e>Localização: </e>${LOCATION_LABELS[char.location] ?? char.location}.`);
+  ln(`<e>Alcunha: </e>[PREENCHER].`);
+  if (char.faction) {
+    ln(`<e>Facção: </e>${FACTION_LABELS[char.faction.type] ?? char.faction.type}.`);
+    ln(`<e>Recompensa / Patente / Cargo / Rank: </e>${char.faction.rank}.`);
+  } else {
+    ln(`<e>Facção: </e>Aventureiro.`);
+    ln(`<e>Recompensa / Patente / Cargo / Rank: </e>[PREENCHER].`);
+  }
+  ln(`</div>`);
+  ln();
+
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>${String(char.level).padStart(2, "0")}`);
+  ln(`<e>Experiência (XP): </e>[PREENCHER]`);
+  ln(`<e>Gemas Totais: </e>${budget.total}`);
+  ln(`<e>Gemais Gastas: </e>${budget.spent}`);
+  ln(`<e>Gemas Atuais: </e>${budget.remaining}`);
+  ln(`<e>Prestígio:  </e>${String(char.faction?.prestige ?? 0).padStart(2, "0")}`);
+  ln(`</div>`);
+  ln();
+
+  // ── Seção 2 — Atributos
+  ln(`<t>2 | Atributos e afins (${budget.spent} gemas)</t>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>${totalPow}`);
+  ln(`<e>Precisão (PRE): </e>${totalPre}`);
+  ln(`<e>Defesa (DEF): </e>${totalDef}`);
+  ln(`<e>Constituição (CON) </e>${totalCon}`);
+  ln(`<e>Energia (EN): </e>${energy}`);
+  ln(`<e>Bônus por Nível: </e>${charBPN}`);
+  ln(`<e>Ganhos raciais: </e>${racialStr}.`);
+  ln();
+  if (char.professions && char.professions.length > 0) {
+    ln(`<e>Profissões:</e> </e>`);
+    for (const prof of char.professions) {
+      ln(`- ${prof.name} (10 gemas)`);
+    }
+  } else {
+    ln(`<e>Profissões:</e> </e>Nenhuma.`);
+  }
+  ln(`</div>`);
+  ln();
+
+  // ── Seção 3 — Perícias
+  ln(`<t>3 | Perícias</t>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; ">`);
   for (const [id, value] of Object.entries(char.pericias) as [PericiaId, number][]) {
-    const notes: string[] = [];
-    if (id === "percepcao" && percepcaoHakiBonus > 0) notes.push(`+${percepcaoHakiBonus} Haki Obs`);
-    if (zoanPericiaBonus && id === zoanPericiaBonus.pericia) notes.push(`+${zoanPericiaBonus.value} Zoan`);
-    const extraBonus = (id === "percepcao" ? percepcaoHakiBonus : 0)
-      + (zoanPericiaBonus?.pericia === id ? zoanPericiaBonus.value : 0);
-    const noteStr = notes.length > 0 ? ` (${notes.join(", ")})` : "";
-    lines.push(`${periciaLabels[id]}: ${value}${noteStr}  (Roll: 3d6 + ${(value + extraBonus) * 3})`);
+    ln(`<e>${PERICIAS_LABELS[id]}: </e>${String(value).padStart(2, "0")}`);
   }
-  lines.push("");
+  ln(`</div>`);
+  ln();
 
-  // ── Haki
-  if (char.haki) {
-    lines.push("[ HAKI ]");
-    const pType = char.haki.primaryType === "armament" ? "Armamento" : "Observação";
-    const sType = char.haki.secondaryType === "armament" ? "Armamento" : "Observação";
-    const pStage = typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5;
-    const sStage = typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0;
-    lines.push(`${pType} (Primário): Estágio ${pStage}`);
-    if (sStage > 0) lines.push(`${sType} (Secundário, Gratuito): Estágio ${sStage}`);
-    if (char.haki.hasKing) {
-      lines.push(`Haki do Rei: ${char.haki.kingStage === "advanced" ? "Avançado" : "Controlado"}`);
-      if (char.haki.advancedType) lines.push(`  Variante Avançada: ${char.haki.advancedType}`);
-    }
-    lines.push("");
-  }
-
-  // ── Akuma no Mi
-  if (char.akuma) {
-    lines.push("[ AKUMA NO MI ]");
-    lines.push(`${char.akuma.name} — ${char.akuma.type.toUpperCase()} Rank ${char.akuma.rank}`);
-    if (char.akuma.type === "zoan") {
-      const zoan = char.akuma as any;
-      lines.push(`Vigor Animal: +${zoan.vigorAnimalBonus} CON`);
-      lines.push(`Mitológica: ${zoan.isMythical ? "Sim" : "Não"}`);
-    }
-    if (char.akuma.type === "logia") {
-      const logia = char.akuma as any;
-      lines.push(`Natureza Elemental: +5 ${attrLabel(logia.elementalNatureAttr)}`);
-      lines.push(`Intangibilidade: +4 DEF +4 CON (passiva)`);
-    }
-    lines.push("");
-  }
-
-  // ── Artes Marciais
-  if (char.artesMarciais?.currentFaixa) {
-    lines.push("[ ARTES MARCIAIS ]");
-    lines.push(`Faixa atual: ${char.artesMarciais.currentFaixa.replace("_", " ").toUpperCase()}`);
-    if (char.artesMarciais.laranjaChoice) {
-      lines.push(`Escolha Laranja: ${char.artesMarciais.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}`);
-    }
-    lines.push("");
-  }
-
-  // ── Ciborgue
-  if (char.cyborg) {
-    lines.push("[ CIBORGUE ]");
-    lines.push(`Shifts: ${char.cyborg.shifts.length}/6`);
-    if (char.cyborg.gear) lines.push(`Gear: ${char.cyborg.gear}`);
-    lines.push("");
-  }
-
-  // ── Técnicas
+  // ── Seção 4 — Técnicas (condicional)
   if (char.techniques.length > 0) {
-    lines.push("[ TÉCNICAS ]");
-    for (const tech of char.techniques) {
-      lines.push(`[${tech.rank}] ${tech.name} — +${tech.baseBonus} ${attrLabel(tech.targetAttr)} (${tech.energyCost} EN)`);
-      if (tech.description) lines.push(`     ${tech.description}`);
+    ln(`<t>4 | Técnicas (${techTotalCost} gemas)</t>`);
+    ln();
+    ln(`<div style=" border: 1px solid; padding: 10px; ">`);
+    for (const rank of ["E", "D", "C", "B", "A"]) {
+      const rankTechs = char.techniques.filter(t => t.rank === rank);
+      if (rankTechs.length === 0) continue;
+      ln(`<e>Rank ${rank}</e>`);
+      for (const tech of rankTechs) {
+        ln(`[b]Nome:[/b] ${tech.name}`);
+        ln(`[b]Descrição:[/b] ${tech.description || "[PREENCHER]"}`);
+        ln(`[b]Custo:[/b] ${TECH_COSTS[rank] ?? 0} gemas.`);
+        ln(`[b]Efeito:[/b] +${tech.baseBonus} ${attrLabel(tech.targetAttr)}.`);
+        ln(`[b]Energia:[/b] ${tech.energyCost}.`);
+        ln();
+      }
     }
-    lines.push("");
+    ln(`</div>`);
+    ln();
   }
 
-  // ── Equipamentos
-  if (char.equippedWeapon || char.equippedDefensive.some(Boolean)) {
-    lines.push("[ EQUIPAMENTOS ]");
-    if (char.equippedWeapon) {
-      const w = char.equippedWeapon as any;
-      lines.push(`Arma: ${w.name} (+${w.bonusValue} ${attrLabel(w.bonusAttr)})${w.characteristic ? ` [${w.characteristic}]` : ""}`);
+  // ── Seção 5 — Caminhos (condicional)
+  if (hasCaminho) {
+    ln(`<t>5 | Caminhos (${caminhoCost} gemas)</t>`);
+    ln();
+
+    // Akuma no Mi
+    if (char.akuma) {
+      ln(`<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi</d>`);
+      ln(`[b]Nome:[/b] ${char.akuma.name}.`);
+      ln(`[b]Tipo:[/b] ${AKUMA_TYPE_LABELS[char.akuma.type] ?? char.akuma.type}.`);
+      ln(`[b]Rank:[/b] ${char.akuma.rank}.`);
+      ln(`[b]Tabela:[/b] [PREENCHER].`);
+      ln(`</div>`);
+      ln();
     }
-    char.equippedDefensive.filter(Boolean).forEach(item => {
-      if (!item) return;
-      lines.push(`Defensivo: ${item.name} (+${item.bonusValue} ${attrLabel(item.bonusAttr)})`);
-    });
-    lines.push("");
-  }
 
-  // ── Gemas breakdown
-  lines.push("[ GEMAS ]");
-  for (const b of budget.breakdown) {
-    lines.push(`  ${b.category}: ${b.detail} — ${b.cost}g`);
-  }
-  lines.push(`  TOTAL: ${budget.spent}/${budget.total}g`);
-  lines.push("");
-
-  // ── Validation warnings at the end
-  if (!report.isValid || report.hasWarnings) {
-    lines.push("[ AVISOS DE VALIDAÇÃO ]");
-    for (const issue of report.issues.filter(i => i.severity !== "info")) {
-      lines.push(`[${issue.severity.toUpperCase()}] ${issue.title}: ${issue.description}`);
+    // Ciborgue
+    if (char.cyborg && char.cyborg.shifts.length > 0) {
+      ln(`<div style=" border: 1px solid; padding: 10px; ">`);
+      for (const shift of char.cyborg.shifts) {
+        ln(`<d>Ciborgue</d>`);
+        ln(`[b]Nome: [/b]${shift.name || "[PREENCHER]"}.`);
+        ln(`[b]Descrição: [/b]${shift.description || "[PREENCHER]"}.`);
+        ln(`[b]Local: [/b]${CYBORG_LOCATION_LABELS[shift.location] ?? shift.location}.`);
+        ln(`[b]Bônus: [/b]${CYBORG_LOCATION_BONUS[shift.location] ?? "[PREENCHER]"}.`);
+        if (shift.bugigangaId) {
+          ln(`[b]Bugiganga: [/b]${shift.bugigangaId}.`);
+        }
+        ln();
+      }
+      if (char.cyborg.gear) {
+        ln(`[b]Gear: [/b]${char.cyborg.gear}.`);
+      }
+      ln(`</div>`);
+      ln();
     }
-    lines.push("");
+
+    // Haki
+    if (char.haki) {
+      ln(`<div style=" border: 1px solid; padding: 10px; ">`);
+      const pType  = char.haki.primaryType;
+      const sType  = char.haki.secondaryType;
+      const pStage = typeof char.haki.primaryStage   === "number" ? char.haki.primaryStage   : 5;
+      const sStage = typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0;
+      const pStages = pType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
+      const sStages = sType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
+      const pData   = pStage > 0 ? pStages[pStage - 1] : null;
+      const sData   = sStage > 0 ? sStages[sStage - 1] : null;
+
+      const hakiBlock = (type: string, stage: number, data: typeof pData, cost: number) => {
+        ln(`<d>Haki ${HAKI_TYPE_LABELS[type] ?? type}</d>`);
+        ln(`[b]Nível: [/b]${String(stage).padStart(2, "0")}`);
+        ln(`[b]Aventuras: [/b]00/02`);
+        ln(`[b]Custo: [/b]${cost} gemas.`);
+        if (data) {
+          const bonusStr = Object.entries(data.bonus)
+            .map(([k, v]) => `+${v} ${attrLabel(k)}`)
+            .join(", ");
+          ln(`[b]Bônus: [/b]${bonusStr}.`);
+          ln(`[b]Gasto de energia: [/b]${data.energyCostPerTurn} por turno.`);
+          ln(`[b]Efeito interpretativo: [/b]${data.description}`);
+        }
+        ln();
+      };
+
+      hakiBlock(pType, pStage, pData, pStage * 20);
+      if (sStage > 0) hakiBlock(sType, sStage, sData, 0);
+
+      if (char.haki.hasKing) {
+        ln(`<d>Haki do Rei</d>`);
+        ln(`[b]Nível: [/b]${char.haki.kingStage === "advanced" ? "Avançado" : "Controlado"}`);
+        ln(`[b]Custo: [/b]20 gemas.`);
+        ln(`[b]Gasto de energia: [/b]5 por turno.`);
+        ln(`[b]Efeito interpretativo: [/b]Paralisia em massa ao redor.`);
+        ln();
+      }
+
+      ln(`</div>`);
+      ln();
+    }
+
+    // Artes Marciais
+    if (char.artesMarciais?.currentFaixa) {
+      const faixa     = char.artesMarciais.currentFaixa;
+      const faixaCost = budget.breakdown.find(b => b.category === "Artes Marciais")?.cost ?? 0;
+      ln(`<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>`);
+      ln(`[b]Faixa: [/b]${FAIXA_LABELS[faixa] ?? faixa}.`);
+      ln(`[b]Custo: [/b]${faixaCost} gemas.`);
+      ln(`[b]Bônus: [/b][PREENCHER].`);
+      if (char.artesMarciais.laranjaChoice) {
+        ln(`[b]Escolha Laranja: [/b]${char.artesMarciais.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}.`);
+      }
+      ln(`</div>`);
+      ln();
+    }
   }
 
-  return lines.join("\n");
+  // ── Seção 6 — Itens e Equipamentos
+  ln(`<t>6 | Itens e Equipamentos${equipCost > 0 ? ` (${equipCost} gemas)` : ""}</t>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Berries: </e>B$ 200.000.`);
+  ln();
+
+  if (char.equippedWeapon) {
+    const w = char.equippedWeapon as any;
+    ln(`<e>Equipamentos Ofensivos</e>`);
+    ln(`[b]Nome: [/b]${w.name}.`);
+    ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
+    ln(`[b]Bônus: [/b]+${w.bonusValue} ${attrLabel(w.bonusAttr)}.`);
+    ln(`[b]Valor: [/b]B$ [PREENCHER].`);
+    ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
+    if (w.characteristic) ln(`[b]Característica Única: [/b]${w.characteristic}.`);
+    ln();
+  }
+
+  const defensives = char.equippedDefensive.filter(Boolean);
+  if (defensives.length > 0) {
+    ln(`<e>Equipamentos Defensivos</e>`);
+    for (const item of defensives) {
+      if (!item) continue;
+      ln(`[b]Nome: [/b]${item.name}.`);
+      ln(`[b]Qualidade: [/b]${qualityLabel(item.quality)}.`);
+      ln(`[b]Bônus: [/b]+${item.bonusValue} ${attrLabel(item.bonusAttr)}.`);
+      ln(`[b]Valor: [/b]B$ [PREENCHER].`);
+      ln(`[b]Descrição: [/b]${(item as any).description || "[PREENCHER]"}.`);
+      ln();
+    }
+  }
+
+  ln(`</div>`);
+  ln();
+
+  // ── Seção 7 — Social
+  ln(`<t>7 | Social e histórico</t>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><d>Aparência</d>`);
+  ln(`[PREENCHER]`);
+  ln(`</div>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><d>Personalidade</d>`);
+  ln(`[PREENCHER]`);
+  ln(`</div>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><d>História</d>`);
+  ln(`[PREENCHER]`);
+  ln(`</div>`);
+  ln();
+
+  // ── Seção 8 — Histórico
+  ln(`<t>8 | Histórico</t>`);
+  ln();
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Aventuras: </e>[PREENCHER]`);
+  ln();
+  ln(`<e>Narração: </e>[PREENCHER]`);
+  ln();
+  ln(`<e>Eventos e Extras: </e>[PREENCHER]`);
+  ln(`</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]`);
+
+  return L.join("\n");
 }
 
 export function copyToClipboard(text: string): Promise<void> {

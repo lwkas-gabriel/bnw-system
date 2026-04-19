@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { importFromFile, importFromClipboard, type ImportResult } from "../features/character/utils/importer";
-import { downloadCharacterJSON, exportToJSONString, exportToForumText, copyToClipboard } from "../features/character/utils/exporter";
+import { downloadCharacterJSON, exportToJSONString, exportToForumHTML, copyToClipboard } from "../features/character/utils/exporter";
 import { PageHeader, Button } from "../shared/components";
 import { ValidationPanel } from "../features/character/components/ValidationPanel";
 
@@ -101,7 +101,7 @@ export default function ImportPage() {
           <input
             ref={inputRef}
             type="file"
-            accept=".json"
+            accept=".json,.txt"
             className="hidden"
             onChange={handleFileChange}
           />
@@ -113,7 +113,7 @@ export default function ImportPage() {
           ) : (
             <>
               <span className="text-4xl mb-4 block opacity-40">📂</span>
-              <p className="text-sm font-medium text-slate-300 mb-1">Arraste um arquivo .json aqui</p>
+              <p className="text-sm font-medium text-slate-300 mb-1">Arraste um arquivo .json ou .txt (ficha de fórum) aqui</p>
               <p className="text-xs text-slate-500">ou clique para selecionar</p>
             </>
           )}
@@ -262,10 +262,10 @@ function ExportRow({ char }: { char: import("../shared/types/character").Charact
           size="sm"
           variant="amber"
           onClick={async () => {
-            await copyToClipboard(exportToForumText(char));
+            await copyToClipboard(exportToForumHTML(char));
           }}
         >
-          📜 Texto fórum
+          📜 Ficha Fórum (dohtml)
         </Button>
       </div>
     </div>
