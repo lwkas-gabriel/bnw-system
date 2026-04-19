@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 interface NavItem {
@@ -23,15 +23,30 @@ interface Props { children: ReactNode }
 
 export function AppLayout({ children }: Props) {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const close = () => setSidebarOpen(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-950">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={close}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-56 flex-shrink-0 flex flex-col bg-slate-900 border-r border-slate-800">
+      <aside className={[
+        "fixed lg:relative inset-y-0 left-0 z-50 w-56 flex-shrink-0",
+        "flex flex-col bg-slate-900 border-r border-slate-800",
+        "transition-transform duration-200 lg:translate-x-0",
+        sidebarOpen ? "translate-x-0" : "-translate-x-full",
+      ].join(" ")}>
         {/* Logo */}
         <div
           className="flex items-center gap-2 px-4 py-5 border-b border-slate-800 cursor-pointer select-none"
-          onClick={() => navigate("/")}
+          onClick={() => { navigate("/"); close(); }}
         >
           <span className="text-2xl">🏴‍☠️</span>
           <div>
@@ -49,6 +64,7 @@ export function AppLayout({ children }: Props) {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
+              onClick={close}
               className={({ isActive }) =>
                 [
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors relative group",
@@ -77,6 +93,18 @@ export function AppLayout({ children }: Props) {
 
       {/* Main */}
       <main className="flex-1 overflow-y-auto">
+        {/* Hamburger button — mobile only */}
+        <button
+          className="lg:hidden fixed top-4 left-4 z-30 p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Abrir menu"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="2" y1="4" x2="16" y2="4" />
+            <line x1="2" y1="9" x2="16" y2="9" />
+            <line x1="2" y1="14" x2="16" y2="14" />
+          </svg>
+        </button>
         {children}
       </main>
     </div>

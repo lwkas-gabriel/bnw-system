@@ -20,7 +20,7 @@ interface PageHeaderProps {
 }
 export function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
   return (
-    <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-slate-800">
+    <div className="flex items-start justify-between px-4 lg:px-6 pt-14 lg:pt-6 pb-4 border-b border-slate-800">
       <div>
         <h1 className="text-xl font-bold text-slate-100 tracking-wide">{title}</h1>
         {subtitle && <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>}
@@ -174,7 +174,7 @@ interface SectionCardProps {
 export function SectionCard({ title, icon, children, action }: SectionCardProps) {
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <div className="flex items-center gap-2">
           {icon && <span className="text-base">{icon}</span>}
           <h3 className="text-sm font-semibold text-slate-200 tracking-wide">{title}</h3>
@@ -226,12 +226,12 @@ interface TabsProps {
 }
 export function Tabs({ tabs, active, onChange }: TabsProps) {
   return (
-    <div className="flex gap-1 bg-slate-900 rounded-lg p-1 border border-slate-800">
+    <div className="flex gap-1 overflow-x-auto scrollbar-none bg-slate-900 rounded-lg p-1 border border-slate-800">
       {tabs.map(t => (
         <button
           key={t.id}
           onClick={() => onChange(t.id)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
             active === t.id
               ? "bg-amber-600 text-white"
               : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
