@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { GemBudgetBar, Button, Tabs, Input } from "../shared/components";
+import { getFactionRank } from "../data/factions";
 import { AttributesSection } from "../features/character/components/AttributesSection";
 import { HakiSection } from "../features/character/components/HakiSection";
 import { AkumaSection } from "../features/character/components/AkumaSection";
@@ -11,17 +12,18 @@ import { PericiasSection } from "../features/character/components/PericiasSectio
 import { ProfissoesSection } from "../features/character/components/ProfissoesSection";
 import { EquipmentSection } from "../features/character/components/EquipmentSection";
 import { FaccoesSection } from "../features/character/components/FaccoesSection";
+import { EmbarcacaoSection } from "../features/character/components/EmbarcacaoSection";
 
-const TABS = [
-  { id: "attributes",    label: "Atributos",    icon: "📊" },
-  { id: "pericias",      label: "Perícias",     icon: "🧠" },
-  { id: "haki",          label: "Haki",         icon: "🌊" },
-  { id: "akuma",         label: "Akuma no Mi",  icon: "🍎" },
-  { id: "artes",         label: "Artes Marciais", icon: "🥋" },
-  { id: "techniques",   label: "Técnicas",     icon: "⚡" },
-  { id: "profissoes",   label: "Profissões",   icon: "📜" },
-  { id: "equipment",    label: "Equipamentos", icon: "🛡️" },
-  { id: "faccao",      label: "Facção",       icon: "⚑" },
+const BASE_TABS = [
+  { id: "attributes",  label: "Atributos",      icon: "📊" },
+  { id: "pericias",    label: "Perícias",        icon: "🧠" },
+  { id: "haki",        label: "Haki",            icon: "🌊" },
+  { id: "akuma",       label: "Akuma no Mi",     icon: "🍎" },
+  { id: "artes",       label: "Artes Marciais",  icon: "🥋" },
+  { id: "techniques",  label: "Técnicas",        icon: "⚡" },
+  { id: "profissoes",  label: "Profissões",      icon: "📜" },
+  { id: "equipment",   label: "Equipamentos",    icon: "🛡️" },
+  { id: "faccao",      label: "Facção",          icon: "⚑" },
 ];
 
 export default function CharacterBuilderPage() {
@@ -30,6 +32,15 @@ export default function CharacterBuilderPage() {
   const { draft, budget, newCharacter, loadCharacter, saveDraft, updateDraft } = useCharacterStore();
   const [activeTab, setActiveTab] = useState("attributes");
   const [showNameModal, setShowNameModal] = useState(false);
+
+  const shipCommission = draft?.faction
+    ? getFactionRank(draft.faction.type, draft.faction.rank)?.shipCommission
+    : undefined;
+
+  const TABS = useMemo(() => {
+    if (!shipCommission) return BASE_TABS;
+    return [...BASE_TABS, { id: "embarcacao", label: "Embarcação", icon: "⚓" }];
+  }, [shipCommission]);
   const [nameInput, setNameInput] = useState("");
   type CreationMode = "novato" | "custom" | "max";
   const [mode, setMode] = useState<CreationMode>("novato");
@@ -202,6 +213,7 @@ export default function CharacterBuilderPage() {
         {activeTab === "profissoes"  && <ProfissoesSection />}
         {activeTab === "equipment"   && <EquipmentSection />}
         {activeTab === "faccao"      && <FaccoesSection />}
+        {activeTab === "embarcacao"  && <EmbarcacaoSection />}
       </div>
     </div>
   );

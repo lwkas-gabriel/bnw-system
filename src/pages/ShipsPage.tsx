@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useShipStore } from "../features/ships/store/shipStore";
+import { useCharacterStore } from "../features/character/store/characterStore";
 import { PageHeader, Button, SectionCard, Badge, Input, Tabs } from "../shared/components";
 import {
   SHIP_SIZES,
@@ -56,9 +57,12 @@ const SHIP_TABS = [
 // ─── Tab: Overview ────────────────────────────────────────────────────────────
 
 function OverviewTab({ shipId }: { shipId: string }) {
-  const { ships, updateShip, updateHull, deleteShip, setActiveShip } = useShipStore();
+  const { ships, updateShip, updateHull, deleteShip, setActiveShip, upgradeShipSize } = useShipStore();
+  const { saved: savedChars } = useCharacterStore();
   const ship = ships.find(s => s.id === shipId);
   if (!ship) return null;
+
+  const ownerChar = savedChars.find(c => c.commissionedShipId === ship.id);
 
   const sizeData = SHIP_SIZES[ship.size];
   const hullPct = Math.round((ship.currentHull / ship.maxHull) * 100);
@@ -140,6 +144,11 @@ function OverviewTab({ shipId }: { shipId: string }) {
             🕵️ Galeão · CP Comandante — embarcação emprestada
           </p>
         )}
+        {ownerChar && (
+          <p className="text-[10px] text-violet-400/70 mb-3">
+            🧑 Personagem: <span className="font-semibold">{ownerChar.name}</span>
+          </p>
+        )}
 
         {/* Notes */}
         <div>
@@ -152,6 +161,51 @@ function OverviewTab({ shipId }: { shipId: string }) {
             className="w-full bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-300 px-3 py-2 focus:outline-none focus:border-amber-600 resize-none"
           />
         </div>
+
+        {/* Size upgrade */}
+        {ship.size !== "colossal" && (() => {
+          const currentIdx = SHIP_SIZES_ORDERED.indexOf(ship.size);
+          // exclude colossal (requires Anexo Insular mechanism)
+          const upgrades = SHIP_SIZES_ORDERED.slice(currentIdx + 1).filter(s => s !== "colossal");
+          if (upgrades.length === 0) return null;
+          const currentPrice = SHIP_SIZES[ship.size].price;
+          return (
+            <div className="mt-4 pt-4 border-t border-slate-700/50">
+              <p className="text-xs font-semibold text-slate-400 mb-2">Upgrade de Tamanho</p>
+              <div className="space-y-2">
+                {upgrades.map(size => {
+                  const data = SHIP_SIZES[size];
+                  const cost = data.price - currentPrice;
+                  return (
+                    <div key={size} className="flex items-center justify-between p-2.5 bg-slate-800 rounded-lg">
+                      <div>
+                        <span className="text-xs font-medium text-slate-200">{data.name}</span>
+                        <span className="text-[10px] text-slate-500 ml-2">
+                          {data.maxCrew} tripulantes · {data.comodoSlots} slots
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-mono text-green-400">
+                          +₿{cost.toLocaleString("pt-BR")}
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => upgradeShipSize(ship.id, size)}
+                        >
+                          Fazer upgrade
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="text-[10px] text-slate-600 mt-2">
+                ⓘ Mantém todos os aprimoramentos instalados. Colossal requer Mecanismo Anexo Insular.
+              </p>
+            </div>
+          );
+        })()}
       </SectionCard>
     </div>
   );

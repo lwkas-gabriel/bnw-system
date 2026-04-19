@@ -80,4 +80,6 @@ export interface Ship {
   ownership: ShipOwnership;
   /** Klabautermann awakened using the Faction Discount (20g) instead of 10 voyages */
   klabautermannUnlockedWithDiscount: boolean;
+  /** Character ID that commissioned this ship (set via faction rank) */
+  characterOwnerId?: string;
 }

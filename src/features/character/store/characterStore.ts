@@ -31,6 +31,8 @@ interface CharacterActions {
   updateDraft: (updater: (char: Character) => void) => void;
   /** Recompute validation and budget */
   revalidate: () => void;
+  /** Link or unlink a commissioned ship to the current draft */
+  setCommissionedShip: (shipId: string | undefined) => void;
 }
 
 // ─── Default character factory ────────────────────────────────────────────────
@@ -122,6 +124,13 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
           updater(state.draft);
           state.errors = validateCharacter(state.draft);
           state.budget = computeGemBudget(state.draft);
+        });
+      },
+
+      setCommissionedShip: (shipId) => {
+        set(state => {
+          if (!state.draft) return;
+          state.draft.commissionedShipId = shipId;
         });
       },
 
