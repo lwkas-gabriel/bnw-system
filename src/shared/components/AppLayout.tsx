@@ -71,7 +71,7 @@ export function AppLayout({ children }: Props) {
 
         {/* Footer */}
         <div className="p-4 border-t border-slate-800">
-          <p className="text-[10px] text-slate-600 text-center">v0.5.1 — Alpha</p>
+          <p className="text-[10px] text-slate-600 text-center">v0.5.2 — Alpha</p>
         </div>
       </aside>
 

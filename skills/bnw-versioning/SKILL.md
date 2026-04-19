@@ -64,6 +64,8 @@ Nunca atualizar apenas um dos dois.
 |--------|-----------|---------------------|
 | 0.1.0  | Esqueleto base: Character Builder core (Atributos, Haki, Akuma, AM, Ciborgue, Técnicas) | — |
 | 0.5.0  | Sprint completo: 7 novos módulos, testes unitários e sistema de facções | Perícias, Profissões, Equipamentos, Armas Únicas, Embarcações, Akuma editor, Facções |
+| 0.5.1  | Security hardening: schema Zod no importer, limite de tamanho, MIME type, CSP e headers HTTP | — |
+| 0.5.2  | Modos de criação de personagem: Jogador Novo, Personalizado e Máximo | — |
 
 ---
 
