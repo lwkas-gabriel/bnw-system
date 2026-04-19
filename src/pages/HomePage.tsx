@@ -5,7 +5,7 @@ import { useCharacterStore } from "../features/character/store/characterStore";
 const MODULES = [
   { path: "/characters", icon: "⚔️", title: "Personagens", desc: "Crie e gerencie fichas completas com todos os caminhos do sistema.", available: true },
   { path: "/combat",     icon: "🎲", title: "Calculadora de Combate", desc: "Simule combates com 3d6, log narrável e análise de probabilidades.", available: true },
-  { path: "/items",      icon: "🔧", title: "Construtor de Itens", desc: "Monte equipamentos, armas únicas e bugigangas.", available: true },
+  { path: "/items",      icon: "🔧", title: "Catálogo de Craft", desc: "Bugigangas, consumíveis, armas únicas e regras de fabricação.", available: true },
   { path: "/ships",      icon: "⛵", title: "Embarcações", desc: "Construa e atualize navios.", available: true },
   { path: "/professions",icon: "📜", title: "Profissões", desc: "Gerencie profissões e fabricação de itens.", available: true },
   { path: "/pericias",   icon: "🧠", title: "Perícias", desc: "Distribuição de graduações e testes.", available: true },

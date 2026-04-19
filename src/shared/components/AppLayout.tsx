@@ -12,7 +12,7 @@ const NAV: NavItem[] = [
   { path: "/",            label: "Início",         icon: "⚓" },
   { path: "/characters",  label: "Personagens",    icon: "⚔️" },
   { path: "/combat",      label: "Combate",        icon: "🎲" },
-  { path: "/items",       label: "Itens",          icon: "🔧" },
+  { path: "/items",       label: "Craft",          icon: "🔧" },
   { path: "/ships",       label: "Embarcações",    icon: "⛵" },
   { path: "/professions", label: "Profissões",     icon: "📜" },
   { path: "/pericias",    label: "Perícias",       icon: "🧠" },
