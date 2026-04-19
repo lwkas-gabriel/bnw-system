@@ -63,12 +63,12 @@ export function HakiSection() {
 
   const haki = draft.haki;
 
-  function initHaki() {
+  function initHaki(primary: "armament" | "observation") {
     updateDraft(c => {
       c.haki = {
-        primaryType: "armament",
+        primaryType: primary,
         primaryStage: 1,
-        secondaryType: "observation",
+        secondaryType: primary === "armament" ? "observation" : "armament",
         secondaryStage: 0,
         hasKing: false,
         kingStage: null,
@@ -132,9 +132,27 @@ export function HakiSection() {
     <div className="space-y-4 max-w-2xl">
       {!haki ? (
         <SectionCard title="Haki" icon="🌊">
-          <div className="text-center py-8">
-            <p className="text-slate-500 text-sm mb-4">Nenhum Haki adquirido. Custo inicial: 20g (estágio 1).</p>
-            <Button variant="primary" onClick={initHaki}>+ Adquirir Haki</Button>
+          <div className="py-6 space-y-4">
+            <p className="text-sm text-slate-400 text-center">Qual será o seu Haki <span className="text-amber-400 font-semibold">primário</span> (pago)?</p>
+            <p className="text-xs text-slate-600 text-center -mt-2">O secundário é gratuito — avança por aventuras.</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => initHaki("armament")}
+                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-slate-700 bg-slate-800/40 hover:border-amber-700 hover:bg-amber-950/10 transition-all"
+              >
+                <span className="text-2xl">🔶</span>
+                <span className="text-xs font-semibold text-slate-300">Armamento</span>
+                <span className="text-[10px] text-slate-500">100g (5 estágios)</span>
+              </button>
+              <button
+                onClick={() => initHaki("observation")}
+                className="flex flex-col items-center gap-2 p-4 rounded-xl border border-slate-700 bg-slate-800/40 hover:border-blue-700 hover:bg-blue-950/10 transition-all"
+              >
+                <span className="text-2xl">👁️</span>
+                <span className="text-xs font-semibold text-slate-300">Observação</span>
+                <span className="text-[10px] text-slate-500">100g (5 estágios)</span>
+              </button>
+            </div>
           </div>
         </SectionCard>
       ) : (
