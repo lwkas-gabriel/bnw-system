@@ -382,11 +382,13 @@ export function exportToForumHTML(char: Character): string {
       if (sStage > 0) hakiBlock(sType, sStage, sData, 0);
 
       if (char.haki.hasKing) {
+        const isKingAdvanced = char.haki.kingStage === "advanced";
         ln(`<d>Haki do Rei</d>`);
-        ln(`[b]Nível: [/b]${char.haki.kingStage === "advanced" ? "Avançado" : "Controlado"}`);
+        ln(`[b]Nível: [/b]${isKingAdvanced ? "Avançado" : "Controlado"}`);
         ln(`[b]Custo: [/b]20 gemas.`);
+        ln(`[b]Bônus: [/b]${isKingAdvanced ? "Infunde o Rei nas técnicas — adiciona Ambição ao bônus de todas as técnicas enquanto ativo." : "+4 de Persuasão."}`);
         ln(`[b]Gasto de energia: [/b]5 por turno.`);
-        ln(`[b]Efeito interpretativo: [/b]Paralisia em massa ao redor.`);
+        ln(`[b]Efeito interpretativo: [/b]${isKingAdvanced ? "Relâmpagos negros emanam do usuário. Dano sem contato físico." : "Desmaia alvos com 5 níveis a menos. Resistentes ficam sem ação de ataque por 2 turnos."}`);
         ln();
       }
 
