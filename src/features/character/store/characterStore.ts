@@ -20,7 +20,7 @@ interface CharacterState {
 
 interface CharacterActions {
   /** Start a new blank character */
-  newCharacter: (name: string, gemBudget?: number) => void;
+  newCharacter: (name: string, gemBudget?: number, level?: number) => void;
   /** Load a saved character into the draft */
   loadCharacter: (id: string) => void;
   /** Save (or overwrite) the current draft */
@@ -35,11 +35,11 @@ interface CharacterActions {
 
 // ─── Default character factory ────────────────────────────────────────────────
 
-function createBlankCharacter(name: string, gemBudget: number = 20): Character {
+function createBlankCharacter(name: string, gemBudget = 20, level = 1): Character {
   return {
     id: crypto.randomUUID(),
     name,
-    level: 1,
+    level,
     race: "human",
     investedAttributes: { power: 0, precision: 0, defense: 0, constitution: 0 },
     racialBonus: {},
@@ -70,8 +70,8 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
       errors: {},
       budget: null,
 
-      newCharacter: (name, gemBudget = 20) => {
-        const char = createBlankCharacter(name, gemBudget);
+      newCharacter: (name, gemBudget = 20, level = 1) => {
+        const char = createBlankCharacter(name, gemBudget, level);
         set(state => {
           state.draft = char;
           state.errors = validateCharacter(char);
