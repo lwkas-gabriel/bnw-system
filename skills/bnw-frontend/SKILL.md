@@ -40,6 +40,8 @@ Todos em `src/shared/components/index.tsx`. **Sempre usar antes de criar um novo
 <StatControl label shortLabel value base bonuses onIncrement onDecrement color="amber|blue|green|red" />
 <GemBudgetBar spent={n} total={n} />
 <SectionCard title="..." icon="..." action={<Button/>}>...</SectionCard>
+// SectionCard: o header usa flex-wrap — título e action ficam na mesma linha
+// enquanto couber e quebram automaticamente quando o espaço apertar.
 <Tabs tabs={[{id, label, icon}]} active={id} onChange={fn} />
 <NumberStepper value min max onChange label />
 <Badge variant="amber|green|red|blue|slate">...</Badge>
@@ -187,6 +189,46 @@ const [aberto, setAberto] = useState(false);
 
 ---
 
+## Responsividade
+
+Tamanho alvo mínimo: **375px** (iPhone SE/mini). Mobile-first com Tailwind breakpoints:
+- `sm: 640px` — tablet pequeno
+- `md: 768px` — tablet
+- `lg: 1024px` — desktop
+
+### Padrões obrigatórios
+
+**Sidebar / AppLayout**  
+A sidebar usa drawer pattern no mobile (slide-in com overlay). Botão hamburger aparece em `lg:hidden` fixo no canto superior esquerdo. Sempre fechar o drawer ao navegar (`onClick={close}` nos NavLinks).
+
+**PageHeader**  
+Já inclui `pt-14 lg:pt-6` para não colidir com o hamburger no mobile. Não override manualmente.
+
+**Grids responsivos**  
+```tsx
+// Padrão: coluna única no mobile, expandindo em telas maiores
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+// Stats compactos (4 colunas): sempre 2 no mobile
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+```
+
+**Tabs**  
+O componente `<Tabs>` já tem `overflow-x-auto scrollbar-none` e `flex-shrink-0` nos botões. Não é preciso adicionar manualmente.
+
+**Tabelas**  
+Sempre envolver em `<div className="overflow-x-auto">`.
+
+**Layouts master-detail** (ex: ShipsPage)  
+Usar estado `mobileView: "list" | "detail"` + `hidden lg:block` para mostrar apenas uma view por vez no mobile. Adicionar botão "← Voltar" com `lg:hidden`.
+
+**Touch targets**  
+Botões primários: mínimo `min-h-[44px]` quando possível. Evitar botões menores que 32px em elementos interativos críticos.
+
+**Páginas sem PageHeader** (ex: HomePage)  
+Adicionar `pt-16 lg:pt-8` no container principal para compensar o hamburger no mobile.
+
+---
+
 ## Erros Comuns a Evitar
 
 - ❌ Criar estilo CSS inline quando existe classe Tailwind equivalente
@@ -194,3 +236,5 @@ const [aberto, setAberto] = useState(false);
 - ❌ Importar de outro feature diretamente (`features/combat` importando de `features/character`)
 - ❌ Usar `<form>` HTML — usar handlers `onClick`/`onChange` diretamente
 - ❌ Re-implementar um componente que já existe em `shared/components/index.tsx`
+- ❌ Grids fixos sem breakpoints (`grid-cols-4`) — sempre adicionar versão mobile (`grid-cols-2 sm:grid-cols-4`)
+- ❌ Largura fixa em modais (`w-[480px]`) — usar `w-full max-w-[480px] mx-4`

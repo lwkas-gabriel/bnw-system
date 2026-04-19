@@ -578,6 +578,7 @@ export default function ShipsPage() {
   const [newSize, setNewSize] = useState<ShipSize>("pequeno");
   const [builtByEngineer, setBuiltByEngineer] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
+  const [mobileView, setMobileView] = useState<"list" | "detail">("list");
 
   const activeShip = ships.find(s => s.id === activeShipId) ?? null;
 
@@ -589,6 +590,12 @@ export default function ShipsPage() {
     setBuiltByEngineer(false);
     setShowCreate(false);
     setActiveTab("overview");
+  }
+
+  function selectShip(id: string) {
+    setActiveShip(id);
+    setActiveTab("overview");
+    setMobileView("detail");
   }
 
   return (
@@ -604,15 +611,18 @@ export default function ShipsPage() {
       />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Ship list */}
-        <div className="w-64 flex-shrink-0 border-r border-slate-800 overflow-y-auto p-3 space-y-1.5">
+        {/* Ship list — full width on mobile, fixed sidebar on desktop */}
+        <div className={[
+          "lg:w-64 lg:flex-shrink-0 border-r border-slate-800 overflow-y-auto p-3 space-y-1.5",
+          mobileView === "list" ? "w-full" : "hidden lg:block",
+        ].join(" ")}>
           {ships.length === 0 ? (
             <p className="text-xs text-slate-600 text-center py-8">Nenhuma embarcação ainda.</p>
           ) : (
             ships.map(ship => (
               <button
                 key={ship.id}
-                onClick={() => { setActiveShip(ship.id); setActiveTab("overview"); }}
+                onClick={() => selectShip(ship.id)}
                 className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${
                   activeShipId === ship.id
                     ? "bg-amber-600/15 text-amber-400 border border-amber-700/30"
@@ -629,8 +639,11 @@ export default function ShipsPage() {
           )}
         </div>
 
-        {/* Main content */}
-        <div className="flex-1 overflow-y-auto">
+        {/* Main content — hidden on mobile when list is shown */}
+        <div className={[
+          "flex-1 overflow-y-auto",
+          mobileView === "list" ? "hidden lg:block" : "block",
+        ].join(" ")}>
           {/* Create form */}
           {showCreate && (
             <div className="m-4 p-4 bg-slate-900 border border-slate-700 rounded-xl max-w-md">
@@ -690,6 +703,12 @@ export default function ShipsPage() {
             <div className="flex flex-col h-full">
               {/* Tab bar */}
               <div className="px-5 pt-4 pb-2 border-b border-slate-800 flex-shrink-0">
+                <button
+                  className="lg:hidden flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 mb-3"
+                  onClick={() => setMobileView("list")}
+                >
+                  ← Embarcações
+                </button>
                 <Tabs tabs={SHIP_TABS} active={activeTab} onChange={setActiveTab} />
               </div>
               {/* Tab content */}
