@@ -176,14 +176,27 @@ export function exportToForumHTML(char: Character): string {
   const energy  = char.level * 3 + char.energy.energyInvested;
   const budget  = computeGemBudget(char);
 
+  // ── Artes Marciais passive bonuses ───────────────────────────────────────────
+  const amIdx = char.artesMarciais?.currentFaixa
+    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
+  const amAtIdx = (f: typeof FAIXA_ORDER[number]) => amIdx >= FAIXA_ORDER.indexOf(f);
+  const amPow  = amAtIdx("azul_escura") ? 2 : 0;
+  const amPre  = amAtIdx("cinza")       ? 2 : 0;
+  const amDef  = amAtIdx("azul_clara")  ? 2 : 0;
+  const amCon  = amAtIdx("amarela")     ? 2 : 0;
+  const amWeaponBonus  = amAtIdx("branca") ? 2 : 0;
+  const amDefItemBonus = (amAtIdx("laranja") ? 1 : 0) + (amAtIdx("marrom") ? 1 : 0) + (amAtIdx("rajada") ? 1 : 0);
+  const amOffTechBonus = amAtIdx("roxa")  ? 2 : 0;
+  const amDefTechBonus = amAtIdx("verde") ? 2 : 0;
+
   const racialPow = char.racialBonus.power        ?? 0;
   const racialPre = char.racialBonus.precision    ?? 0;
   const racialDef = char.racialBonus.defense      ?? 0;
   const racialCon = char.racialBonus.constitution ?? 0;
-  const totalPow  = 1 + char.investedAttributes.power        + racialPow;
-  const totalPre  = 1 + char.investedAttributes.precision    + racialPre;
-  const totalDef  = 1 + char.investedAttributes.defense      + racialDef;
-  const totalCon  = 3 + char.investedAttributes.constitution + racialCon;
+  const totalPow  = 1 + char.investedAttributes.power        + racialPow + amPow;
+  const totalPre  = 1 + char.investedAttributes.precision    + racialPre + amPre;
+  const totalDef  = 1 + char.investedAttributes.defense      + racialDef + amDef;
+  const totalCon  = 3 + char.investedAttributes.constitution + racialCon + amCon;
 
   const racialParts: string[] = [];
   if (racialPow) racialParts.push(`+${racialPow} POD`);
@@ -279,7 +292,8 @@ export function exportToForumHTML(char: Character): string {
   ln(`<t>3 | Perícias</t>`);
   ln();
   ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-  for (const [id, value] of Object.entries(char.pericias) as [PericiaId, number][]) {
+  for (const id of Object.keys(PERICIAS_LABELS) as PericiaId[]) {
+    const value = char.pericias?.[id] ?? 0;
     ln(`<e>${PERICIAS_LABELS[id]}: </e>${String(value).padStart(2, "0")}`);
   }
   ln(`</div>`);
@@ -301,7 +315,8 @@ export function exportToForumHTML(char: Character): string {
         ln(`[b]Nome:[/b] ${tech.name}`);
         ln(`[b]Descrição:[/b] ${tech.description || "[PREENCHER]"}`);
         ln(`[b]Custo:[/b] ${costStr}`);
-        ln(`[b]Efeito:[/b] +${tech.baseBonus} ${attrLabel(tech.targetAttr)}.`);
+        const amTechBonus = tech.type === "offensive" ? amOffTechBonus : amDefTechBonus;
+        ln(`[b]Efeito:[/b] +${tech.baseBonus + amTechBonus} ${attrLabel(tech.targetAttr)}.`);
         ln(`[b]Energia:[/b] ${tech.energyCost}.`);
         ln();
       }
@@ -432,9 +447,10 @@ export function exportToForumHTML(char: Character): string {
   if (char.equippedWeapon) {
     const w = char.equippedWeapon as any;
     const uniqueData = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { name: string; effect: string }>)[w.characteristic] : null;
+    const weaponTotal = (w.bonusValue ?? 0) + amWeaponBonus;
     const bonusStr = uniqueData
-      ? `+${w.bonusValue} ${attrLabel(w.bonusAttr)}; ${uniqueData.effect}`
-      : `+${w.bonusValue} ${attrLabel(w.bonusAttr)}`;
+      ? `+${weaponTotal} ${attrLabel(w.bonusAttr)}; ${uniqueData.effect}`
+      : `+${weaponTotal} ${attrLabel(w.bonusAttr)}`;
     ln(`<e>Equipamentos Ofensivos</e>`);
     ln(`[b]Nome: [/b]${w.name}.`);
     ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
@@ -453,7 +469,7 @@ export function exportToForumHTML(char: Character): string {
       if (!item) continue;
       ln(`[b]Nome: [/b]${item.name}.`);
       ln(`[b]Qualidade: [/b]${qualityLabel(item.quality)}.`);
-      ln(`[b]Bônus: [/b]+${item.bonusValue} ${attrLabel(item.bonusAttr)}.`);
+      ln(`[b]Bônus: [/b]+${(item.bonusValue ?? 0) + amDefItemBonus} ${attrLabel(item.bonusAttr)}.`);
       ln(`[b]Valor: [/b]${DEFENSIVE_PRICE[item.quality] ?? "[PREENCHER]"}.`);
       ln(`[b]Descrição: [/b]${(item as any).description || "[PREENCHER]"}.`);
       ln();
