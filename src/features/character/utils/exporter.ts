@@ -188,10 +188,14 @@ export function exportToForumHTML(char: Character): string {
     .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
     .reduce((s, b) => s + b.cost, 0);
 
+  const LARANJA_IDX_EXP = FAIXA_ORDER.indexOf("laranja");
+  const currentFaixaIdxExp = char.artesMarciais?.currentFaixa
+    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
   const isUniqueFromLaranja = !!(
     char.equippedWeapon &&
     "characteristic" in char.equippedWeapon &&
-    char.artesMarciais?.laranjaChoice === "unique_weapon"
+    currentFaixaIdxExp >= LARANJA_IDX_EXP &&
+    char.artesMarciais?.laranjaChoice !== "techniques"
   );
   const equipCost = isUniqueFromLaranja ? 0 : budget.breakdown
     .filter(b => b.category === "Arma Única")
@@ -418,7 +422,7 @@ export function exportToForumHTML(char: Character): string {
     ln(`[b]Nome: [/b]${w.name}.`);
     ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
     ln(`[b]Bônus: [/b]${bonusStr}.`);
-    ln(`[b]Custo: [/b]${isUniqueFromLaranja ? "Concedida via Faixa Laranja." : "20 gemas."}`);
+    if (uniqueData) ln(`[b]Custo: [/b]${isUniqueFromLaranja ? "Concedida via Faixa Laranja." : "20 gemas."}`);
     ln(`[b]Valor: [/b]B$ [PREENCHER].`);
     ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
     if (uniqueData) ln(`[b]Característica Única: [/b]${uniqueData.name}.`);

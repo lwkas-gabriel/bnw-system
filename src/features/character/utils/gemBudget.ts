@@ -155,9 +155,14 @@ export function computeGemBudget(char: Character): GemBudgetResult {
   }
 
   // ── Unique Weapon ─────────────────────────────────────────────────
-  // Only count if NOT obtained via AM Laranja
+  // Only count if NOT obtained via AM Laranja (Laranja faixa or higher + not explicitly "techniques")
   const hasUniqueWeapon = char.equippedWeapon && "characteristic" in char.equippedWeapon;
-  const gotFromLaranja = char.artesMarciais?.laranjaChoice === "unique_weapon";
+  const LARANJA_IDX = ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf("laranja");
+  const currentFaixaIdx = char.artesMarciais?.currentFaixa
+    ? ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf(char.artesMarciais.currentFaixa)
+    : -1;
+  const hasLaranja = currentFaixaIdx >= LARANJA_IDX;
+  const gotFromLaranja = hasUniqueWeapon && hasLaranja && char.artesMarciais?.laranjaChoice !== "techniques";
   if (hasUniqueWeapon && !gotFromLaranja) {
     breakdown.push({
       category: "Arma Única",
