@@ -48,6 +48,18 @@ function qualityLabel(q: string): string {
   return ({ common: "Comum", splendid: "Esplêndido", legendary: "Extraordinário" })[q] ?? q;
 }
 
+const OFFENSIVE_PRICE: Record<string, string> = {
+  common:    "B$ 500.000",
+  splendid:  "B$ 10.000.000",
+  legendary: "B$ 80.000.000",
+};
+
+const DEFENSIVE_PRICE: Record<string, string> = {
+  common:    "B$ 500.000",
+  splendid:  "B$ 5.000.000",
+  legendary: "B$ 40.000.000",
+};
+
 const RACE_LABELS: Record<string, string> = {
   human: "Humano", fishman: "Tritão", siren: "Sireno", lunar: "Lunar",
   mink: "Mink", dwarf: "Anão", giant: "Gigante", half_giant: "Meio-Gigante",
@@ -423,7 +435,7 @@ export function exportToForumHTML(char: Character): string {
     ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
     ln(`[b]Bônus: [/b]${bonusStr}.`);
     if (uniqueData) ln(`[b]Custo: [/b]${isUniqueFromLaranja ? "Concedida via Faixa Laranja." : "20 gemas."}`);
-    ln(`[b]Valor: [/b]B$ [PREENCHER].`);
+    ln(`[b]Valor: [/b]${OFFENSIVE_PRICE[w.quality] ?? "[PREENCHER]"}.`);
     ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
     if (uniqueData) ln(`[b]Característica Única: [/b]${uniqueData.name}.`);
     ln();
@@ -437,7 +449,7 @@ export function exportToForumHTML(char: Character): string {
       ln(`[b]Nome: [/b]${item.name}.`);
       ln(`[b]Qualidade: [/b]${qualityLabel(item.quality)}.`);
       ln(`[b]Bônus: [/b]+${item.bonusValue} ${attrLabel(item.bonusAttr)}.`);
-      ln(`[b]Valor: [/b]B$ [PREENCHER].`);
+      ln(`[b]Valor: [/b]${DEFENSIVE_PRICE[item.quality] ?? "[PREENCHER]"}.`);
       ln(`[b]Descrição: [/b]${(item as any).description || "[PREENCHER]"}.`);
       ln();
     }
