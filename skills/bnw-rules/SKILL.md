@@ -247,6 +247,61 @@ computeFactionDiscount(char)   // → { hasDiscount, used, appliedTo, bonus: 0|2
 
 ---
 
+## Companheiros
+
+| Rank | Custo | Nv. máx | Gemas máx | Perícia máx |
+|------|-------|---------|-----------|-------------|
+| C    | 10g   | 15      | 100g      | 4           |
+| B    | 20g   | 25      | 200g      | 5           |
+| A    | 30g   | 35      | 300g      | 5           |
+
+- Subir Rank custa a diferença (C→A = 20g adicionais).
+- Gemas disponíveis para o Companheiro = gemas totais da PJ (limitado pelo Rank).
+- Companheiros nunca recebem XP, Gemas, Prestígio ou Berries diretamente.
+- Apenas 1 profissão; Rank C: Perícia máx 4, não alcança topo de profissão.
+
+### Mascote (exclusivo de Adestrador)
+
+- Intercalam turnos com o Adestrador; compartilham **CON de menor valor** entre os dois.
+- Não têm Perícias, Profissões, Haki nem bugigangas.
+- Bônus de gemas (pode ultrapassar limite do Rank):
+
+| Rank | Bônus |
+|------|-------|
+| C    | Sobrevivência × 2 |
+| B    | Sobrevivência × 4 |
+| A    | Sobrevivência × 6 |
+
+### Autômato (exclusivo de Engenheiro)
+
+Requisitos cumulativos:
+- Rank mínimo B
+- PJ tem profissão Engenheiro + Perícia Lógica 5
+- PJ tem ≥ 120g investidas
+- Autômato deve ser Ciborgue Completo (6 shifts)
+
+Privilégio: pode lutar **no lugar do Engenheiro** contra NPCs. Derrota do Autômato = derrota do Engenheiro.
+
+### Recrutamento de NPCs por Mar
+
+| Mar      | Rank mín. | DC mín. |
+|----------|-----------|---------|
+| Blues    | C         | 9       |
+| Paradise | B         | 18      |
+| New World| A         | 27      |
+
+### Implementação
+
+```ts
+// src/shared/types/character.ts → CompanionRank, CompanionType, CompanionData
+// char.companions?: CompanionData[]
+// src/features/character/utils/gemBudget.ts → GEM_COSTS.companion = { C:10, B:20, A:30 }
+// src/features/character/utils/validator.ts → checkCompanions()
+// src/features/character/components/CompanheirosSection.tsx → UI
+```
+
+---
+
 ## migrateCharacter — Ao Adicionar Campo no Character
 
 ```ts

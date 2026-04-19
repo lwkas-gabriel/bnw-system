@@ -219,6 +219,7 @@ export interface CyborgShiftData {
   location: CyborgShiftLocation;
   name: string;
   description: string;
+  bugigangaId?: string | null;
 }
 
 export interface CyborgPath {
@@ -250,6 +251,19 @@ export interface Equipment {
 export interface UniqueWeapon extends Equipment {
   uniqueName: string;
   characteristic: UniqueWeaponCharacteristic;
+}
+
+// ─── Companheiros ─────────────────────────────────────────────────────────────
+
+export type CompanionRank = "C" | "B" | "A";
+export type CompanionType = "companion" | "mascote" | "automato";
+
+export interface CompanionData {
+  id: string;
+  name: string;
+  rank: CompanionRank;
+  type: CompanionType;
+  notes?: string;
 }
 
 // ─── Faction ──────────────────────────────────────────────────────────────────
@@ -298,4 +312,5 @@ export interface Character {
   faction?: FactionData;
   /** ID of the ship commissioned via faction rank (links to ShipStore) */
   commissionedShipId?: string;
+  companions?: CompanionData[];
 }

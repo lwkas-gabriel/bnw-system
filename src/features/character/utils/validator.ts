@@ -544,6 +544,113 @@ function checkCyborg(char: Character): ValidationIssue[] {
   return issues;
 }
 
+function checkCompanions(char: Character): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const companions = char.companions ?? [];
+  if (companions.length === 0) return issues;
+
+  const profNames = char.professions?.map(p => p.name.toLowerCase()) ?? [];
+  const isAdestrador = profNames.some(n => n.includes("adestrador"));
+  const isEngenheiro = profNames.some(n => n.includes("engenheiro"));
+
+  const mascotes = companions.filter(c => c.type === "mascote");
+  const automatos = companions.filter(c => c.type === "automato");
+
+  if (mascotes.length > 0 && !isAdestrador) {
+    issues.push({
+      id: "companions_mascote_no_adestrador",
+      severity: "error",
+      category: "Companheiros",
+      title: "Mascote requer profissão Adestrador",
+      description: "Apenas personagens com a profissão Adestrador podem ter um Mascote.",
+      fix: "Adicione a profissão Adestrador ou mude o tipo do companheiro.",
+    });
+  }
+
+  if (mascotes.length > 1) {
+    issues.push({
+      id: "companions_multiple_mascotes",
+      severity: "error",
+      category: "Companheiros",
+      title: "Mais de um Mascote",
+      description: "Um personagem pode ter no máximo 1 Mascote.",
+      fix: "Remova o Mascote excedente.",
+    });
+  }
+
+  if (automatos.length > 0 && !isEngenheiro) {
+    issues.push({
+      id: "companions_automato_no_engenheiro",
+      severity: "error",
+      category: "Companheiros",
+      title: "Autômato requer profissão Engenheiro",
+      description: "Apenas personagens com a profissão Engenheiro podem ter um Autômato.",
+      fix: "Adicione a profissão Engenheiro ou mude o tipo do companheiro.",
+    });
+  }
+
+  for (const automato of automatos) {
+    if (automato.rank === "C") {
+      issues.push({
+        id: `companions_automato_rank_${automato.id}`,
+        severity: "error",
+        category: "Companheiros",
+        title: `Autômato "${automato.name || "Autômato"}" requer Rank B+`,
+        description: "Autômatos devem ter no mínimo Rank B.",
+        fix: "Eleve o Rank do Autômato para B (20g) ou A (30g).",
+      });
+    }
+
+    const shifts = char.cyborg?.shifts.length ?? 0;
+    if (shifts < 6) {
+      issues.push({
+        id: `companions_automato_shifts_${automato.id}`,
+        severity: "error",
+        category: "Companheiros",
+        title: `Autômato requer Ciborgue Completo (6 shifts)`,
+        description: `Personagem tem ${shifts} shifts. O Autômato exige que a PJ tenha 6 shifts.`,
+        fix: "Complete os 6 shifts de Ciborgue (120g total).",
+      });
+    }
+
+    if ((char.pericias?.logica ?? 0) < 5) {
+      issues.push({
+        id: `companions_automato_logica_${automato.id}`,
+        severity: "error",
+        category: "Companheiros",
+        title: `Autômato requer Lógica 5`,
+        description: `Perícia Lógica do personagem: ${char.pericias?.logica ?? 0}. Necessário: 5.`,
+        fix: "Eleve a Perícia Lógica para 5.",
+      });
+    }
+
+    const budget = computeGemBudget(char);
+    if (budget.spent < 120) {
+      issues.push({
+        id: `companions_automato_gems_${automato.id}`,
+        severity: "error",
+        category: "Companheiros",
+        title: `Autômato requer mínimo 120g investidas`,
+        description: `Personagem gastou ${budget.spent}g. Necessário: pelo menos 120g.`,
+        fix: "Invista pelo menos 120g no personagem (inclui os 120g do Ciborgue Completo).",
+      });
+    }
+
+    if (char.location !== "new_world") {
+      issues.push({
+        id: `companions_automato_location_${automato.id}`,
+        severity: "warning",
+        category: "Companheiros",
+        title: `Autômato: Ciborgue Completo normalmente requer New World`,
+        description: "O Gear que completa o Ciborgue exige New World, indiretamente afetando o Autômato.",
+        fix: "Verifique se o personagem está no New World ao completar os 6 shifts.",
+      });
+    }
+  }
+
+  return issues;
+}
+
 function checkProfessions(char: Character): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   if (!char.professions?.length) return issues;
@@ -625,6 +732,7 @@ export function validateCharacterFull(char: Character): ValidationReport {
     ...checkProfessions(char),
     ...checkEquipment(char),
     ...checkCyborg(char),
+    ...checkCompanions(char),
     ...checkEnergy(char),
   ];
 

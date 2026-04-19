@@ -13,6 +13,8 @@ import { ProfissoesSection } from "../features/character/components/ProfissoesSe
 import { EquipmentSection } from "../features/character/components/EquipmentSection";
 import { FaccoesSection } from "../features/character/components/FaccoesSection";
 import { EmbarcacaoSection } from "../features/character/components/EmbarcacaoSection";
+import { CyborgSection } from "../features/character/components/CyborgSection";
+import { CompanheirosSection } from "../features/character/components/CompanheirosSection";
 
 const BASE_TABS = [
   { id: "attributes",  label: "Atributos",      icon: "📊" },
@@ -24,6 +26,8 @@ const BASE_TABS = [
   { id: "profissoes",  label: "Profissões",      icon: "📜" },
   { id: "equipment",   label: "Equipamentos",    icon: "🛡️" },
   { id: "faccao",      label: "Facção",          icon: "⚑" },
+  { id: "ciborgue",    label: "Ciborgue",        icon: "🦾" },
+  { id: "companheiros",label: "Companheiros",    icon: "🐾" },
 ];
 
 export default function CharacterBuilderPage() {
@@ -224,8 +228,10 @@ export default function CharacterBuilderPage() {
         {activeTab === "techniques"  && <TechniquesSection />}
         {activeTab === "profissoes"  && <ProfissoesSection />}
         {activeTab === "equipment"   && <EquipmentSection />}
-        {activeTab === "faccao"      && <FaccoesSection />}
+        {activeTab === "faccao"       && <FaccoesSection />}
         {activeTab === "embarcacao"  && <EmbarcacaoSection />}
+        {activeTab === "ciborgue"    && <CyborgSection />}
+        {activeTab === "companheiros"&& <CompanheirosSection />}
       </div>
     </div>
   );
