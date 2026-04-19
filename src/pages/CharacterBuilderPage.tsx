@@ -54,8 +54,8 @@ export default function CharacterBuilderPage() {
   useEffect(() => {
     if (id && id !== "new") {
       loadCharacter(id);
-    } else if (!id || id === "new") {
-      if (!draft) setShowNameModal(true);
+    } else {
+      setShowNameModal(true);
     }
   }, [id]);
 
