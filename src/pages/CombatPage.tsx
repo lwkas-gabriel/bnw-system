@@ -41,7 +41,7 @@ function CombatantPanel({
             </div>
             <Button size="sm" variant="ghost" onClick={() => onSelect(null as any)}>Trocar</Button>
           </div>
-          <div className="grid grid-cols-4 gap-1.5 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center">
             {[
               { l: "POD", v: 1 + char.investedAttributes.power },
               { l: "PRE", v: 1 + char.investedAttributes.precision },
@@ -150,7 +150,7 @@ export default function CombatPage() {
         </div>
 
         {/* Combatants */}
-        <div className="flex gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           <CombatantPanel label="Combatente A" char={charA} onSelect={setCharA} />
           <div className="flex items-center justify-center text-2xl text-slate-600 font-bold px-2">⚔️</div>
           <CombatantPanel label="Combatente B" char={charB} onSelect={setCharB} />

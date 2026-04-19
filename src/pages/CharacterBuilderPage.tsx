@@ -77,7 +77,7 @@ export default function CharacterBuilderPage() {
 
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="card w-[480px]">
+        <div className="card w-full max-w-[480px] mx-4">
           <h2 className="text-base font-bold text-slate-200 mb-5">Novo Personagem</h2>
 
           <Input
@@ -90,7 +90,7 @@ export default function CharacterBuilderPage() {
           />
 
           <p className="text-xs font-semibold text-slate-400 mt-5 mb-2">Modo de criação</p>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {MODES.map(m => (
               <button
                 key={m.id}
@@ -154,40 +154,52 @@ export default function CharacterBuilderPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Builder header */}
-      <div className="flex-shrink-0 px-6 py-4 border-b border-slate-800 bg-slate-900/50">
-        <div className="flex items-center gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-3 mb-2">
-              <input
-                className="bg-transparent text-lg font-bold text-slate-100 focus:outline-none border-b border-transparent focus:border-amber-600 transition-colors placeholder:text-slate-600"
-                value={draft.name}
-                placeholder="Nome do personagem"
-                onChange={e => updateDraft(c => { c.name = e.target.value; })}
-              />
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500">Lv.</span>
-                <input
-                  type="number"
-                  min={1}
-                  max={40}
-                  value={draft.level}
-                  onChange={e => updateDraft(c => { c.level = Math.max(1, Math.min(40, Number(e.target.value))); })}
-                  className="w-12 bg-slate-800 border border-slate-700 rounded text-center text-sm font-mono font-bold text-amber-400 focus:outline-none focus:border-amber-600"
-                />
-              </div>
-              <select
-                value={draft.location}
-                onChange={e => updateDraft(c => { c.location = e.target.value as typeof draft.location; })}
-                className="bg-slate-800 border border-slate-700 rounded text-xs text-slate-400 px-2 py-1 focus:outline-none focus:border-amber-600"
-              >
-                <option value="blues">Blues</option>
-                <option value="grand_line">Grand Line</option>
-                <option value="new_world">New World</option>
-              </select>
-            </div>
-            {budget && <GemBudgetBar spent={budget.spent} total={budget.total} />}
+      <div className="flex-shrink-0 px-4 lg:px-6 pt-14 lg:pt-4 pb-4 border-b border-slate-800 bg-slate-900/50">
+        {/* Info: 2-col grid below 425px, flex row above */}
+        <div className="grid grid-cols-2 min-[579px]:flex min-[579px]:flex-wrap min-[579px]:items-center gap-x-4 gap-y-2">
+          {/* Name */}
+          <input
+            className="bg-transparent text-lg font-bold text-slate-100 focus:outline-none border-b border-transparent focus:border-amber-600 transition-colors placeholder:text-slate-600 w-full min-[579px]:w-auto min-w-0 max-w-full"
+            value={draft.name}
+            placeholder="Nome"
+            size={Math.max(6, draft.name.length)}
+            onChange={e => updateDraft(c => { c.name = e.target.value; })}
+          />
+          {/* Level */}
+          <div className="flex items-center justify-end min-[579px]:justify-start gap-2 flex-shrink-0">
+            <span className="text-xs text-slate-500">Lv.</span>
+            <input
+              type="number"
+              min={1}
+              max={40}
+              value={draft.level}
+              onChange={e => updateDraft(c => { c.level = Math.max(1, Math.min(40, Number(e.target.value))); })}
+              className="w-12 bg-slate-800 border border-slate-700 rounded text-center text-sm font-mono font-bold text-amber-400 focus:outline-none focus:border-amber-600"
+            />
           </div>
-          <div className="flex gap-2">
+          {/* Location */}
+          <select
+            value={draft.location}
+            onChange={e => updateDraft(c => { c.location = e.target.value as typeof draft.location; })}
+            className="bg-slate-800 border border-slate-700 rounded text-xs text-slate-400 px-2 py-1 focus:outline-none focus:border-amber-600 w-full min-[579px]:w-auto"
+          >
+            <option value="blues">Blues</option>
+            <option value="grand_line">Grand Line</option>
+            <option value="new_world">New World</option>
+          </select>
+          {/* Gem counter (all non-desktop) / bar (desktop) */}
+          {budget && (
+            <>
+              <span className={`lg:hidden flex justify-end min-[579px]:justify-start flex-shrink-0 text-xs font-mono font-bold ${budget.isOverBudget ? "text-red-400" : "text-amber-400"}`}>
+                {budget.spent}<span className="text-slate-500">/{budget.total}g</span>
+              </span>
+              <div className="hidden lg:block flex-1 min-w-[120px]">
+                <GemBudgetBar spent={budget.spent} total={budget.total} />
+              </div>
+            </>
+          )}
+          {/* Actions — spans both cols below 425px, pushes right above */}
+          <div className="col-span-2 min-[579px]:col-span-1 flex justify-end gap-2 min-[579px]:ml-auto">
             <Button variant="ghost" size="sm" onClick={() => navigate("/characters")}>
               Cancelar
             </Button>

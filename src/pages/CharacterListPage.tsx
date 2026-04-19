@@ -27,7 +27,7 @@ function CharacterCard({ char, onLoad, onDelete }: { char: Character; onLoad: ()
               <span className="text-[10px] text-slate-600">Sem caminhos configurados</span>
             )}
           </div>
-          <div className="grid grid-cols-4 gap-2 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
             {[
               { label: "POD", value: 1 + char.investedAttributes.power },
               { label: "PRE", value: 1 + char.investedAttributes.precision },

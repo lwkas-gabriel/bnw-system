@@ -378,7 +378,7 @@ export function AttributesSection() {
           </div>
         )}
 
-        <div className="flex justify-around py-2">
+        <div className="flex flex-wrap justify-around gap-4 py-2">
           <StatControl
             label="Poder"
             shortLabel="POD"

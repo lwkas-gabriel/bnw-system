@@ -107,7 +107,7 @@ export default function ItemsPage() {
         subtitle="Bugigangas, consumíveis, armas únicas e regras de fabricação por profissão"
       />
 
-      <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+      <div className="flex-1 overflow-y-auto px-4 lg:px-6 py-5 space-y-6">
 
         {/* Slot & Price Table */}
         <SectionCard title="Slots de Equipamento" icon="⚔️">
@@ -150,7 +150,7 @@ export default function ItemsPage() {
 
         {/* Craft rules */}
         <SectionCard title="Regras de Craft" icon="🔨">
-          <div className="grid grid-cols-2 gap-4 text-xs text-slate-400">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-400">
             {[
               { name: "Ferreiro",    skill: "Destreza",  crafts: "Armas e peças defensivas." },
               { name: "Engenheiro",  skill: "Lógica",    crafts: "Bugigangas e embarcações (30% desconto)." },
@@ -180,7 +180,7 @@ export default function ItemsPage() {
         {/* Catalog tabs */}
         <div>
           {/* Tab bar */}
-          <div className="flex gap-1 mb-4">
+          <div className="flex gap-1 mb-4 overflow-x-auto scrollbar-none">
             {([
               { id: "bugigangas",   label: "Bugigangas",   count: BUGIGANGAS.length },
               { id: "consumiveis",  label: "Consumíveis",  count: CONSUMIVEIS_ITEM_COUNT },
@@ -189,7 +189,7 @@ export default function ItemsPage() {
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`px-4 py-2 rounded-t-lg text-xs font-medium transition-colors ${
+                className={`flex-shrink-0 px-4 py-2 rounded-t-lg text-xs font-medium transition-colors ${
                   tab === t.id
                     ? "bg-amber-900/30 border border-b-transparent border-amber-800/50 text-amber-400"
                     : "text-slate-500 hover:text-slate-300"
@@ -302,7 +302,7 @@ export default function ItemsPage() {
                     <span className="text-[10px] font-medium text-slate-300">{c.skill}</span>
                   </div>
                   <p className="text-[10px] text-slate-500 mb-3">{c.effect}</p>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {c.items.map(item => (
                       <div key={item.quality} className="bg-slate-800/60 rounded-lg p-3 border border-slate-700/40">
                         <p className={`text-[10px] font-semibold mb-1 ${QUALITY_COLORS[item.quality]}`}>
