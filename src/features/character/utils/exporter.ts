@@ -471,6 +471,17 @@ export function exportToForumHTML(char: Character): string {
   return L.join("\n");
 }
 
+export function downloadCharacterForumHTML(char: Character): void {
+  const html = exportToForumHTML(char);
+  const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = `${char.name.replace(/\s+/g, "_").toLowerCase()}_ficha.txt`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function copyToClipboard(text: string): Promise<void> {
   return navigator.clipboard.writeText(text);
 }

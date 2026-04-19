@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { importFromFile, importFromClipboard, type ImportResult } from "../features/character/utils/importer";
-import { downloadCharacterJSON, exportToJSONString, exportToForumHTML, copyToClipboard } from "../features/character/utils/exporter";
+import { downloadCharacterJSON, exportToJSONString, downloadCharacterForumHTML, copyToClipboard } from "../features/character/utils/exporter";
 import { PageHeader, Button } from "../shared/components";
 import { ValidationPanel } from "../features/character/components/ValidationPanel";
 
@@ -261,9 +261,7 @@ function ExportRow({ char }: { char: import("../shared/types/character").Charact
         <Button
           size="sm"
           variant="amber"
-          onClick={async () => {
-            await copyToClipboard(exportToForumHTML(char));
-          }}
+          onClick={() => downloadCharacterForumHTML(char)}
         >
           📜 Ficha Fórum (dohtml)
         </Button>
