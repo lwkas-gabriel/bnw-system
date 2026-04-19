@@ -45,28 +45,31 @@ const SLOT_INFO = [
 const CONSUMIVEIS = [
   {
     category: "Pomada",
+    icon:     "💊",
     craftor:  "Médico",
     skill:    "Erudição",
     effect:   "Cura CON",
     items: [
-      { quality: "common",    label: "Comum",      bonus: "+1 CON",      price: 50_000   },
-      { quality: "splendid",  label: "Esplêndido", bonus: "+2 CON",      price: 500_000  },
+      { quality: "common",    label: "Comum",      bonus: "+1 CON",      price: 50_000    },
+      { quality: "splendid",  label: "Esplêndido", bonus: "+2 CON",      price: 500_000   },
       { quality: "legendary", label: "Lendário",   bonus: "+3 CON",      price: 1_000_000 },
     ],
   },
   {
     category: "Lanche",
+    icon:     "🍖",
     craftor:  "Cozinheiro",
     skill:    "Expressão",
     effect:   "Restaura EN",
     items: [
-      { quality: "common",    label: "Comum",      bonus: "+3 EN",       price: 50_000   },
-      { quality: "splendid",  label: "Esplêndido", bonus: "+6 EN",       price: 500_000  },
+      { quality: "common",    label: "Comum",      bonus: "+3 EN",       price: 50_000    },
+      { quality: "splendid",  label: "Esplêndido", bonus: "+6 EN",       price: 500_000   },
       { quality: "legendary", label: "Lendário",   bonus: "+9 EN",       price: 1_000_000 },
     ],
   },
   {
     category: "Banquete",
+    icon:     "🍽️",
     craftor:  "Cozinheiro",
     skill:    "Expressão",
     effect:   "CON temporária (descontada primeiro; some ao dormir ou ao fim do tópico)",
@@ -78,11 +81,7 @@ const CONSUMIVEIS = [
   },
 ] as const;
 
-const CONSUMIVEL_QUALITY_COLORS: Record<string, string> = {
-  common:    "text-slate-400",
-  splendid:  "text-sky-400",
-  legendary: "text-amber-400",
-};
+const CONSUMIVEIS_ITEM_COUNT = CONSUMIVEIS.reduce((n, c) => n + c.items.length, 0);
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -184,7 +183,7 @@ export default function ItemsPage() {
           <div className="flex gap-1 mb-4">
             {([
               { id: "bugigangas",   label: "Bugigangas",   count: BUGIGANGAS.length },
-              { id: "consumiveis",  label: "Consumíveis",  count: CONSUMIVEIS.length },
+              { id: "consumiveis",  label: "Consumíveis",  count: CONSUMIVEIS_ITEM_COUNT },
               { id: "armas_unicas", label: "Armas Únicas", count: uniqueWeaponList.length },
             ] as const).map(t => (
               <button
@@ -294,7 +293,7 @@ export default function ItemsPage() {
                 Limite em combate: <span className="text-slate-300">3 consumíveis totais</span> por personagem (qualquer combinação).
               </p>
               {CONSUMIVEIS.map(c => (
-                <SectionCard key={c.category} title={c.category} icon={c.category === "Pomada" ? "💊" : c.category === "Lanche" ? "🍖" : "🍽️"}>
+                <SectionCard key={c.category} title={c.category} icon={c.icon}>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-[10px] text-slate-500">Criado por</span>
                     <span className="text-xs font-medium text-amber-400">{c.craftor}</span>
@@ -306,7 +305,7 @@ export default function ItemsPage() {
                   <div className="grid grid-cols-3 gap-3">
                     {c.items.map(item => (
                       <div key={item.quality} className="bg-slate-800/60 rounded-lg p-3 border border-slate-700/40">
-                        <p className={`text-[10px] font-semibold mb-1 ${CONSUMIVEL_QUALITY_COLORS[item.quality]}`}>
+                        <p className={`text-[10px] font-semibold mb-1 ${QUALITY_COLORS[item.quality]}`}>
                           {item.label}
                         </p>
                         <p className="text-sm font-bold text-slate-200 mb-2">{item.bonus}</p>
