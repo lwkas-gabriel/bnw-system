@@ -1,0 +1,62 @@
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Tabela de Akuma no Mi - Paramecia</div><br>
+
+<div style=" border: 1px solid; padding: 10px; ">[align=center][IMG]https://i.imgur.com/btV5doG.png[/IMG]
+<d>PARAMECIA </d>
+[SIZE=1]Comida por: [NOME DA PERSONAGEM][/SIZE][/align]
+
+O usuário se torna capaz de [DESCRIÇÃO DO PODER].
+
+<e>1. Efeito aderido</e>
+Todas as técnicas que receberem esse efeito aderido adicional também recebem +1 em seu bônus básico (PDR, PRE, DEF ou CON).
+
+[QUOTE][b]♦️ [NOME DO EFEITO]:[/b] [DESCRIÇÃO][/QUOTE]
+
+<e>2. Habilidades Passivas:</e>
+
+[QUOTE][b][NOME DA HABILIDADE INICIAL]:[/b] <br>
+[b]Bônus:[/b] [/QUOTE]
+
+<d>Rank B</d>
+
+[QUOTE][b][NOME DA HABILIDADE INTERMEDIÁRIA]:[/b] <br>
+[b]Bônus:[/b] [/QUOTE]
+
+<d>Rank A</d>
+
+[QUOTE][QUOTE][b][NOME DA HABILIDADE AVANÇADA]:[/b] <br>
+[b]Bônus:[/b] <BR>[/QUOTE]
+[b]Condição:[/b] [/QUOTE]
+
+<e>3. Habilidades Ativas:</e>
+
+[QUOTE][b][NOME DA HABILIDADE INICIAL]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Custo:[/b] 2 de energia[/QUOTE]
+
+<d>Rank B</d>
+
+[QUOTE][b][NOME DA HABILIDADE INTERMEDIÁRIA]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Custo:[/b] 3 de energia[/QUOTE]
+
+<d>Rank A</d>
+
+[QUOTE][b][NOME DA HABILIDADE AVANÇADA]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Custo:[/b] 3 de energia<br>
+[b]Condição:[/b] [/QUOTE]
+
+<d>Rank S</d>
+
+<e>4. Despertar</e>
+
+[QUOTE][b]Modo Desperto:[/b] <br>
+[b]Bônus:[/b] +5 de [PRECISÃO OU DEFESA]<br>
+[b]Custo:[/b] 5 de energia<p>
+
+[b][NOME DA HABILIDADE DESPERTA]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Condição:[/b] Modo Desperto ativo.[/QUOTE]
+</div><div class="versao">STAFF BNW 2024</div></div>[/dohtml]

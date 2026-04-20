@@ -213,6 +213,220 @@ export function parseImportJSON(raw: string): ImportResult {
   return { status, character, parseErrors, validation };
 }
 
+// ─── Parse Forum HTML (dohtml) ────────────────────────────────────────────────
+
+const RACE_MAP: Record<string, string> = {
+  "humano": "human", "tritão": "fishman", "fishman": "fishman",
+  "sireno": "siren", "siren": "siren", "lunar": "lunar",
+  "mink": "mink", "anão": "dwarf", "gigante": "giant",
+  "meio-gigante": "half_giant", "meio gigante": "half_giant",
+};
+
+const LOCATION_MAP: Record<string, string> = {
+  "blues": "blues", "grand line": "grand_line", "paradise": "grand_line",
+  "new world": "new_world", "novo mundo": "new_world",
+};
+
+const FAIXA_MAP: Record<string, string> = {
+  "branca": "branca", "cinza": "cinza", "azul clara": "azul_clara",
+  "azul escura": "azul_escura", "amarela": "amarela", "laranja": "laranja",
+  "verde": "verde", "roxa": "roxa", "marrom": "marrom", "preta": "preta",
+  "coral": "coral", "rajada": "rajada", "vermelha": "vermelha",
+  "grão mestre": "grao_mestre", "grao mestre": "grao_mestre",
+};
+
+const AKUMA_TYPE_MAP: Record<string, string> = {
+  "zoan": "zoan", "logia": "logia", "paramecia": "paramecia",
+};
+
+function rx1(text: string, pattern: RegExp): string | null {
+  return text.match(pattern)?.[1]?.trim() ?? null;
+}
+
+export function parseImportForumHTML(text: string): ImportResult {
+  const parseErrors: string[] = [
+    "Importado via formato de fórum — campos narrativos não importados.",
+  ];
+
+  const name    = rx1(text, /<div class="toptitle">([^<]+)<\/div>/) ?? "Personagem Importado";
+  const raceRaw = rx1(text, /<e>Ra[çc]a:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? "";
+  const locRaw  = rx1(text, /<e>Localiza[çc][ãa]o:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? "";
+
+  const race     = RACE_MAP[raceRaw]     ?? "human";
+  const location = LOCATION_MAP[locRaw] ?? "blues";
+
+  const level     = Number(rx1(text, /<e>N[ií]vel:\s*<\/e>(\d+)/))   || 1;
+  const gemBudget = Number(rx1(text, /<e>Gemas Totais:\s*<\/e>(\d+)/)) || 20;
+  const gemsSpent = Number(rx1(text, /<e>Gemais? Gastas:\s*<\/e>(\d+)/)) || 0;
+
+  const totalPow = Number(rx1(text, /<e>Poder\s*\(PDR\):\s*<\/e>(\d+)/)) || 1;
+  const totalPre = Number(rx1(text, /<e>Precis[ãa]o\s*\(PRE\):\s*<\/e>(\d+)/)) || 1;
+  const totalDef = Number(rx1(text, /<e>Defesa\s*\(DEF\):\s*<\/e>(\d+)/)) || 1;
+  const totalCon = Number(rx1(text, /<e>Constitui[çc][ãa]o[^<]*<\/e>(\d+)/)) || 3;
+
+  const investedAttributes = {
+    power:        Math.max(0, totalPow - 1),
+    precision:    Math.max(0, totalPre - 1),
+    defense:      Math.max(0, totalDef - 1),
+    constitution: Math.max(0, totalCon - 3),
+  };
+
+  const energyInvested = Math.max(0,
+    (Number(rx1(text, /<e>Energia\s*\(EN\):\s*<\/e>(\d+)/)) || level * 3) - level * 3
+  );
+
+  const PERICID_LABELS: Array<[PericiaId, RegExp]> = [
+    ["ambicao",      /<e>Ambi[çc][ãa]o:\s*<\/e>(\d+)/],
+    ["atletismo",    /<e>Atletismo:\s*<\/e>(\d+)/],
+    ["destreza",     /<e>Destreza:\s*<\/e>(\d+)/],
+    ["erudicao",     /<e>Erudi[çc][ãa]o:\s*<\/e>(\d+)/],
+    ["expressao",    /<e>Express[ãa]o:\s*<\/e>(\d+)/],
+    ["furtividade",  /<e>Furtividade:\s*<\/e>(\d+)/],
+    ["investigacao", /<e>Investiga[çc][ãa]o:\s*<\/e>(\d+)/],
+    ["logica",       /<e>L[oó]gica:\s*<\/e>(\d+)/],
+    ["percepcao",    /<e>Percep[çc][ãa]o:\s*<\/e>(\d+)/],
+    ["persuasao",    /<e>Persuas[ãa]o:\s*<\/e>(\d+)/],
+    ["sobrevivencia",/<e>Sobreviv[eê]ncia:\s*<\/e>(\d+)/],
+  ];
+
+  const pericias = blankPericias();
+  for (const [id, pattern] of PERICID_LABELS) {
+    const v = Number(rx1(text, pattern));
+    if (!isNaN(v)) pericias[id] = v;
+  }
+
+  // Techniques
+  const techniques: unknown[] = [];
+  const techRankBlocks = [...text.matchAll(/<e>Rank ([EDCBA])<\/e>([\s\S]*?)(?=<e>Rank [EDCBA]<\/e>|<\/div>)/g)];
+  for (const [, rank, block] of techRankBlocks) {
+    for (const techBlock of block.split(/(?=\[b\]Nome:\[\/b\])/)) {
+      const tName = rx1(techBlock, /\[b\]Nome:\[\/b\]\s*([^\n]+)/);
+      if (!tName || tName === "Nome da técnica") continue;
+      const energyCost = Number(rx1(techBlock, /\[b\]Energia:\[\/b\]\s*(\d+)/)) || 1;
+      techniques.push({
+        id: crypto.randomUUID(),
+        name: tName,
+        description: rx1(techBlock, /\[b\]Descri[çc][ãa]o:\[\/b\]\s*([^\n]+)/) ?? "",
+        rank,
+        type: "offensive",
+        targetAttr: "power",
+        baseBonus: 1,
+        energyCost,
+        adherences: [],
+        source: "purchased",
+      });
+    }
+  }
+
+  // Akuma no Mi
+  let akuma: unknown = null;
+  const akumaBlock = rx1(text, /<d>Akuma no Mi<\/d>([\s\S]*?)(?=<\/div>)/);
+  if (akumaBlock) {
+    const akumaName = rx1(akumaBlock, /\[b\]Nome:\[\/b\]\s*([^.\n]+)/);
+    const akumaType = rx1(akumaBlock, /\[b\]Tipo:\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? "";
+    const akumaRank = rx1(akumaBlock, /\[b\]Rank:\[\/b\]\s*([SABC])/);
+    if (akumaName && AKUMA_TYPE_MAP[akumaType]) {
+      akuma = { type: AKUMA_TYPE_MAP[akumaType], name: akumaName, rank: akumaRank ?? "C",
+        ...(AKUMA_TYPE_MAP[akumaType] === "zoan"
+          ? { animalClass: "herbivore", isMythical: false, isAncestral: false, points: [], abilities: [], vigorAnimalBonus: 0 }
+          : AKUMA_TYPE_MAP[akumaType] === "logia"
+            ? { elementalNatureAttr: "power", statusEnhanced: { name: "", description: "", combination: [""] }, intangibilityBonus: { defense: 4, constitution: 4 } }
+            : { parameciaClass: "corporeal", specialAdherence: "", passives: [], actives: [] }
+        ),
+      };
+    }
+  }
+
+  // Haki
+  let haki: unknown = null;
+  const hakiArmBlock  = rx1(text, /<d>Haki do Armamento<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
+  const hakiObsBlock  = rx1(text, /<d>Haki da Observa[çc][ãa]o<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
+  const hakiKingBlock = text.includes("<d>Haki do Rei</d>");
+
+  if (hakiArmBlock || hakiObsBlock) {
+    const armStage = Number(rx1(hakiArmBlock ?? "", /\[b\]N[ií]vel:\s*\[\/b\]\s*(\d+)/)) || 0;
+    const obStage  = Number(rx1(hakiObsBlock  ?? "", /\[b\]N[ií]vel:\s*\[\/b\]\s*(\d+)/)) || 0;
+    const armCost  = Number(rx1(hakiArmBlock  ?? "", /\[b\]Custo:\s*\[\/b\]\s*(\d+)/))    || 0;
+
+    const primaryType   = armCost > 0 ? "armament" : "observation";
+    const secondaryType = primaryType === "armament" ? "observation" : "armament";
+
+    haki = {
+      primaryType,
+      primaryStage:   primaryType === "armament" ? armStage : obStage,
+      secondaryType,
+      secondaryStage: primaryType === "armament" ? obStage  : armStage,
+      hasKing:        hakiKingBlock,
+      kingStage:      hakiKingBlock ? "controlled" : null,
+      advancedType:   null,
+    };
+  }
+
+  // Cyborg
+  let cyborg: unknown = null;
+  const cyborgBlocks = [...text.matchAll(/<d>Ciborgue<\/d>([\s\S]*?)(?=<d>Ciborgue<\/d>|<\/div>)/g)];
+  if (cyborgBlocks.length > 0) {
+    const CYBORG_LOC_MAP: Record<string, string> = {
+      "cabeça": "head", "braço direito": "right_arm", "braço esquerdo": "left_arm",
+      "perna direita": "right_leg", "perna esquerda": "left_leg", "tronco": "torso",
+    };
+    const shifts = cyborgBlocks.map((m, i) => {
+      const block = m[1];
+      const locRawC = rx1(block, /\[b\]Local:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase().trim() ?? "";
+      return {
+        shiftNumber: (i + 1) as 1|2|3|4|5|6,
+        location: CYBORG_LOC_MAP[locRawC] ?? "torso",
+        name: rx1(block, /\[b\]Nome:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
+        description: rx1(block, /\[b\]Descri[çc][ãa]o:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
+        bugigangaId: null,
+      };
+    });
+    cyborg = { shifts, shift3Bonus: null, gear: null, usesFuel: shifts.length >= 3 };
+  }
+
+  // Artes Marciais
+  let artesMarciais: unknown = null;
+  const amBlock = rx1(text, /<d>Artes Marciais<\/d>([\s\S]*?)(?=<\/div>)/);
+  if (amBlock) {
+    const faixaRaw = rx1(amBlock, /\[b\]Faixa:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase().trim() ?? "";
+    const faixa = FAIXA_MAP[faixaRaw] ?? null;
+    if (faixa) artesMarciais = { currentFaixa: faixa, laranjaChoice: null };
+  }
+
+  const rawChar: Record<string, unknown> = {
+    name,
+    level,
+    race,
+    investedAttributes,
+    racialBonus: {},
+    pericias,
+    professions: [],
+    energy: { energy: level * 3 + energyInvested, energyInvested },
+    haki,
+    akuma,
+    artesMarciais,
+    cyborg,
+    techniques,
+    equippedWeapon:    null,
+    equippedDefensive: [null, null],
+    gemsSpent,
+    gemBudget,
+    location,
+    companions: [],
+  };
+
+  const character = migrateCharacter(rawChar);
+  const validation = validateCharacterFull(character);
+
+  const status: ImportStatus = !validation.isValid
+    ? "success_with_warnings"
+    : validation.hasWarnings
+      ? "success_with_warnings"
+      : "success_with_warnings"; // always warn since narratives are missing
+
+  return { status, character, parseErrors, validation };
+}
+
 // ─── File reader ──────────────────────────────────────────────────────────────
 
 export function readFileAsText(file: File): Promise<string> {
@@ -234,28 +448,21 @@ export async function importFromFile(file: File): Promise<ImportResult> {
     };
   }
 
-  if (!file.name.endsWith(".json")) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Formato de arquivo inválido. Apenas arquivos .json são aceitos."],
-      validation: null,
-    };
-  }
+  const isTxt  = file.name.endsWith(".txt");
+  const isJson = file.name.endsWith(".json");
 
-  // file.type can be empty string on some OSes for .json — only reject known-wrong MIME types
-  if (file.type && file.type !== "application/json") {
+  if (!isJson && !isTxt) {
     return {
       status: "error",
       character: null,
-      parseErrors: [`Tipo de arquivo inválido (${file.type}). Esperado: application/json.`],
+      parseErrors: ["Formato de arquivo inválido. Apenas arquivos .json ou .txt são aceitos."],
       validation: null,
     };
   }
 
   try {
     const text = await readFileAsText(file);
-    return parseImportJSON(text);
+    return parseImportAuto(text);
   } catch (e) {
     return {
       status: "error",
@@ -264,6 +471,12 @@ export async function importFromFile(file: File): Promise<ImportResult> {
       validation: null,
     };
   }
+}
+
+function parseImportAuto(text: string): ImportResult {
+  return text.trim().startsWith("[dohtml]")
+    ? parseImportForumHTML(text)
+    : parseImportJSON(text);
 }
 
 export async function importFromClipboard(): Promise<ImportResult> {
@@ -285,7 +498,7 @@ export async function importFromClipboard(): Promise<ImportResult> {
         validation: null,
       };
     }
-    return parseImportJSON(text);
+    return parseImportAuto(text);
   } catch {
     return {
       status: "error",

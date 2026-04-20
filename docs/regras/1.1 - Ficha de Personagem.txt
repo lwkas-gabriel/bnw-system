@@ -1,0 +1,202 @@
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Nome do Personagem</div><br>
+
+<img src="IMAGEM OU GIF" width="500px" height="279px"/></img><br>
+
+<div class="post"><t>1 | Informações gerais</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>Nome do personagem.
+<e>Idade: </e>XX anos.
+<e>Raça: </e>Raça do personagem.
+<e>Localização: </e>Ilha onde se encontra.
+<e>Alcunha: </e>Como o personagem é conhecido (a alcunha é adquirida APENAS in game)
+<e>Facção: </e>Qual facção o personagem pertence (se não pretende começar em nenhuma específica, preencha com "aventureiro" ou "civil").
+<e>Recompensa / Patente / Cargo / Rank: </e>Preencher conforme a facção escolhida.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>01
+<e>Experiência (XP): </e>00/90
+<e>Gemas Totais: </e>20
+<e>Gemais Gastas: </e>00
+<e>Gemas Atuais: </e>20
+<e>Prestígio:  </e>00
+</div>
+
+<t>2 | Atributos e afins (XX gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>01
+<e>Precisão (PRE): </e>01
+<e>Defesa (DEF): </e>01
+<e>Constituição (CON) </e>03
+<e>Energia (EN): </e>03
+<e>Bônus por Nível: </e>0
+<e>Ganhos raciais: </e>Descrever os ganhos extras conforma a raça escolhida.
+
+<e>Profissões:</e> </e>Descrever as profissões e quantidade de gemas investidas.
+- Profissão 1 (XX gemas)
+- Profissão 2 (XX gemas)
+</div>
+
+<t>3 | Perícias</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Ambição: </e>00
+<e>Atletismo: </e>00
+<e>Destreza: </e>00
+<e>Erudição: </e>00
+<e>Expressão: </e>00
+<e>Furtividade: </e>00
+<e>Investigação: </e>00
+<e>Lógica: </e>00
+<e>Percepção: </e>00
+<e>Persuasão: </e>00
+<e>Sobrevivência: </e>00
+</div>
+
+<t>4 | Técnicas (XX gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Rank E</e>
+[b]Nome:[/b] Nome da técnica
+[b]Descrição:[/b] Descrever como a técnica funciona
+[b]Custo:[/b] Descrever quantas gemas pagou pela técnica.
+[b]Efeito:[/b] Qual o efeito da técnica.
+[b]Energia:[/b] XX.
+
+<e>Rank D</e>
+[b]Nome:[/b] Nome da técnica
+[b]Descrição:[/b] Descrever como a técnica funciona
+[b]Custo:[/b] Descrever quantas gemas pagou pela técnica.
+[b]Efeito:[/b] Qual o efeito da técnica.
+[b]Energia:[/b] XX.
+
+<e>Rank C</e>
+[b]Nome:[/b] Nome da técnica
+[b]Descrição:[/b] Descrever como a técnica funciona
+[b]Custo:[/b] Descrever quantas gemas pagou pela técnica.
+[b]Efeito:[/b] Qual o efeito da técnica.
+[b]Energia:[/b] XX.
+
+<e>Rank B</e>
+[b]Nome:[/b] Nome da técnica
+[b]Descrição:[/b] Descrever como a técnica funciona
+[b]Custo:[/b] Descrever quantas gemas pagou pela técnica.
+[b]Efeito:[/b] Qual o efeito da técnica.
+[b]Energia:[/b] XX.
+
+<e>Rank A</e>
+[b]Nome:[/b] Nome da técnica
+[b]Descrição:[/b] Descrever como a técnica funciona
+[b]Custo:[/b] Descrever quantas gemas pagou pela técnica.
+[b]Efeito:[/b] Qual o efeito da técnica.
+[b]Energia:[/b] XX.
+</div>
+
+<t>5 | Caminhos (XX gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi</d>
+[b]Nome:[/b] Nome da akuma.
+[b]Tipo:[/b] Paramecia, Logia ou Zoan.
+[b]Rank:[/b] S, A, B ou C.
+[b]Tabela:[/b] link para a tabela de progressão ou, se preferir, coloque o code em spoiler.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Ciborgue</d>
+[b]Nome: [/b]Nome da peça.
+[b]Descrição: [/b]A descrição da peça.
+[b]Local: [/b]Cabeça, braços, pernas ou tronco.
+[b]Bônus: [/b]+XX em (atributos).
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Haki da Observação</d>
+[b]Nível: [/b]00
+[b]Aventuras: [/b]00/02
+[b]Custo: [/b]XX gemas.
+[b]Bônus: [/b]+XX em (atributos).
+[b]Gasto de energia: [/b]XX por turno.
+[b]Efeito interpretativo: [/b]Descrição do efeito.
+
+<d>Haki do Armamento</d>
+[b]Nível: [/b]00
+[b]Aventuras: [/b]00/02
+[b]Custo: [/b]XX gemas.
+[b]Bônus: [/b]+XX em (atributos).
+[b]Gasto de energia: [/b]XX por turno.
+[b]Efeito interpretativo: [/b]Descrição do efeito.
+
+<d>Haki do Rei</d>
+[b]Nível: [/b]00
+[b]Custo: [/b]XX gemas.
+[b]Gasto de energia: [/b]XX por turno.
+[b]Efeito interpretativo: [/b]Descrição do efeito.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>
+[b]Faixa: [/b]Cor da faixa.
+[b]Custo: [/b]Quantidade de gemas.
+[b]Bônus: [/b]Descrição do bônus específico da faixa.
+</div>
+
+<t>6 | Itens e Equipamentos (XX gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Berries: </e>B$ 200.000.
+
+<e>Domínio de territórios</e>
+[b]Nome da ilha: [/b] Nome da ilha
+[b]Alterações: [/b]
+-Nome da alteração: B$ XXX.XXX.
+
+<e>Equipamentos Ofensivos</e>
+[b]Nome: [/b]Nome do item.
+[b]Qualidade: [/b]Comum, Esplêndido ou Extraordinário.
+[b]Bônus: [/b]+XX em (atributo)
+[b]Valor: [/b]B$ XXX
+[b]Descrição: [/b]Descrição do item.
+
+<e>Equipamentos Defensivos</e>
+[b]Nome: [/b]Nome do item.
+[b]Qualidade: [/b]Comum, Esplêndido ou Extraordinário.
+[b]Bônus: [/b]+XX em (atributo)
+[b]Valor: [/b]B$ XXX
+[b]Descrição: [/b]Descrição do item.
+
+<e>Consumíveis</e>
+[b]Nome: [/b]Nome do item.
+[b]Qualidade: [/b]Comum, Esplêndido ou Extraordinário.
+[b]Bônus: [/b]+XX em (atributo)
+[b]Valor: [/b]B$ XXX
+[b]Descrição: [/b]Descrição do item.
+
+<e>Bugigangas</e>
+[b]Nome: [/b]Nome do item.
+[b]Qualidade: [/b]Comum, Esplêndido ou Extraordinário.
+[b]Valor: [/b]B$ XXX
+[b]Descrição: [/b]Descrição do item.
+
+<e>Itens interpretativos</e>
+[b]Nome: [/b]Nome do item.
+[b]Valor: [/b]B$ XXX
+[b]Descrição: [/b]Descrição do item.
+</div>
+
+<t>7 | Social e histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Aparência</d>
+Descrição da aparência da personagem, foto ou os dois.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Personalidade</d>
+Personalidade da personagem; quanto mais descrita, melhor.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>História</d>
+História da sua personagem até o momento de criação da ficha. Pode ser completado conforme o avanço das avanturas.
+</div>
+
+<t>8 | Histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Aventuras: </e>Total de XP, gemas ou demais recompensas totais ganhas nas aventuras de seu personagem - o link com os detalhes deve ser postado no tracker, encontrado no post abaixo.
+
+<e>Narração: </e>Total de XP, gemas ou demais recompensas totais ganhas em narrações de aventuras de outros personagens - o link com os detalhes deve ser postado no tracker, encontrado no post abaixo.
+
+<e>Eventos e Extras: </e>Total de XP, gemas ou demais recompensas totais ganhas em outros cargos da staff, eventos e afins - o link com os detalhes deve ser postado no tracker, encontrado no post abaixo.
+</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]
