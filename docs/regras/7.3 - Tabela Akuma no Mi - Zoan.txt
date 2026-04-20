@@ -1,0 +1,62 @@
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Tabela de Akuma no Mi - Zoan</div><br>
+
+<div style=" border: 1px solid; padding: 10px; ">[align=center][IMG]https://i.imgur.com/btV5doG.png[/IMG]
+<d>ZOAN</d>
+[SIZE=1]Comida por: [NOME DA PERSONAGEM][/SIZE][/align]
+
+Permite ao usuário se transformar em um [ANIMAL].
+
+<e>1. Points</e>
+
+[b]Rank C:[/b] + 1 nos atributos de cada point.
+[b]Rank B:[/b] + 3 nos atributos de cada point.
+[b]Rank A:[/b] + 4 nos atributos de cada point.
+
+[QUOTE][b]Point 01 - Híbrido:[/b]<br>
+[B][ATRIBUTO PRINCIPAL][/B]: +X<br>
+[b][ATRIBUTO COMPLEMENTAR]:[/b] : +X<P>
+
+[b]Point 02 - Animal:[/b]<br>
+[B][ATRIBUTO PRINCIPAL][/B]: +X e<br>
+[b][ATRIBUTO COMPLEMENTAR]:[/b] : +X[/QUOTE]
+
+<e>2. Efeito Aderido Especial</e>
+
+[QUOTE][b]♦ Bestialidade:[/b]<br>
+A técnica apresenta toda a bestialidade de um usuário Zoan, com as melhores características do animal que a representa. Melhora o bônus da técnica em +1 para o atributo primário durante a criação da ficha. Este é o único Efeito Aderido que funciona tanto em técnicas defensivas como ofensivas, ou seja, se usado em ambas em um mesmo turno, proporcionam um bônus total de +2.[/QUOTE]
+
+<e>3. Vigor Animal</e>
+
+[b]Rank C:[/b] + 2 de Constituição
+[b]Rank B:[/b] + 4 de Constituição
+[b]Rank A:[/b] + 6 de Constituição
+
+<d>Rank A</d>
+
+<e>4. Habilidades:</e>
+[QUOTE][b][NOME DA HABILIDADE]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Custo:[/b] 1 de energia<br>
+[b]Condição:[/b] <P>
+
+[b][NOME DA HABILIDADE]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Custo:[/b] 1 de energia<br>
+[b]Condição:[/b] [/QUOTE]
+
+<d>Rank S</d>
+
+<e>5. Despertar:</e>
+
+[QUOTE][b]Point 03 - Desperto:[/b]<br>
+[b][ATRIBUTO PRINCIPAL]:[/b] +8<br>
+[b][ATRIBUTO COMPLEMENTAR]:[/b] +8<BR>
+[b]Custo:[/b] +8<P>
+
+[b][NOME DA HABILIDADE]:[/b] <br>
+[b]Bônus:[/b] <br>
+[b]Condição:[/b] Estar na Forma Desperta.
+[/QUOTE]
+</div><div class="versao">STAFF BNW 2024</div></div>[/dohtml]

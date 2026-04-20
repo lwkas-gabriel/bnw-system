@@ -1,0 +1,49 @@
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">NOME DO NAVIO</div><br>
+
+<img src="IMAGEM OU GIF" width="500px" height="279px"/></img><br>
+
+
+<div class="post"><t>1 | Informações gerais</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>Nome do navio.
+<e>Despertar: </e> 00/10
+<e>Tamanho:</e> Individual, pequeno, médio, grande, gigante ou colossal.
+<e>Valor:</e> Preço da embarcação sem qualquer aprimoramento
+<e>Cômodos:</e> Quantidade máxima
+<e>Passageiros:</e> Quantidade máxima
+<e>Descrição:</e> Aparência é detalhes interpretativos
+</div>
+
+
+
+
+<t>2 | Mecanismos Avançados</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Efeito:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Efeito:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+
+
+
+<t>3 | Cômodos</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome:</e> ???
+<e>Valor:</e> B$ ???.000
+<e>Espaço:</e> 1, 2 ou 3
+<e>Bônus:</e> Copiar da tabela
+<e>Descrição:</e> Pode usar a descrição padrão da tabela ou personalizar, criando sua própria descrição.
+</div>
+
+
+</div><div class="versao">STAFF BNW 2024</div></div>[/dohtml]

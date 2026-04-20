@@ -1,0 +1,37 @@
+[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Tabela de Akuma no Mi - Logia</div><br>
+
+<div class="post"><div style=" border: 1px solid; padding: 10px; ">[align=center][IMG]https://i.imgur.com/btV5doG.png[/IMG]
+<d>LOGIA</d>
+[SIZE=1]Comida por: [NOME DA PERSONAGEM][/SIZE] [/align]
+
+Garante a seu usuário a capacidade de se transformar, controlar e criar [ELEMENTO].
+
+<d>Rank A</d>
+
+<e>1. Manipulação Elemental: </e>Interpretativamente as logias podem manipular, criar e controlar seu elemento à vontade. Você recebe também imunidade ao elemento principal de sua akuma, e isso também se estende ao status de seu elemento.
+
+[QUOTE][b]♦️ Natureza Elemental:[/b] +5 em [ATRIBUTO]<p>
+
+[b]♦️ Elementalista:[/b] Pode gastar 1 de Energia para adicionar seu Status Aprimorado em qualquer ataque corpo a corpo que seja realizado, com ou sem o uso de técnicas.[/QUOTE]
+
+<e>2. Invulnerabilidade: </e>Você se torna invulnerável! Usuários de Logias tornam-se intangíveis por ataques normais, apenas podendo ser atingidos por oponentes com Haki de nível 3 ou maior, armas de kairoseki, tecnologia laser ou por ataques provenientes de outra logia.
+
+[QUOTE][b]♦️ Intangibilidade:[/b] +4 em Defesa e +4 em Constituição[/QUOTE]
+
+<e>3. Status Aprimorado: </e>
+
+[QUOTE]
+[b]♦️ [STATUS]:[/b] [DESCRIÇÃO][/QUOTE]
+
+<e>4. Efeitos Aderidos Especiais:</e>
+
+[QUOTE][b]♦️ Ataque em Área Controlado:[/b] Acerta todos os alvos que se encontrem a uma ação de movimento a frente do usuário e na ação de movimento seguinte à frente.[/QUOTE]
+
+<d>Rank S</d>
+
+<e>5. Despertar:</e>
+
+[QUOTE][b]♦️ Domínio Elemental:[/b] +5 de Poder e +5 de Precisão por 5 de energia em uma área de 3 turnos de ação (efeitos permanecem enquanto houver investimento de energia) [/QUOTE]
+</div><div class="versao">STAFF BNW 2024</div></div>[/dohtml]
