@@ -1,10 +1,11 @@
 import { useCharacterStore } from "../store/characterStore";
 import { StatControl, SectionCard, Badge, NumberStepper } from "../../../shared/components";
 import { bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS, totalAttributePoints } from "../utils/attrCalc";
+import { hakiStageNum } from "../utils/haki";
 import { RACES } from "../../../data/races";
 import type {
   RaceId, BaseAttributes, Character,
-  ZoanAkuma, LogiaAkuma, ParameciaAkuma, HakiStage, AMFaixaId,
+  ZoanAkuma, LogiaAkuma, ParameciaAkuma, AMFaixaId,
 } from "../../../shared/types/character";
 
 // ─── Attr Breakdown ───────────────────────────────────────────────────────────
@@ -27,9 +28,6 @@ const FAIXA_ORDER: Record<AMFaixaId, number> = {
   coral: 11, rajada: 12, vermelha: 13, grao_mestre: 14,
 };
 
-function hakiStageNum(stage: HakiStage): number {
-  return typeof stage === "number" ? stage : 5;
-}
 
 function computeAttrBreakdown(char: Character): AttrRow[] {
   const rows: AttrRow[] = [];

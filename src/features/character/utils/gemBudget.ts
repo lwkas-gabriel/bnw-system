@@ -1,5 +1,6 @@
 import type { Character, AMFaixaId, AkumaRank, CompanionRank } from "../../../shared/types/character";
 import { FACTIONS } from "../../../data/factions";
+import { hakiCostBreakdown } from "./haki";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
 
@@ -100,30 +101,8 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
   // ── Haki ─────────────────────────────────────────────────────────
   if (char.haki) {
-    const primaryCost = typeof char.haki.primaryStage === "number"
-      ? char.haki.primaryStage * GEM_COSTS.haki.stageBase
-      : 5 * GEM_COSTS.haki.stageBase; // stage 5
-
-    breakdown.push({
-      category: "Haki",
-      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-${typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5})`,
-      cost: primaryCost,
-    });
-
-    if (char.haki.hasKing) {
-      breakdown.push({ category: "Haki", detail: "Haki do Rei (Dormente/Controlado)", cost: GEM_COSTS.haki.king });
-    }
-
-    if (char.haki.kingStage === "advanced") {
-      breakdown.push({ category: "Haki", detail: "Haki do Rei Avançado", cost: GEM_COSTS.haki.advancedPartial });
-    }
-
-    if (char.haki.advancedType && char.haki.advancedType !== "king_advanced") {
-      breakdown.push({
-        category: "Haki",
-        detail: `Haki Avançado — ${char.haki.advancedType} (parcial + completo)`,
-        cost: GEM_COSTS.haki.advancedPartial + GEM_COSTS.haki.advancedComplete,
-      });
+    for (const item of hakiCostBreakdown(char.haki)) {
+      breakdown.push({ category: "Haki", ...item });
     }
   }
 

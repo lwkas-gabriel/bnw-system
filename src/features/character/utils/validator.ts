@@ -1,5 +1,6 @@
 import type { Character, ZoanAkuma, PericiaId } from "../../../shared/types/character";
 import { computeGemBudget } from "./gemBudget";
+import { computeHakiCost, hakiStageNum } from "./haki";
 import { characterMaxEnergy, totalAttributePoints, totalPericiaPoints } from "./attrCalc";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -172,7 +173,7 @@ function checkHaki(char: Character): ValidationIssue[] {
   if (!char.haki) return issues;
 
   const { haki } = char;
-  const primaryStageNum = typeof haki.primaryStage === "number" ? haki.primaryStage : 5;
+  const primaryStageNum = hakiStageNum(haki.primaryStage);
   const secondaryStageNum = typeof haki.secondaryStage === "number" ? haki.secondaryStage : 0;
 
   // Primary >= secondary
@@ -240,11 +241,7 @@ function checkHaki(char: Character): ValidationIssue[] {
   }
 
   // Cost warning
-  const hakiCost =
-    primaryStageNum * 20 +
-    (haki.hasKing ? 20 : 0) +
-    (haki.kingStage === "advanced" ? 20 : 0) +
-    (haki.advancedType && haki.advancedType !== "king_advanced" ? 40 : 0);
+  const hakiCost = computeHakiCost(haki);
 
   if (hakiCost > 0) {
     issues.push({

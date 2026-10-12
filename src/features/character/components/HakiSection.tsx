@@ -2,6 +2,7 @@ import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI } from "../../../data/haki";
 import type { HakiPath, AdvancedHakiVariant } from "../../../shared/types/character";
+import { computeHakiCost, hakiStageNum } from "../utils/haki";
 
 const STAGE_LABELS = [1, 2, 3, 4, 5];
 
@@ -118,15 +119,11 @@ export function HakiSection() {
     });
   }
 
-  const primaryStageNum = typeof haki?.primaryStage === "number" ? haki.primaryStage : 0;
+  const primaryStageNum = haki ? hakiStageNum(haki.primaryStage) : 0;
   const canHaveKing = primaryStageNum >= 5 || (typeof haki?.secondaryStage === "number" && haki.secondaryStage >= 5);
   const canHaveAdvanced = draft.location === "new_world";
 
-  // Both Armament and Observation cost 20g/stage as primary; only secondary is free
-  const gemCost = (primaryStageNum * 20)
-    + (haki?.hasKing ? 20 : 0)
-    + (haki?.advancedType === "king_advanced" ? 20 : 0)
-    + (haki?.advancedType && haki.advancedType !== "king_advanced" ? 40 : 0);
+  const gemCost = haki ? computeHakiCost(haki) : 0;
 
   return (
     <div className="space-y-4 max-w-2xl">

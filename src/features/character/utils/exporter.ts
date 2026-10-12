@@ -1,6 +1,7 @@
 import type { Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
 import { bpn, characterMaxEnergy } from "./attrCalc";
-import { computeGemBudget } from "./gemBudget";
+import { computeGemBudget, GEM_COSTS } from "./gemBudget";
+import { hakiStageNum } from "./haki";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
@@ -656,7 +657,7 @@ export function exportToForumHTML(char: Character): string {
       ln(`<div style=" border: 1px solid; padding: 10px; ">`);
       const pType  = char.haki.primaryType;
       const sType  = char.haki.secondaryType;
-      const pStage = typeof char.haki.primaryStage   === "number" ? char.haki.primaryStage   : 5;
+      const pStage = hakiStageNum(char.haki.primaryStage);
       const sStage = typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0;
       const pStages = pType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
       const sStages = sType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
@@ -679,14 +680,14 @@ export function exportToForumHTML(char: Character): string {
         ln();
       };
 
-      hakiBlock(pType, pStage, pData, pStage * 20);
+      hakiBlock(pType, pStage, pData, pStage * GEM_COSTS.haki.stageBase);
       if (sStage > 0) hakiBlock(sType, sStage, sData, 0);
 
       if (char.haki.hasKing) {
         const isKingAdvanced = char.haki.kingStage === "advanced";
         ln(`<d>Haki do Rei</d>`);
         ln(`[b]Nível: [/b]${isKingAdvanced ? "Avançado" : "Controlado"}`);
-        ln(`[b]Custo: [/b]20 gemas.`);
+        ln(`[b]Custo: [/b]${GEM_COSTS.haki.king + (isKingAdvanced ? GEM_COSTS.haki.advancedPartial : 0)} gemas.`);
         ln(`[b]Bônus: [/b]${isKingAdvanced ? "Infunde o Rei nas técnicas — adiciona Ambição ao bônus de todas as técnicas enquanto ativo." : "+4 de Persuasão."}`);
         ln(`[b]Gasto de energia: [/b]5 por turno.`);
         ln(`[b]Efeito interpretativo: [/b]${isKingAdvanced ? "Relâmpagos negros emanam do usuário. Dano sem contato físico." : "Desmaia alvos com 5 níveis a menos. Resistentes ficam sem ação de ataque por 2 turnos."}`);
