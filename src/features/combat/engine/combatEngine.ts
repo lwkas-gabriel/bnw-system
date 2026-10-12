@@ -4,7 +4,7 @@ import type {
   TurnEvent, AttackRollResult, DamageResult, DiceRoll,
   CombatSummary, ActiveBuffs,
 } from "../../../shared/types/combat";
-import { baseAttributes } from "../../character/utils/attrCalc";
+import { baseAttributes, bpn, characterMaxEnergy } from "../../character/utils/attrCalc";
 import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID, CYBORG_SHIFT_BONUS } from "../../../data/cyborg";
 
@@ -35,14 +35,6 @@ export function averageRoll(): DiceRoll {
 }
 
 // ─── BPN & Energy ─────────────────────────────────────────────────────────────
-
-export function calcBPN(level: number): number {
-  return Math.floor((level * 3) / 4);
-}
-
-export function calcEnergy(level: number, gemsInvested: number): number {
-  return level * 3 + gemsInvested;
-}
 
 // ─── Stat Resolvers ───────────────────────────────────────────────────────────
 
@@ -274,8 +266,8 @@ export function resolveAttack(
   const atkAttrs = resolveAttributes(attacker, attackerChoice.buffs);
   const defAttrs = resolveAttributes(defender, defenderChoice.buffs);
 
-  const bpnAtk = calcBPN(attacker.level);
-  const bpnDef = calcBPN(defender.level);
+  const bpnAtk = bpn(attacker.level);
+  const bpnDef = bpn(defender.level);
 
   // Offensive technique targets PRE or POD — for attack roll we use PRE bonus
   const offTech = attackerChoice.offensive;
@@ -588,6 +580,22 @@ const NO_BUFFS: ActiveBuffs = {
   logiaElementalDomain: false,
 };
 
+/**
+ * Estado inicial de um combatente. Usa resolveAttributes sem buffs para incluir
+ * bônus passivos na CON inicial (Logia +4, Vigor Animal, AM Amarela +2) e
+ * characterMaxEnergy para a energia (inclui o +20 do Shift 3 do Ciborgue).
+ */
+export function initialCombatantState(char: Character): CombatantState {
+  return {
+    character: char,
+    currentCon: resolveAttributes(char, NO_BUFFS).constitution,
+    currentEnergy: characterMaxEnergy(char),
+    retemUsed: false,
+    tempConStack: [],
+    statusEffects: [],
+  };
+}
+
 export function simulateCombat(
   charA: Character,
   charB: Character,
@@ -595,28 +603,8 @@ export function simulateCombat(
   mode: CombatMode = "jxj",
   useAverage: boolean = false
 ): CombatSummary {
-  // Use resolveAttributes with no buffs so passive bonuses (Logia +4 CON,
-  // Zoan vigorAnimal, AM Amarela +2 CON) are included in the starting CON.
-  const baseAttrsA = resolveAttributes(charA, NO_BUFFS);
-  const baseAttrsB = resolveAttributes(charB, NO_BUFFS);
-
-  let stateA: CombatantState = {
-    character: charA,
-    currentCon: baseAttrsA.constitution,
-    currentEnergy: calcEnergy(charA.level, charA.energy.energyInvested),
-    retemUsed: false,
-    tempConStack: [],
-    statusEffects: [],
-  };
-
-  let stateB: CombatantState = {
-    character: charB,
-    currentCon: baseAttrsB.constitution,
-    currentEnergy: calcEnergy(charB.level, charB.energy.energyInvested),
-    retemUsed: false,
-    tempConStack: [],
-    statusEffects: [],
-  };
+  let stateA = initialCombatantState(charA);
+  let stateB = initialCombatantState(charB);
 
   const turns: TurnResult[] = [];
   let combatEnded = false;

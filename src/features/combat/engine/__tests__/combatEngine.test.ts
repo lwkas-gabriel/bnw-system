@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   absorbDamage, resolveAttributes, buildTempConStack,
   resolveTechniqueBonus, resolveDamage, hitProbability,
-  calcBPN, calcEnergy,
+  initialCombatantState,
 } from "../combatEngine";
 import { createCharacterFixture } from "../../../character/utils/__tests__/fixtures";
 import type { ActiveBuffs, CombatantState, TurnChoice } from "../../../../shared/types/combat";
@@ -31,17 +31,18 @@ function makeState(overrides: Partial<CombatantState> = {}): CombatantState {
 
 // ─── Dice utils ───────────────────────────────────────────────────────────────
 
-describe("calcBPN / calcEnergy", () => {
-  it("calcBPN matches bpn() formula", () => {
-    expect(calcBPN(1)).toBe(0);
-    expect(calcBPN(10)).toBe(7);
-    expect(calcBPN(40)).toBe(30);
+describe("initialCombatantState", () => {
+  it("energia inicial = nível×3 + gemas investidas", () => {
+    const char = createCharacterFixture({ level: 10, energy: { bpn: 7, energy: 35, energyInvested: 5 } });
+    expect(initialCombatantState(char).currentEnergy).toBe(35);
   });
 
-  it("calcEnergy is level×3 + gems", () => {
-    expect(calcEnergy(10, 0)).toBe(30);
-    expect(calcEnergy(10, 5)).toBe(35);
-    expect(calcEnergy(1, 0)).toBe(3);
+  it("energia inicial inclui o +20 do Shift 3 do Ciborgue", () => {
+    const char = createCharacterFixture({
+      level: 10,
+      cyborg: { shifts: [], shift3Bonus: "energy", gear: null, usesFuel: true },
+    });
+    expect(initialCombatantState(char).currentEnergy).toBe(50);
   });
 });
 
