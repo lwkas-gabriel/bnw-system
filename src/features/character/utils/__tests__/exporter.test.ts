@@ -77,3 +77,12 @@ describe("round-trip fórum — Akuma no Mi", () => {
   });
 });
 
+describe("Artes Marciais — bônus acumulados", () => {
+  it("lista cada faixa com os bônus que ela adiciona, até a faixa atual", () => {
+    const html = exportToForumHTML(createRichCharacterFixture());
+    expect(html).toContain("- Faixa Laranja: +1 em todos os itens defensivos; 2 Técnicas Rank A ou 1 Arma Única Comum");
+    expect(html).toContain("- Faixa Verde: +2 de bônus em técnicas defensivas");
+    expect(html).not.toContain("- Faixa Roxa");
+  });
+});
+

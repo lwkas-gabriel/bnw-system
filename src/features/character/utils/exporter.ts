@@ -1,4 +1,4 @@
-import type { Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
+import type { AMFaixaId, Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
 import { bpn, characterMaxEnergy } from "./attrCalc";
 import { computeGemBudget, GEM_COSTS } from "./gemBudget";
 import { hakiStageNum } from "./haki";
@@ -8,6 +8,7 @@ import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/peri
 import { BUGIGANGAS } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { getFactionLabel } from "../../../data/factions";
+import { faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -107,64 +108,6 @@ const TECH_COSTS: Record<string, number> = { E: 6, D: 7, C: 8, B: 9, A: 10 };
 
 const TECH_SOURCE_LABELS: Record<string, string> = {
   akuma: "Akuma no Mi", haki: "Haki", artes_marciais: "Artes Marciais", ciborgue: "Ciborgue",
-};
-
-// Accumulated bonuses up to and including each faixa
-const FAIXA_ORDER: import("../../../shared/types/character").AMFaixaId[] = [
-  "branca", "cinza", "azul_clara", "azul_escura", "amarela",
-  "laranja", "verde", "roxa", "marrom",
-  "preta", "coral", "rajada", "vermelha", "grao_mestre",
-];
-
-const FAIXA_BONUS_LINES: Record<string, string[]> = {
-  branca:      ["+2 de bônus na arma equipada"],
-  cinza:       ["+2 de bônus na arma equipada", "+2 de Precisão"],
-  azul_clara:  ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa"],
-  azul_escura: ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder"],
-  amarela:     ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição"],
-  laranja:     ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum"],
-  verde:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas"],
-  roxa:        ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas"],
-  marrom:      ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A"],
-  preta:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra"],
-  coral:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra"],
-  rajada:      ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos"],
-  vermelha:    ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos",
-                "+2 em POD/PRE/DEF/CON por 2 de energia (escolha por turno)"],
-  grao_mestre: ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos",
-                "+2 em POD/PRE/DEF/CON por 2 de energia (escolha por turno)",
-                "+2 em ataque por 3 de energia OU -2 no ataque do oponente por 3 de energia"],
 };
 
 const PERICIAS_LABELS: Record<PericiaId, string> = {
@@ -441,9 +384,8 @@ export function exportToForumHTML(char: Character): string {
   const budget  = computeGemBudget(char);
 
   // ── Artes Marciais passive bonuses ───────────────────────────────────────────
-  const amIdx = char.artesMarciais?.currentFaixa
-    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
-  const amAtIdx = (f: typeof FAIXA_ORDER[number]) => amIdx >= FAIXA_ORDER.indexOf(f);
+  const amIdx = faixaIndex(char.artesMarciais?.currentFaixa);
+  const amAtIdx = (f: AMFaixaId) => amIdx >= faixaIndex(f);
   const amPow  = amAtIdx("azul_escura") ? 2 : 0;
   const amPre  = amAtIdx("cinza")       ? 2 : 0;
   const amDef  = amAtIdx("azul_clara")  ? 2 : 0;
@@ -486,13 +428,10 @@ export function exportToForumHTML(char: Character): string {
     .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
     .reduce((s, b) => s + b.cost, 0);
 
-  const LARANJA_IDX_EXP = FAIXA_ORDER.indexOf("laranja");
-  const currentFaixaIdxExp = char.artesMarciais?.currentFaixa
-    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
   const isUniqueFromLaranja = !!(
     char.equippedWeapon &&
     "characteristic" in char.equippedWeapon &&
-    currentFaixaIdxExp >= LARANJA_IDX_EXP &&
+    amIdx >= faixaIndex("laranja") &&
     char.artesMarciais?.laranjaChoice !== "techniques"
   );
   const equipCost = isUniqueFromLaranja ? 0 : budget.breakdown
@@ -702,23 +641,15 @@ export function exportToForumHTML(char: Character): string {
     if (char.artesMarciais?.currentFaixa) {
       const faixa     = char.artesMarciais.currentFaixa;
       const faixaCost = budget.breakdown.find(b => b.category === "Artes Marciais")?.cost ?? 0;
-      const bonusLines = FAIXA_BONUS_LINES[faixa] ?? [];
       ln(`<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>`);
       ln(`[b]Faixa: [/b]${FAIXA_LABELS[faixa] ?? faixa}.`);
       ln(`[b]Custo: [/b]${faixaCost} gemas.`);
       if (char.artesMarciais.laranjaChoice) {
         ln(`[b]Escolha Laranja: [/b]${char.artesMarciais.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}.`);
       }
-      if (bonusLines.length > 0) {
-        ln(`[b]Bônus acumulados: [/b]`);
-        for (let i = 0; i < FAIXA_ORDER.length; i++) {
-          const f = FAIXA_ORDER[i];
-          const label = FAIXA_LABELS[f] ?? f;
-          const linhaFaixa = FAIXA_BONUS_LINES[f]?.[i];
-          if (!linhaFaixa) break;
-          ln(`- Faixa ${label}: ${linhaFaixa}`);
-          if (f === faixa) break;
-        }
+      ln(`[b]Bônus acumulados: [/b]`);
+      for (const f of faixasUpTo(faixa)) {
+        ln(`- Faixa ${FAIXA_LABELS[f.id] ?? f.id}: ${f.bonusLines.join("; ")}`);
       }
       ln(`</div>`);
       ln();
