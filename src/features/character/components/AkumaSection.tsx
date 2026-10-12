@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge, SegmentedControl, ToggleButton, Callout } from "../../../shared/components";
 import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID, ZOAN_MODULES } from "../../../data/akumaModules";
 import type { AkumaModuleOption } from "../../../data/akumaModules";
@@ -255,7 +255,7 @@ function AkumaTechEditor({ tech, onUpdate }: {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function AkumaSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   // C=1 técnica grátis, B/A/S=2 técnicas grátis

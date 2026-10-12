@@ -1,12 +1,12 @@
 // ArtesMarciaisSection.tsx
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Badge, Callout } from "../../../shared/components";
 import type { AMFaixaId } from "../../../shared/types/character";
 import { GEM_COSTS } from "../../../data/gemCosts";
 import { AM_FAIXAS, AM_FAIXA_ORDER, FAIXA_REGION_LABELS, faixaIndex, faixasUpTo, hasReachedFaixa, isFaixaAvailable } from "../../../data/artesMarciais";
 
 export function ArtesMarciaisSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const currentFaixa = draft.artesMarciais?.currentFaixa ?? null;

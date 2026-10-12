@@ -1,4 +1,4 @@
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Badge, Button, Callout } from "../../../shared/components";
 import {
   FACTIONS,
@@ -13,7 +13,7 @@ import { formatBerries } from "../../../shared/utils/format";
 // ─── Faction picker ───────────────────────────────────────────────────────────
 
 function FactionPicker() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   return (
@@ -156,7 +156,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
 // ─── Discount block ───────────────────────────────────────────────────────────
 
 function DiscountBlock() {
-  const { draft } = useCharacterStore();
+  const { draft } = useDraft();
   if (!draft?.faction) return null;
 
   const discountInfo = computeFactionDiscount(draft);
@@ -175,7 +175,7 @@ function DiscountBlock() {
 // ─── Main section ─────────────────────────────────────────────────────────────
 
 export function FaccoesSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   if (!draft.faction) return <FactionPicker />;

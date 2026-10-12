@@ -1,4 +1,4 @@
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge, StatTile, Callout } from "../../../shared/components";
 import type { CompanionData, CompanionRank, CompanionType } from "../../../shared/types/character";
 import { GEM_COSTS } from "../../../data/gemCosts";
@@ -23,7 +23,7 @@ const MASCOTE_BONUS_MULT: Record<CompanionRank, number> = { C: 2, B: 4, A: 6 };
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CompanheirosSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const companions = draft.companions ?? [];

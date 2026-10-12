@@ -1,4 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { StatControl, SectionCard, Badge, NumberStepper, ToggleButton, StatTile, Callout } from "../../../shared/components";
 import { bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS, totalAttributePoints } from "../utils/attrCalc";
 import { RACES } from "../../../data/races";
@@ -18,7 +19,9 @@ function AttrCell({ v, highlight }: { v: number; highlight?: boolean }) {
 const RACE_OPTIONS = Object.values(RACES).map(r => ({ value: r.id, label: r.name }));
 
 export function AttributesSection() {
-  const { draft, updateDraft, errors, budget } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
+  const errors = useCharacterStore(s => s.errors);
+  const budget = useCharacterStore(s => s.budget);
   if (!draft) return null;
 
   const charBPN = bpn(draft.level);

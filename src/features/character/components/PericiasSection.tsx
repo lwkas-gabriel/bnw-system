@@ -1,4 +1,4 @@
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Badge, NumberStepper, ToggleButton, Callout } from "../../../shared/components";
 import {
   PERICIAS,
@@ -13,7 +13,7 @@ import type { PericiaId, ZoanAkuma } from "../../../shared/types/character";
 const PERICIA_IDS = Object.keys(PERICIAS) as PericiaId[];
 
 export function PericiasSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const maxPoints = totalPericiaPoints(draft.level);

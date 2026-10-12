@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Input, Badge, SegmentedControl, ToggleButton } from "../../../shared/components";
 import { GEM_COSTS } from "../../../data/gemCosts";
 import { BUGIGANGAS, BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
@@ -330,7 +330,7 @@ function EquipCard({ label, equipment, hasUniqueWeapon, onEdit }: EquipCardProps
 type EditTarget = "weapon" | "def0" | "def1" | null;
 
 export function EquipmentSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   const [editing, setEditing] = useState<EditTarget>(null);
   const [uniqueMode, setUniqueMode] = useState(false);
 

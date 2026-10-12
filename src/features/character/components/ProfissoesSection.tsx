@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { PROFESSIONS, PROFESSIONS_BY_ID } from "../../../data/professions";
 import { PERICIAS } from "../../../data/pericias";
@@ -9,7 +9,7 @@ import { GEM_COSTS } from "../../../data/gemCosts";
 import type { CharacterProfession, PericiaId, ZoanAkuma } from "../../../shared/types/character";
 
 export function ProfissoesSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   const [expandedCraft, setExpandedCraft] = useState<string | null>(null);
 
   if (!draft) return null;

@@ -1,4 +1,4 @@
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge, StatTile } from "../../../shared/components";
 import type { CyborgShiftData, CyborgShiftLocation, CyborgGear, CyborgPath } from "../../../shared/types/character";
 import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../../../data/attributes";
@@ -31,7 +31,7 @@ function newShift(shiftNumber: number, usedLocations: CyborgShiftLocation[]): Cy
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CyborgSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const cyborg = draft.cyborg;

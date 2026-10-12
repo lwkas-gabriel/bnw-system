@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { TECHNIQUE_RANKS } from "../../../data/techniques";
 import type { Technique, TechniqueRank } from "../../../shared/types/character";
@@ -165,7 +165,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
 }
 
 export function TechniquesSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   const [showForm, setShowForm] = useState(false);
   if (!draft) return null;
 

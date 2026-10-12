@@ -1,4 +1,4 @@
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge, Callout } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
 import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
@@ -59,7 +59,7 @@ function StageProgress({ stages, current, onSelect, type }: {
 }
 
 export function HakiSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const haki = draft.haki;
