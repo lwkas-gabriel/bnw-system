@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { SectionCard } from "../../../../shared/components";
-import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID } from "../../../../data/akumaModules";
+import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID, PARAMECIA_ACTIVE_EN, PARAMECIA_ACTIVE_SLOTS, PARAMECIA_PASSIVE_SLOTS } from "../../../../data/akumaModules";
 import type { AkumaRank, ParameciaAkuma, ParameciaHabilityPassive, ParameciaHabilityActive } from "../../../../shared/types/character";
-import { PARAMECIA_ACTIVE_EN, PARAMECIA_ACTIVE_SLOTS, PARAMECIA_PASSIVE_SLOTS } from "../../../../data/akumaModules";
 import { PARAMECIA_CLASSES, RANK_ORDER_MAP } from "./constants";
 import { ModuleBadge, ModulePicker } from "./AkumaFields";
 

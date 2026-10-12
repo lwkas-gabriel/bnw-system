@@ -416,3 +416,23 @@ export const SHIP_COMODOS: ShipComodoData[] = [
 export const SHIP_COMODOS_BY_ID: Record<string, ShipComodoData> = Object.fromEntries(
   SHIP_COMODOS.map(c => [c.id, c])
 );
+
+/** Profissão beneficiada por cada cômodo (badge na UI) */
+export const COMODO_PROFESSION: Record<string, string> = {
+  cozinha_industrial: "Cozinheiro",
+  oficina:            "Engenheiro",
+  forja:              "Ferreiro",
+  laboratorio:        "Médico",
+  escritorio:         "Navegador / Arqueólogo",
+  biblioteca:         "Arqueólogo",
+  picadeiro:          "Adestrador",
+  motor:              "Ciborgue",
+  remos:              "Haki / AM",
+  turbina:            "Akuma no Mi",
+  brigue:             "Caçador",
+  antena:             "Ciborgue (Gear Drone)",
+  tanque_reserva:     "Ciborgue (Combustível)",
+  enfermaria:         "Médico",
+};
+
+export const SHIP_ROLES = Object.keys(SHIP_ROLE_LABELS) as ShipRole[];
