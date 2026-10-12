@@ -190,6 +190,10 @@ export function getFactionRank(type: FactionType, rankId: string): FactionRankDa
   return def.ranks.find(r => r.id === rankId) ?? (def.lateralRank?.id === rankId ? def.lateralRank : undefined);
 }
 
+export function getFactionLabel(type: FactionType, rankId: string): string {
+  return getFactionRank(type, rankId)?.label ?? rankId;
+}
+
 export function getAvailableRanks(type: FactionType, level: number): FactionRankData[] {
   return FACTIONS[type].ranks.filter(r => r.requiredLevel <= level);
 }
