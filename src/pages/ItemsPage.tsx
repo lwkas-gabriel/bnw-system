@@ -7,6 +7,7 @@ import type { EquipmentQuality } from "../shared/types/character";
 import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../data/equipment";
 import { STANDARD_CRAFT_DC } from "../data/professions";
 import { formatBerries, formatBerriesShort } from "../shared/utils/format";
+import { PERICIAS } from "../data/pericias";
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
 
@@ -235,7 +236,7 @@ export default function ItemsPage() {
                       <p className="text-[10px] text-slate-500 mt-1">{b.description}</p>
                       {b.periciaBonus && (
                         <p className="text-[10px] text-green-400 mt-0.5">
-                          +{b.periciaBonus.value} {b.periciaBonus.pericia}
+                          +{b.periciaBonus.value} {PERICIAS[b.periciaBonus.pericia].name}
                         </p>
                       )}
                       {b.interpretive && (

@@ -96,7 +96,7 @@ export function AkumaTechEditor({ tech, onUpdate }: {
           </div>
 
           <p className="text-[9px] text-slate-600">
-            Rank A fixo · +{tech.baseBonus} {tech.targetAttr.slice(0, 3).toUpperCase()} · {tech.energyCost} EN · Gratuita (não cobra gemas)
+            Rank A fixo · +{tech.baseBonus} {ATTR_SHORT_LABELS[tech.targetAttr]} · {tech.energyCost} EN · Gratuita (não cobra gemas)
           </p>
         </div>
       )}

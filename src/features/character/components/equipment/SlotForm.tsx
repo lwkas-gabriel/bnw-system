@@ -7,6 +7,7 @@ import { EQUIPMENT_PRICES, QUALITY_BONUS, SLOT_ATTRS, SLOT_LABELS } from "../../
 import { formatBerries } from "../../../../shared/utils/format";
 import { blankEquipment } from "./equipmentForm";
 import { QualityPicker } from "./QualityPicker";
+import { PERICIAS } from "../../../../data/pericias";
 
 // ─── Slot Edit Form ───────────────────────────────────────────────────────────
 
@@ -117,7 +118,7 @@ export function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClea
         {eq.bugiganga && (
           <p className="text-[10px] text-slate-500 mt-1">
             {eq.bugiganga.periciaBonus
-              ? `+${eq.bugiganga.periciaBonus.value} ${eq.bugiganga.periciaBonus.pericia}`
+              ? `+${eq.bugiganga.periciaBonus.value} ${PERICIAS[eq.bugiganga.periciaBonus.pericia].name}`
               : eq.bugiganga.interpretive ?? ""}
           </p>
         )}

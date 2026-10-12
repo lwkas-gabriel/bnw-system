@@ -24,7 +24,7 @@ function TechCard({ tech, onRemove }: { tech: Technique; onRemove: () => void })
       </div>
       <p className="text-[10px] text-slate-500 mb-2">{tech.description}</p>
       <div className="flex items-center gap-3 text-[10px]">
-        <span className="text-slate-400">+{tech.baseBonus} {tech.targetAttr.slice(0, 3).toUpperCase()}</span>
+        <span className="text-slate-400">+{tech.baseBonus} {ATTR_SHORT_LABELS[tech.targetAttr]}</span>
         <span className="text-slate-500">{tech.energyCost} EN</span>
         {tech.source && (
           <span className="text-slate-600 capitalize">{tech.source}</span>

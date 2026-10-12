@@ -4,7 +4,8 @@ import { StatControl, SectionCard, Badge, NumberStepper, ToggleButton, StatTile,
 import { bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS, totalAttributePoints } from "../utils/attrCalc";
 import { RACES } from "../../../data/races";
 import type { RaceId, BaseAttributes } from "../../../shared/types/character";
-import { ATTR_KEYS, ATTR_LABELS } from "../../../data/attributes";
+import { ATTR_KEYS, ATTR_LABELS, ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
+import { PERICIAS } from "../../../data/pericias";
 import { computeAttrBreakdown, sumRows } from "../utils/attrBreakdown";
 
 function AttrCell({ v, highlight }: { v: number; highlight?: boolean }) {
@@ -80,12 +81,12 @@ export function AttributesSection() {
                 <div className="flex flex-wrap gap-1">
                   {Object.entries(data.attrBonus).map(([k, v]) => (
                     <span key={k} className="text-[9px] text-slate-500">
-                      +{v} {k.slice(0, 3).toUpperCase()}
+                      +{v} {ATTR_SHORT_LABELS[k as AttrKey]}
                     </span>
                   ))}
                   {data.periciaBonus && (
                     <span className="text-[9px] text-slate-500">
-                      +{data.periciaBonus.value} {data.periciaBonus.pericia}
+                      +{data.periciaBonus.value} {PERICIAS[data.periciaBonus.pericia].name}
                     </span>
                   )}
                   {data.specialAbility && (

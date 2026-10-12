@@ -3,6 +3,7 @@ import { SectionCard, Button, Badge, Callout, Switch } from "../../../shared/com
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
 import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
+import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
 
 const STAGE_LABELS = [1, 2, 3, 4, 5];
 
@@ -43,7 +44,7 @@ function StageProgress({ stages, current, onSelect, type }: {
           <div className="flex gap-3 text-xs">
             {Object.entries(stages[currentNum - 1].bonus).map(([k, v]) => (
               <span key={k} className="text-slate-300">
-                +{v} <span className="text-slate-500 uppercase text-[10px]">{k.slice(0, 3)}</span>
+                +{v} <span className="text-slate-500 uppercase text-[10px]">{ATTR_SHORT_LABELS[k as AttrKey]}</span>
               </span>
             ))}
             <span className="ml-auto text-slate-500">{stages[currentNum - 1].energyCostPerTurn} EN/turno</span>
