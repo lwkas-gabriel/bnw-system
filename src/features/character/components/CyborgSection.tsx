@@ -1,6 +1,7 @@
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import type { CyborgShiftData, CyborgShiftLocation, CyborgGear, CyborgPath } from "../../../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../../../data/attributes";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
@@ -144,12 +145,11 @@ export function CyborgSection() {
         <Button size="sm" variant="danger" onClick={removeCyborg}>Remover</Button>
       }>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-          {(["power","precision","defense","constitution"] as const).map(attr => {
-            const labels: Record<string, string> = { power:"POD", precision:"PRE", defense:"DEF", constitution:"CON" };
+          {ATTR_KEYS.map(attr => {
             const val = attrBonuses[attr];
             return (
               <div key={attr} className="bg-slate-800 rounded-lg p-2 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500">{labels[attr]}</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-500">{ATTR_SHORT_LABELS[attr]}</p>
                 <p className={`text-sm font-bold font-mono ${val > 0 ? "text-amber-400" : "text-slate-600"}`}>
                   {val > 0 ? `+${val}` : "—"}
                 </p>

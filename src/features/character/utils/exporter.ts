@@ -9,6 +9,7 @@ import { BUGIGANGAS } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { getFactionLabel } from "../../../data/factions";
 import { faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
+import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -47,7 +48,7 @@ export function downloadCharacterJSON(char: Character): void {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function attrLabel(key: string): string {
-  return ({ power: "POD", precision: "PRE", defense: "DEF", constitution: "CON" })[key] ?? key;
+  return ATTR_SHORT_LABELS[key as AttrKey] ?? key;
 }
 
 function qualityLabel(q: string): string {

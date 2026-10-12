@@ -7,6 +7,7 @@ import type {
   AkumaRank, ZoanAkuma, LogiaAkuma, ParameciaAkuma, ZoanClass, ParameciaClass,
   ZoanAbility, ParameciaHabilityPassive, ParameciaHabilityActive, Technique,
 } from "../../../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS, DEFENSIVE_ATTRS, OFFENSIVE_ATTRS, type AttrKey } from "../../../data/attributes";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -44,8 +45,6 @@ const PARAMECIA_CLASSES: { id: ParameciaClass; label: string; desc: string }[] =
   { id: "surreal",     label: "Surreal",     desc: "Distorção da realidade" },
 ];
 
-const ATTRS = ["power", "precision", "defense", "constitution"] as const;
-const ATTR_LABEL: Record<string, string> = { power: "POD", precision: "PRE", defense: "DEF", constitution: "CON" };
 
 const RANK_ORDER_MAP: Record<AkumaRank, number> = { C: 0, B: 1, A: 2, S: 3 };
 
@@ -67,10 +66,10 @@ function Toggle({ value, onChange }: { value: boolean; onChange: () => void }) {
   );
 }
 
-function AttrPicker({ value, color, onChange }: { value: string; color: string; onChange: (a: typeof ATTRS[number]) => void }) {
+function AttrPicker({ value, color, onChange }: { value: string; color: string; onChange: (a: AttrKey) => void }) {
   return (
     <div className="flex gap-1">
-      {ATTRS.map(a => (
+      {ATTR_KEYS.map(a => (
         <button
           key={a}
           onClick={() => onChange(a)}
@@ -78,7 +77,7 @@ function AttrPicker({ value, color, onChange }: { value: string; color: string; 
             value === a ? `${color} text-white` : "bg-slate-700 text-slate-400 hover:bg-slate-600"
           }`}
         >
-          {ATTR_LABEL[a]}
+          {ATTR_SHORT_LABELS[a]}
         </button>
       ))}
     </div>
@@ -220,10 +219,7 @@ function AkumaTechEditor({ tech, onUpdate }: {
             <div>
               <label className="text-[10px] text-slate-500 mb-1 block">Atributo</label>
               <div className="flex gap-1">
-                {(tech.type === "offensive"
-                  ? [["power", "POD"], ["precision", "PRE"]]
-                  : [["defense", "DEF"], ["constitution", "CON"]]
-                ).map(([v, l]) => (
+                {(tech.type === "offensive" ? OFFENSIVE_ATTRS : DEFENSIVE_ATTRS).map(v => [v, ATTR_SHORT_LABELS[v]] as const).map(([v, l]) => (
                   <button
                     key={v}
                     onClick={() => onUpdate({ targetAttr: v as Technique["targetAttr"] })}
@@ -803,7 +799,7 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
     <SectionCard title="Configuração Logia" icon="⚡">
       <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Natureza Elemental (+5 ao atributo)</p>
       <div className="flex gap-2 mb-4">
-        {ATTRS.map(a => (
+        {ATTR_KEYS.map(a => (
           <button
             key={a}
             onClick={() => onUpdate(l => { l.elementalNatureAttr = a; })}
@@ -811,7 +807,7 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
               logia.elementalNatureAttr === a ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
             }`}
           >
-            {ATTR_LABEL[a]}
+            {ATTR_SHORT_LABELS[a]}
           </button>
         ))}
       </div>

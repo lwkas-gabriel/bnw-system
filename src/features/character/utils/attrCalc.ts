@@ -1,4 +1,5 @@
-import type { Character, PericiaId, ZoanAkuma, ZoanClass } from "../../../shared/types/character";
+import type { BaseAttributes, Character, PericiaId, ZoanAkuma, ZoanClass } from "../../../shared/types/character";
+import { ATTR_KEYS, BASE_ATTRIBUTES } from "../../../data/attributes";
 
 /** Total péricia points available: 3 at L1, +1 every even level. L40 = 23. */
 export function totalPericiaPoints(level: number): number {
@@ -36,6 +37,21 @@ export const CYBORG_ENERGY_BONUS = 20;
 export function characterMaxEnergy(char: Pick<Character, "level" | "energy" | "cyborg">): number {
   const cyborgBonus = char.cyborg?.shift3Bonus === "energy" ? CYBORG_ENERGY_BONUS : 0;
   return energyMax(char.level, char.energy.energyInvested) + cyborgBonus;
+}
+
+/**
+ * Atributos base do personagem: valores iniciais (1/1/1/3) + pontos investidos
+ * (+ bônus racial, se `includeRacial`). Não inclui bônus de caminhos.
+ */
+export function baseAttributes(
+  char: Pick<Character, "investedAttributes" | "racialBonus">,
+  includeRacial = true,
+): BaseAttributes {
+  const result = { ...BASE_ATTRIBUTES };
+  for (const key of ATTR_KEYS) {
+    result[key] += char.investedAttributes[key] + (includeRacial ? char.racialBonus[key] ?? 0 : 0);
+  }
+  return result;
 }
 
 /** Remaining gem budget */

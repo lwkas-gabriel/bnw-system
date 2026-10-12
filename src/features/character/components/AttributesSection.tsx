@@ -7,6 +7,7 @@ import type {
   RaceId, BaseAttributes, Character,
   ZoanAkuma, LogiaAkuma, ParameciaAkuma, AMFaixaId,
 } from "../../../shared/types/character";
+import { ATTR_KEYS, ATTR_LABELS } from "../../../data/attributes";
 
 // ─── Attr Breakdown ───────────────────────────────────────────────────────────
 
@@ -331,8 +332,7 @@ export function AttributesSection() {
               Bônus Racial Humano — Escolha 1 atributo para +1 (fora do pool)
             </p>
             <div className="flex flex-wrap gap-2">
-              {(["power", "precision", "defense", "constitution"] as const).map(attr => {
-                const labels = { power: "Poder", precision: "Precisão", defense: "Defesa", constitution: "Constituição" };
+              {ATTR_KEYS.map(attr => {
                 const chosen = (draft.racialBonus[attr] ?? 0) > 0;
                 return (
                   <button
@@ -344,7 +344,7 @@ export function AttributesSection() {
                       chosen ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
                     }`}
                   >
-                    {labels[attr]}
+                    {ATTR_LABELS[attr]}
                   </button>
                 );
               })}

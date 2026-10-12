@@ -3,6 +3,7 @@ import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { TECHNIQUE_RANKS } from "../../../data/techniques";
 import type { Technique, TechniqueRank } from "../../../shared/types/character";
+import { ATTR_SHORT_LABELS, DEFENSIVE_ATTRS, OFFENSIVE_ATTRS } from "../../../data/attributes";
 
 const RANK_COLORS: Record<TechniqueRank, string> = {
   E: "text-slate-400 border-slate-600",
@@ -122,10 +123,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
         <div>
           <label className="text-[10px] text-slate-500 mb-1 block">Atributo</label>
           <div className="flex gap-1">
-            {(form.type === "offensive"
-              ? [["power","POD"],["precision","PRE"]]
-              : [["defense","DEF"],["constitution","CON"]]
-            ).map(([v, l]) => (
+            {(form.type === "offensive" ? OFFENSIVE_ATTRS : DEFENSIVE_ATTRS).map(v => [v, ATTR_SHORT_LABELS[v]] as const).map(([v, l]) => (
               <button
                 key={v}
                 onClick={() => setForm(f => ({ ...f, targetAttr: v as any }))}

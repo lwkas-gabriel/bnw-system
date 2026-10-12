@@ -10,6 +10,7 @@ import type {
   EquipmentQuality,
   BaseAttributes,
 } from "../../../shared/types/character";
+import { ATTR_SHORT_LABELS } from "../../../data/attributes";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -45,12 +46,6 @@ const SLOT_LABELS: Record<EquipmentSlot, string> = {
   legs:   "Pernas",
 };
 
-const ATTR_LABELS: Record<keyof BaseAttributes, string> = {
-  power:        "POD",
-  precision:    "PRE",
-  defense:      "DEF",
-  constitution: "CON",
-};
 
 const DEFENSIVE_SLOTS: EquipmentSlot[] = ["head", "arms", "torso", "legs"];
 
@@ -175,7 +170,7 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
                   : "bg-slate-700 text-slate-400 hover:bg-slate-600"
               }`}
             >
-              {ATTR_LABELS[attr]}
+              {ATTR_SHORT_LABELS[attr]}
             </button>
           ))}
         </div>
@@ -335,7 +330,7 @@ function UniqueWeaponPicker({ current, onSave, onClear }: UniqueWeaponPickerProp
                 bonusAttr === attr ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
               }`}
             >
-              {ATTR_LABELS[attr]}
+              {ATTR_SHORT_LABELS[attr]}
             </button>
           ))}
         </div>
@@ -393,7 +388,7 @@ function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps)
         <div className="text-right shrink-0">
           {equipment.bonusValue > 0 ? (
             <Badge variant="amber">
-              +{equipment.bonusValue} {ATTR_LABELS[equipment.bonusAttr as keyof BaseAttributes]}
+              +{equipment.bonusValue} {ATTR_SHORT_LABELS[equipment.bonusAttr]}
             </Badge>
           ) : (
             <span className="text-[10px] text-slate-600">sem bônus</span>
@@ -479,7 +474,7 @@ export function EquipmentSection() {
           allEquip.length > 0 ? (
             <div className="flex gap-1.5">
               {(Object.entries(bonusSummary) as [keyof BaseAttributes, number][]).map(([attr, val]) => (
-                <Badge key={attr} variant="amber">+{val} {ATTR_LABELS[attr]}</Badge>
+                <Badge key={attr} variant="amber">+{val} {ATTR_SHORT_LABELS[attr]}</Badge>
               ))}
             </div>
           ) : undefined

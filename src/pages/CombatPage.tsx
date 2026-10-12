@@ -2,6 +2,8 @@ import { useCombatStore } from "../features/combat/store/combatStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { PageHeader, Button } from "../shared/components";
 import type { Character } from "../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../data/attributes";
+import { baseAttributes } from "../features/character/utils/attrCalc";
 import { hitProbability } from "../features/combat/engine/combatEngine";
 
 function CombatantPanel({
@@ -42,12 +44,7 @@ function CombatantPanel({
             <Button size="sm" variant="ghost" onClick={() => onSelect(null as any)}>Trocar</Button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center">
-            {[
-              { l: "POD", v: 1 + char.investedAttributes.power },
-              { l: "PRE", v: 1 + char.investedAttributes.precision },
-              { l: "DEF", v: 1 + char.investedAttributes.defense },
-              { l: "CON", v: 3 + char.investedAttributes.constitution },
-            ].map(s => (
+            {ATTR_KEYS.map(attr => ({ l: ATTR_SHORT_LABELS[attr], v: baseAttributes(char, false)[attr] })).map(s => (
               <div key={s.l} className="bg-slate-800 rounded p-1.5">
                 <p className="text-[9px] text-slate-500 uppercase">{s.l}</p>
                 <p className="text-sm font-bold font-mono text-slate-200">{s.v}</p>

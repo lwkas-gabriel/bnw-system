@@ -4,6 +4,7 @@ import type {
   TurnEvent, AttackRollResult, DamageResult, DiceRoll,
   CombatSummary, ActiveBuffs,
 } from "../../../shared/types/combat";
+import { baseAttributes } from "../../character/utils/attrCalc";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -51,19 +52,13 @@ export function resolveAttributes(
   char: Character,
   buffs: ActiveBuffs
 ): BaseAttributes & { energyCostPerTurn: number } {
-  const base: BaseAttributes = {
-    power:        1 + char.investedAttributes.power        + (char.racialBonus.power        ?? 0),
-    precision:    1 + char.investedAttributes.precision    + (char.racialBonus.precision    ?? 0),
-    defense:      1 + char.investedAttributes.defense      + (char.racialBonus.defense      ?? 0),
-    constitution: 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0),
-  };
+  const base: BaseAttributes = baseAttributes(char);
 
   // Murakumogiri: triples base CON (before any path bonuses)
   const isMurakumogiri = char.equippedWeapon && "characteristic" in char.equippedWeapon
     && char.equippedWeapon.characteristic === "murakumogiri";
   if (isMurakumogiri) {
-    const initialCon = 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0);
-    base.constitution += initialCon * 2; // ×3 total
+    base.constitution *= 3;
   }
 
   let energyCost = 0;
