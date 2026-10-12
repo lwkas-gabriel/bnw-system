@@ -172,13 +172,6 @@ export function resolveTechniqueBonus(
   const isKitetsu = hasWeaponTrait(char, "kitetsu");
   if (isKitetsu) bonus *= 2;
 
-  // TODO: confirmar regras — bônus de técnica exclusivo para Zoan/Logia precisa
-  // ser mapeado no arquivo de regras antes de ser habilitado. Desabilitado temporariamente.
-  // const isZoan = char.akuma?.type === "zoan";
-  // if (isZoan) bonus += 1;
-  // const isLogia = char.akuma?.type === "logia";
-  // if (isLogia) bonus += 1;
-
   // AM Faixa Verde: +2 to defensive techniques
   // AM Faixa Roxa: +2 to offensive techniques
   if (char.artesMarciais?.currentFaixa) {
@@ -361,7 +354,6 @@ export function resolveDamage(
 function applyEnergyCost(
   state: CombatantState,
   choice: TurnChoice,
-  _useAverage: boolean
 ): { newState: CombatantState; events: TurnEvent[] } {
   const attrs = resolveAttributes(state.character, choice.buffs);
   let totalCost = attrs.energyCostPerTurn;
@@ -392,6 +384,66 @@ function applyEnergyCost(
   };
 }
 
+/**
+ * Um ataque completo (rolagem + dano) de `attacker` contra `defender`.
+ * Registra os eventos em `events` e retorna o novo estado do defensor.
+ */
+function resolveStrike(
+  attacker: Character,
+  attackerChoice: TurnChoice,
+  defender: CombatantState,
+  defenderChoice: TurnChoice,
+  useAverage: boolean,
+  events: TurnEvent[],
+): CombatantState {
+  const target = defender.character;
+  const roll = resolveAttack(attacker, attackerChoice, target, defenderChoice, useAverage);
+
+  events.push({
+    type: "attack",
+    actorId: attacker.id,
+    targetId: target.id,
+    description: roll.hit
+      ? `${attacker.name} acerta! (${roll.attackerTotal} vs ${roll.defenderThreshold})`
+      : `${attacker.name} erra. (${roll.attackerTotal} vs ${roll.defenderThreshold})`,
+    roll: roll.roll,
+    numerics: { total: roll.attackerTotal, threshold: roll.defenderThreshold },
+  });
+  if (!roll.hit) return defender;
+
+  const dmg = resolveDamage(attacker, attackerChoice, defender, defenderChoice);
+  const newCon = Math.max(
+    dmg.retemActivated ? 1 : 0,
+    defender.currentCon - dmg.baseConDamage - dmg.directConDamage
+  );
+
+  events.push({
+    type: "damage",
+    actorId: attacker.id,
+    targetId: target.id,
+    description: `${attacker.name} causa ${dmg.rawDamage} de POD. ` +
+      (dmg.tempConAbsorbed > 0 ? `CON temp absorveu ${dmg.tempConAbsorbed}. ` : "") +
+      (dmg.directConDamage > 0 ? `+${dmg.directConDamage} de dano direto. ` : "") +
+      `${target.name}: ${defender.currentCon} → ${newCon} CON.`,
+    numerics: { raw: dmg.rawDamage, absorbed: dmg.tempConAbsorbed, direct: dmg.directConDamage, conBefore: defender.currentCon, conAfter: newCon },
+  });
+
+  if (dmg.retemActivated) {
+    events.push({ type: "retem", actorId: target.id,
+      description: `${target.name} ativa Retém 1 CON! Permanece com 1 CON.` });
+  }
+  if (dmg.isKnockout) {
+    events.push({ type: "knockout", actorId: attacker.id, targetId: target.id,
+      description: `${target.name} foi nocauteado!` });
+  }
+
+  return {
+    ...defender,
+    currentCon: newCon,
+    retemUsed: dmg.retemActivated ? true : defender.retemUsed,
+  };
+}
+
 export function processTurn(
   stateA: CombatantState,
   stateB: CombatantState,
@@ -406,53 +458,7 @@ export function processTurn(
   let currentB = { ...stateB };
 
   // ── 1. Attack A → B ────────────────────────────────────────────────
-  const rollAB = resolveAttack(stateA.character, choiceA, stateB.character, choiceB, useAverage);
-
-  events.push({
-    type: "attack",
-    actorId: stateA.character.id,
-    targetId: stateB.character.id,
-    description: rollAB.hit
-      ? `${stateA.character.name} acerta! (${rollAB.attackerTotal} vs ${rollAB.defenderThreshold})`
-      : `${stateA.character.name} erra. (${rollAB.attackerTotal} vs ${rollAB.defenderThreshold})`,
-    roll: rollAB.roll,
-    numerics: { total: rollAB.attackerTotal, threshold: rollAB.defenderThreshold },
-  });
-
-  if (rollAB.hit) {
-    const dmgAB = resolveDamage(stateA.character, choiceA, currentB, choiceB);
-    const newConB = Math.max(
-      dmgAB.retemActivated ? 1 : 0,
-      currentB.currentCon - dmgAB.baseConDamage - dmgAB.directConDamage
-    );
-
-    events.push({
-      type: "damage",
-      actorId: stateA.character.id,
-      targetId: stateB.character.id,
-      description: `${stateA.character.name} causa ${dmgAB.rawDamage} de POD. ` +
-        (dmgAB.tempConAbsorbed > 0 ? `CON temp absorveu ${dmgAB.tempConAbsorbed}. ` : "") +
-        (dmgAB.directConDamage > 0 ? `+${dmgAB.directConDamage} de dano direto. ` : "") +
-        `${stateB.character.name}: ${currentB.currentCon} → ${newConB} CON.`,
-      numerics: { raw: dmgAB.rawDamage, absorbed: dmgAB.tempConAbsorbed, direct: dmgAB.directConDamage, conBefore: currentB.currentCon, conAfter: newConB },
-    });
-
-    if (dmgAB.retemActivated) {
-      events.push({ type: "retem", actorId: stateB.character.id,
-        description: `${stateB.character.name} ativa Retém 1 CON! Permanece com 1 CON.` });
-    }
-
-    currentB = {
-      ...currentB,
-      currentCon: newConB,
-      retemUsed: dmgAB.retemActivated ? true : currentB.retemUsed,
-    };
-
-    if (dmgAB.isKnockout) {
-      events.push({ type: "knockout", actorId: stateA.character.id, targetId: stateB.character.id,
-        description: `${stateB.character.name} foi nocauteado!` });
-    }
-  }
+  currentB = resolveStrike(stateA.character, choiceA, currentB, choiceB, useAverage, events);
 
   // ── 2. Attack B → A ────────────────────────────────────────────────
   // In JxJ mode T1: both attack simultaneously regardless of first attacker
@@ -462,57 +468,12 @@ export function processTurn(
     : currentB.currentCon > 0;
 
   if (bAttacks) {
-    const rollBA = resolveAttack(stateB.character, choiceB, stateA.character, choiceA, useAverage);
-
-    events.push({
-      type: "attack",
-      actorId: stateB.character.id,
-      targetId: stateA.character.id,
-      description: rollBA.hit
-        ? `${stateB.character.name} acerta! (${rollBA.attackerTotal} vs ${rollBA.defenderThreshold})`
-        : `${stateB.character.name} erra. (${rollBA.attackerTotal} vs ${rollBA.defenderThreshold})`,
-      roll: rollBA.roll,
-      numerics: { total: rollBA.attackerTotal, threshold: rollBA.defenderThreshold },
-    });
-
-    if (rollBA.hit) {
-      const dmgBA = resolveDamage(stateB.character, choiceB, currentA, choiceA);
-      const newConA = Math.max(
-        dmgBA.retemActivated ? 1 : 0,
-        currentA.currentCon - dmgBA.baseConDamage - dmgBA.directConDamage
-      );
-
-      events.push({
-        type: "damage",
-        actorId: stateB.character.id,
-        targetId: stateA.character.id,
-        description: `${stateB.character.name} causa ${dmgBA.rawDamage} de POD. ` +
-          (dmgBA.tempConAbsorbed > 0 ? `CON temp absorveu ${dmgBA.tempConAbsorbed}. ` : "") +
-          `${stateA.character.name}: ${currentA.currentCon} → ${newConA} CON.`,
-        numerics: { raw: dmgBA.rawDamage, absorbed: dmgBA.tempConAbsorbed, conBefore: currentA.currentCon, conAfter: newConA },
-      });
-
-      if (dmgBA.retemActivated) {
-        events.push({ type: "retem", actorId: stateA.character.id,
-          description: `${stateA.character.name} ativa Retém 1 CON! Permanece com 1 CON.` });
-      }
-
-      currentA = {
-        ...currentA,
-        currentCon: newConA,
-        retemUsed: dmgBA.retemActivated ? true : currentA.retemUsed,
-      };
-
-      if (dmgBA.isKnockout) {
-        events.push({ type: "knockout", actorId: stateB.character.id, targetId: stateA.character.id,
-          description: `${stateA.character.name} foi nocauteado!` });
-      }
-    }
+    currentA = resolveStrike(stateB.character, choiceB, currentA, choiceA, useAverage, events);
   }
 
   // ── 3. Energy costs ────────────────────────────────────────────────
-  const { newState: newA } = applyEnergyCost(currentA, choiceA, useAverage);
-  const { newState: newB } = applyEnergyCost(currentB, choiceB, useAverage);
+  const { newState: newA } = applyEnergyCost(currentA, choiceA);
+  const { newState: newB } = applyEnergyCost(currentB, choiceB);
   currentA = newA;
   currentB = newB;
 

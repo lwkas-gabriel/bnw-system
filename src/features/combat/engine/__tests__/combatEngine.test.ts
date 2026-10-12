@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   absorbDamage, resolveAttributes, buildTempConStack,
   resolveTechniqueBonus, resolveDamage, hitProbability,
-  initialCombatantState,
+  initialCombatantState, processTurn,
 } from "../combatEngine";
 import { createCharacterFixture } from "../../../character/utils/__tests__/fixtures";
 import type { ActiveBuffs, CombatantState, TurnChoice } from "../../../../shared/types/combat";
@@ -418,3 +418,34 @@ describe("hitProbability", () => {
     expect(prob).toBeLessThanOrEqual(1);
   });
 });
+
+// ─── processTurn ──────────────────────────────────────────────────────────────
+
+describe("processTurn", () => {
+  const choice: TurnChoice = {
+    offensive: null, defensive: null, useElementalista: false,
+    buffs: { ...NO_BUFFS, zoanPoint: null, logiaElementalDomain: false },
+  };
+  const strong = createCharacterFixture({ id: "a", name: "A", level: 40, investedAttributes: { power: 30, precision: 30, defense: 0, constitution: 1 } });
+  const weak   = createCharacterFixture({ id: "b", name: "B", level: 1 });
+
+  it("A ataca primeiro; em JxJ turno 1 ambos atacam mesmo após nocaute", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 1, "jxj", true);
+    const attacks = result.events.filter(e => e.type === "attack");
+    expect(attacks.map(e => e.actorId)).toEqual(["a", "b"]);
+    expect(result.combatEnded).toBe(true);
+    expect(result.winner).toBe("a");
+  });
+
+  it("fora do turno 1, B nocauteado não contra-ataca", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 2, "jxj", true);
+    expect(result.events.filter(e => e.type === "attack").map(e => e.actorId)).toEqual(["a"]);
+  });
+
+  it("eventos de dano trazem CON antes/depois coerentes com o estado final", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 2, "jxj", true);
+    const dmg = result.events.find(e => e.type === "damage" && e.targetId === "b");
+    expect(dmg?.numerics?.conAfter).toBe(result.stateAfter[1].currentCon);
+  });
+});
+
