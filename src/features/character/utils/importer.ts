@@ -133,6 +133,8 @@ function migrateCharacter(raw: Record<string, unknown>): Character {
     gemBudget:   Number(raw.gemBudget)   || 20,
     location:    (raw.location as any)   ?? "blues",
     companions:  Array.isArray(raw.companions) ? (raw.companions as any[]) : [],
+    ...(raw.faction && typeof raw.faction === "object" ? { faction: raw.faction as Character["faction"] } : {}),
+    ...(typeof raw.commissionedShipId === "string" ? { commissionedShipId: raw.commissionedShipId } : {}),
   };
 }
 

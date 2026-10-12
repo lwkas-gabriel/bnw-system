@@ -21,7 +21,7 @@ describe("round-trip JSON", () => {
     expect(result.character).toMatchObject({
       name: char.name, level: char.level, race: char.race, location: char.location,
       investedAttributes: char.investedAttributes, haki: char.haki, akuma: char.akuma,
-      artesMarciais: char.artesMarciais, cyborg: char.cyborg,
+      artesMarciais: char.artesMarciais, cyborg: char.cyborg, faction: char.faction,
     });
     expect(result.character?.techniques.map(t => t.name)).toEqual(char.techniques.map(t => t.name));
   });
