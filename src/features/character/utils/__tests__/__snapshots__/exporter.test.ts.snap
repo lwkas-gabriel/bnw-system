@@ -32,7 +32,7 @@ exports[`exportToForumHTML — snapshot (contrato com o fórum) > personagem com
 <e>Precisão (PRE): </e>6 +2 [Racial: Mink] +2 [Bônus AM]
 <e>Defesa (DEF): </e>5 +2 [Bônus AM]
 <e>Constituição (CON) </e>8 +2 [Bônus AM]
-<e>Energia (EN): </e>66
+<e>Energia (EN): </e>86
 <e>Bônus por Nível: </e>15
 <e>Ganhos raciais: </e>+2 PRE, +1 Percepção, +1 Furtividade (Zoan).
 
@@ -124,6 +124,7 @@ A técnica apresenta toda a bestialidade de um usuário Zoan, com as melhores ca
 [b]Local: [/b]Tronco.
 [b]Bônus: [/b]+4 CON.
 
+[b]Bônus do Shift 3: [/b]+20 de Energia.
 </div>
 
 <div style=" border: 1px solid; padding: 10px; ">

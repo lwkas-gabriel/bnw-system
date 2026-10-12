@@ -1,5 +1,5 @@
 import type { Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
-import { bpn } from "./attrCalc";
+import { bpn, characterMaxEnergy } from "./attrCalc";
 import { computeGemBudget } from "./gemBudget";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
@@ -436,7 +436,7 @@ function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<
 
 export function exportToForumHTML(char: Character): string {
   const charBPN = bpn(char.level);
-  const energy  = char.level * 3 + char.energy.energyInvested;
+  const energy  = characterMaxEnergy(char);
   const budget  = computeGemBudget(char);
 
   // ── Artes Marciais passive bonuses ───────────────────────────────────────────
@@ -640,6 +640,9 @@ export function exportToForumHTML(char: Character): string {
           ln(`[b]Bugiganga: [/b]${shift.bugigangaId}.`);
         }
         ln();
+      }
+      if (char.cyborg.shift3Bonus) {
+        ln(`[b]Bônus do Shift 3: [/b]${char.cyborg.shift3Bonus === "energy" ? "+20 de Energia" : "+2 Técnicas Rank A"}.`);
       }
       if (char.cyborg.gear) {
         ln(`[b]Gear: [/b]${char.cyborg.gear}.`);

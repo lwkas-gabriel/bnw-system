@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { Character, PericiaId } from "../../../shared/types/character";
 import type { ExportedCharacter } from "./exporter";
-import { blankPericias } from "./attrCalc";
+import { blankPericias, CYBORG_ENERGY_BONUS, energyMax } from "./attrCalc";
 import { validateCharacterFull, type ValidationReport } from "./validator";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -271,10 +271,6 @@ export function parseImportForumHTML(text: string): ImportResult {
     constitution: Math.max(0, totalCon - 3),
   };
 
-  const energyInvested = Math.max(0,
-    (Number(rx1(text, /<e>Energia\s*\(EN\):\s*<\/e>(\d+)/)) || level * 3) - level * 3
-  );
-
   const PERICID_LABELS: Array<[PericiaId, RegExp]> = [
     ["ambicao",      /<e>Ambi[çc][ãa]o:\s*<\/e>(\d+)/],
     ["atletismo",    /<e>Atletismo:\s*<\/e>(\d+)/],
@@ -381,8 +377,15 @@ export function parseImportForumHTML(text: string): ImportResult {
         bugigangaId: null,
       };
     });
-    cyborg = { shifts, shift3Bonus: null, gear: null, usesFuel: shifts.length >= 3 };
+    const shift3Raw = rx1(text, /\[b\]Bônus do Shift 3:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? "";
+    const shift3Bonus = shift3Raw.includes("energia") ? "energy" : shift3Raw.includes("técnicas") ? "techniques" : null;
+    cyborg = { shifts, shift3Bonus, gear: null, usesFuel: shifts.length >= 3 };
   }
+
+  // Energia exportada = Lv×3 + investida + bônus do Shift 3 (ver characterMaxEnergy)
+  const exportedEnergy = Number(rx1(text, /<e>Energia\s*\(EN\):\s*<\/e>(\d+)/)) || level * 3;
+  const cyborgEnergyBonus = (cyborg as { shift3Bonus?: string } | null)?.shift3Bonus === "energy" ? CYBORG_ENERGY_BONUS : 0;
+  const energyInvested = Math.max(0, exportedEnergy - level * 3 - cyborgEnergyBonus);
 
   // Artes Marciais
   let artesMarciais: unknown = null;
@@ -401,7 +404,7 @@ export function parseImportForumHTML(text: string): ImportResult {
     racialBonus: {},
     pericias,
     professions: [],
-    energy: { energy: level * 3 + energyInvested, energyInvested },
+    energy: { energy: energyMax(level, energyInvested), energyInvested },
     haki,
     akuma,
     artesMarciais,

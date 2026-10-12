@@ -44,3 +44,17 @@ describe("round-trip fórum", () => {
     expect(imported.techniques.map(t => t.name).sort()).toEqual(char.techniques.map(t => t.name).sort());
   });
 });
+
+describe("energia com Ciborgue (Shift 3 = energia)", () => {
+  it("export inclui o +20 de energia do Ciborgue", () => {
+    // nível 20 → 60 + 6 investidos + 20 do Shift 3
+    expect(exportToForumHTML(createRichCharacterFixture())).toContain("<e>Energia (EN): </e>86");
+  });
+
+  it("round-trip fórum preserva energia investida e escolha do Shift 3", () => {
+    const char = createRichCharacterFixture();
+    const imported = parseImportForumHTML(exportToForumHTML(char)).character!;
+    expect(imported.energy.energyInvested).toBe(6);
+    expect(imported.cyborg?.shift3Bonus).toBe("energy");
+  });
+});

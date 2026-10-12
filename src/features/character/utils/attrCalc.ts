@@ -29,6 +29,15 @@ export function energyMax(level: number, gemsInvestedInEnergy: number): number {
   return level * 3 + gemsInvestedInEnergy;
 }
 
+/** Energia extra concedida pela escolha "energy" no Shift 3 do Ciborgue */
+export const CYBORG_ENERGY_BONUS = 20;
+
+/** Energia máxima do personagem: fórmula base + bônus do Shift 3 do Ciborgue */
+export function characterMaxEnergy(char: Pick<Character, "level" | "energy" | "cyborg">): number {
+  const cyborgBonus = char.cyborg?.shift3Bonus === "energy" ? CYBORG_ENERGY_BONUS : 0;
+  return energyMax(char.level, char.energy.energyInvested) + cyborgBonus;
+}
+
 /** Remaining gem budget */
 export function remainingGems(budget: number, spent: number): number {
   return budget - spent;
