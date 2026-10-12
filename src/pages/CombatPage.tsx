@@ -202,7 +202,9 @@ export default function CombatPage() {
               <p className="text-sm font-bold text-slate-200">
                 {result.winner
                   ? `🏆 ${result.winner === charA?.id ? charA?.name : charB?.name} vence!`
-                  : "⚔️ Empate — ambos os combatentes foram nocauteados."}
+                  : result.finalStates.every(s => s.currentCon <= 0)
+                    ? "⚔️ Empate — ambos os combatentes foram nocauteados."
+                    : `⏱️ Sem vencedor após ${result.turnsCount} turno(s) — ninguém foi nocauteado.`}
               </p>
               <p className="text-xs text-slate-500 mt-1">{result.turnsCount} turno{result.turnsCount !== 1 ? "s" : ""}</p>
             </div>
