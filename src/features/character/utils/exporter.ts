@@ -535,7 +535,7 @@ function renderHaki(haki: HakiPath, ln: LineFn): void {
     const isAdvanced = haki.kingStage === "advanced";
     ln(`<d>Haki do Rei</d>`);
     ln(`[b]Nível: [/b]${isAdvanced ? "Avançado" : "Controlado"}`);
-    ln(`[b]Custo: [/b]${GEM_COSTS.haki.king + (isAdvanced ? GEM_COSTS.haki.advancedPartial : 0)} gemas.`);
+    ln(`[b]Custo: [/b]${GEM_COSTS.haki.king + (isAdvanced ? GEM_COSTS.haki.kingAdvanced : 0)} gemas.`);
     ln(`[b]Bônus: [/b]${isAdvanced ? "Infunde o Rei nas técnicas — adiciona Ambição ao bônus de todas as técnicas enquanto ativo." : "+4 de Persuasão."}`);
     ln(`[b]Gasto de energia: [/b]5 por turno.`);
     ln(`[b]Efeito interpretativo: [/b]${isAdvanced ? "Relâmpagos negros emanam do usuário. Dano sem contato físico." : "Desmaia alvos com 5 níveis a menos. Resistentes ficam sem ação de ataque por 2 turnos."}`);

@@ -25,8 +25,9 @@ export const GEM_COSTS = {
     stageBase: 20,    // per stage, × 5 stages = 100g for primary
     secondary: 0,     // always free
     king: 20,         // Dormant / Controlled (single payment)
-    advancedPartial:  20,
-    advancedComplete: 20,
+    advancedPartial:  20,   // Haki Avançado (Armamento/Observação): fase parcial
+    advancedComplete: 20,   // Haki Avançado (Armamento/Observação): fase completa
+    kingAdvanced:     20,   // Haki do Rei Avançado: nível único, sem fase parcial/completa
   },
   // Artes Marciais — each faixa
   artesMarciais: {

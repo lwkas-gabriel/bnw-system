@@ -1,7 +1,8 @@
 import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge, Callout, Switch } from "../../../shared/components";
-import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
-import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
+import { GEM_COSTS } from "../../../data/gemCosts";
+import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES, type AdvancedHakiData } from "../../../data/haki";
+import type { HakiPath, HakiStage } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
 import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
 
@@ -111,12 +112,11 @@ export function HakiSection() {
     });
   }
 
-  function setAdvanced(variant: AdvancedHakiVariant) {
+  function setAdvanced(variant: AdvancedHakiData["variant"]) {
     if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.advancedType = variant;
-      if (variant === "king_advanced") c.haki.kingStage = "advanced";
     });
   }
 
@@ -223,7 +223,7 @@ export function HakiSection() {
 
                 {canHaveAdvanced && (
                   <div>
-                    <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-wider">Haki do Rei Avançado (+20g)</p>
+                    <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-wider">Haki do Rei Avançado (+{GEM_COSTS.haki.kingAdvanced}g · nível único)</p>
                     <button
                       onClick={() => haki.advancedType === "king_advanced" ? updateDraft(c => { if (c.haki) { c.haki.kingStage = "controlled"; c.haki.advancedType = null; }}) : setKingAdvanced()}
                       className={`w-full p-3 rounded-lg border text-left transition-all ${
@@ -232,8 +232,8 @@ export function HakiSection() {
                           : "border-slate-700 bg-slate-800 hover:border-amber-700"
                       }`}
                     >
-                      <p className="text-xs font-medium text-amber-400">Imbuir do Rei</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Adiciona valor de Ambição ao bônus de todas as técnicas com o Rei ativo.</p>
+                      <p className="text-xs font-medium text-amber-400">{KING_HAKI.advanced.label}</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{KING_HAKI.advanced.effect}</p>
                       <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.pericias.ambicao}: +{draft.pericias.ambicao} por técnica</p>
                     </button>
                   </div>
@@ -250,7 +250,7 @@ export function HakiSection() {
             <SectionCard title="Haki Avançado" icon="⚡">
               <p className="text-[10px] text-amber-500/80 mb-3">Só é possível um tipo de Haki Avançado. Rei Avançado custa 20g; os outros custam 40g (parcial + completo).</p>
               <div className="grid grid-cols-1 gap-2">
-                {ADVANCED_HAKI.filter(a => a.type !== "king").map(adv => (
+                {ADVANCED_HAKI.map(adv => (
                   <button
                     key={adv.variant}
                     onClick={() => setAdvanced(adv.variant)}

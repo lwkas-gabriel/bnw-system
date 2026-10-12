@@ -24,7 +24,7 @@ export function hakiCostBreakdown(haki: HakiPath): HakiCostItem[] {
     items.push({ detail: "Haki do Rei (Dormente/Controlado)", cost: GEM_COSTS.haki.king });
   }
   if (haki.kingStage === "advanced") {
-    items.push({ detail: "Haki do Rei Avançado", cost: GEM_COSTS.haki.advancedPartial });
+    items.push({ detail: "Haki do Rei Avançado", cost: GEM_COSTS.haki.kingAdvanced });
   }
   if (haki.advancedType && haki.advancedType !== "king_advanced") {
     items.push({
