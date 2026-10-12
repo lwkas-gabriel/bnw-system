@@ -8,7 +8,7 @@ import { hitProbability } from "../features/combat/engine/combatEngine";
 
 function CombatantPanel({
   label, char, onSelect,
-}: { label: string; char: Character | null; onSelect: (c: Character) => void }) {
+}: { label: string; char: Character | null; onSelect: (c: Character | null) => void }) {
   const saved = useCharacterStore(s => s.saved);
 
   return (
@@ -41,7 +41,7 @@ function CombatantPanel({
               <p className="text-sm font-bold text-slate-200">{char.name}</p>
               <p className="text-xs text-slate-500">Nível {char.level} · {char.race}</p>
             </div>
-            <Button size="sm" variant="ghost" onClick={() => onSelect(null as any)}>Trocar</Button>
+            <Button size="sm" variant="ghost" onClick={() => onSelect(null)}>Trocar</Button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center">
             {ATTR_KEYS.map(attr => ({ l: ATTR_SHORT_LABELS[attr], v: baseAttributes(char, false)[attr] })).map(s => (
@@ -131,13 +131,13 @@ export default function CombatPage() {
         <div className="flex items-center gap-3">
           <span className="text-xs text-slate-500">Modo:</span>
           <div className="flex gap-1">
-            {[
+            {([
               { id: "jxj", label: "Jogador × Jogador" },
               { id: "vs_npc", label: "Jogador × NPC" },
-            ].map(m => (
+            ] as const).map(m => (
               <button
                 key={m.id}
-                onClick={() => setMode(m.id as any)}
+                onClick={() => setMode(m.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   mode === m.id ? "bg-amber-600 text-white" : "bg-slate-800 border border-slate-700 text-slate-400 hover:border-slate-600"
                 }`}

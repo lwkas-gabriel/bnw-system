@@ -12,8 +12,7 @@ module.exports = {
   rules: {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
-    // Desligada até a remoção dos `any` existentes (fase de legibilidade); depois volta a "error".
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "error",
   },
   overrides: [
     // Arquivo de configuração de rotas: exporta o router junto com o layout.

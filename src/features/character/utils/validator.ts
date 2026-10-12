@@ -296,7 +296,7 @@ function checkAkuma(char: Character): ValidationIssue[] {
 
   // Logia specific
   if (char.akuma.type === "logia") {
-    const logia = char.akuma as any;
+    const logia = char.akuma;
     if (!logia.statusEnhanced?.name) {
       push({
         id: "logia_no_status",

@@ -126,7 +126,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
             {(form.type === "offensive" ? OFFENSIVE_ATTRS : DEFENSIVE_ATTRS).map(v => [v, ATTR_SHORT_LABELS[v]] as const).map(([v, l]) => (
               <button
                 key={v}
-                onClick={() => setForm(f => ({ ...f, targetAttr: v as any }))}
+                onClick={() => setForm(f => ({ ...f, targetAttr: v }))}
                 className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                   form.targetAttr === v ? "bg-amber-600 text-white" : "bg-slate-800 border border-slate-700 text-slate-500"
                 }`}

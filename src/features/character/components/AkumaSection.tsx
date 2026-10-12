@@ -830,14 +830,14 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
         <input
           className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-amber-600"
           placeholder="Nome do status (ex: Queimadura, Cegueira...)"
-          value={(logia as any).statusEnhanced?.name ?? ""}
-          onChange={e => onUpdate(l => { (l as any).statusEnhanced.name = e.target.value; })}
+          value={logia.statusEnhanced?.name ?? ""}
+          onChange={e => onUpdate(l => { l.statusEnhanced.name = e.target.value; })}
         />
         <input
           className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-400 focus:outline-none focus:border-amber-600"
           placeholder="Descrição do efeito..."
-          value={(logia as any).statusEnhanced?.description ?? ""}
-          onChange={e => onUpdate(l => { (l as any).statusEnhanced.description = e.target.value; })}
+          value={logia.statusEnhanced?.description ?? ""}
+          onChange={e => onUpdate(l => { l.statusEnhanced.description = e.target.value; })}
         />
         <p className="text-[10px] text-slate-600">
           Combine 2 efeitos aderidos ou dobre 1 (Vulnerabilidade, Confusão, Fraqueza, Fragilidade, Exaustão, Ferimento).

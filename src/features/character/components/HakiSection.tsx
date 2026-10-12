@@ -1,7 +1,7 @@
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
-import type { HakiPath, AdvancedHakiVariant } from "../../../shared/types/character";
+import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
 
 const STAGE_LABELS = [1, 2, 3, 4, 5];
@@ -81,14 +81,14 @@ export function HakiSection() {
   function setPrimaryStage(s: number) {
     updateDraft(c => {
       if (!c.haki) return;
-      c.haki.primaryStage = s as any;
+      c.haki.primaryStage = s as HakiStage;
     });
   }
 
   function setSecondaryStage(s: number) {
     updateDraft(c => {
       if (!c.haki) return;
-      c.haki.secondaryStage = s as any;
+      c.haki.secondaryStage = s as HakiStage;
     });
   }
 

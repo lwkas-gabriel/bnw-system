@@ -17,8 +17,8 @@ interface CombatState {
 
 interface CombatActions {
   setMode: (mode: CombatMode) => void;
-  setCharA: (char: Character) => void;
-  setCharB: (char: Character) => void;
+  setCharA: (char: Character | null) => void;
+  setCharB: (char: Character | null) => void;
   setChoice: (turn: number, side: "a" | "b", choice: TurnChoice) => void;
   addTurn: () => void;
   removeTurn: (index: number) => void;
