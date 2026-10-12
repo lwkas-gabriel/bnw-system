@@ -100,7 +100,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   // Mechanisms — extract from [b]Name:[/b] blocks inside Mecanismos section
   const mechanismsSection = /<d>Mecanismos Avançados[^<]*<\/d>([\s\S]*?)(?:<d>|<\/div>)/.exec(text)?.[1] ?? "";
   const mechanisms: string[] = [];
-  const mecNameReg = /\[b\]([^\[:\]]+):\[\/b\]/g;
+  const mecNameReg = /\[b\]([^[:\]]+):\[\/b\]/g;
   let mecMatch: RegExpExecArray | null;
   while ((mecMatch = mecNameReg.exec(mechanismsSection)) !== null) {
     const name_ = mecMatch[1].trim().toLowerCase();
@@ -124,7 +124,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   // Crew — extract from [b]Role:[/b] Name lines inside Tripulação section
   const crewSection = /<d>Tripulação[^<]*<\/d>([\s\S]*?)(?:<\/div>)/.exec(text)?.[1] ?? "";
   const crew: Ship["crew"] = [];
-  const crewReg = /\[b\]([^\[\]]+):\[\/b\]\s*([^\n]+)/g;
+  const crewReg = /\[b\]([^[\]]+):\[\/b\]\s*([^\n]+)/g;
   let crewMatch: RegExpExecArray | null;
   while ((crewMatch = crewReg.exec(crewSection)) !== null) {
     const roleLabel = crewMatch[1].trim().toLowerCase();

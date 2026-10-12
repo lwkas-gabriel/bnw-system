@@ -57,7 +57,7 @@ export default function CharacterBuilderPage() {
     } else {
       setShowNameModal(true);
     }
-  }, [id]);
+  }, [id, loadCharacter]);
 
   function handleCreate() {
     if (!nameInput.trim()) return;
