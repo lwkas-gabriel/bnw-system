@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useShipStore } from "../features/ships/store/shipStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button, SectionCard, Badge, Input, Tabs } from "../shared/components";
+import { PageHeader, Button, SectionCard, Badge, Input, Tabs, CopyButton } from "../shared/components";
 import {
   SHIP_SIZES,
   SHIP_SIZES_ORDERED,
@@ -16,7 +16,6 @@ import { COMMISSIONED_SHIP_PRESET } from "../data/factions";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
 import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML } from "../features/ships/utils/shipExporter";
 import { formatBerries, formatBerriesShort } from "../shared/utils/format";
-import { copyToClipboard } from "../shared/utils/download";
 import { engineerDiscount, shipHullPrice, usedComodoSlots } from "../features/ships/utils/shipCalc";
 
 // Comodo → profession badge mapping
@@ -71,7 +70,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
         action={
           <div className="flex gap-2">
             <Button size="sm" onClick={() => downloadShipJSON(ship)}>⬇ JSON</Button>
-            <Button size="sm" onClick={() => copyToClipboard(exportShipToJSONString(ship))}>📋 JSON</Button>
+            <CopyButton label="📋 JSON" getText={() => exportShipToJSONString(ship)} />
             <Button size="sm" onClick={() => downloadShipForumHTML(ship)}>📜 Fórum</Button>
             <Button variant="danger" size="sm" onClick={() => { deleteShip(ship.id); setActiveShip(null); }}>
               Excluir
