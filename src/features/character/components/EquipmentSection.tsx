@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Input, Badge } from "../../../shared/components";
+import { SectionCard, Button, Input, Badge, SegmentedControl, ToggleButton } from "../../../shared/components";
+import { GEM_COSTS } from "../../../data/gemCosts";
 import { BUGIGANGAS, BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import type {
@@ -16,6 +17,11 @@ import { formatBerries } from "../../../shared/utils/format";
 import { isUniqueWeapon } from "../utils/equipment";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
+
+const QUALITY_OPTIONS = (Object.keys(QUALITY_LABELS) as EquipmentQuality[]).map(q => ({
+  value: q,
+  label: <>{QUALITY_LABELS[q]}{QUALITY_BONUS[q] > 0 && <span className="ml-1 opacity-75">+{QUALITY_BONUS[q]}</span>}</>,
+}));
 
 const DEFENSIVE_SLOTS: EquipmentSlot[] = ["head", "arms", "torso", "legs"];
 
@@ -77,21 +83,13 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
       {slotOptions.length > 1 && (
         <div>
           <label className="block text-[10px] text-slate-500 mb-1">Slot</label>
-          <div className="flex flex-wrap gap-1.5">
-            {slotOptions.map(s => (
-              <button
-                key={s}
-                onClick={() => handleChange("slot", s)}
-                className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                  eq.slot === s
-                    ? "bg-amber-600 text-white"
-                    : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                }`}
-              >
-                {SLOT_LABELS[s]}
-              </button>
-            ))}
-          </div>
+          <SegmentedControl
+            className="flex flex-wrap gap-1.5"
+            buttonClassName="px-2.5 py-1 rounded text-xs"
+            options={slotOptions.map(s => ({ value: s, label: SLOT_LABELS[s] }))}
+            value={eq.slot}
+            onChange={s => handleChange("slot", s)}
+          />
         </div>
       )}
 
@@ -106,44 +104,17 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
       {/* Quality */}
       <div>
         <label className="block text-[10px] text-slate-500 mb-1">Qualidade</label>
-        <div className="flex gap-1.5">
-          {(["common", "splendid", "legendary"] as EquipmentQuality[]).map(q => (
-            <button
-              key={q}
-              onClick={() => handleChange("quality", q)}
-              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
-                eq.quality === q
-                  ? "bg-amber-600 text-white"
-                  : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-              }`}
-            >
-              {QUALITY_LABELS[q]}
-              {QUALITY_BONUS[q] > 0 && (
-                <span className="ml-1 opacity-75">+{QUALITY_BONUS[q]}</span>
-              )}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl options={QUALITY_OPTIONS} value={eq.quality} onChange={q => handleChange("quality", q)} />
       </div>
 
       {/* Bonus attribute */}
       <div>
         <label className="block text-[10px] text-slate-500 mb-1">Atributo bônus</label>
-        <div className="flex gap-1.5">
-          {allowedAttrs.map(attr => (
-            <button
-              key={attr}
-              onClick={() => handleChange("bonusAttr", attr)}
-              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
-                eq.bonusAttr === attr
-                  ? "bg-amber-600 text-white"
-                  : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-              }`}
-            >
-              {ATTR_SHORT_LABELS[attr]}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={allowedAttrs.map(attr => ({ value: attr, label: ATTR_SHORT_LABELS[attr] }))}
+          value={eq.bonusAttr}
+          onChange={attr => handleChange("bonusAttr", attr)}
+        />
       </div>
 
       {/* Bugiganga */}
@@ -272,38 +243,17 @@ function UniqueWeaponPicker({ current, onSave, onClear }: UniqueWeaponPickerProp
       {/* Quality */}
       <div>
         <label className="block text-[10px] text-slate-500 mb-1">Qualidade</label>
-        <div className="flex gap-1.5">
-          {(["common", "splendid", "legendary"] as EquipmentQuality[]).map(q => (
-            <button
-              key={q}
-              onClick={() => setQuality(q)}
-              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
-                quality === q ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-              }`}
-            >
-              {QUALITY_LABELS[q]}
-              {QUALITY_BONUS[q] > 0 && <span className="ml-1 opacity-75">+{QUALITY_BONUS[q]}</span>}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl options={QUALITY_OPTIONS} value={quality} onChange={setQuality} />
       </div>
 
       {/* Bonus attribute */}
       <div>
         <label className="block text-[10px] text-slate-500 mb-1">Atributo bônus</label>
-        <div className="flex gap-1.5">
-          {(["precision", "power"] as (keyof BaseAttributes)[]).map(attr => (
-            <button
-              key={attr}
-              onClick={() => setBonusAttr(attr)}
-              className={`flex-1 px-2 py-1.5 rounded text-xs transition-colors ${
-                bonusAttr === attr ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-              }`}
-            >
-              {ATTR_SHORT_LABELS[attr]}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={SLOT_ATTRS.weapon.map(attr => ({ value: attr, label: ATTR_SHORT_LABELS[attr] }))}
+          value={bonusAttr}
+          onChange={setBonusAttr}
+        />
       </div>
 
       {/* Actions */}
@@ -490,22 +440,12 @@ export function EquipmentSection() {
           <div className="p-4 bg-slate-800/60 border border-slate-700 rounded-lg space-y-3">
             {/* Toggle unique / common */}
             <div className="flex gap-2">
-              <button
-                onClick={() => setUniqueMode(false)}
-                className={`flex-1 py-1.5 rounded text-xs transition-colors ${
-                  !uniqueMode ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                }`}
-              >
+              <ToggleButton active={!uniqueMode} onClick={() => setUniqueMode(false)} className="flex-1 py-1.5 rounded text-xs">
                 Arma Comum
-              </button>
-              <button
-                onClick={() => setUniqueMode(true)}
-                className={`flex-1 py-1.5 rounded text-xs transition-colors ${
-                  uniqueMode ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                }`}
-              >
-                Arma Única <span className="text-[10px] opacity-75">20g</span>
-              </button>
+              </ToggleButton>
+              <ToggleButton active={uniqueMode} onClick={() => setUniqueMode(true)} className="flex-1 py-1.5 rounded text-xs">
+                Arma Única <span className="text-[10px] opacity-75">{GEM_COSTS.uniqueWeapon}g</span>
+              </ToggleButton>
             </div>
             {uniqueMode ? (
               <UniqueWeaponPicker

@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Badge, NumberStepper } from "../../../shared/components";
+import { SectionCard, Badge, NumberStepper, ToggleButton, Callout } from "../../../shared/components";
 import {
   PERICIAS,
   PERICIAS_DC,
@@ -62,26 +62,23 @@ export function PericiasSection() {
 
         {/* Human choice */}
         {draft.race === "human" && (
-          <div className="mb-4 p-3 bg-amber-950/20 border border-amber-800/30 rounded-lg">
+          <Callout className="mb-4 p-3 rounded-lg">
             <p className="text-xs font-medium text-amber-400 mb-2">
               Bônus Racial Humano — Escolha 1 perícia para +1 (fora do pool)
             </p>
             <div className="flex flex-wrap gap-1.5">
               {PERICIA_IDS.map(id => (
-                <button
+                <ToggleButton
                   key={id}
+                  active={draft.humanPericiaChoice === id}
                   onClick={() => updateDraft(c => { c.humanPericiaChoice = c.humanPericiaChoice === id ? null : id; })}
-                  className={`px-2 py-1 rounded text-xs transition-colors ${
-                    draft.humanPericiaChoice === id
-                      ? "bg-amber-600 text-white"
-                      : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                  }`}
+                  className="px-2 py-1 rounded text-xs"
                 >
                   {PERICIAS[id].name}
-                </button>
+                </ToggleButton>
               ))}
             </div>
-          </div>
+          </Callout>
         )}
 
         {/* Péricias grid */}

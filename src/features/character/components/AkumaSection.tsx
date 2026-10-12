@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { SectionCard, Button, Badge, SegmentedControl, ToggleButton, Callout } from "../../../shared/components";
 import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID, ZOAN_MODULES } from "../../../data/akumaModules";
 import type { AkumaModuleOption } from "../../../data/akumaModules";
 import type {
@@ -68,15 +68,15 @@ function AttrPicker({ value, color, onChange }: { value: string; color: string; 
   return (
     <div className="flex gap-1">
       {ATTR_KEYS.map(a => (
-        <button
+        <ToggleButton
           key={a}
+          active={value === a}
+          activeClassName={`${color} text-white`}
           onClick={() => onChange(a)}
-          className={`flex-1 py-1 rounded text-[9px] font-bold transition-colors ${
-            value === a ? `${color} text-white` : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-          }`}
+          className="flex-1 py-1 rounded text-[9px] font-bold"
         >
           {ATTR_SHORT_LABELS[a]}
-        </button>
+        </ToggleButton>
       ))}
     </div>
   );
@@ -462,12 +462,12 @@ export function AkumaSection() {
         })()}
 
         {akuma.rank === "S" && (
-          <div className="p-2 bg-amber-950/30 border border-amber-800/30 rounded-lg text-[10px] text-amber-400/80">
+          <Callout className="p-2 text-[10px] text-amber-400/80 rounded-lg">
             ✨ Despertar (Rank S) — requer New World + 5 aventuras.
             {akuma.type === "logia"     && " Domínio Elemental: +5 POD+PRE por 5 EN/turno em área de 3 movimentos."}
             {akuma.type === "paramecia" && " Modo Desperto: +5 PRE ou +5 DEF (escolha/turno) por 5 EN."}
             {akuma.type === "zoan"      && " Point Desperto: +8/+8 por 5 EN/turno. + 1 Habilidade Desperta (2 módulos)."}
-          </div>
+          </Callout>
         )}
       </SectionCard>
 
@@ -796,19 +796,13 @@ function LogiaConfig({ logia, onUpdate }: { logia: LogiaAkuma; onUpdate: (fn: (l
   return (
     <SectionCard title="Configuração Logia" icon="⚡">
       <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-2">Natureza Elemental (+5 ao atributo)</p>
-      <div className="flex gap-2 mb-4">
-        {ATTR_KEYS.map(a => (
-          <button
-            key={a}
-            onClick={() => onUpdate(l => { l.elementalNatureAttr = a; })}
-            className={`flex-1 py-2 rounded-lg text-[10px] font-bold uppercase transition-colors ${
-              logia.elementalNatureAttr === a ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-            }`}
-          >
-            {ATTR_SHORT_LABELS[a]}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        className="flex gap-2 mb-4"
+        buttonClassName="flex-1 py-2 rounded-lg text-[10px] font-bold uppercase"
+        options={ATTR_KEYS.map(a => ({ value: a, label: ATTR_SHORT_LABELS[a] }))}
+        value={logia.elementalNatureAttr}
+        onChange={a => onUpdate(l => { l.elementalNatureAttr = a; })}
+      />
 
       <div className="grid grid-cols-3 gap-2 mb-4">
         <div className="p-2 bg-slate-800 rounded-lg text-center">

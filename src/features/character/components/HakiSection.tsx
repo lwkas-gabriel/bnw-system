@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { SectionCard, Button, Badge, Callout } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
 import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
@@ -217,14 +217,14 @@ export function HakiSection() {
             </div>
             {haki.hasKing && (
               <div className="space-y-2">
-                <div className="p-2 bg-amber-950/30 border border-amber-800/30 rounded-lg">
+                <Callout className="p-2 rounded-lg">
                   <p className="text-xs font-medium text-amber-400 mb-1">Haki do Rei — Controlado</p>
                   <p className="text-[10px] text-slate-500">{KING_HAKI.controlled.description}</p>
                   <div className="flex gap-3 mt-1 text-[10px] text-slate-400">
                     <span>+{KING_HAKI.controlled.persuasionBonus} Persuasão</span>
                     <span>{KING_HAKI.controlled.energyCostPerTurn} EN/turno</span>
                   </div>
-                </div>
+                </Callout>
 
                 {canHaveAdvanced && (
                   <div>

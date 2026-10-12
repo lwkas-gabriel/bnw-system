@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useShipStore } from "../features/ships/store/shipStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button, SectionCard, Badge, Input, Tabs, CopyButton } from "../shared/components";
+import { PageHeader, Button, SectionCard, Badge, Input, Tabs, CopyButton, ToggleButton, StatTile } from "../shared/components";
 import {
   SHIP_SIZES,
   SHIP_SIZES_ORDERED,
@@ -88,10 +88,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
             { label: "Cômodos",   value: `${usedComodoSlots(ship.comodoIds)}/${sizeData.comodoSlots} slots` },
             { label: "Mecanismos", value: `${ship.mechanisms.length}/${sizeData.maxMechanisms}` },
           ].map(s => (
-            <div key={s.label} className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{s.label}</p>
-              <p className="text-sm font-bold font-mono text-slate-200">{s.value}</p>
-            </div>
+            <StatTile key={s.label} label={s.label} value={s.value} />
           ))}
         </div>
 
@@ -401,17 +398,14 @@ function ComodosTab({ shipId }: { shipId: string }) {
       {/* Size filters */}
       <div className="flex gap-1.5 mb-4">
         {(["all", 1, 2, 3] as const).map(f => (
-          <button
+          <ToggleButton
             key={f}
+            active={sizeFilter === f}
             onClick={() => setSizeFilter(f)}
-            className={`px-2.5 py-1 rounded text-[10px] transition-colors ${
-              sizeFilter === f
-                ? "bg-amber-600 text-white"
-                : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-            }`}
+            className="px-2.5 py-1 rounded text-[10px]"
           >
             {f === "all" ? "Todos" : `${f} slot${f > 1 ? "s" : ""}`}
-          </button>
+          </ToggleButton>
         ))}
       </div>
 

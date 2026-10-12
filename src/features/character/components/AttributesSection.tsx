@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { StatControl, SectionCard, Badge, NumberStepper } from "../../../shared/components";
+import { StatControl, SectionCard, Badge, NumberStepper, ToggleButton, StatTile, Callout } from "../../../shared/components";
 import { bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS, totalAttributePoints } from "../utils/attrCalc";
 import { RACES } from "../../../data/races";
 import type { RaceId, BaseAttributes } from "../../../shared/types/character";
@@ -94,14 +94,14 @@ export function AttributesSection() {
           })}
         </div>
         {raceData.specialAbility && (
-          <div className="mt-3 p-2 bg-amber-950/30 border border-amber-800/40 rounded-lg">
+          <Callout className="mt-3 p-2 rounded-lg">
             <p className="text-xs text-amber-400">{raceData.specialAbility}</p>
-          </div>
+          </Callout>
         )}
 
         {/* Human free attribute choice */}
         {draft.race === "human" && (
-          <div className="mt-3 p-3 bg-amber-950/20 border border-amber-800/30 rounded-lg">
+          <Callout className="mt-3 p-3 rounded-lg">
             <p className="text-xs font-medium text-amber-400 mb-2">
               Bônus Racial Humano — Escolha 1 atributo para +1 (fora do pool)
             </p>
@@ -109,21 +109,20 @@ export function AttributesSection() {
               {ATTR_KEYS.map(attr => {
                 const chosen = (draft.racialBonus[attr] ?? 0) > 0;
                 return (
-                  <button
+                  <ToggleButton
                     key={attr}
+                    active={chosen}
                     onClick={() => updateDraft(c => {
                       c.racialBonus = chosen ? {} : { [attr]: 1 };
                     })}
-                    className={`px-3 py-1.5 rounded text-xs transition-colors ${
-                      chosen ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                    }`}
+                    className="px-3 py-1.5 rounded text-xs"
                   >
                     {ATTR_LABELS[attr]}
-                  </button>
+                  </ToggleButton>
                 );
               })}
             </div>
-          </div>
+          </Callout>
         )}
       </SectionCard>
 
@@ -199,11 +198,7 @@ export function AttributesSection() {
             { label: "BPN",     value: charBPN,                       sub: `3/4 × Lv.${draft.level}` },
             { label: "Energia", value: characterMaxEnergy(draft), sub: `Lv×3 + ${draft.energy.energyInvested}g${draft.cyborg?.shift3Bonus === "energy" ? ` +${CYBORG_ENERGY_BONUS} Cib` : ""}` },
           ].map(d => (
-            <div key={d.label} className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{d.label}</p>
-              <p className="text-xl font-bold font-mono text-slate-200">{d.value}</p>
-              <p className="text-[10px] text-slate-600 mt-0.5">{d.sub}</p>
-            </div>
+            <StatTile key={d.label} label={d.label} value={d.value} sub={d.sub} valueClassName="text-xl font-bold font-mono text-slate-200" />
           ))}
         </div>
 

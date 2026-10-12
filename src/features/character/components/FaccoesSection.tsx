@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Badge, Button } from "../../../shared/components";
+import { SectionCard, Badge, Button, Callout } from "../../../shared/components";
 import {
   FACTIONS,
   getFactionRank,
@@ -163,12 +163,12 @@ function DiscountBlock() {
   if (!discountInfo.hasDiscount) return null;
 
   return (
-    <div className="mt-3 p-3 bg-amber-950/20 border border-amber-800/30 rounded-lg">
+    <Callout className="mt-3 p-3 rounded-lg">
       <p className="text-xs font-bold text-amber-400 mb-1">Bônus de Facção — +20 gemas</p>
       <p className="text-[10px] text-slate-400">
         20 gemas adicionais somadas ao seu pool total. Podem ser usadas em qualquer caminho da ficha.
       </p>
-    </div>
+    </Callout>
   );
 }
 

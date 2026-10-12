@@ -1,6 +1,6 @@
 // ArtesMarciaisSection.tsx
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Badge } from "../../../shared/components";
+import { SectionCard, Badge, Callout } from "../../../shared/components";
 import type { AMFaixaId } from "../../../shared/types/character";
 import { GEM_COSTS } from "../../../data/gemCosts";
 import { AM_FAIXAS, AM_FAIXA_ORDER, FAIXA_REGION_LABELS, faixaIndex, faixasUpTo, hasReachedFaixa, isFaixaAvailable } from "../../../data/artesMarciais";
@@ -75,7 +75,7 @@ export function ArtesMarciaisSection() {
 
         {/* Laranja choice */}
         {hasLaranja && (
-          <div className="mt-4 p-3 bg-amber-950/30 border border-amber-800/40 rounded-xl">
+          <Callout className="mt-4 p-3 rounded-xl">
             <p className="text-xs font-medium text-amber-400 mb-2">Faixa Laranja — Escolha</p>
             <div className="flex gap-2">
               <button
@@ -99,7 +99,7 @@ export function ArtesMarciaisSection() {
                 ⚡ 2 Técnicas Rank A
               </button>
             </div>
-          </div>
+          </Callout>
         )}
       </SectionCard>
     </div>

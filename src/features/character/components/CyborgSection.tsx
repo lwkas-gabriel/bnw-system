@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { SectionCard, Button, Badge, StatTile } from "../../../shared/components";
 import type { CyborgShiftData, CyborgShiftLocation, CyborgGear, CyborgPath } from "../../../shared/types/character";
 import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../../../data/attributes";
 import { CYBORG_LOCATIONS, cyborgBonusLabel } from "../../../data/cyborg";
@@ -143,12 +143,13 @@ export function CyborgSection() {
           {ATTR_KEYS.map(attr => {
             const val = attrBonuses[attr];
             return (
-              <div key={attr} className="bg-slate-800 rounded-lg p-2 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500">{ATTR_SHORT_LABELS[attr]}</p>
-                <p className={`text-sm font-bold font-mono ${val > 0 ? "text-amber-400" : "text-slate-600"}`}>
-                  {val > 0 ? `+${val}` : "—"}
-                </p>
-              </div>
+              <StatTile
+                key={attr}
+                compact
+                label={ATTR_SHORT_LABELS[attr]}
+                value={val > 0 ? `+${val}` : "—"}
+                valueClassName={`text-sm font-bold font-mono ${val > 0 ? "text-amber-400" : "text-slate-600"}`}
+              />
             );
           })}
         </div>

@@ -1,5 +1,5 @@
 import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { SectionCard, Button, Badge, StatTile, Callout } from "../../../shared/components";
 import type { CompanionData, CompanionRank, CompanionType } from "../../../shared/types/character";
 import { GEM_COSTS } from "../../../data/gemCosts";
 
@@ -69,11 +69,14 @@ export function CompanheirosSection() {
           {RANK_OPTIONS.map(r => {
             const lim = RANK_LIMITS[r.value];
             return (
-              <div key={r.value} className="bg-slate-800 rounded-lg p-2 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{r.label}</p>
-                <p className="text-xs font-bold text-amber-400">{r.cost}g</p>
-                <p className="text-[9px] text-slate-600 mt-1">Nv. máx {lim.maxLevel} · {lim.maxGems}g</p>
-              </div>
+              <StatTile
+                key={r.value}
+                compact
+                label={r.label}
+                value={`${r.cost}g`}
+                valueClassName="text-xs font-bold text-amber-400"
+                sub={`Nv. máx ${lim.maxLevel} · ${lim.maxGems}g`}
+              />
             );
           })}
         </div>
@@ -163,7 +166,7 @@ export function CompanheirosSection() {
 
               {/* Type-specific info */}
               {isMascote && (
-                <div className="bg-amber-950/20 border border-amber-800/40 rounded-lg p-3 space-y-1.5">
+                <Callout className="p-3 space-y-1.5 rounded-lg">
                   <p className="text-xs font-semibold text-amber-400">Mascote — Regras especiais</p>
                   <p className="text-xs text-slate-400">
                     Lutam juntos com o Adestrador, intercalando turnos. Compartilham a CON de menor valor.
@@ -177,7 +180,7 @@ export function CompanheirosSection() {
                   <p className="text-[10px] text-slate-600">
                     Este bônus pode ultrapassar o limite do Rank. Mascotes não têm Perícias, Profissões nem Haki.
                   </p>
-                </div>
+                </Callout>
               )}
 
               {isAutomato && (

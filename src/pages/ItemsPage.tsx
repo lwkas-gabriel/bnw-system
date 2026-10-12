@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PageHeader, SectionCard, Badge } from "../shared/components";
+import { PageHeader, SectionCard, Badge, SegmentedControl } from "../shared/components";
 import { BUGIGANGAS } from "../data/bugigangas";
 import { UNIQUE_WEAPONS } from "../data/uniqueWeapons";
 import type { BugigangaEffect } from "../data/bugigangas";
@@ -199,36 +199,20 @@ export default function ItemsPage() {
             >
               {/* Filters */}
               <div className="flex flex-wrap gap-2 mb-4">
-                <div className="flex gap-1">
-                  {(["all", "pericia_bonus", "interpretive"] as const).map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setEffectFilter(f)}
-                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                        effectFilter === f
-                          ? "bg-amber-600 text-white"
-                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                      }`}
-                    >
-                      {f === "all" ? "Todos" : EFFECT_LABELS[f]}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex gap-1">
-                  {(["all", "common", "splendid", "legendary"] as const).map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setQualityFilter(f)}
-                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                        qualityFilter === f
-                          ? "bg-amber-600 text-white"
-                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                      }`}
-                    >
-                      {f === "all" ? "Todas qualidades" : QUALITY_LABELS[f]}
-                    </button>
-                  ))}
-                </div>
+                <SegmentedControl
+                  className="flex gap-1"
+                  buttonClassName="px-2 py-1 rounded text-[10px]"
+                  options={(["all", "pericia_bonus", "interpretive"] as const).map(f => ({ value: f, label: f === "all" ? "Todos" : EFFECT_LABELS[f] }))}
+                  value={effectFilter}
+                  onChange={setEffectFilter}
+                />
+                <SegmentedControl
+                  className="flex gap-1"
+                  buttonClassName="px-2 py-1 rounded text-[10px]"
+                  options={(["all", "common", "splendid", "legendary"] as const).map(f => ({ value: f, label: f === "all" ? "Todas qualidades" : QUALITY_LABELS[f] }))}
+                  value={qualityFilter}
+                  onChange={setQualityFilter}
+                />
               </div>
 
               {/* Grid */}
