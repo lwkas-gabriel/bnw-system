@@ -69,6 +69,7 @@ Nunca atualizar apenas um dos dois.
 | 0.6.0  | Aba de embarcação comissionada no builder e upgrade de tamanho de navio | — |
 | 0.7.0  | Exportador/importador de fichas de embarcação; tabelas completas AM no fórum; bônus racial+AM detalhados | ships/utils (shipExporter, shipImporter) |
 | 0.7.1  | Fix: rótulo da patente da facção no export do fórum; /deliver com criação opcional de PR | — |
+| 0.7.2  | Refatoração de manutenibilidade (fontes únicas em src/data, primitivos de UI, divisão de componentes, lint sem any) + 10 correções de bugs | — |
 
 ---
 
