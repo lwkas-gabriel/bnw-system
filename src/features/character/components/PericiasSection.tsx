@@ -24,12 +24,12 @@ export function PericiasSection() {
   const racialPericiaId: PericiaId | undefined =
     draft.race === "human"
       ? (draft.humanPericiaChoice ?? undefined)
-      : RACE_PERICIA_BONUS[draft.race] as PericiaId | undefined;
+      : RACE_PERICIA_BONUS[draft.race];
 
   // Zoan class bonus (outside the pool)
   const zoanPericiaId: PericiaId | undefined =
     draft.akuma?.type === "zoan"
-      ? ZOAN_CLASS_PERICIA_BONUS[(draft.akuma as ZoanAkuma).animalClass] as PericiaId | undefined
+      ? ZOAN_CLASS_PERICIA_BONUS[(draft.akuma as ZoanAkuma).animalClass]
       : undefined;
 
   function getEffectiveValue(id: PericiaId): number {

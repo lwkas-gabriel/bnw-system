@@ -300,13 +300,12 @@ function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<
   if (char.race === "human") {
     add(char.humanPericiaChoice, "Raça: Humano", 1);
   } else {
-    add(RACE_PERICIA_BONUS[char.race] as PericiaId | undefined, `Raça: ${raceForumLabel(char.race)}`, 1);
+    add(RACE_PERICIA_BONUS[char.race], `Raça: ${raceForumLabel(char.race)}`, 1);
   }
 
   // Zoan class bonus
   if (char.akuma?.type === "zoan") {
-    const animalClass = (char.akuma as any).animalClass as string;
-    add(ZOAN_CLASS_PERICIA_BONUS[animalClass], "Zoan", 1);
+    add(ZOAN_CLASS_PERICIA_BONUS[char.akuma.animalClass], "Zoan", 1);
   }
 
   // Cyborg shift bugigangas (referenced by ID)
@@ -363,10 +362,10 @@ export function exportToForumHTML(char: Character): string {
   if (racialDef) racialParts.push(`+${racialDef} DEF`);
   if (racialCon) racialParts.push(`+${racialCon} CON`);
   // Racial/human/zoan pericia bonus
-  const racialPericiaId = char.race === "human" ? char.humanPericiaChoice : (RACE_PERICIA_BONUS[char.race] as PericiaId | undefined);
+  const racialPericiaId = char.race === "human" ? char.humanPericiaChoice : RACE_PERICIA_BONUS[char.race];
   if (racialPericiaId) racialParts.push(`+1 ${PERICIAS[racialPericiaId].name}`);
   if (char.akuma?.type === "zoan") {
-    const zoanPericiaId = ZOAN_CLASS_PERICIA_BONUS[(char.akuma as any).animalClass] as PericiaId | undefined;
+    const zoanPericiaId = ZOAN_CLASS_PERICIA_BONUS[(char.akuma as ZoanAkuma).animalClass];
     if (zoanPericiaId) racialParts.push(`+1 ${PERICIAS[zoanPericiaId].name} (Zoan)`);
   }
   const racialStr = racialParts.length > 0 ? racialParts.join(", ") : "Nenhum";

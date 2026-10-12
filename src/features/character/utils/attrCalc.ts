@@ -1,5 +1,6 @@
-import type { BaseAttributes, Character, PericiaId, ZoanAkuma, ZoanClass } from "../../../shared/types/character";
+import type { BaseAttributes, Character, PericiaId, ZoanAkuma } from "../../../shared/types/character";
 import { ATTR_KEYS, BASE_ATTRIBUTES } from "../../../data/attributes";
+import { ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 
 /** Total péricia points available: 3 at L1, +1 every even level. L40 = 23. */
 export function totalPericiaPoints(level: number): number {
@@ -134,13 +135,6 @@ export function validateCharacter(char: Character): Record<string, string[]> {
   };
 }
 
-const ZOAN_CLASS_PERICIA: Record<ZoanClass, PericiaId> = {
-  flying:    "atletismo",
-  herbivore: "sobrevivencia",
-  carnivore: "furtividade",
-  rational:  "logica",
-};
-
 /**
  * Returns the pericias bonus granted by a Zoan animal class, or null if the
  * character has no Zoan Akuma. This bonus is applied ON TOP of graduated values
@@ -148,7 +142,7 @@ const ZOAN_CLASS_PERICIA: Record<ZoanClass, PericiaId> = {
  */
 export function getZoanClassPericiaBonus(char: Character): { pericia: PericiaId; value: 1 } | null {
   if (char.akuma?.type !== "zoan") return null;
-  const pericia = ZOAN_CLASS_PERICIA[(char.akuma as ZoanAkuma).animalClass];
+  const pericia = ZOAN_CLASS_PERICIA_BONUS[(char.akuma as ZoanAkuma).animalClass];
   return pericia ? { pericia, value: 1 } : null;
 }
 
