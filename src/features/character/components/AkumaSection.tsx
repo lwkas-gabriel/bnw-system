@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDraft } from "../hooks/useDraft";
-import { SectionCard, Button, Badge, SegmentedControl, ToggleButton, Callout } from "../../../shared/components";
+import { SectionCard, Button, Badge, SegmentedControl, ToggleButton, Callout, Switch } from "../../../shared/components";
 import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID, ZOAN_MODULES } from "../../../data/akumaModules";
 import type { AkumaModuleOption } from "../../../data/akumaModules";
 import type {
@@ -52,17 +52,6 @@ const PARAMECIA_ACTIVE_SLOTS:  Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S
 const PARAMECIA_ACTIVE_EN:     Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 0 };
 
 // ─── Small helpers ────────────────────────────────────────────────────────────
-
-function Toggle({ value, onChange }: { value: boolean; onChange: () => void }) {
-  return (
-    <button
-      onClick={onChange}
-      className={`relative w-10 h-5 rounded-full transition-colors ${value ? "bg-amber-600" : "bg-slate-700"}`}
-    >
-      <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform mx-0.5 ${value ? "translate-x-5" : ""}`} />
-    </button>
-  );
-}
 
 function AttrPicker({ value, color, onChange }: { value: string; color: string; onChange: (a: AttrKey) => void }) {
   return (
@@ -578,14 +567,14 @@ function ZoanConfig({ zoan, onUpdate }: { zoan: ZoanAkuma; onUpdate: (fn: (z: Zo
               <p className="text-xs text-slate-300">Mitológica</p>
               <p className="text-[10px] text-slate-500">Módulos exclusivos + Retém 1 CON</p>
             </div>
-            <Toggle value={zoan.isMythical} onChange={() => onUpdate(z => { z.isMythical = !z.isMythical; })} />
+            <Switch checked={zoan.isMythical} onChange={() => onUpdate(z => { z.isMythical = !z.isMythical; })} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs text-slate-300">Ancestral</p>
               <p className="text-[10px] text-slate-500">Variante ancestral da espécie</p>
             </div>
-            <Toggle value={zoan.isAncestral} onChange={() => onUpdate(z => { z.isAncestral = !z.isAncestral; })} />
+            <Switch checked={zoan.isAncestral} onChange={() => onUpdate(z => { z.isAncestral = !z.isAncestral; })} />
           </div>
         </div>
 

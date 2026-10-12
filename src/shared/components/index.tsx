@@ -153,20 +153,55 @@ interface GemBudgetBarProps {
   total: number;
 }
 export function GemBudgetBar({ spent, total }: GemBudgetBarProps) {
-  const pct = Math.min(100, (spent / total) * 100);
   const over = spent > total;
   return (
     <div className="flex items-center gap-3">
-      <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full transition-all duration-300 ${over ? "bg-red-500" : "bg-amber-500"}`}
-          style={{ width: `${pct}%` }}
-        />
-      </div>
+      <ProgressBar value={spent} max={total} barClassName={over ? "bg-red-500" : "bg-amber-500"} className="flex-1 h-2 bg-slate-800" />
       <span className={`text-xs font-mono font-bold ${over ? "text-red-400" : "text-amber-400"}`}>
         {spent}<span className="text-slate-500">/{total}g</span>
       </span>
     </div>
+  );
+}
+
+// ─── ProgressBar ──────────────────────────────────────────────────────────────
+interface ProgressBarProps {
+  value: number;
+  max: number;
+  /** Cor da barra preenchida */
+  barClassName?: string;
+  /** Classes do trilho (altura, cor de fundo, margens) */
+  className?: string;
+}
+export function ProgressBar({ value, max, barClassName = "bg-amber-500", className = "w-full h-2 bg-slate-700" }: ProgressBarProps) {
+  const pct = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
+  return (
+    <div className={`rounded-full overflow-hidden ${className}`}>
+      <div className={`h-full rounded-full transition-all duration-300 ${barClassName}`} style={{ width: `${pct}%` }} />
+    </div>
+  );
+}
+
+// ─── Switch ───────────────────────────────────────────────────────────────────
+interface SwitchProps {
+  checked: boolean;
+  onChange: () => void;
+  disabled?: boolean;
+  size?: "sm" | "md";
+}
+/** Interruptor liga/desliga */
+export function Switch({ checked, onChange, disabled, size = "sm" }: SwitchProps) {
+  const track = size === "sm" ? "w-10 h-5" : "w-12 h-6";
+  const knob  = size === "sm" ? "w-4 h-4" : "w-5 h-5";
+  const on    = size === "sm" ? "translate-x-5" : "translate-x-[1.375rem]";
+  return (
+    <button
+      onClick={onChange}
+      disabled={disabled}
+      className={`relative ${track} rounded-full transition-colors ${checked ? "bg-amber-600" : "bg-slate-700"} disabled:opacity-40 disabled:cursor-not-allowed`}
+    >
+      <span className={`absolute top-0.5 left-0.5 ${knob} bg-white rounded-full shadow transition-transform ${checked ? on : ""}`} />
+    </button>
   );
 }
 
@@ -176,8 +211,6 @@ interface SectionCardProps {
   icon?: string;
   children: ReactNode;
   action?: ReactNode;
-  collapsible?: boolean;
-  defaultOpen?: boolean;
 }
 export function SectionCard({ title, icon, children, action }: SectionCardProps) {
   return (

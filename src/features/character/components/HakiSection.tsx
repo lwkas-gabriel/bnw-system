@@ -1,5 +1,5 @@
 import { useDraft } from "../hooks/useDraft";
-import { SectionCard, Button, Badge, Callout } from "../../../shared/components";
+import { SectionCard, Button, Badge, Callout, Switch } from "../../../shared/components";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
 import type { HakiPath, HakiStage, AdvancedHakiVariant } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
@@ -207,13 +207,7 @@ export function HakiSection() {
                 <p className="text-xs text-slate-400">Custo: 20g. Requer estágio 5 em um dos Hakis.</p>
                 {!canHaveKing && <p className="text-[10px] text-amber-500/80 mt-0.5">Atinja estágio 5 primeiro.</p>}
               </div>
-              <button
-                onClick={toggleKing}
-                disabled={!canHaveKing && !haki.hasKing}
-                className={`relative w-12 h-6 rounded-full transition-colors ${haki.hasKing ? "bg-amber-600" : "bg-slate-700"} disabled:opacity-40 disabled:cursor-not-allowed`}
-              >
-                <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${haki.hasKing ? "translate-x-6" : "translate-x-0.5"}`} />
-              </button>
+              <Switch size="md" checked={haki.hasKing} onChange={toggleKing} disabled={!canHaveKing && !haki.hasKing} />
             </div>
             {haki.hasKing && (
               <div className="space-y-2">

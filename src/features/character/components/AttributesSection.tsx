@@ -1,6 +1,6 @@
 import { useCharacterStore } from "../store/characterStore";
 import { useDraft } from "../hooks/useDraft";
-import { StatControl, SectionCard, Badge, NumberStepper, ToggleButton, StatTile, Callout } from "../../../shared/components";
+import { StatControl, SectionCard, Badge, NumberStepper, ToggleButton, StatTile, Callout, EmptyState } from "../../../shared/components";
 import { bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS, totalAttributePoints } from "../utils/attrCalc";
 import { RACES } from "../../../data/races";
 import type { RaceId, BaseAttributes } from "../../../shared/types/character";
@@ -308,7 +308,7 @@ export function AttributesSection() {
       {budget && (
         <SectionCard title="Gemas — Breakdown" icon="💎">
           {budget.breakdown.length === 0 ? (
-            <p className="text-xs text-slate-600 text-center py-4">Nenhum caminho adquirido ainda.</p>
+            <EmptyState compact title="Nenhum caminho adquirido ainda." />
           ) : (
             <div className="space-y-1">
               {budget.breakdown.map((b, i) => (

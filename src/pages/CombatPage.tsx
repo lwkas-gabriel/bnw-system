@@ -1,6 +1,6 @@
 import { useCombatStore } from "../features/combat/store/combatStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button } from "../shared/components";
+import { PageHeader, Button, EmptyState } from "../shared/components";
 import type { Character } from "../shared/types/character";
 import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../data/attributes";
 import { baseAttributes } from "../features/character/utils/attrCalc";
@@ -18,7 +18,7 @@ function CombatantPanel({
         <div>
           <p className="text-xs text-slate-500 mb-3">Selecione um personagem salvo ou configure manualmente.</p>
           {saved.length === 0 ? (
-            <p className="text-xs text-slate-600 text-center py-4">Nenhum personagem salvo.</p>
+            <EmptyState compact title="Nenhum personagem salvo." />
           ) : (
             <div className="space-y-1 max-h-48 overflow-y-auto">
               {saved.map(c => (

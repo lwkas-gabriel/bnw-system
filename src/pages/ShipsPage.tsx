@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useShipStore } from "../features/ships/store/shipStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button, SectionCard, Badge, Input, Tabs, CopyButton, ToggleButton, StatTile } from "../shared/components";
+import { PageHeader, Button, SectionCard, Badge, Input, Tabs, CopyButton, ToggleButton, StatTile, ProgressBar, EmptyState } from "../shared/components";
 import {
   SHIP_SIZES,
   SHIP_SIZES_ORDERED,
@@ -100,14 +100,12 @@ function OverviewTab({ shipId }: { shipId: string }) {
               {ship.currentHull}/{ship.maxHull}
             </span>
           </div>
-          <div className="w-full h-2.5 bg-slate-700 rounded-full overflow-hidden mb-2">
-            <div
-              className={`h-full rounded-full transition-all ${
-                hullPct > 60 ? "bg-green-500" : hullPct > 30 ? "bg-amber-500" : "bg-red-500"
-              }`}
-              style={{ width: `${hullPct}%` }}
-            />
-          </div>
+          <ProgressBar
+            value={ship.currentHull}
+            max={ship.maxHull}
+            className="w-full h-2.5 bg-slate-700 mb-2"
+            barClassName={hullPct > 60 ? "bg-green-500" : hullPct > 30 ? "bg-amber-500" : "bg-red-500"}
+          />
           <div className="flex gap-2">
             <Button variant="ghost" size="sm" onClick={() => updateHull(ship.id, -1)} className="flex-1">−1</Button>
             <Button variant="ghost" size="sm" onClick={() => updateHull(ship.id, -5)} className="flex-1">−5</Button>
@@ -267,7 +265,7 @@ function CrewTab({ shipId }: { shipId: string }) {
       )}
 
       {ship.crew.length === 0 ? (
-        <p className="text-xs text-slate-600 text-center py-4">Nenhum tripulante ainda.</p>
+        <EmptyState compact title="Nenhum tripulante ainda." />
       ) : (
         <div className="space-y-1.5">
           {ship.crew.map(member => (
@@ -387,12 +385,7 @@ function ComodosTab({ shipId }: { shipId: string }) {
     >
       {/* Slot bar */}
       <div className="mb-4">
-        <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all ${remainingSlots === 0 ? "bg-red-500" : "bg-amber-500"}`}
-            style={{ width: `${Math.min(100, (usedSlots / sizeData.comodoSlots) * 100)}%` }}
-          />
-        </div>
+        <ProgressBar value={usedSlots} max={sizeData.comodoSlots} barClassName={remainingSlots === 0 ? "bg-red-500" : "bg-amber-500"} />
       </div>
 
       {/* Size filters */}
@@ -481,7 +474,7 @@ function KlabautermannTab({ shipId }: { shipId: string }) {
 
   const { klabautermann } = ship;
   const progress = Math.min(10, klabautermann.voyageCount);
-  const pct = (progress / 10) * 100;
+  const pct = (progress / KLABAUTERMANN_VOYAGES) * 100;
 
   return (
     <SectionCard title="Klabautermann" icon="👻">
@@ -498,14 +491,7 @@ function KlabautermannTab({ shipId }: { shipId: string }) {
             {klabautermann.voyageCount}/{KLABAUTERMANN_VOYAGES}
           </span>
         </div>
-        <div className="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all ${
-              klabautermann.active ? "bg-amber-500" : "bg-sky-600"
-            }`}
-            style={{ width: `${pct}%` }}
-          />
-        </div>
+        <ProgressBar value={pct} max={100} className="w-full h-3 bg-slate-700" barClassName={klabautermann.active ? "bg-amber-500" : "bg-sky-600"} />
         <div className="flex justify-between mt-1">
           {[0, 2, 4, 6, 8, 10].map(n => (
             <span key={n} className={`text-[9px] ${klabautermann.voyageCount >= n ? "text-slate-400" : "text-slate-600"}`}>
