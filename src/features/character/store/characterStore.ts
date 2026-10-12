@@ -64,6 +64,23 @@ function createBlankCharacter(name: string, gemBudget = GEM_BUDGET_MIN, level = 
   };
 }
 
+/** Estado derivado do draft: erros de validação e orçamento de gemas */
+function derivedState(char: Character): Pick<CharacterState, "errors" | "budget"> {
+  return { errors: validateCharacter(char), budget: computeGemBudget(char) };
+}
+
+/** Compat: personagens salvos antes das perícias tinham só `ambition` */
+function migrateLegacyCharacter(char: Character): Character {
+  if (char.pericias) return char;
+  const legacy = char as Character & { ambition?: number };
+  return {
+    ...char,
+    pericias: { ...blankPericias(), ambicao: Number(legacy.ambition) || 0 },
+    humanPericiaChoice: null,
+    professions: [],
+  };
+}
+
 // ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useCharacterStore = create<CharacterState & CharacterActions>()(
@@ -78,28 +95,17 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
         const char = createBlankCharacter(name, gemBudget, level);
         set(state => {
           state.draft = char;
-          state.errors = validateCharacter(char);
-          state.budget = computeGemBudget(char);
+          Object.assign(state, derivedState(char));
         });
       },
 
       loadCharacter: (id) => {
-        let found = get().saved.find(c => c.id === id) ?? null;
-        if (!found) return;
-        // Backward compat: migrate pre-pericias characters saved in localStorage
-        if (!(found as any).pericias) {
-          const legacy = found as any;
-          found = {
-            ...found,
-            pericias: { ...blankPericias(), ambicao: Number(legacy.ambition) || 0 },
-            humanPericiaChoice: null,
-            professions: [],
-          };
-        }
+        const saved = get().saved.find(c => c.id === id);
+        if (!saved) return;
+        const char = migrateLegacyCharacter(saved);
         set(state => {
-          state.draft = found;
-          state.errors = validateCharacter(found!);
-          state.budget = computeGemBudget(found!);
+          state.draft = char;
+          Object.assign(state, derivedState(char));
         });
       },
 
@@ -124,8 +130,7 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
         set(state => {
           if (!state.draft) return;
           updater(state.draft);
-          state.errors = validateCharacter(state.draft);
-          state.budget = computeGemBudget(state.draft);
+          Object.assign(state, derivedState(state.draft));
         });
       },
 
@@ -139,10 +144,7 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
       revalidate: () => {
         const draft = get().draft;
         if (!draft) return;
-        set(state => {
-          state.errors = validateCharacter(draft);
-          state.budget = computeGemBudget(draft);
-        });
+        set(state => { Object.assign(state, derivedState(draft)); });
       },
     })),
     {
