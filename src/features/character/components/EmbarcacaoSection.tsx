@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../store/characterStore";
 import { useShipStore } from "../../ships/store/shipStore";
 import { getFactionRank, COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
-import { SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS_BY_ID } from "../../../data/ships";
+import { SHIP_SIZES, SHIP_MECHANISMS_BY_ID, SHIP_COMODOS_BY_ID } from "../../../data/ships";
 import { Button, Input, Badge, SectionCard } from "../../../shared/components";
 import type { ShipOwnership } from "../../../shared/types/ship";
 
@@ -95,7 +95,7 @@ export function EmbarcacaoSection() {
 
   // ─── Estado A: sem navio criado ────────────────────────────────────────────
   const presetSize      = SHIP_SIZES[COMMISSIONED_SHIP_PRESET.size];
-  const presetMechanism = SHIP_MECHANISMS.find(m => m.id === COMMISSIONED_SHIP_PRESET.mechanisms[0]);
+  const presetMechanism = SHIP_MECHANISMS_BY_ID[COMMISSIONED_SHIP_PRESET.mechanisms[0]];
   const presetComodos   = COMMISSIONED_SHIP_PRESET.comodoIds
     .map(id => SHIP_COMODOS_BY_ID[id])
     .filter(Boolean);

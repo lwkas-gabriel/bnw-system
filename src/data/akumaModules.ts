@@ -42,3 +42,11 @@ export const ZOAN_MODULES: AkumaModuleOption[] = [
   { id: "status_res", label: "Resistência a Status",        description: "Resiste a um tipo de status (duração ÷ 2)",               slots: 1, mythicalOnly: true },
   { id: "alter_env",  label: "Altera Ambiente",             description: "Altera o ambiente de combate por 2 turnos",               slots: 1, mythicalOnly: true },
 ];
+
+export const PARAMECIA_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object.fromEntries(
+  PARAMECIA_MODULES.map(m => [m.id, m]),
+);
+
+export const ZOAN_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object.fromEntries(
+  ZOAN_MODULES.map(m => [m.id, m]),
+);

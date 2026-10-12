@@ -6,9 +6,9 @@ import { GEM_COSTS } from "../../../data/gemCosts";
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const RANK_OPTIONS: { value: CompanionRank; label: string; cost: number }[] = [
-  { value: "C", label: "Rank C", cost: 10 },
-  { value: "B", label: "Rank B", cost: 20 },
-  { value: "A", label: "Rank A", cost: 30 },
+  { value: "C", label: "Rank C", cost: GEM_COSTS.companion.C },
+  { value: "B", label: "Rank B", cost: GEM_COSTS.companion.B },
+  { value: "A", label: "Rank A", cost: GEM_COSTS.companion.A },
 ];
 
 const RANK_LIMITS: Record<CompanionRank, { maxLevel: number; maxGems: number; maxPericia: number }> = {

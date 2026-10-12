@@ -6,7 +6,7 @@ import { hakiStageNum } from "./haki";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
-import { BUGIGANGAS } from "../../../data/bugigangas";
+import { BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { FACTIONS, getFactionLabel } from "../../../data/factions";
 import { faixaForumLabel, faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
@@ -312,7 +312,7 @@ function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<
   // Cyborg shift bugigangas (referenced by ID)
   for (const shift of char.cyborg?.shifts ?? []) {
     if (!shift.bugigangaId) continue;
-    const bug = BUGIGANGAS.find(b => b.id === shift.bugigangaId);
+    const bug = shift.bugigangaId ? BUGIGANGAS_BY_ID[shift.bugigangaId] : undefined;
     if (bug?.periciaBonus) add(bug.periciaBonus.pericia, `Bugiganga: ${bug.name}`, bug.periciaBonus.value);
   }
 

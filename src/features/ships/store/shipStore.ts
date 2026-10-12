@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { Ship, ShipSize, ShipOwnership, CrewMember } from "../../../shared/types/ship";
-import { SHIP_MAX_HULL, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
+import { KLABAUTERMANN_VOYAGES, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
 import { COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
 import { SHIP_COMODOS_BY_ID } from "../../../data/ships";
 
@@ -62,7 +62,7 @@ function usedComodoSlots(comodoIds: string[]): number {
 }
 
 function createBlankShip(name: string, size: ShipSize, builtByEngineer = false): Ship {
-  const maxHull = SHIP_MAX_HULL[size];
+  const maxHull = SHIP_SIZES[size].maxHull;
   return {
     id: crypto.randomUUID(),
     name,
@@ -178,7 +178,7 @@ export const useShipStore = create<ShipState & ShipActions>()(
           const ship = state.ships.find(s => s.id === shipId);
           if (!ship) return;
           ship.klabautermann.voyageCount += 1;
-          if (!ship.klabautermann.active && ship.klabautermann.voyageCount >= 10) {
+          if (!ship.klabautermann.active && ship.klabautermann.voyageCount >= KLABAUTERMANN_VOYAGES) {
             ship.klabautermann.active = true;
           }
         });
@@ -223,7 +223,7 @@ export const useShipStore = create<ShipState & ShipActions>()(
           const newIdx     = SHIP_SIZES_ORDERED.indexOf(newSize);
           if (newIdx <= currentIdx) return;
           ship.size    = newSize;
-          ship.maxHull = SHIP_MAX_HULL[newSize];
+          ship.maxHull = SHIP_SIZES[newSize].maxHull;
           // currentHull kept as-is; mechanisms and comodoIds preserved
         });
       },

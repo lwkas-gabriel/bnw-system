@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Input, Badge } from "../../../shared/components";
-import { BUGIGANGAS } from "../../../data/bugigangas";
+import { BUGIGANGAS, BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import type {
   Equipment,
@@ -154,7 +154,7 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
               handleChange("bugiganga", undefined);
               return;
             }
-            const bug = BUGIGANGAS.find(b => b.id === e.target.value);
+            const bug = BUGIGANGAS_BY_ID[e.target.value];
             if (bug) {
               handleChange("bugiganga", {
                 name: bug.name,

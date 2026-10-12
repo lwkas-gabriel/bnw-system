@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
-import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
+import { PARAMECIA_MODULES, PARAMECIA_MODULES_BY_ID, ZOAN_MODULES } from "../../../data/akumaModules";
 import type { AkumaModuleOption } from "../../../data/akumaModules";
 import type {
   AkumaRank, ZoanAkuma, LogiaAkuma, ParameciaAkuma, ZoanClass, ParameciaClass,
@@ -1012,7 +1012,7 @@ function ParameciaHabilidadeEditor({
   onRemoveModule: (idx: number) => void;
 }) {
   const usedSlots = habilidade.modules.reduce((sum, modId) => {
-    const m = PARAMECIA_MODULES.find(m => m.id === modId);
+    const m = PARAMECIA_MODULES_BY_ID[modId];
     return sum + (m?.slots ?? 1);
   }, 0);
 
@@ -1072,7 +1072,7 @@ function ParameciaHabilidadeEditor({
       {/* Module badges */}
       <div className="flex flex-wrap gap-1">
         {habilidade.modules.map((modId, idx) => {
-          const m = PARAMECIA_MODULES.find(m => m.id === modId);
+          const m = PARAMECIA_MODULES_BY_ID[modId];
           return m ? (
             <ModuleBadge key={idx} module={m} onRemove={() => onRemoveModule(idx)} />
           ) : null;

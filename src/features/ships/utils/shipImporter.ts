@@ -1,5 +1,6 @@
 import type { Ship, ShipSize, ShipOwnership, ShipRole } from "../../../shared/types/ship";
-import { SHIP_MAX_HULL, SHIP_MECHANISMS, SHIP_COMODOS } from "../../../data/ships";
+import { KLABAUTERMANN_VOYAGES, SHIP_COMODOS, SHIP_MECHANISMS, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES } from "../../../data/ships";
+import { invertLabels } from "../../../shared/utils/labels";
 import { readFileAsText } from "../../character/utils/importer";
 
 // ─── Result type ──────────────────────────────────────────────────────────────
@@ -15,24 +16,11 @@ export interface ShipImportResult {
 
 // ─── Reverse label maps ───────────────────────────────────────────────────────
 
-const SIZE_BY_LABEL: Record<string, ShipSize> = {
-  "individual": "individual", "pequeno": "pequeno", "médio": "medio",
-  "grande": "grande", "gigante": "gigante", "colossal": "colossal",
-};
-
-const OWNERSHIP_BY_LABEL: Record<string, ShipOwnership> = {
-  "próprio": "owned",
-  "comissionado (marinha)": "navy_permanent",
-  "temporário (cp — 1 aventura)": "cp_temporary",
-  "galeão emprestado (cp comandante)": "cp_galeon",
-};
-
-const ROLE_BY_LABEL: Record<string, ShipRole> = {
-  "capitão": "captain", "imediato": "first_mate", "navegante": "navigator",
-  "médico": "doctor", "cozinheiro": "cook", "carpinteiro": "shipwright",
-  "músico": "musician", "atirador": "sniper", "arqueólogo(a)": "archaeologist",
-  "tripulante": "crew",
-};
+const SIZE_BY_LABEL = invertLabels(
+  Object.fromEntries(Object.values(SHIP_SIZES).map(s => [s.id, s.name])) as Record<ShipSize, string>,
+);
+const OWNERSHIP_BY_LABEL = invertLabels(SHIP_OWNERSHIP_LABELS);
+const ROLE_BY_LABEL = invertLabels(SHIP_ROLE_LABELS);
 
 // ─── JSON import ──────────────────────────────────────────────────────────────
 
@@ -84,13 +72,13 @@ function parseShipDoHTML(text: string): ShipImportResult {
   if (!sizeRaw || !SIZE_BY_LABEL[sizeRaw]) warnings.push("Tamanho não reconhecido — assumido Médio.");
 
   const hullMatch = /<e>Casco \(Hull\): <\/e>(\d+)\/(\d+)/.exec(text);
-  const maxHull = hullMatch ? parseInt(hullMatch[2]) : SHIP_MAX_HULL[size];
+  const maxHull = hullMatch ? parseInt(hullMatch[2]) : SHIP_SIZES[size].maxHull;
   const currentHull = hullMatch ? parseInt(hullMatch[1]) : maxHull;
 
   const builtByEngineer = /<e>Construído por Engenheiro: <\/e>Sim/.test(text);
   const klabActive = /<e>Klabautermann: <\/e>Ativo/.test(text);
   const voyageMatch = /\((\d+)\/10 viagens\)/.exec(text);
-  const voyageCount = voyageMatch ? parseInt(voyageMatch[1]) : (klabActive ? 10 : 0);
+  const voyageCount = voyageMatch ? parseInt(voyageMatch[1]) : (klabActive ? KLABAUTERMANN_VOYAGES : 0);
 
   const ownershipRaw = extract(/<e>Aquisição: <\/e>([^\n<]+)/)?.toLowerCase();
   const ownership: ShipOwnership = (ownershipRaw && OWNERSHIP_BY_LABEL[ownershipRaw])

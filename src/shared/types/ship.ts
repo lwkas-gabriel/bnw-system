@@ -17,6 +17,7 @@ export interface ShipSizeData {
   maxCrew: number;
   maxMechanisms: number;      // always 2
   comodoSlots: number;        // total slot capacity for cômodos
+  maxHull: number;            // pontos de casco
 }
 
 export interface ShipMechanismData {

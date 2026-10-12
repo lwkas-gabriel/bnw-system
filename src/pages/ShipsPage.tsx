@@ -8,6 +8,9 @@ import {
   SHIP_MECHANISMS,
   SHIP_COMODOS,
   SHIP_COMODOS_BY_ID,
+  SHIP_ROLE_LABELS,
+  ENGINEER_DISCOUNT,
+  KLABAUTERMANN_VOYAGES,
 } from "../data/ships";
 import { COMMISSIONED_SHIP_PRESET } from "../data/factions";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
@@ -31,22 +34,7 @@ const COMODO_PROFESSION: Record<string, string> = {
   enfermaria:         "Médico",
 };
 
-// ─── Labels ───────────────────────────────────────────────────────────────────
-
-const ROLE_LABELS: Record<ShipRole, string> = {
-  captain:      "Capitão",
-  first_mate:   "Imediato",
-  navigator:    "Navegante",
-  doctor:       "Médico",
-  cook:         "Cozinheiro",
-  shipwright:   "Carpinteiro",
-  musician:     "Músico",
-  sniper:       "Atirador",
-  archaeologist:"Arqueólogo(a)",
-  crew:         "Tripulante",
-};
-
-const SHIP_ROLES = Object.keys(ROLE_LABELS) as ShipRole[];
+const SHIP_ROLES = Object.keys(SHIP_ROLE_LABELS) as ShipRole[];
 
 const SHIP_TABS = [
   { id: "overview",      label: "Visão Geral",  icon: "⛵" },
@@ -55,6 +43,7 @@ const SHIP_TABS = [
   { id: "comodos",       label: "Cômodos",      icon: "🏠" },
   { id: "klabautermann", label: "Klabautermann",icon: "👻" },
 ];
+
 
 // ─── Tab: Overview ────────────────────────────────────────────────────────────
 
@@ -68,7 +57,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
 
   const sizeData = SHIP_SIZES[ship.size];
   const hullPct = Math.round((ship.currentHull / ship.maxHull) * 100);
-  const engineerDiscount = ship.builtByEngineer ? Math.floor(sizeData.price * 0.3) : 0;
+  const engineerDiscount = ship.builtByEngineer ? Math.floor(sizeData.price * ENGINEER_DISCOUNT) : 0;
   const effectivePrice = sizeData.price - engineerDiscount;
 
   return (
@@ -267,7 +256,7 @@ function CrewTab({ shipId }: { shipId: string }) {
               className="w-full bg-slate-700 border border-slate-600 rounded-lg text-sm text-slate-300 px-3 py-2 focus:outline-none focus:border-amber-600"
             >
               {SHIP_ROLES.map(r => (
-                <option key={r} value={r}>{ROLE_LABELS[r]}</option>
+                <option key={r} value={r}>{SHIP_ROLE_LABELS[r]}</option>
               ))}
             </select>
           </div>
@@ -286,7 +275,7 @@ function CrewTab({ shipId }: { shipId: string }) {
             <div key={member.id} className="flex items-center justify-between px-3 py-2 bg-slate-800 rounded-lg">
               <div>
                 <span className="text-xs font-medium text-slate-300">{member.name}</span>
-                <span className="text-[10px] text-slate-500 ml-2">{ROLE_LABELS[member.role]}</span>
+                <span className="text-[10px] text-slate-500 ml-2">{SHIP_ROLE_LABELS[member.role]}</span>
               </div>
               <Button variant="danger" size="sm" onClick={() => removeCrewMember(ship.id, member.id)}>×</Button>
             </div>
@@ -501,7 +490,7 @@ function KlabautermannTab({ shipId }: { shipId: string }) {
   return (
     <SectionCard title="Klabautermann" icon="👻">
       <p className="text-xs text-slate-400 mb-4">
-        O espírito guardião de um navio. Desperta após <span className="text-amber-400">10 viagens</span> significativas —
+        O espírito guardião de um navio. Desperta após <span className="text-amber-400">{KLABAUTERMANN_VOYAGES} viagens</span> significativas —
         tornando-se visível apenas para a tripulação, protegendo e auxiliando a embarcação.
       </p>
 
@@ -510,7 +499,7 @@ function KlabautermannTab({ shipId }: { shipId: string }) {
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs text-slate-400">Viagens realizadas</span>
           <span className={`text-xs font-mono font-bold ${klabautermann.active ? "text-amber-400" : "text-slate-300"}`}>
-            {klabautermann.voyageCount}/10
+            {klabautermann.voyageCount}/{KLABAUTERMANN_VOYAGES}
           </span>
         </div>
         <div className="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
