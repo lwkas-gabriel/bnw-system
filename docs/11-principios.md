@@ -43,44 +43,31 @@ Quando uma nova mecânica do sistema é identificada:
 
 ## Testes
 
-A engine de combate é a camada mais crítica e deve ter cobertura de testes. Por ser TypeScript puro:
+Regras de negócio são TypeScript puro e devem ter testes (Vitest, `environment: node`).
 
 ```bash
-npm run test      # executa Vitest
+npm run test:run  # executa todos os testes uma vez
+npm run test      # modo watch
 npm run test:ui   # interface visual do Vitest
 ```
 
-### Casos prioritários
+Os testes ficam em `__tests__/` ao lado do código; fixtures de personagem em
+`src/features/character/utils/__tests__/fixtures.ts` (`createCharacterFixture`, `createRichCharacterFixture`).
 
-| Teste | Arquivo | O que verificar |
-|-------|---------|-----------------|
-| `roll3d6()` | `combatEngine.test.ts` | Distribuição correta, detecção de críticos |
-| `hitProbability()` | `combatEngine.test.ts` | Casos extremos (PRE >> DEF, PRE << DEF), PRE = DEF ≈ 58% |
-| `resolveDamage()` | `combatEngine.test.ts` | Absorção de CON temp, Retém 1 CON, dano direto Ryuo |
-| `processTurn()` | `combatEngine.test.ts` | JxJ simultâneo T1, protagonismo vs NPC, Kitetsu self-damage |
-| `simulateCombat()` | `combatEngine.test.ts` | Cenários conhecidos com resultados validados manualmente |
-| `validateCharacterFull()` | `validator.test.ts` | Cada categoria de erro com ficha deliberadamente inválida |
-| `computeGemBudget()` | `gemBudget.test.ts` | Haki secundário grátis, Haissaikai via Laranja |
-| `parseImportJSON()` | `importer.test.ts` | JSON inválido, campos ausentes, migração de versões anteriores |
+| Área | Arquivo(s) | O que cobre |
+|------|------------|-------------|
+| Engine de combate | `combat/engine/__tests__/combatEngine.test.ts` | atributos, CON temp, dano, técnicas, `processTurn`, estado inicial |
+| Validação | `character/utils/__tests__/validator.test.ts` | cada categoria de erro com ficha inválida |
+| Gemas / Haki | `gemBudget.test.ts`, `haki.test.ts` | custos, secundário grátis, Rei, Arma Única via Laranja |
+| Export / Import | `exporter.test.ts` (+ snapshots) | formato do fórum, round-trip JSON e fórum, Akuma, energia, aliases |
+| Utils de domínio | `attrCalc`, `attrBreakdown`, `akuma`, `equipment` | regras extraídas dos componentes |
+| Stores | `character/store/__tests__`, `ships/store/__tests__` | ações e invariantes |
+| Navios | `ships/utils/__tests__` | `shipCalc`, round-trip de export/import |
+| Dados | `data/__tests__` | facções, faixas de AM, Ciborgue |
+| Shared | `shared/utils/__tests__` | formatação, `invertLabels` |
 
-### Estrutura sugerida para testes
-
-```
-src/
-  features/
-    combat/
-      engine/
-        combatEngine.ts
-        combatEngine.test.ts    ← testes da engine
-    character/
-      utils/
-        validator.ts
-        validator.test.ts
-        gemBudget.ts
-        gemBudget.test.ts
-        importer.ts
-        importer.test.ts
-```
+Regras: toda regra nova ganha teste; bug corrigido ganha um teste que falharia antes da correção;
+mudança em exporter/importer exige round-trip.
 
 ---
 

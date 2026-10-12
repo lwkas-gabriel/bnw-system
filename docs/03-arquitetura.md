@@ -6,46 +6,51 @@
 src/
 ├── shared/
 │   ├── types/
-│   │   ├── character.ts      ← Tipos do personagem: Character, Haki, Akuma, AM, Cyborg...
-│   │   └── combat.ts         ← Tipos de combate: CombatantState, TurnChoice, DiceRoll...
-│   └── components/
-│       └── index.tsx         ← Componentes reutilizáveis: Button, Input, Badge...
+│   │   ├── character.ts      ← Character, Haki, Akuma, AM, Cyborg, LocationId, PrimaryHakiType...
+│   │   ├── combat.ts         ← CombatantState, TurnChoice, DiceRoll...
+│   │   ├── ship.ts           ← Ship, ShipSize, ShipOwnership...
+│   │   └── io.ts             ← ImportStatus, ExportEnvelope
+│   ├── components/
+│   │   ├── index.tsx         ← Componentes reutilizáveis (ver 09-componentes.md)
+│   │   ├── AppLayout.tsx     ← Sidebar + área principal
+│   │   └── PageLoader.tsx
+│   ├── hooks/                ← useCopyToClipboard, useFileImport
+│   └── utils/                ← format (formatBerries), download, importIO, labels
 │
-├── data/                     ← Constantes imutáveis do sistema
-│   ├── races.ts
-│   ├── haki.ts
-│   ├── techniques.ts
-│   ├── uniqueWeapons.ts
-│   └── index.ts              ← Barrel export
+├── data/                     ← Tabelas, labels e constantes imutáveis (fonte única)
+│   ├── gemCosts.ts           ← GEM_COSTS, GEM_BUDGET_MIN/MAX
+│   ├── attributes.ts, artesMarciais.ts, cyborg.ts, equipment.ts, locations.ts
+│   ├── races.ts, haki.ts, techniques.ts, uniqueWeapons.ts, akumaModules.ts
+│   ├── pericias.ts, professions.ts, bugigangas.ts, ships.ts, factions.ts
+│   └── index.ts              ← Barrel (conveniência; prefira importar o arquivo direto)
 │
 ├── features/
 │   ├── character/
-│   │   ├── components/       ← AttributesSection, HakiSection, AkumaSection...
-│   │   ├── store/
-│   │   │   └── characterStore.ts
+│   │   ├── components/       ← Seções do builder (+ subpastas akuma/, equipment/)
+│   │   ├── hooks/useDraft.ts
+│   │   ├── store/characterStore.ts
 │   │   └── utils/
-│   │       ├── attrCalc.ts   ← bpn(), energyMax(), validateAttributes()
-│   │       ├── gemBudget.ts  ← computeGemBudget(), GEM_COSTS
-│   │       ├── validator.ts  ← validateCharacterFull(), ValidationReport
-│   │       ├── exporter.ts   ← exportToJSON(), exportToForumText()
-│   │       └── importer.ts   ← importFromFile(), parseImportJSON()
+│   │       ├── attrCalc.ts       ← bpn(), energyMax(), characterMaxEnergy(), baseAttributes()
+│   │       ├── gemBudget.ts      ← computeGemBudget()
+│   │       ├── haki.ts, akuma.ts, equipment.ts, artesMarciais.ts, attrBreakdown.ts
+│   │       ├── validator.ts      ← validateCharacterFull(), ValidationReport
+│   │       ├── exporter.ts       ← exportToJSON(), exportToForumHTML()
+│   │       ├── importer.ts       ← importFromFile(), parseImportJSON(), parseImportForumHTML()
+│   │       └── __tests__/        ← testes + fixtures.ts
 │   │
 │   ├── combat/
-│   │   ├── engine/
-│   │   │   └── combatEngine.ts  ← Lógica pura, sem React
-│   │   └── store/
-│   │       └── combatStore.ts
+│   │   ├── engine/combatEngine.ts  ← Lógica pura, sem React
+│   │   └── store/combatStore.ts
 │   │
-│   └── items/                ← Estrutura pronta, UI pendente
+│   └── ships/
+│       ├── components/       ← Abas da página de Embarcações
+│       ├── store/shipStore.ts
+│       └── utils/            ← shipCalc, shipExporter, shipImporter
 │
 ├── pages/                    ← Orquestradores (sem lógica de negócio)
-│   ├── HomePage.tsx
-│   ├── CharacterListPage.tsx
-│   ├── CharacterBuilderPage.tsx
-│   ├── CombatPage.tsx
-│   ├── ImportPage.tsx
-│   ├── ItemsPage.tsx
-│   └── ComingSoonPage.tsx
+│   ├── HomePage.tsx, CharacterListPage.tsx, CharacterBuilderPage.tsx
+│   ├── CombatPage.tsx, ImportPage.tsx, ItemsPage.tsx
+│   └── ShipsPage.tsx, PericiasPage.tsx, ProfissoesPage.tsx
 │
 └── router/
     └── index.tsx             ← Rotas com lazy loading

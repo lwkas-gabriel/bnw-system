@@ -155,7 +155,45 @@ Variantes: `amber` · `green` · `red` · `blue` · `slate`
 
 ---
 
-### ValidationPanel
+### Primitivos de escolha e exibição
+
+```tsx
+<ToggleButton active={sel} onClick={fn} className="px-2 py-1 rounded text-xs">Opção</ToggleButton>
+<SegmentedControl options={[{ value, label }]} value={v} onChange={fn} />
+<StatTile label="BPN" value={15} sub="3/4 × Lv.20" compact? valueClassName? />
+<Callout tone="amber|green|red|blue" className="p-3 rounded-lg">...</Callout>
+<ProgressBar value={n} max={m} barClassName="bg-amber-500" className="w-full h-2 bg-slate-700" />
+<Switch checked={b} onChange={fn} size="sm|md" disabled? />
+<Spinner label="Carregando..." />
+<EmptyState compact title="Nada aqui ainda." />
+```
+
+- `ToggleButton` é o padrão "âmbar quando ativo"; `SegmentedControl` agrupa vários com uma seleção.
+- `StatTile` substitui os blocos `bg-slate-800 rounded-lg p-3 text-center` com rótulo + valor.
+- `Callout` é a caixa de aviso/regra; o tom define fundo e borda.
+
+### Import / Export
+
+```tsx
+<FileDropZone icon="📂" label="Arraste um arquivo..." loadingLabel="Validando..." loading={l} onFile={fn} />
+<OrDivider />
+<ImportStatusBanner status={result.status} subtitle="Nome — Nível 20" />
+<MessageList title="Erros de leitura" messages={errors} tone="red|amber" />
+<ExportActions onDownloadJSON={fn} getJSON={() => json} onDownloadForum={fn} />
+<CopyButton getText={() => texto} label="📋 Copiar JSON" />
+```
+
+Hooks em `src/shared/hooks/`: `useFileImport(importFile, importClipboard)` → `{ loading, result, fromFile, fromClipboard }`
+e `useCopyToClipboard()` → `{ copied, copy }`.
+
+---
+
+### ValidationPanel / ValidationBadge
+
+Não são componentes shared: ficam em `src/features/character/components/ValidationPanel.tsx`
+porque dependem de `ValidationReport` (feature de personagem).
+
+#### ValidationPanel
 
 ```tsx
 <ValidationPanel
@@ -173,7 +211,7 @@ Variantes: `amber` · `green` · `red` · `blue` · `slate`
 
 ---
 
-### ValidationBadge
+#### ValidationBadge
 
 ```tsx
 <ValidationBadge

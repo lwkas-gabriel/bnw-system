@@ -45,12 +45,35 @@ Todos em `src/shared/components/index.tsx`. **Sempre usar antes de criar um novo
 <Tabs tabs={[{id, label, icon}]} active={id} onChange={fn} />
 <NumberStepper value min max onChange label />
 <Badge variant="amber|green|red|blue|slate">...</Badge>
-<EmptyState icon title description action />
+<EmptyState icon title description action />   // ou <EmptyState compact title="..." /> dentro de cards
 <PageHeader title subtitle actions />
 <Tooltip content="..."><span/></Tooltip>
-<ValidationPanel report={ValidationReport} compact onAutoFix={fn} />
-<ValidationBadge report onClick />
+
+// Escolha e exibição
+<ToggleButton active={sel} onClick={fn} className="px-2 py-1 rounded text-xs">...</ToggleButton>
+<SegmentedControl options={[{ value, label }]} value={v} onChange={fn} />
+<StatTile label value sub? compact? valueClassName? />
+<Callout tone="amber|green|red|blue" className="p-3 rounded-lg">...</Callout>
+<ProgressBar value max barClassName? className? />
+<Switch checked onChange size="sm|md" disabled? />
+<Spinner label? />
+
+// Import / Export
+<FileDropZone icon label loadingLabel loading onFile />
+<OrDivider />
+<ImportStatusBanner status subtitle? />
+<MessageList title messages tone="red|amber" />
+<ExportActions onDownloadJSON getJSON onDownloadForum />
+<CopyButton getText label? />
 ```
+
+Hooks: `useDraft()` (seções do builder — `{ draft, updateDraft }` com seletores),
+`useCopyToClipboard()`, `useFileImport()` em `src/shared/hooks/`.
+
+`ValidationPanel` e `ValidationBadge` ficam em `src/features/character/components/ValidationPanel.tsx`.
+
+Nunca reproduza à mão o padrão "âmbar quando ativo" (`bg-amber-600 text-white` vs `bg-slate-700…`),
+caixas de aviso âmbar ou blocos de estatística: use `ToggleButton`/`SegmentedControl`, `Callout` e `StatTile`.
 
 ---
 
@@ -63,9 +86,6 @@ Todos em `src/shared/components/index.tsx`. **Sempre usar antes de criar um novo
 .btn-primary   → px-4 py-2 bg-amber-600 hover:bg-amber-500 ...
 .input         → bg-slate-800 border border-slate-700 rounded-lg ...
 .stat-bubble   → flex flex-col items-center w-16 h-16 rounded-xl border-2
-.badge-ready   → bg-green-900/60 text-green-400 border-green-800
-.badge-soon    → bg-slate-800 text-slate-400 border-slate-700
-.badge-partial → bg-amber-900/60 text-amber-400 border-amber-800
 ```
 
 ---

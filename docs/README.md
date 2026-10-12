@@ -1,7 +1,7 @@
 # BNW System — Documentação Técnica
 
 > Character Builder · Calculadora de Combate · Import/Export · Validação  
-> **v1.0** — RPG de Fórum One Piece (BNW)
+> **v0.7.x (Alpha)** — RPG de Fórum One Piece (BNW)
 
 ---
 
@@ -62,11 +62,11 @@ Fichas criadas manualmente em fórum têm alta incidência de erros de cálculo,
 |--------|--------|-----------|
 | Character Builder | ✅ Disponível | Criação completa de fichas com todos os caminhos |
 | Calculadora de Combate | ✅ Disponível | Simulação com 3d6 real ou média, log narrável |
-| Importar / Exportar | ✅ Disponível | JSON tipado + texto para fórum + validação |
-| Validação de Fichas | ✅ Disponível | 9 categorias de regras, sugestões de correção |
+| Importar / Exportar | ✅ Disponível | JSON tipado + ficha dohtml do fórum (ida e volta) + validação |
+| Validação de Fichas | ✅ Disponível | 12 categorias de regras, sugestões de correção |
 | Construtor de Itens | ✅ Disponível | Catálogo de bugigangas + equipamentos no builder |
 | Embarcações | ✅ Disponível | Rota /ships — mecanismos, cômodos, Klabautermann |
 | Profissões | ✅ Disponível | Rota /professions — 7 profissões, craft, perícias vinculadas |
 | Perícias | ✅ Disponível | Rota /pericias — 11 perícias, DCs, pontos por nível |
-| Companheiros | 📋 Regras documentadas | Implementação pendente — ver docs/25 |
+| Companheiros | ✅ Disponível | Aba Companheiros no builder (Ranks C/B/A, mascotes, autômatos) |
 | Navegação | 📋 Regras documentadas | Implementação pendente — ver docs/26 |
