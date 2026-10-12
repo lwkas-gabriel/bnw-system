@@ -18,6 +18,7 @@ import { raceForumLabel } from "../../../data/races";
 import { PERICIAS } from "../../../data/pericias";
 import { TECHNIQUE_RANKS, TECHNIQUE_SOURCE_LABELS } from "../../../data/techniques";
 import { HAKI_TYPE_NAMES } from "../../../data/haki";
+import { formatBerries, pad2 } from "../../../shared/utils/format";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -59,9 +60,9 @@ function attrLabel(key: string): string {
   return ATTR_SHORT_LABELS[key as AttrKey] ?? key;
 }
 
-/** Preço formatado como na ficha do fórum ("B$ 500.000"), ou marcador se ausente */
+/** Preço formatado ("B$ 500.000"), ou marcador se ausente */
 function formatBerriesOr(value: number | undefined): string {
-  return value === undefined ? "[PREENCHER]" : `B$ ${value.toLocaleString("pt-BR")}`;
+  return value === undefined ? "[PREENCHER]" : formatBerries(value);
 }
 
 const AKUMA_TYPE_LABELS: Record<string, string> = {
@@ -419,12 +420,12 @@ export function exportToForumHTML(char: Character): string {
   ln(`</div>`);
   ln();
 
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>${String(char.level).padStart(2, "0")}`);
+  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>${pad2(char.level)}`);
   ln(`<e>Experiência (XP): </e>[PREENCHER]`);
   ln(`<e>Gemas Totais: </e>${budget.total}`);
   ln(`<e>Gemais Gastas: </e>${budget.spent}`);
   ln(`<e>Gemas Atuais: </e>${budget.remaining}`);
-  ln(`<e>Prestígio:  </e>${String(char.faction?.prestige ?? 0).padStart(2, "0")}`);
+  ln(`<e>Prestígio:  </e>${pad2(char.faction?.prestige ?? 0)}`);
   ln(`</div>`);
   ln();
 
@@ -467,7 +468,7 @@ export function exportToForumHTML(char: Character): string {
     const extrasStr = extras
       ? extras.map(e => ` +${e.value} [${e.label}]`).join("")
       : "";
-    ln(`<e>${PERICIAS[id].name}: </e>${String(value).padStart(2, "0")}${extrasStr}`);
+    ln(`<e>${PERICIAS[id].name}: </e>${pad2(value)}${extrasStr}`);
   }
   ln(`</div>`);
   ln();
@@ -554,7 +555,7 @@ export function exportToForumHTML(char: Character): string {
 
       const hakiBlock = (type: PrimaryHakiType, stage: number, data: typeof pData, cost: number) => {
         ln(`<d>Haki ${HAKI_TYPE_NAMES[type].withArticle}</d>`);
-        ln(`[b]Nível: [/b]${String(stage).padStart(2, "0")}`);
+        ln(`[b]Nível: [/b]${pad2(stage)}`);
         ln(`[b]Aventuras: [/b]00/02`);
         ln(`[b]Custo: [/b]${cost} gemas.`);
         if (data) {

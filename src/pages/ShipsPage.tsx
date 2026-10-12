@@ -15,6 +15,7 @@ import {
 import { COMMISSIONED_SHIP_PRESET } from "../data/factions";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
 import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML, copyShipToClipboard } from "../features/ships/utils/shipExporter";
+import { formatBerries, formatBerriesShort } from "../shared/utils/format";
 
 // Comodo → profession badge mapping
 const COMODO_PROFESSION: Record<string, string> = {
@@ -81,7 +82,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
           {[
             { label: "Tamanho",   value: sizeData.name },
             { label: "Tripulação máx.", value: `${ship.crew.length}/${sizeData.maxCrew}` },
-            { label: "Preço",     value: `₿${effectivePrice.toLocaleString("pt-BR")}` },
+            { label: "Preço",     value: formatBerries(effectivePrice) },
             { label: "Req. Percepção", value: `${sizeData.percepaoRequired}/5` },
             { label: "Cômodos",   value: `${SHIP_COMODOS.filter(c => ship.comodoIds.includes(c.id)).reduce((s,c)=>s+c.size,0)}/${sizeData.comodoSlots} slots` },
             { label: "Mecanismos", value: `${ship.mechanisms.length}/${sizeData.maxMechanisms}` },
@@ -122,7 +123,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
 
         {ship.builtByEngineer && (
           <p className="text-[10px] text-green-400/70 mb-3">
-            ✦ Construída por Engenheiro — desconto de 30% aplicado (economia: ₿{engineerDiscount.toLocaleString("pt-BR")})
+            ✦ Construída por Engenheiro — desconto de {ENGINEER_DISCOUNT * 100}% aplicado (economia: {formatBerries(engineerDiscount)})
           </p>
         )}
         {ship.ownership === "navy_permanent" && (
@@ -182,7 +183,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
                       </div>
                       <div className="flex items-center gap-3">
                         <span className="text-xs font-mono text-green-400">
-                          +₿{cost.toLocaleString("pt-BR")}
+                          +{formatBerries(cost)}
                         </span>
                         <Button
                           variant="ghost"
@@ -328,7 +329,7 @@ function MechanismsTab({ shipId }: { shipId: string }) {
                   <p className="text-xs font-medium text-slate-200">{mech.name}</p>
                   {isCommissionGrant && isSelected
                     ? <span className="text-[10px] font-semibold text-amber-500">Incluído na comissão</span>
-                    : <span className="text-[10px] font-mono text-slate-500">₿{(mech.price / 1_000_000).toFixed(0)}M</span>
+                    : <span className="text-[10px] font-mono text-slate-500">{formatBerriesShort(mech.price)}</span>
                   }
                 </div>
                 <p className="text-[10px] text-slate-500 mt-0.5">{mech.description}</p>
@@ -434,7 +435,7 @@ function ComodosTab({ shipId }: { shipId: string }) {
                   <span className="text-[10px] text-slate-500 bg-slate-700 px-1.5 py-0.5 rounded-full">
                     {comodo.size} slot{comodo.size > 1 ? "s" : ""}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-600">₿{(comodo.price / 1_000_000).toFixed(0)}M</span>
+                  <span className="text-[10px] font-mono text-slate-600">{formatBerriesShort(comodo.price)}</span>
                   {COMODO_PROFESSION[comodo.id] && (
                     <span className="text-[10px] text-sky-400/70 bg-sky-900/20 px-1.5 py-0.5 rounded-full">
                       {COMODO_PROFESSION[comodo.id]}
@@ -663,7 +664,7 @@ export default function ShipsPage() {
                       const data = SHIP_SIZES[size];
                       return (
                         <option key={size} value={size}>
-                          {data.name} — ₿{data.price.toLocaleString("pt-BR")} · Percepção {data.percepaoRequired}+
+                          {data.name} — {formatBerries(data.price)} · Percepção {data.percepaoRequired}+
                         </option>
                       );
                     })}

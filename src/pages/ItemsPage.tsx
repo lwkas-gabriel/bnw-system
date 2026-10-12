@@ -6,6 +6,7 @@ import type { BugigangaEffect } from "../data/bugigangas";
 import type { EquipmentQuality } from "../shared/types/character";
 import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../data/equipment";
 import { STANDARD_CRAFT_DC } from "../data/professions";
+import { formatBerries, formatBerriesShort } from "../shared/utils/format";
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
 
@@ -124,9 +125,9 @@ export default function ItemsPage() {
                       <tr key={s.slot} className={i % 2 === 0 ? "bg-slate-800/30" : ""}>
                         <td className="py-2 pr-4 text-slate-300 font-medium">{s.label}</td>
                         <td className="py-2 pr-4 text-slate-500">{s.attrs}</td>
-                        <td className="py-2 pr-4 text-right font-mono text-slate-400">₿{(prices.common / 1000).toFixed(0)}k</td>
-                        <td className="py-2 pr-4 text-right font-mono text-sky-400">₿{(prices.splendid / 1_000_000).toFixed(0)}M</td>
-                        <td className="py-2 text-right font-mono text-amber-400">₿{(prices.legendary / 1_000_000).toFixed(0)}M</td>
+                        <td className="py-2 pr-4 text-right font-mono text-slate-400">{formatBerriesShort(prices.common)}</td>
+                        <td className="py-2 pr-4 text-right font-mono text-sky-400">{formatBerriesShort(prices.splendid)}</td>
+                        <td className="py-2 text-right font-mono text-amber-400">{formatBerriesShort(prices.legendary)}</td>
                       </tr>
                     );
                   })}
@@ -259,7 +260,7 @@ export default function ItemsPage() {
                     </div>
                     <div className="text-right shrink-0 space-y-0.5">
                       <p className="text-[10px] font-mono text-slate-400">
-                        ₿{b.price.toLocaleString("pt-BR")}
+                        {formatBerries(b.price)}
                       </p>
                       <p className="text-[10px] text-slate-600">
                         {b.ciborgueShifts} shift{b.ciborgueShifts > 1 ? "s" : ""} ciborgue
@@ -299,10 +300,10 @@ export default function ItemsPage() {
                         <p className="text-sm font-bold text-slate-200 mb-2">{item.bonus}</p>
                         <div className="space-y-0.5">
                           <p className="text-[10px] text-slate-500">
-                            Mercado: <span className="font-mono text-slate-400">₿{item.price.toLocaleString("pt-BR")}</span>
+                            Mercado: <span className="font-mono text-slate-400">{formatBerries(item.price)}</span>
                           </p>
                           <p className="text-[10px] text-slate-500">
-                            Custo: <span className="font-mono text-slate-400">₿{(item.price / 2).toLocaleString("pt-BR")}</span>
+                            Custo: <span className="font-mono text-slate-400">{formatBerries(item.price / 2)}</span>
                           </p>
                         </div>
                       </div>

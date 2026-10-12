@@ -3,6 +3,7 @@ import {
   ENGINEER_DISCOUNT, KLABAUTERMANN_DISCOUNT_PRICE, KLABAUTERMANN_VOYAGES,
   SHIP_COMODOS_BY_ID, SHIP_MECHANISMS_BY_ID, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES,
 } from "../../../data/ships";
+import { formatBerries } from "../../../shared/utils/format";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -39,9 +40,6 @@ export function downloadShipJSON(ship: Ship): void {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatBerries(n: number): string {
-  return `B$ ${n.toLocaleString("pt-BR")}`;
-}
 
 function computeShipTotalPrice(ship: Ship): number {
   const sizeData = SHIP_SIZES[ship.size];

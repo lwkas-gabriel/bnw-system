@@ -12,6 +12,7 @@ import type {
 } from "../../../shared/types/character";
 import { ATTR_SHORT_LABELS } from "../../../data/attributes";
 import { EQUIPMENT_PRICES, QUALITY_BONUS, QUALITY_LABELS, SLOT_ATTRS, SLOT_LABELS } from "../../../data/equipment";
+import { formatBerries } from "../../../shared/utils/format";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -184,7 +185,7 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
 
       {/* Price note */}
       <p className="text-[10px] text-slate-600">
-        Preço: <span className="font-mono text-slate-500">₿{price.toLocaleString("pt-BR")}</span>
+        Preço: <span className="font-mono text-slate-500">{formatBerries(price)}</span>
         {" · "} Sem custo em gemas.
       </p>
 
@@ -561,13 +562,13 @@ export function EquipmentSection() {
                 <div className="flex justify-between text-xs px-2 py-1 bg-slate-800 rounded">
                   <span className="text-slate-400">Arma</span>
                   <span className="font-mono text-slate-300">
-                    ₿{EQUIPMENT_PRICES.weapon[q].toLocaleString("pt-BR")}
+                    {formatBerries(EQUIPMENT_PRICES.weapon[q])}
                   </span>
                 </div>
                 <div className="flex justify-between text-xs px-2 py-1 bg-slate-800 rounded">
                   <span className="text-slate-400">Defensivo</span>
                   <span className="font-mono text-slate-300">
-                    ₿{EQUIPMENT_PRICES.defensive[q].toLocaleString("pt-BR")}
+                    {formatBerries(EQUIPMENT_PRICES.defensive[q])}
                   </span>
                 </div>
               </div>

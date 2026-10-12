@@ -8,6 +8,7 @@ import {
 } from "../../../data/factions";
 import { computeFactionDiscount } from "../utils/gemBudget";
 import type { FactionType } from "../../../shared/types/character";
+import { formatBerries } from "../../../shared/utils/format";
 
 // ─── Faction picker ───────────────────────────────────────────────────────────
 
@@ -66,7 +67,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
             <div className="flex justify-between text-xs">
               <span className="text-slate-400">Recompensa máx.</span>
               <span className={`font-mono font-bold ${fac.colorClass}`}>
-                ₿{rankDef.bountyMax.toLocaleString("pt-BR")}
+                {formatBerries(rankDef.bountyMax)}
               </span>
             </div>
           )}
@@ -91,7 +92,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
             <div className="flex justify-between text-xs pt-1 border-t border-slate-700">
               <span className="text-slate-400">Pilhagem estimada</span>
               <span className="font-mono text-slate-300">
-                ₿{pilhagemIncome(rankDef.shipCrewBonus, rankDef.followerBonus).toLocaleString("pt-BR")} / aventura
+                {formatBerries(pilhagemIncome(rankDef.shipCrewBonus, rankDef.followerBonus))} / aventura
               </span>
             </div>
           )}
@@ -105,7 +106,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
             <div className="flex justify-between text-xs">
               <span className="text-slate-400">Salário</span>
               <span className={`font-mono font-bold ${fac.colorClass}`}>
-                ₿{rankDef.salary.toLocaleString("pt-BR")} / aventura
+                {formatBerries(rankDef.salary)} / aventura
               </span>
             </div>
           )}
@@ -126,7 +127,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
         <div className="flex justify-between text-xs">
           <span className="text-slate-400">Contrato máx.</span>
           <span className={`font-mono font-bold ${fac.colorClass}`}>
-            ₿{rankDef.contractMax.toLocaleString("pt-BR")}
+            {formatBerries(rankDef.contractMax)}
           </span>
         </div>
       )}
@@ -136,7 +137,7 @@ function BenefitsBlock({ type, rankId }: { type: FactionType; rankId: string }) 
         <div className="flex justify-between text-xs">
           <span className="text-slate-400">Renda de missão</span>
           <span className={`font-mono font-bold ${fac.colorClass}`}>
-            ₿{rankDef.missionIncome.toLocaleString("pt-BR")} / aventura
+            {formatBerries(rankDef.missionIncome)} / aventura
           </span>
         </div>
       )}
