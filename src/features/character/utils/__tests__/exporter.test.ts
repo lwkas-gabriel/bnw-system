@@ -58,3 +58,22 @@ describe("energia com Ciborgue (Shift 3 = energia)", () => {
     expect(imported.cyborg?.shift3Bonus).toBe("energy");
   });
 });
+
+describe("round-trip fórum — Akuma no Mi", () => {
+  it.each([
+    ["zoan" as const],
+    ["logia" as const],
+    ["paramecia" as const],
+  ])("recupera nome, tipo e rank (%s)", (type) => {
+    const base = createRichCharacterFixture();
+    const akuma = type === "zoan" ? base.akuma! : type === "logia"
+      ? { type, name: "Mera Mera no Mi", rank: "A" as const, elementalNatureAttr: "power" as const,
+          statusEnhanced: { name: "Queimadura", description: "", combination: ["queimadura"] as [string] },
+          intangibilityBonus: { defense: 4 as const, constitution: 4 as const } }
+      : { type, name: "Gomu Gomu no Mi", rank: "C" as const, parameciaClass: "corporeal" as const,
+          specialAdherence: "", passives: [], actives: [] };
+    const imported = parseImportForumHTML(exportToForumHTML({ ...base, akuma })).character!;
+    expect(imported.akuma).toMatchObject({ type, name: akuma.name, rank: akuma.rank });
+  });
+});
+

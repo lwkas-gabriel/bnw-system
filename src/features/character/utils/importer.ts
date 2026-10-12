@@ -316,11 +316,14 @@ export function parseImportForumHTML(text: string): ImportResult {
 
   // Akuma no Mi
   let akuma: unknown = null;
+  // Formato atual do exporter: <d>Akuma no Mi — Nome (Tipo Rank X — N gemas)</d>
+  const akumaHeader = /<d>Akuma no Mi — (.+?) \((\w+) Rank ([SABC])\b[^)]*\)<\/d>/.exec(text);
+  // Formato legado: <d>Akuma no Mi</d> seguido de [b]Nome/Tipo/Rank:[/b]
   const akumaBlock = rx1(text, /<d>Akuma no Mi<\/d>([\s\S]*?)(?=<\/div>)/);
-  if (akumaBlock) {
-    const akumaName = rx1(akumaBlock, /\[b\]Nome:\[\/b\]\s*([^.\n]+)/);
-    const akumaType = rx1(akumaBlock, /\[b\]Tipo:\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? "";
-    const akumaRank = rx1(akumaBlock, /\[b\]Rank:\[\/b\]\s*([SABC])/);
+  if (akumaHeader || akumaBlock) {
+    const akumaName = akumaHeader?.[1].trim() ?? rx1(akumaBlock ?? "", /\[b\]Nome:\[\/b\]\s*([^.\n]+)/);
+    const akumaType = (akumaHeader?.[2] ?? rx1(akumaBlock ?? "", /\[b\]Tipo:\[\/b\]\s*([^.\n]+)/) ?? "").toLowerCase();
+    const akumaRank = akumaHeader?.[3] ?? rx1(akumaBlock ?? "", /\[b\]Rank:\[\/b\]\s*([SABC])/);
     if (akumaName && AKUMA_TYPE_MAP[akumaType]) {
       akuma = { type: AKUMA_TYPE_MAP[akumaType], name: akumaName, rank: akumaRank ?? "C",
         ...(AKUMA_TYPE_MAP[akumaType] === "zoan"
