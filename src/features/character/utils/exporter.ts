@@ -19,16 +19,12 @@ import { PERICIAS } from "../../../data/pericias";
 import { TECHNIQUE_RANKS, TECHNIQUE_SOURCE_LABELS } from "../../../data/techniques";
 import { HAKI_TYPE_NAMES } from "../../../data/haki";
 import { formatBerries, pad2 } from "../../../shared/utils/format";
+import { downloadText, slugify } from "../../../shared/utils/download";
+import type { ExportEnvelope } from "../../../shared/types/io";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
-export interface ExportedCharacter {
-  /** Schema version for forward-compatibility */
-  _version: "1.0";
-  _exportedAt: string;
-  _system: "bnw-character-system";
-  character: Character;
-}
+export type ExportedCharacter = ExportEnvelope<"bnw-character-system", "character", Character>;
 
 export function exportToJSON(char: Character): ExportedCharacter {
   return {
@@ -44,14 +40,7 @@ export function exportToJSONString(char: Character): string {
 }
 
 export function downloadCharacterJSON(char: Character): void {
-  const json = exportToJSONString(char);
-  const blob = new Blob([json], { type: "application/json" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${char.name.replace(/\s+/g, "_").toLowerCase()}_ficha.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportToJSONString(char), `${slugify(char.name)}_ficha.json`, "application/json");
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -677,16 +666,5 @@ export function exportToForumHTML(char: Character): string {
 }
 
 export function downloadCharacterForumHTML(char: Character): void {
-  const html = exportToForumHTML(char);
-  const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${char.name.replace(/\s+/g, "_").toLowerCase()}_ficha.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-export function copyToClipboard(text: string): Promise<void> {
-  return navigator.clipboard.writeText(text);
+  downloadText(exportToForumHTML(char), `${slugify(char.name)}_ficha.txt`);
 }

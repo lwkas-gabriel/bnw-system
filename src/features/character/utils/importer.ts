@@ -4,10 +4,12 @@ import type { ExportedCharacter } from "./exporter";
 import { blankPericias, CYBORG_ENERGY_BONUS, energyMax } from "./attrCalc";
 import { validateCharacterFull, type ValidationReport } from "./validator";
 import { GEM_BUDGET_MIN } from "../../../data/gemCosts";
+import type { ImportStatus } from "../../../shared/types/io";
+import { readClipboardText, readFileAsText, regexCapture, validateImportFile } from "../../../shared/utils/importIO";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type ImportStatus = "success" | "success_with_warnings" | "error";
+export type { ImportStatus };
 
 export interface ImportResult {
   status: ImportStatus;
@@ -17,10 +19,6 @@ export interface ImportResult {
   /** Full validation report (null if parse failed) */
   validation: ValidationReport | null;
 }
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const MAX_FILE_SIZE = 512 * 1024; // 512 KB
 
 // ─── Zod schema ───────────────────────────────────────────────────────────────
 
@@ -242,9 +240,7 @@ const AKUMA_TYPE_MAP: Record<string, string> = {
   "zoan": "zoan", "logia": "logia", "paramecia": "paramecia",
 };
 
-function rx1(text: string, pattern: RegExp): string | null {
-  return text.match(pattern)?.[1]?.trim() ?? null;
-}
+const rx1 = regexCapture;
 
 export function parseImportForumHTML(text: string): ImportResult {
   const parseErrors: string[] = [
@@ -436,49 +432,20 @@ export function parseImportForumHTML(text: string): ImportResult {
   return { status, character, parseErrors, validation };
 }
 
-// ─── File reader ──────────────────────────────────────────────────────────────
+// ─── File / clipboard ─────────────────────────────────────────────────────────
 
-export function readFileAsText(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload  = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Falha ao ler o arquivo."));
-    reader.readAsText(file);
-  });
+function importError(message: string): ImportResult {
+  return { status: "error", character: null, parseErrors: [message], validation: null };
 }
 
 export async function importFromFile(file: File): Promise<ImportResult> {
-  if (file.size > MAX_FILE_SIZE) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: [`Arquivo muito grande (${Math.round(file.size / 1024)} KB). Máximo: ${MAX_FILE_SIZE / 1024} KB.`],
-      validation: null,
-    };
-  }
-
-  const isTxt  = file.name.endsWith(".txt");
-  const isJson = file.name.endsWith(".json");
-
-  if (!isJson && !isTxt) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Formato de arquivo inválido. Apenas arquivos .json ou .txt são aceitos."],
-      validation: null,
-    };
-  }
+  const invalid = validateImportFile(file);
+  if (invalid) return importError(invalid);
 
   try {
-    const text = await readFileAsText(file);
-    return parseImportAuto(text);
+    return parseImportAuto(await readFileAsText(file));
   } catch (e) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Erro ao ler o arquivo: " + (e instanceof Error ? e.message : String(e))],
-      validation: null,
-    };
+    return importError("Erro ao ler o arquivo: " + (e instanceof Error ? e.message : String(e)));
   }
 }
 
@@ -489,31 +456,6 @@ function parseImportAuto(text: string): ImportResult {
 }
 
 export async function importFromClipboard(): Promise<ImportResult> {
-  try {
-    const text = await navigator.clipboard.readText();
-    if (!text.trim()) {
-      return {
-        status: "error",
-        character: null,
-        parseErrors: ["Área de transferência vazia."],
-        validation: null,
-      };
-    }
-    if (text.length > MAX_FILE_SIZE) {
-      return {
-        status: "error",
-        character: null,
-        parseErrors: [`Conteúdo muito grande. Máximo: ${MAX_FILE_SIZE / 1024} KB.`],
-        validation: null,
-      };
-    }
-    return parseImportAuto(text);
-  } catch {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Sem acesso à área de transferência. Use o upload de arquivo."],
-      validation: null,
-    };
-  }
+  const clip = await readClipboardText();
+  return clip.ok ? parseImportAuto(clip.text) : importError(clip.error);
 }

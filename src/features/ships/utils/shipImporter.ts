@@ -1,11 +1,12 @@
 import type { Ship, ShipSize, ShipOwnership, ShipRole } from "../../../shared/types/ship";
 import { KLABAUTERMANN_VOYAGES, SHIP_COMODOS, SHIP_MECHANISMS, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES } from "../../../data/ships";
 import { invertLabels } from "../../../shared/utils/labels";
-import { readFileAsText } from "../../character/utils/importer";
+import type { ImportStatus } from "../../../shared/types/io";
+import { readClipboardText, readFileAsText, regexCapture, validateImportFile } from "../../../shared/utils/importIO";
 
 // ─── Result type ──────────────────────────────────────────────────────────────
 
-export type ShipImportStatus = "success" | "success_with_warnings" | "error";
+export type ShipImportStatus = ImportStatus;
 
 export interface ShipImportResult {
   status: ShipImportStatus;
@@ -58,9 +59,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  function extract(pattern: RegExp): string | null {
-    return pattern.exec(text)?.[1]?.trim() ?? null;
-  }
+  const extract = (pattern: RegExp) => regexCapture(text, pattern);
 
   const name = extract(/<div class="toptitle">([^<]+)/) ?? extract(/<e>Nome: <\/e>([^\n<]+)/);
   if (!name) {
@@ -157,20 +156,22 @@ export function parseShipImport(text: string): ShipImportResult {
   return parseShipJSON(trimmed);
 }
 
+function shipImportError(message: string): ShipImportResult {
+  return { status: "error", ship: null, parseErrors: [message], warnings: [] };
+}
+
 export async function importShipFromFile(file: File): Promise<ShipImportResult> {
+  const invalid = validateImportFile(file);
+  if (invalid) return shipImportError(invalid);
+
   try {
-    const text = await readFileAsText(file);
-    return parseShipImport(text);
+    return parseShipImport(await readFileAsText(file));
   } catch {
-    return { status: "error", ship: null, parseErrors: ["Erro ao ler arquivo."], warnings: [] };
+    return shipImportError("Erro ao ler arquivo.");
   }
 }
 
 export async function importShipFromClipboard(): Promise<ShipImportResult> {
-  try {
-    const text = await navigator.clipboard.readText();
-    return parseShipImport(text);
-  } catch {
-    return { status: "error", ship: null, parseErrors: ["Não foi possível acessar a área de transferência."], warnings: [] };
-  }
+  const clip = await readClipboardText();
+  return clip.ok ? parseShipImport(clip.text) : shipImportError(clip.error);
 }

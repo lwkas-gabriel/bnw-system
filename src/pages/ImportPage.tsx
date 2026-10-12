@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { useShipStore } from "../features/ships/store/shipStore";
 import { importFromFile, importFromClipboard, type ImportResult } from "../features/character/utils/importer";
-import { downloadCharacterJSON, exportToJSONString, downloadCharacterForumHTML, copyToClipboard } from "../features/character/utils/exporter";
+import { downloadCharacterJSON, exportToJSONString, downloadCharacterForumHTML } from "../features/character/utils/exporter";
 import { importShipFromFile, importShipFromClipboard, type ShipImportResult } from "../features/ships/utils/shipImporter";
-import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML, copyShipToClipboard } from "../features/ships/utils/shipExporter";
+import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML } from "../features/ships/utils/shipExporter";
 import { PageHeader, Button } from "../shared/components";
 import { ValidationPanel } from "../features/character/components/ValidationPanel";
+import { copyToClipboard } from "../shared/utils/download";
 
 type DragState = "idle" | "over" | "loading";
 
@@ -448,7 +449,7 @@ function ShipExportRow({ ship }: { ship: import("../shared/types/ship").Ship }) 
   }, [copied]);
 
   async function handleCopyJSON() {
-    await copyShipToClipboard(exportShipToJSONString(ship));
+    await copyToClipboard(exportShipToJSONString(ship));
     setCopied(true);
   }
 

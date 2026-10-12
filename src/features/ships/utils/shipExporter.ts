@@ -4,15 +4,12 @@ import {
   SHIP_COMODOS_BY_ID, SHIP_MECHANISMS_BY_ID, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES,
 } from "../../../data/ships";
 import { formatBerries } from "../../../shared/utils/format";
+import { downloadText, slugify } from "../../../shared/utils/download";
+import type { ExportEnvelope } from "../../../shared/types/io";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
-export interface ExportedShip {
-  _version: "1.0";
-  _exportedAt: string;
-  _system: "bnw-ship-system";
-  ship: Ship;
-}
+export type ExportedShip = ExportEnvelope<"bnw-ship-system", "ship", Ship>;
 
 export function exportShipToJSON(ship: Ship): ExportedShip {
   return {
@@ -28,14 +25,7 @@ export function exportShipToJSONString(ship: Ship): string {
 }
 
 export function downloadShipJSON(ship: Ship): void {
-  const json = exportShipToJSONString(ship);
-  const blob = new Blob([json], { type: "application/json" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${ship.name.replace(/\s+/g, "_").toLowerCase()}_navio.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportShipToJSONString(ship), `${slugify(ship.name)}_navio.json`, "application/json");
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -149,14 +139,6 @@ export function exportShipToForumHTML(ship: Ship): string {
 }
 
 export function downloadShipForumHTML(ship: Ship): void {
-  const html = exportShipToForumHTML(ship);
-  const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${ship.name.replace(/\s+/g, "_").toLowerCase()}_navio.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportShipToForumHTML(ship), `${slugify(ship.name)}_navio.txt`);
 }
 
-export { copyToClipboard as copyShipToClipboard } from "../../character/utils/exporter";

@@ -14,8 +14,9 @@ import {
 } from "../data/ships";
 import { COMMISSIONED_SHIP_PRESET } from "../data/factions";
 import type { ShipSize, ShipRole } from "../shared/types/ship";
-import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML, copyShipToClipboard } from "../features/ships/utils/shipExporter";
+import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML } from "../features/ships/utils/shipExporter";
 import { formatBerries, formatBerriesShort } from "../shared/utils/format";
+import { copyToClipboard } from "../shared/utils/download";
 
 // Comodo → profession badge mapping
 const COMODO_PROFESSION: Record<string, string> = {
@@ -69,7 +70,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
         action={
           <div className="flex gap-2">
             <Button size="sm" onClick={() => downloadShipJSON(ship)}>⬇ JSON</Button>
-            <Button size="sm" onClick={() => copyShipToClipboard(exportShipToJSONString(ship))}>📋 JSON</Button>
+            <Button size="sm" onClick={() => copyToClipboard(exportShipToJSONString(ship))}>📋 JSON</Button>
             <Button size="sm" onClick={() => downloadShipForumHTML(ship)}>📜 Fórum</Button>
             <Button variant="danger" size="sm" onClick={() => { deleteShip(ship.id); setActiveShip(null); }}>
               Excluir
