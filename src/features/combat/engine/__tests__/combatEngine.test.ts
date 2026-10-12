@@ -255,6 +255,17 @@ describe("buildTempConStack", () => {
 describe("resolveTechniqueBonus", () => {
   const baseTech = { id: "t1", name: "Punch", description: "", rank: "B" as const, type: "offensive" as const, targetAttr: "power" as const, baseBonus: 3, energyCost: 3, adherences: [], source: "purchased" as const };
 
+  it("Rei Avançado soma a Ambição efetiva (graduação + bônus racial)", () => {
+    const char = createCharacterFixture({
+      race: "human", humanPericiaChoice: "ambicao",
+      pericias: { ...createCharacterFixture().pericias, ambicao: 4 },
+      haki: { primaryType: "armament", primaryStage: 5, secondaryType: "observation", secondaryStage: 0,
+        hasKing: true, kingStage: "advanced", advancedType: "king_advanced" },
+    });
+    const choice = makeChoice({ offensive: baseTech, buffs: { ...NO_BUFFS, hakiKing: true, hakiAdvanced: true } });
+    expect(resolveTechniqueBonus(char, choice, true)).toBe(3 + 5); // 4 investido + 1 racial
+  });
+
   it("returns baseBonus with no modifiers", () => {
     const char = createCharacterFixture();
     const choice = makeChoice({ offensive: baseTech });

@@ -5,6 +5,7 @@ import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI
 import type { HakiPath, HakiStage } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
 import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
+import { periciaTotal } from "../utils/pericias";
 
 const STAGE_LABELS = [1, 2, 3, 4, 5];
 
@@ -234,7 +235,7 @@ export function HakiSection() {
                     >
                       <p className="text-xs font-medium text-amber-400">{KING_HAKI.advanced.label}</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">{KING_HAKI.advanced.effect}</p>
-                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.pericias.ambicao}: +{draft.pericias.ambicao} por técnica</p>
+                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {periciaTotal(draft, "ambicao")}: +{periciaTotal(draft, "ambicao")} por técnica</p>
                     </button>
                   </div>
                 )}

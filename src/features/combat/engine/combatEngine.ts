@@ -8,6 +8,7 @@ import { baseAttributes, bpn, characterMaxEnergy } from "../../character/utils/a
 import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID, CYBORG_SHIFT_BONUS } from "../../../data/cyborg";
 import { hasWeaponTrait } from "../../character/utils/equipment";
+import { periciaTotal } from "../../character/utils/pericias";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -182,8 +183,8 @@ export function resolveTechniqueBonus(
 
   // Rei Avancado: adds Ambição to technique bonus while King Haki is active
   if (choice.buffs.hakiKing && choice.buffs.hakiAdvanced &&
-      char.haki?.kingStage === "advanced" && char.pericias.ambicao) {
-    bonus += char.pericias.ambicao;
+      char.haki?.kingStage === "advanced") {
+    bonus += periciaTotal(char, "ambicao"); // graduação + bônus raciais/bugigangas
   }
 
   // Yoru: halves energy cost (bonus calculation unaffected)

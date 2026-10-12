@@ -6,7 +6,6 @@ import type { ExportEnvelope } from "../../../shared/types/io";
 import { AKUMA_TYPE_LABELS, PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { faixaForumLabel, faixasUpTo, faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { ATTR_KEYS, ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
-import { BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
 import { CYBORG_LOCATIONS_BY_ID, cyborgBonusLabel } from "../../../data/cyborg";
 import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../../../data/equipment";
 import { FACTIONS, getFactionLabel } from "../../../data/factions";
@@ -24,6 +23,7 @@ import { baseAttributes, bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS } from "./
 import { isUniqueWeapon } from "./equipment";
 import { computeGemBudget, type GemBudgetResult } from "./gemBudget";
 import { hakiStageNum } from "./haki";
+import { computePericiaBonuses } from "./pericias";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -276,43 +276,6 @@ function formatParameciaTable(param: ParameciaAkuma, charName: string): string[]
   return ls;
 }
 
-// ─── Pericia bonus aggregator ─────────────────────────────────────────────────
-
-function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<{ label: string; value: number }>>> {
-  const result: Partial<Record<PericiaId, Array<{ label: string; value: number }>>> = {};
-
-  function add(pericia: PericiaId | undefined | null, label: string, value: number) {
-    if (!pericia) return;
-    (result[pericia] ??= []).push({ label, value });
-  }
-
-  // Racial / human choice
-  if (char.race === "human") {
-    add(char.humanPericiaChoice, "Raça: Humano", 1);
-  } else {
-    add(RACE_PERICIA_BONUS[char.race], `Raça: ${raceForumLabel(char.race)}`, 1);
-  }
-
-  // Zoan class bonus
-  if (char.akuma?.type === "zoan") {
-    add(ZOAN_CLASS_PERICIA_BONUS[char.akuma.animalClass], "Zoan", 1);
-  }
-
-  // Cyborg shift bugigangas (referenced by ID)
-  for (const shift of char.cyborg?.shifts ?? []) {
-    const bug = shift.bugigangaId ? BUGIGANGAS_BY_ID[shift.bugigangaId] : undefined;
-    if (bug?.periciaBonus) add(bug.periciaBonus.pericia, `Bugiganga: ${bug.name}`, bug.periciaBonus.value);
-  }
-
-  // Equipment bugigangas (embedded)
-  for (const eq of [char.equippedWeapon, ...char.equippedDefensive]) {
-    const bug = eq?.bugiganga;
-    if (bug?.periciaBonus) add(bug.periciaBonus.pericia, `Bugiganga: ${bug.name}`, bug.periciaBonus.value);
-  }
-
-  return result;
-}
-
 // ─── Forum HTML export (dohtml) ───────────────────────────────────────────────
 
 /** Abertura padrão das caixas da ficha do fórum */
@@ -432,7 +395,7 @@ function renderAttributes({ char, budget, am }: ForumContext, ln: LineFn): void 
 }
 
 function renderPericias({ char }: ForumContext, ln: LineFn): void {
-  const extras = computePericiaExtras(char);
+  const extras = computePericiaBonuses(char);
   ln(`<t>3 | Perícias</t>`);
   ln();
   ln(BOX);
