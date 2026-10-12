@@ -8,7 +8,8 @@ import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/peri
 import { BUGIGANGAS } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { getFactionLabel } from "../../../data/factions";
-import { faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
+import { faixaForumLabel, faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
+import { CYBORG_LOCATIONS_BY_ID, cyborgBonusLabel } from "../../../data/cyborg";
 import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
@@ -83,22 +84,6 @@ const FACTION_LABELS: Record<string, string> = {
 
 const HAKI_TYPE_LABELS: Record<string, string> = {
   armament: "do Armamento", observation: "da Observação",
-};
-
-const CYBORG_LOCATION_LABELS: Record<string, string> = {
-  head: "Cabeça", right_arm: "Braço Direito", left_arm: "Braço Esquerdo",
-  right_leg: "Perna Direita", left_leg: "Perna Esquerda", torso: "Tronco",
-};
-
-const CYBORG_LOCATION_BONUS: Record<string, string> = {
-  head: "+4 PRE", right_arm: "+4 POD", left_arm: "+4 POD",
-  right_leg: "+4 DEF", left_leg: "+4 DEF", torso: "+4 CON",
-};
-
-const FAIXA_LABELS: Record<string, string> = {
-  branca: "Branca", cinza: "Cinza", azul_clara: "Azul Clara", azul_escura: "Azul Escura",
-  amarela: "Amarela", laranja: "Laranja", verde: "Verde", roxa: "Roxa", marrom: "Marrom",
-  preta: "Preta", coral: "Coral", rajada: "Rajada", vermelha: "Vermelha", grao_mestre: "Grão Mestre",
 };
 
 const AKUMA_TYPE_LABELS: Record<string, string> = {
@@ -575,8 +560,8 @@ export function exportToForumHTML(char: Character): string {
         ln(`<d>Ciborgue</d>`);
         ln(`[b]Nome: [/b]${shift.name || "[PREENCHER]"}.`);
         ln(`[b]Descrição: [/b]${shift.description || "[PREENCHER]"}.`);
-        ln(`[b]Local: [/b]${CYBORG_LOCATION_LABELS[shift.location] ?? shift.location}.`);
-        ln(`[b]Bônus: [/b]${CYBORG_LOCATION_BONUS[shift.location] ?? "[PREENCHER]"}.`);
+        ln(`[b]Local: [/b]${CYBORG_LOCATIONS_BY_ID[shift.location]?.label ?? shift.location}.`);
+        ln(`[b]Bônus: [/b]${CYBORG_LOCATIONS_BY_ID[shift.location] ? cyborgBonusLabel(shift.location) : "[PREENCHER]"}.`);
         if (shift.bugigangaId) {
           ln(`[b]Bugiganga: [/b]${shift.bugigangaId}.`);
         }
@@ -643,14 +628,14 @@ export function exportToForumHTML(char: Character): string {
       const faixa     = char.artesMarciais.currentFaixa;
       const faixaCost = budget.breakdown.find(b => b.category === "Artes Marciais")?.cost ?? 0;
       ln(`<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>`);
-      ln(`[b]Faixa: [/b]${FAIXA_LABELS[faixa] ?? faixa}.`);
+      ln(`[b]Faixa: [/b]${faixaForumLabel(faixa)}.`);
       ln(`[b]Custo: [/b]${faixaCost} gemas.`);
       if (char.artesMarciais.laranjaChoice) {
         ln(`[b]Escolha Laranja: [/b]${char.artesMarciais.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}.`);
       }
       ln(`[b]Bônus acumulados: [/b]`);
       for (const f of faixasUpTo(faixa)) {
-        ln(`- Faixa ${FAIXA_LABELS[f.id] ?? f.id}: ${f.bonusLines.join("; ")}`);
+        ln(`- Faixa ${faixaForumLabel(f.id)}: ${f.bonusLines.join("; ")}`);
       }
       ln(`</div>`);
       ln();

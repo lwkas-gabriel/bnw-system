@@ -5,6 +5,8 @@ import type {
   CombatSummary, ActiveBuffs,
 } from "../../../shared/types/combat";
 import { baseAttributes } from "../../character/utils/attrCalc";
+import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
+import { CYBORG_LOCATIONS_BY_ID, CYBORG_SHIFT_BONUS } from "../../../data/cyborg";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -143,7 +145,7 @@ export function resolveAttributes(
 
   // ── Artes Marciais flat bonuses (always active once unlocked) ────
   if (char.artesMarciais?.currentFaixa) {
-    const faixaBonuses = getFaixaBonuses(char.artesMarciais.currentFaixa);
+    const faixaBonuses = faixaStatBonuses(char.artesMarciais.currentFaixa);
     base.power        += faixaBonuses.power        ?? 0;
     base.precision    += faixaBonuses.precision    ?? 0;
     base.defense      += faixaBonuses.defense      ?? 0;
@@ -153,63 +155,11 @@ export function resolveAttributes(
   // ── Ciborgue shift bonuses (always active) ───────────────────────
   if (char.cyborg?.shifts) {
     for (const shift of char.cyborg.shifts) {
-      const shiftBonus = getCyborgShiftBonus(shift.location);
-      base.power        += shiftBonus.power        ?? 0;
-      base.precision    += shiftBonus.precision    ?? 0;
-      base.defense      += shiftBonus.defense      ?? 0;
-      base.constitution += shiftBonus.constitution ?? 0;
+      base[CYBORG_LOCATIONS_BY_ID[shift.location].attr] += CYBORG_SHIFT_BONUS;
     }
   }
 
   return { ...base, energyCostPerTurn: energyCost };
-}
-
-/** Returns the flat stat bonus for a given cyborg shift location */
-function getCyborgShiftBonus(location: string): Partial<BaseAttributes> {
-  const bonuses: Record<string, Partial<BaseAttributes>> = {
-    head:       { precision: 4 },
-    right_arm:  { power: 4 },
-    left_arm:   { power: 4 },
-    right_leg:  { defense: 4 },
-    left_leg:   { defense: 4 },
-    torso:      { constitution: 4 },
-  };
-  return bonuses[location] ?? {};
-}
-
-/** Returns the cumulative flat stat bonuses from AM faixas up to and including the given one */
-function getFaixaBonuses(faixa: string): Partial<BaseAttributes> {
-  // Ordered list of flat stat bonuses per faixa
-  const bonuses: Record<string, Partial<BaseAttributes>> = {
-    branca:      {},
-    cinza:       { precision: 2 },
-    azul_clara:  { defense: 2 },
-    azul_escura: { power: 2 },
-    amarela:     { constitution: 2 },
-    laranja:     {},
-    verde:       {},
-    roxa:        {},
-    marrom:      {},
-    preta:       {},
-    coral:       {},
-    rajada:      {},
-    vermelha:    {},
-    grao_mestre: {},
-  };
-
-  const order = ["branca","cinza","azul_clara","azul_escura","amarela",
-                 "laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"];
-  const idx = order.indexOf(faixa);
-
-  const acc: Partial<BaseAttributes> = {};
-  for (let i = 0; i <= idx; i++) {
-    const b = bonuses[order[i]];
-    if (b.power)        acc.power        = (acc.power        ?? 0) + b.power;
-    if (b.precision)    acc.precision    = (acc.precision    ?? 0) + b.precision;
-    if (b.defense)      acc.defense      = (acc.defense      ?? 0) + b.defense;
-    if (b.constitution) acc.constitution = (acc.constitution ?? 0) + b.constitution;
-  }
-  return acc;
 }
 
 // ─── Technique Bonus Resolver ─────────────────────────────────────────────────
@@ -243,11 +193,9 @@ export function resolveTechniqueBonus(
   // AM Faixa Verde: +2 to defensive techniques
   // AM Faixa Roxa: +2 to offensive techniques
   if (char.artesMarciais?.currentFaixa) {
-    const faixaOrder = ["branca","cinza","azul_clara","azul_escura","amarela",
-                        "laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"];
-    const idx = faixaOrder.indexOf(char.artesMarciais.currentFaixa);
-    if (!isOffensive && idx >= faixaOrder.indexOf("verde")) bonus += 2;   // Faixa Verde
-    if (isOffensive  && idx >= faixaOrder.indexOf("roxa"))  bonus += 2;   // Faixa Roxa
+    const faixa = char.artesMarciais.currentFaixa;
+    if (!isOffensive && hasReachedFaixa(faixa, "verde")) bonus += 2;   // Faixa Verde
+    if (isOffensive  && hasReachedFaixa(faixa, "roxa"))  bonus += 2;   // Faixa Roxa
   }
 
   // Rei Avancado: adds Ambição to technique bonus while King Haki is active

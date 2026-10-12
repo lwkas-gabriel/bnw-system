@@ -3,55 +3,29 @@ import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Badge } from "../../../shared/components";
 import type { AMFaixaId } from "../../../shared/types/character";
 import { GEM_COSTS } from "../utils/gemBudget";
-
-const FAIXAS: { id: AMFaixaId; label: string; bonus: string; location: string }[] = [
-  { id: "branca",      label: "Branca",      bonus: "+2 bônus na arma",          location: "Qualquer" },
-  { id: "cinza",       label: "Cinza",        bonus: "+2 Precisão",               location: "Qualquer" },
-  { id: "azul_clara",  label: "Azul Clara",   bonus: "+2 Defesa",                 location: "Qualquer" },
-  { id: "azul_escura", label: "Azul Escura",  bonus: "+2 Poder",                  location: "Qualquer" },
-  { id: "amarela",     label: "Amarela",      bonus: "+2 Constituição",           location: "Qualquer" },
-  { id: "laranja",     label: "Laranja",      bonus: "+1 itens def + Arma Única", location: "Grand Line" },
-  { id: "verde",       label: "Verde",        bonus: "+2 técnicas defensivas",    location: "Grand Line" },
-  { id: "roxa",        label: "Roxa",         bonus: "+2 técnicas ofensivas",     location: "Grand Line" },
-  { id: "marrom",      label: "Marrom",       bonus: "+1 itens def + 1 Rank A",   location: "Grand Line" },
-  { id: "preta",       label: "Preta",        bonus: "Equipa arma extra",         location: "New World" },
-  { id: "coral",       label: "Coral",        bonus: "+2 na arma extra",          location: "New World" },
-  { id: "rajada",      label: "Rajada",       bonus: "+1 itens defensivos",       location: "New World" },
-  { id: "vermelha",    label: "Vermelha",     bonus: "+2 POD/PRE/DEF/CON por 2 EN", location: "New World" },
-  { id: "grao_mestre", label: "Grão-Mestre",  bonus: "+2 rolagem ou -2 oponente", location: "New World" },
-];
-
-const ORDER = FAIXAS.map(f => f.id);
-
-function isAvailable(id: AMFaixaId, location: "blues" | "grand_line" | "new_world"): boolean {
-  const f = FAIXAS.find(f => f.id === id)!;
-  if (f.location === "Qualquer") return true;
-  if (f.location === "Grand Line") return location === "grand_line" || location === "new_world";
-  if (f.location === "New World") return location === "new_world";
-  return false;
-}
+import { AM_FAIXAS, AM_FAIXA_ORDER, FAIXA_REGION_LABELS, faixaIndex, faixasUpTo, hasReachedFaixa, isFaixaAvailable } from "../../../data/artesMarciais";
 
 export function ArtesMarciaisSection() {
   const { draft, updateDraft } = useCharacterStore();
   if (!draft) return null;
 
   const currentFaixa = draft.artesMarciais?.currentFaixa ?? null;
-  const currentIdx = currentFaixa ? ORDER.indexOf(currentFaixa) : -1;
+  const currentIdx = faixaIndex(currentFaixa);
 
   const totalCost = currentFaixa
-    ? ORDER.slice(0, currentIdx + 1).reduce((s, f) => s + GEM_COSTS.artesMarciais[f as AMFaixaId], 0)
+    ? faixasUpTo(currentFaixa).reduce((s, f) => s + GEM_COSTS.artesMarciais[f.id], 0)
     : 0;
 
   function selectFaixa(id: AMFaixaId) {
-    const newIdx = ORDER.indexOf(id);
+    const newIdx = faixaIndex(id);
     const isSame = currentFaixa === id;
     updateDraft(c => {
       if (!c.artesMarciais) c.artesMarciais = { currentFaixa: null, laranjaChoice: null };
-      c.artesMarciais.currentFaixa = isSame ? (newIdx > 0 ? ORDER[newIdx - 1] as AMFaixaId : null) : id;
+      c.artesMarciais.currentFaixa = isSame ? (newIdx > 0 ? AM_FAIXA_ORDER[newIdx - 1] : null) : id;
     });
   }
 
-  const hasLaranja = currentIdx >= ORDER.indexOf("laranja");
+  const hasLaranja = hasReachedFaixa(currentFaixa, "laranja");
 
   return (
     <div className="space-y-4 max-w-2xl">
@@ -63,8 +37,8 @@ export function ArtesMarciaisSection() {
         <p className="text-xs text-slate-500 mb-4">Selecione a faixa atual. Todas as faixas anteriores são adquiridas automaticamente.</p>
 
         <div className="space-y-1.5">
-          {FAIXAS.map((faixa, idx) => {
-            const available = isAvailable(faixa.id, draft.location);
+          {AM_FAIXAS.map((faixa, idx) => {
+            const available = isFaixaAvailable(faixa.id, draft.location);
             const isActive = currentIdx >= idx;
             const isCurrent = currentFaixa === faixa.id;
 
@@ -89,11 +63,11 @@ export function ArtesMarciaisSection() {
                     <span className={`text-xs font-semibold ${isActive ? "text-amber-300" : "text-slate-400"}`}>
                       {faixa.label}
                     </span>
-                    {!available && <span className="text-[9px] text-slate-600">{faixa.location}</span>}
+                    {!available && <span className="text-[9px] text-slate-600">{FAIXA_REGION_LABELS[faixa.region]}</span>}
                   </div>
-                  <p className="text-[10px] text-slate-500 truncate">{faixa.bonus}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{faixa.summary}</p>
                 </div>
-                <span className="text-[10px] font-mono text-slate-600 flex-shrink-0">10g</span>
+                <span className="text-[10px] font-mono text-slate-600 flex-shrink-0">{GEM_COSTS.artesMarciais[faixa.id]}g</span>
               </button>
             );
           })}

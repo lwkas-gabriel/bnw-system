@@ -1,6 +1,7 @@
 import type { Character, AMFaixaId, AkumaRank, CompanionRank } from "../../../shared/types/character";
 import { FACTIONS } from "../../../data/factions";
 import { hakiCostBreakdown } from "./haki";
+import { faixasUpTo, hasReachedFaixa } from "../../../data/artesMarciais";
 
 // ─── Gem costs (single source of truth) ──────────────────────────────────────
 
@@ -108,14 +109,8 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
   // ── Artes Marciais ────────────────────────────────────────────────
   if (char.artesMarciais?.currentFaixa) {
-    const order: AMFaixaId[] = [
-      "branca","cinza","azul_clara","azul_escura","amarela",
-      "laranja","verde","roxa","marrom",
-      "preta","coral","rajada","vermelha","grao_mestre",
-    ];
-    const idx = order.indexOf(char.artesMarciais.currentFaixa);
-    const total = order.slice(0, idx + 1).reduce(
-      (sum, f) => sum + GEM_COSTS.artesMarciais[f], 0
+    const total = faixasUpTo(char.artesMarciais.currentFaixa).reduce(
+      (sum, f) => sum + GEM_COSTS.artesMarciais[f.id], 0
     );
     breakdown.push({
       category: "Artes Marciais",
@@ -136,11 +131,7 @@ export function computeGemBudget(char: Character): GemBudgetResult {
   // ── Unique Weapon ─────────────────────────────────────────────────
   // Only count if NOT obtained via AM Laranja (Laranja faixa or higher + not explicitly "techniques")
   const hasUniqueWeapon = char.equippedWeapon && "characteristic" in char.equippedWeapon;
-  const LARANJA_IDX = ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf("laranja");
-  const currentFaixaIdx = char.artesMarciais?.currentFaixa
-    ? ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf(char.artesMarciais.currentFaixa)
-    : -1;
-  const hasLaranja = currentFaixaIdx >= LARANJA_IDX;
+  const hasLaranja = hasReachedFaixa(char.artesMarciais?.currentFaixa, "laranja");
   const gotFromLaranja = hasUniqueWeapon && hasLaranja && char.artesMarciais?.laranjaChoice !== "techniques";
   if (hasUniqueWeapon && !gotFromLaranja) {
     breakdown.push({

@@ -2,17 +2,12 @@ import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import type { CyborgShiftData, CyborgShiftLocation, CyborgGear, CyborgPath } from "../../../shared/types/character";
 import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../../../data/attributes";
+import { CYBORG_LOCATIONS, cyborgBonusLabel } from "../../../data/cyborg";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
-const LOCATIONS: { value: CyborgShiftLocation; label: string; attrBonus: string }[] = [
-  { value: "head",       label: "Cabeça",         attrBonus: "+4 PRE" },
-  { value: "right_arm",  label: "Braço Direito",  attrBonus: "+4 POD" },
-  { value: "left_arm",   label: "Braço Esquerdo", attrBonus: "+4 POD" },
-  { value: "right_leg",  label: "Perna Direita",  attrBonus: "+4 DEF" },
-  { value: "left_leg",   label: "Perna Esquerda", attrBonus: "+4 DEF" },
-  { value: "torso",      label: "Tronco",         attrBonus: "+4 CON" },
-];
+const LOCATIONS: { value: CyborgShiftLocation; label: string; attrBonus: string }[] =
+  CYBORG_LOCATIONS.map(l => ({ value: l.id, label: l.label, attrBonus: cyborgBonusLabel(l.id) }));
 
 const GEARS: { value: CyborgGear; label: string; description: string }[] = [
   { value: "overclock", label: "Overclock", description: "Dobra custo de combustível de 1 técnica/turno; concede +metade do efeito (arredonda ↑)." },

@@ -5,9 +5,11 @@ import { hakiStageNum } from "../utils/haki";
 import { RACES } from "../../../data/races";
 import type {
   RaceId, BaseAttributes, Character,
-  ZoanAkuma, LogiaAkuma, ParameciaAkuma, AMFaixaId,
+  ZoanAkuma, LogiaAkuma, ParameciaAkuma,
 } from "../../../shared/types/character";
 import { ATTR_KEYS, ATTR_LABELS } from "../../../data/attributes";
+import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
+import { CYBORG_LOCATIONS_BY_ID } from "../../../data/cyborg";
 
 // ─── Attr Breakdown ───────────────────────────────────────────────────────────
 
@@ -18,16 +20,6 @@ interface AttrRow {
   isCombat?: boolean;
 }
 
-const SHIFT_ATTR: Record<string, keyof BaseAttributes> = {
-  head: "precision", right_arm: "power", left_arm: "power",
-  right_leg: "defense", left_leg: "defense", torso: "constitution",
-};
-
-const FAIXA_ORDER: Record<AMFaixaId, number> = {
-  branca: 1, cinza: 2, azul_clara: 3, azul_escura: 4, amarela: 5,
-  laranja: 6, verde: 7, roxa: 8, marrom: 9, preta: 10,
-  coral: 11, rajada: 12, vermelha: 13, grao_mestre: 14,
-};
 
 
 function computeAttrBreakdown(char: Character): AttrRow[] {
@@ -68,7 +60,7 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
   if (char.cyborg) {
     const shiftTotals: Partial<Record<keyof BaseAttributes, number>> = {};
     for (const shift of char.cyborg.shifts) {
-      const attr = SHIFT_ATTR[shift.location];
+      const attr = CYBORG_LOCATIONS_BY_ID[shift.location].attr;
       if (attr) shiftTotals[attr] = (shiftTotals[attr] ?? 0) + 4;
     }
     add("Ciborgue (shifts)",
@@ -131,16 +123,17 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
 
   // Artes Marciais
   if (char.artesMarciais?.currentFaixa) {
-    const fi = FAIXA_ORDER[char.artesMarciais.currentFaixa];
+    const faixa = char.artesMarciais.currentFaixa;
+    const amStats = faixaStatBonuses(faixa);
     // Flat bonuses cumulativos (Cinza–Amarela)
     add("AM (faixas Cinza–Amarela)",
-      fi >= 4 ? 2 : 0,
-      fi >= 2 ? 2 : 0,
-      fi >= 3 ? 2 : 0,
-      fi >= 5 ? 2 : 0,
+      amStats.power ?? 0,
+      amStats.precision ?? 0,
+      amStats.defense ?? 0,
+      amStats.constitution ?? 0,
     );
     // Bônus em itens defensivos (Laranja=+1, Marrom=+2, Rajada=+3)
-    const defBonus = fi >= 12 ? 3 : fi >= 9 ? 2 : fi >= 6 ? 1 : 0;
+    const defBonus = hasReachedFaixa(faixa, "rajada") ? 3 : hasReachedFaixa(faixa, "marrom") ? 2 : hasReachedFaixa(faixa, "laranja") ? 1 : 0;
     if (defBonus > 0) {
       const defTotals: Record<keyof BaseAttributes, number> = { power: 0, precision: 0, defense: 0, constitution: 0 };
       for (const item of [char.equippedDefensive[0], char.equippedDefensive[1]]) {
@@ -149,7 +142,7 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
       add("AM (bônus defensivos)", defTotals.power, defTotals.precision, defTotals.defense, defTotals.constitution);
     }
     // Vermelha: +2 a atributo à escolha por 2 EN (combate)
-    if (fi >= 13) {
+    if (hasReachedFaixa(faixa, "vermelha")) {
       rows.push({ source: "AM Vermelha (+2 à escolha / 2 EN)", pod: 0, pre: 0, def: 0, con: 0, isCombat: true, conTemp: undefined });
     }
   }

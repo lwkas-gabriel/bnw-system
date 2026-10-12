@@ -7,3 +7,7 @@ export * from "./professions";
 export * from "./bugigangas";
 export * from "./akumaModules";
 export * from "./factions";
+export * from "./ships";
+export * from "./attributes";
+export * from "./artesMarciais";
+export * from "./cyborg";

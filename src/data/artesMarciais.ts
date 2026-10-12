@@ -1,4 +1,4 @@
-import type { AMFaixaId } from "../shared/types/character";
+import type { AMFaixaId, BaseAttributes } from "../shared/types/character";
 
 export type FaixaRegion = "any" | "grand_line" | "new_world";
 
@@ -11,15 +11,19 @@ export interface AMFaixaData {
   region: FaixaRegion;
   /** Bônus que ESTA faixa adiciona (o acumulado é a soma das faixas anteriores) */
   bonusLines: string[];
+  /** Bônus fixo de atributo que ESTA faixa adiciona */
+  statBonus?: Partial<BaseAttributes>;
+  /** Grafia usada na ficha do fórum, quando difere de `label` */
+  forumLabel?: string;
 }
 
 /** As 14 faixas de Artes Marciais, em ordem de progressão (fonte única). */
 export const AM_FAIXAS: AMFaixaData[] = [
   { id: "branca",      label: "Branca",      summary: "+2 bônus na arma",            region: "any",        bonusLines: ["+2 de bônus na arma equipada"] },
-  { id: "cinza",       label: "Cinza",       summary: "+2 Precisão",                 region: "any",        bonusLines: ["+2 de Precisão"] },
-  { id: "azul_clara",  label: "Azul Clara",  summary: "+2 Defesa",                   region: "any",        bonusLines: ["+2 de Defesa"] },
-  { id: "azul_escura", label: "Azul Escura", summary: "+2 Poder",                    region: "any",        bonusLines: ["+2 de Poder"] },
-  { id: "amarela",     label: "Amarela",     summary: "+2 Constituição",             region: "any",        bonusLines: ["+2 de Constituição"] },
+  { id: "cinza",       label: "Cinza",       summary: "+2 Precisão",                 region: "any",        bonusLines: ["+2 de Precisão"], statBonus: { precision: 2 } },
+  { id: "azul_clara",  label: "Azul Clara",  summary: "+2 Defesa",                   region: "any",        bonusLines: ["+2 de Defesa"], statBonus: { defense: 2 } },
+  { id: "azul_escura", label: "Azul Escura", summary: "+2 Poder",                    region: "any",        bonusLines: ["+2 de Poder"], statBonus: { power: 2 } },
+  { id: "amarela",     label: "Amarela",     summary: "+2 Constituição",             region: "any",        bonusLines: ["+2 de Constituição"], statBonus: { constitution: 2 } },
   { id: "laranja",     label: "Laranja",     summary: "+1 itens def + Arma Única",   region: "grand_line", bonusLines: ["+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum"] },
   { id: "verde",       label: "Verde",       summary: "+2 técnicas defensivas",      region: "grand_line", bonusLines: ["+2 de bônus em técnicas defensivas"] },
   { id: "roxa",        label: "Roxa",        summary: "+2 técnicas ofensivas",       region: "grand_line", bonusLines: ["+2 de bônus em técnicas ofensivas"] },
@@ -28,7 +32,7 @@ export const AM_FAIXAS: AMFaixaData[] = [
   { id: "coral",       label: "Coral",       summary: "+2 na arma extra",            region: "new_world",  bonusLines: ["+2 de bônus na arma extra"] },
   { id: "rajada",      label: "Rajada",      summary: "+1 itens defensivos",         region: "new_world",  bonusLines: ["+1 de bônus nos equipamentos defensivos"] },
   { id: "vermelha",    label: "Vermelha",    summary: "+2 POD/PRE/DEF/CON por 2 EN", region: "new_world",  bonusLines: ["+2 em POD/PRE/DEF/CON por 2 de energia (escolha por turno)"] },
-  { id: "grao_mestre", label: "Grão-Mestre", summary: "+2 rolagem ou -2 oponente",   region: "new_world",  bonusLines: ["+2 em ataque por 3 de energia OU -2 no ataque do oponente por 3 de energia"] },
+  { id: "grao_mestre", label: "Grão-Mestre", summary: "+2 rolagem ou -2 oponente",   region: "new_world",  bonusLines: ["+2 em ataque por 3 de energia OU -2 no ataque do oponente por 3 de energia"], forumLabel: "Grão Mestre" },
 ];
 
 export const AM_FAIXA_ORDER: AMFaixaId[] = AM_FAIXAS.map(f => f.id);
@@ -44,3 +48,38 @@ export function faixaIndex(id: AMFaixaId | null | undefined): number {
 export function faixasUpTo(id: AMFaixaId): AMFaixaData[] {
   return AM_FAIXAS.slice(0, faixaIndex(id) + 1);
 }
+
+/** Se a faixa atual já alcançou (ou passou) `target`. */
+export function hasReachedFaixa(current: AMFaixaId | null | undefined, target: AMFaixaId): boolean {
+  return faixaIndex(current) >= faixaIndex(target);
+}
+
+/** Bônus fixos de atributo acumulados até `faixa` (inclusive). */
+export function faixaStatBonuses(faixa: AMFaixaId): Partial<BaseAttributes> {
+  const acc: Partial<BaseAttributes> = {};
+  for (const f of faixasUpTo(faixa)) {
+    for (const [attr, value] of Object.entries(f.statBonus ?? {}) as [keyof BaseAttributes, number][]) {
+      acc[attr] = (acc[attr] ?? 0) + value;
+    }
+  }
+  return acc;
+}
+
+/** Região exigida pela faixa, em texto (UI). */
+export const FAIXA_REGION_LABELS: Record<FaixaRegion, string> = {
+  any: "Qualquer", grand_line: "Grand Line", new_world: "New World",
+};
+
+/** Se a faixa pode ser obtida na localização atual do personagem. */
+export function isFaixaAvailable(id: AMFaixaId, location: "blues" | "grand_line" | "new_world"): boolean {
+  const region = AM_FAIXAS_BY_ID[id].region;
+  if (region === "grand_line") return location === "grand_line" || location === "new_world";
+  if (region === "new_world") return location === "new_world";
+  return true;
+}
+
+export function faixaForumLabel(id: AMFaixaId): string {
+  const f = AM_FAIXAS_BY_ID[id];
+  return f.forumLabel ?? f.label;
+}
+
