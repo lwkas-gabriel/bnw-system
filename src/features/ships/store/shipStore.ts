@@ -5,6 +5,7 @@ import type { Ship, ShipSize, ShipOwnership, CrewMember } from "../../../shared/
 import { KLABAUTERMANN_VOYAGES, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
 import { COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
 import { SHIP_COMODOS_BY_ID } from "../../../data/ships";
+import { usedComodoSlots } from "../utils/shipCalc";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
 
@@ -53,13 +54,6 @@ interface ShipActions {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function usedComodoSlots(comodoIds: string[]): number {
-  return comodoIds.reduce((sum, id) => {
-    const comodo = SHIP_COMODOS_BY_ID[id];
-    return sum + (comodo?.size ?? 0);
-  }, 0);
-}
 
 function createBlankShip(name: string, size: ShipSize, builtByEngineer = false): Ship {
   const maxHull = SHIP_SIZES[size].maxHull;

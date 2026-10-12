@@ -1,11 +1,12 @@
 import type { Ship } from "../../../shared/types/ship";
 import {
-  ENGINEER_DISCOUNT, KLABAUTERMANN_DISCOUNT_PRICE, KLABAUTERMANN_VOYAGES,
+  KLABAUTERMANN_VOYAGES,
   SHIP_COMODOS_BY_ID, SHIP_MECHANISMS_BY_ID, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES,
 } from "../../../data/ships";
 import { formatBerries } from "../../../shared/utils/format";
 import { downloadText, slugify } from "../../../shared/utils/download";
 import type { ExportEnvelope } from "../../../shared/types/io";
+import { computeShipTotalPrice, usedComodoSlots } from "./shipCalc";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -31,20 +32,6 @@ export function downloadShipJSON(ship: Ship): void {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 
-function computeShipTotalPrice(ship: Ship): number {
-  const sizeData = SHIP_SIZES[ship.size];
-  let total = sizeData.price;
-  if (ship.builtByEngineer) total -= Math.floor(total * ENGINEER_DISCOUNT);
-  for (const id of ship.mechanisms) {
-    total += SHIP_MECHANISMS_BY_ID[id]?.price ?? 0;
-  }
-  for (const id of ship.comodoIds) {
-    total += SHIP_COMODOS_BY_ID[id]?.price ?? 0;
-  }
-  if (ship.klabautermannUnlockedWithDiscount) total += KLABAUTERMANN_DISCOUNT_PRICE;
-  return total;
-}
-
 // ─── Forum HTML export (dohtml) ───────────────────────────────────────────────
 
 export function exportShipToForumHTML(ship: Ship): string {
@@ -53,9 +40,7 @@ export function exportShipToForumHTML(ship: Ship): string {
   const ownershipLabel = SHIP_OWNERSHIP_LABELS[ship.ownership] ?? ship.ownership;
   const totalPrice = computeShipTotalPrice(ship);
 
-  const usedSlots = ship.comodoIds.reduce((sum, id) => {
-    return sum + (SHIP_COMODOS_BY_ID[id]?.size ?? 0);
-  }, 0);
+  const usedSlots = usedComodoSlots(ship.comodoIds);
 
   const klabStr = ship.klabautermann.active
     ? `Ativo (${ship.klabautermann.voyageCount} viagens)`

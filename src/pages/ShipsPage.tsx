@@ -17,6 +17,7 @@ import type { ShipSize, ShipRole } from "../shared/types/ship";
 import { downloadShipJSON, exportShipToJSONString, downloadShipForumHTML } from "../features/ships/utils/shipExporter";
 import { formatBerries, formatBerriesShort } from "../shared/utils/format";
 import { copyToClipboard } from "../shared/utils/download";
+import { engineerDiscount, shipHullPrice, usedComodoSlots } from "../features/ships/utils/shipCalc";
 
 // Comodo → profession badge mapping
 const COMODO_PROFESSION: Record<string, string> = {
@@ -59,8 +60,8 @@ function OverviewTab({ shipId }: { shipId: string }) {
 
   const sizeData = SHIP_SIZES[ship.size];
   const hullPct = Math.round((ship.currentHull / ship.maxHull) * 100);
-  const engineerDiscount = ship.builtByEngineer ? Math.floor(sizeData.price * ENGINEER_DISCOUNT) : 0;
-  const effectivePrice = sizeData.price - engineerDiscount;
+  const discount = ship.builtByEngineer ? engineerDiscount(sizeData.price) : 0;
+  const effectivePrice = shipHullPrice(ship);
 
   return (
     <div className="space-y-4">
@@ -85,7 +86,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
             { label: "Tripulação máx.", value: `${ship.crew.length}/${sizeData.maxCrew}` },
             { label: "Preço",     value: formatBerries(effectivePrice) },
             { label: "Req. Percepção", value: `${sizeData.percepaoRequired}/5` },
-            { label: "Cômodos",   value: `${SHIP_COMODOS.filter(c => ship.comodoIds.includes(c.id)).reduce((s,c)=>s+c.size,0)}/${sizeData.comodoSlots} slots` },
+            { label: "Cômodos",   value: `${usedComodoSlots(ship.comodoIds)}/${sizeData.comodoSlots} slots` },
             { label: "Mecanismos", value: `${ship.mechanisms.length}/${sizeData.maxMechanisms}` },
           ].map(s => (
             <div key={s.label} className="bg-slate-800 rounded-lg p-3 text-center">
@@ -124,7 +125,7 @@ function OverviewTab({ shipId }: { shipId: string }) {
 
         {ship.builtByEngineer && (
           <p className="text-[10px] text-green-400/70 mb-3">
-            ✦ Construída por Engenheiro — desconto de {ENGINEER_DISCOUNT * 100}% aplicado (economia: {formatBerries(engineerDiscount)})
+            ✦ Construída por Engenheiro — desconto de {ENGINEER_DISCOUNT * 100}% aplicado (economia: {formatBerries(discount)})
           </p>
         )}
         {ship.ownership === "navy_permanent" && (
@@ -360,7 +361,7 @@ function ComodosTab({ shipId }: { shipId: string }) {
   if (!ship) return null;
 
   const sizeData = SHIP_SIZES[ship.size];
-  const usedSlots = SHIP_COMODOS.filter(c => ship.comodoIds.includes(c.id)).reduce((s,c) => s+c.size, 0);
+  const usedSlots = usedComodoSlots(ship.comodoIds);
   const remainingSlots = sizeData.comodoSlots - usedSlots;
 
   if (sizeData.comodoSlots === 0) {
