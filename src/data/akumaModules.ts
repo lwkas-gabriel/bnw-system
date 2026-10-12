@@ -1,3 +1,5 @@
+import type { AkumaType } from "../shared/types/character";
+
 export interface AkumaModuleOption {
   id: string;
   label: string;
@@ -50,3 +52,7 @@ export const PARAMECIA_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object
 export const ZOAN_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object.fromEntries(
   ZOAN_MODULES.map(m => [m.id, m]),
 );
+
+export const AKUMA_TYPE_LABELS: Record<AkumaType, string> = {
+  zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
+};

@@ -6,6 +6,13 @@ import { validateCharacterFull, type ValidationReport } from "./validator";
 import { GEM_BUDGET_MIN } from "../../../data/gemCosts";
 import type { ImportStatus } from "../../../shared/types/io";
 import { readClipboardText, readFileAsText, regexCapture, validateImportFile } from "../../../shared/utils/importIO";
+import type { AMFaixaId, CyborgShiftLocation, LocationId, RaceId } from "../../../shared/types/character";
+import { invertLabels } from "../../../shared/utils/labels";
+import { RACES, raceForumLabel } from "../../../data/races";
+import { LOCATION_LABELS } from "../../../data/locations";
+import { AM_FAIXA_ORDER, faixaForumLabel } from "../../../data/artesMarciais";
+import { AKUMA_TYPE_LABELS } from "../../../data/akumaModules";
+import { CYBORG_LOCATIONS } from "../../../data/cyborg";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -216,29 +223,28 @@ export function parseImportJSON(raw: string): ImportResult {
 
 // ─── Parse Forum HTML (dohtml) ────────────────────────────────────────────────
 
-const RACE_MAP: Record<string, string> = {
-  "humano": "human", "tritão": "fishman", "fishman": "fishman",
-  "sireno": "siren", "siren": "siren", "lunar": "lunar",
-  "mink": "mink", "anão": "dwarf", "gigante": "giant",
-  "meio-gigante": "half_giant", "meio gigante": "half_giant",
+// Rótulos da ficha → id, derivados dos mesmos dados que o exporter usa,
+// mais grafias alternativas aceitas em fichas antigas/escritas à mão.
+const RACE_MAP: Record<string, RaceId> = {
+  ...invertLabels(Object.fromEntries((Object.keys(RACES) as RaceId[]).map(id => [id, raceForumLabel(id)])) as Record<RaceId, string>),
+  "fishman": "fishman", "siren": "siren", "meio gigante": "half_giant",
 };
 
-const LOCATION_MAP: Record<string, string> = {
-  "blues": "blues", "grand line": "grand_line", "paradise": "grand_line",
-  "new world": "new_world", "novo mundo": "new_world",
+const LOCATION_MAP: Record<string, LocationId> = {
+  ...invertLabels(LOCATION_LABELS),
+  "paradise": "grand_line", "novo mundo": "new_world",
 };
 
-const FAIXA_MAP: Record<string, string> = {
-  "branca": "branca", "cinza": "cinza", "azul clara": "azul_clara",
-  "azul escura": "azul_escura", "amarela": "amarela", "laranja": "laranja",
-  "verde": "verde", "roxa": "roxa", "marrom": "marrom", "preta": "preta",
-  "coral": "coral", "rajada": "rajada", "vermelha": "vermelha",
-  "grão mestre": "grao_mestre", "grao mestre": "grao_mestre",
+const FAIXA_MAP: Record<string, AMFaixaId> = {
+  ...invertLabels(Object.fromEntries(AM_FAIXA_ORDER.map(id => [id, faixaForumLabel(id)])) as Record<AMFaixaId, string>),
+  "grao mestre": "grao_mestre",
 };
 
-const AKUMA_TYPE_MAP: Record<string, string> = {
-  "zoan": "zoan", "logia": "logia", "paramecia": "paramecia",
-};
+const AKUMA_TYPE_MAP = invertLabels(AKUMA_TYPE_LABELS);
+
+const CYBORG_LOC_MAP = invertLabels(
+  Object.fromEntries(CYBORG_LOCATIONS.map(l => [l.id, l.label])) as Record<CyborgShiftLocation, string>,
+);
 
 const rx1 = regexCapture;
 
@@ -364,10 +370,6 @@ export function parseImportForumHTML(text: string): ImportResult {
   let cyborg: unknown = null;
   const cyborgBlocks = [...text.matchAll(/<d>Ciborgue<\/d>([\s\S]*?)(?=<d>Ciborgue<\/d>|<\/div>)/g)];
   if (cyborgBlocks.length > 0) {
-    const CYBORG_LOC_MAP: Record<string, string> = {
-      "cabeça": "head", "braço direito": "right_arm", "braço esquerdo": "left_arm",
-      "perna direita": "right_leg", "perna esquerda": "left_leg", "tronco": "torso",
-    };
     const shifts = cyborgBlocks.map((m, i) => {
       const block = m[1];
       const locRawC = rx1(block, /\[b\]Local:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase().trim() ?? "";

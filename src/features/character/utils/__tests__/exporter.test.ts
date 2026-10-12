@@ -86,3 +86,14 @@ describe("Artes Marciais — bônus acumulados", () => {
   });
 });
 
+describe("import fórum — grafias alternativas", () => {
+  it("aceita aliases de raça e localização", () => {
+    const html = exportToForumHTML(createRichCharacterFixture({ race: "half_giant", location: "new_world" }))
+      .replace("<e>Raça: </e>Meio-Gigante.", "<e>Raça: </e>Meio Gigante.")
+      .replace("<e>Localização: </e>New World.", "<e>Localização: </e>Novo Mundo.");
+    const imported = parseImportForumHTML(html).character!;
+    expect(imported.race).toBe("half_giant");
+    expect(imported.location).toBe("new_world");
+  });
+});
+

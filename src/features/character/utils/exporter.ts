@@ -7,7 +7,7 @@ import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/hak
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 import { BUGIGANGAS_BY_ID } from "../../../data/bugigangas";
-import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
+import { AKUMA_TYPE_LABELS, PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
 import { FACTIONS, getFactionLabel } from "../../../data/factions";
 import { faixaForumLabel, faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID, cyborgBonusLabel } from "../../../data/cyborg";
@@ -56,9 +56,6 @@ function formatBerriesOr(value: number | undefined): string {
   return value === undefined ? "[PREENCHER]" : formatBerries(value);
 }
 
-const AKUMA_TYPE_LABELS: Record<string, string> = {
-  zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
-};
 
 function attrDisplay(base: number, racial: number, raceName: string, am: number): string {
   let s = `${base}`;
