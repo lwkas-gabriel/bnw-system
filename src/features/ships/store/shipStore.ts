@@ -2,9 +2,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { Ship, ShipSize, ShipOwnership, CrewMember } from "../../../shared/types/ship";
-import { KLABAUTERMANN_VOYAGES, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
+import { KLABAUTERMANN_VOYAGES, SHIP_COMODOS_BY_ID, SHIP_SIZES, SHIP_SIZES_ORDERED } from "../../../data/ships";
 import { COMMISSIONED_SHIP_PRESET } from "../../../data/factions";
-import { SHIP_COMODOS_BY_ID } from "../../../data/ships";
 import { usedComodoSlots } from "../utils/shipCalc";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
@@ -78,150 +77,113 @@ function createBlankShip(name: string, size: ShipSize, builtByEngineer = false):
 
 export const useShipStore = create<ShipState & ShipActions>()(
   persist(
-    immer((set) => ({
-      ships: [],
-      activeShipId: null,
-
-      addShip: (name, size, builtByEngineer = false) => {
-        const ship = createBlankShip(name, size, builtByEngineer);
-        set(state => { state.ships.push(ship); state.activeShipId = ship.id; });
-      },
-
-      deleteShip: (id) => {
-        set(state => {
-          state.ships = state.ships.filter(s => s.id !== id);
-          if (state.activeShipId === id) state.activeShipId = null;
-        });
-      },
-
-      updateShip: (id, updater) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === id);
-          if (ship) updater(ship);
-        });
-      },
-
-      setActiveShip: (id) => {
-        set(state => { state.activeShipId = id; });
-      },
-
-      addCrewMember: (shipId, member) => {
+    immer((set) => {
+      /** Aplica `fn` ao navio `shipId` (no-op se não existir) */
+      const withShip = (shipId: string, fn: (ship: Ship) => void) => {
         set(state => {
           const ship = state.ships.find(s => s.id === shipId);
-          if (ship) ship.crew.push({ ...member, id: crypto.randomUUID() });
+          if (ship) fn(ship);
         });
-      },
+      };
 
-      removeCrewMember: (shipId, memberId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (ship) ship.crew = ship.crew.filter(m => m.id !== memberId);
-        });
-      },
+      return {
+        ships: [],
+        activeShipId: null,
 
-      addMechanism: (shipId, mechanismId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (!ship) return;
-          const sizeData = SHIP_SIZES[ship.size];
-          if (ship.mechanisms.length >= sizeData.maxMechanisms) return;
+        addShip: (name, size, builtByEngineer = false) => {
+          const ship = createBlankShip(name, size, builtByEngineer);
+          set(state => { state.ships.push(ship); state.activeShipId = ship.id; });
+        },
+
+        deleteShip: (id) => {
+          set(state => {
+            state.ships = state.ships.filter(s => s.id !== id);
+            if (state.activeShipId === id) state.activeShipId = null;
+          });
+        },
+
+        updateShip: (id, updater) => withShip(id, updater),
+
+        setActiveShip: (id) => {
+          set(state => { state.activeShipId = id; });
+        },
+
+        addCrewMember: (shipId, member) => withShip(shipId, ship => {
+          ship.crew.push({ ...member, id: crypto.randomUUID() });
+        }),
+
+        removeCrewMember: (shipId, memberId) => withShip(shipId, ship => {
+          ship.crew = ship.crew.filter(m => m.id !== memberId);
+        }),
+
+        addMechanism: (shipId, mechanismId) => withShip(shipId, ship => {
+          if (ship.mechanisms.length >= SHIP_SIZES[ship.size].maxMechanisms) return;
           if (ship.mechanisms.includes(mechanismId)) return;
           ship.mechanisms.push(mechanismId);
-        });
-      },
+        }),
 
-      removeMechanism: (shipId, mechanismId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (ship) ship.mechanisms = ship.mechanisms.filter(m => m !== mechanismId);
-        });
-      },
+        removeMechanism: (shipId, mechanismId) => withShip(shipId, ship => {
+          ship.mechanisms = ship.mechanisms.filter(m => m !== mechanismId);
+        }),
 
-      addComodo: (shipId, comodoId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (!ship) return;
+        addComodo: (shipId, comodoId) => withShip(shipId, ship => {
           if (ship.comodoIds.includes(comodoId)) return;
-          const sizeData = SHIP_SIZES[ship.size];
           const comodo = SHIP_COMODOS_BY_ID[comodoId];
           if (!comodo) return;
-          const usedSlots = usedComodoSlots(ship.comodoIds);
-          if (usedSlots + comodo.size > sizeData.comodoSlots) return;
+          if (usedComodoSlots(ship.comodoIds) + comodo.size > SHIP_SIZES[ship.size].comodoSlots) return;
           ship.comodoIds.push(comodoId);
-        });
-      },
+        }),
 
-      removeComodo: (shipId, comodoId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (ship) ship.comodoIds = ship.comodoIds.filter(c => c !== comodoId);
-        });
-      },
+        removeComodo: (shipId, comodoId) => withShip(shipId, ship => {
+          ship.comodoIds = ship.comodoIds.filter(c => c !== comodoId);
+        }),
 
-      updateHull: (shipId, delta) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (ship) {
-            ship.currentHull = Math.max(0, Math.min(ship.maxHull, ship.currentHull + delta));
-          }
-        });
-      },
+        updateHull: (shipId, delta) => withShip(shipId, ship => {
+          ship.currentHull = Math.max(0, Math.min(ship.maxHull, ship.currentHull + delta));
+        }),
 
-      incrementVoyage: (shipId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (!ship) return;
+        incrementVoyage: (shipId) => withShip(shipId, ship => {
           ship.klabautermann.voyageCount += 1;
           if (!ship.klabautermann.active && ship.klabautermann.voyageCount >= KLABAUTERMANN_VOYAGES) {
             ship.klabautermann.active = true;
           }
-        });
-      },
+        }),
 
-      unlockKlabautermannWithDiscount: (shipId) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (!ship || ship.klabautermann.active) return;
+        unlockKlabautermannWithDiscount: (shipId) => withShip(shipId, ship => {
+          if (ship.klabautermann.active) return;
           ship.klabautermann.active = true;
           ship.klabautermannUnlockedWithDiscount = true;
-        });
-      },
+        }),
 
-      updateOwnership: (shipId, ownership) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (ship) ship.ownership = ownership;
-        });
-      },
+        updateOwnership: (shipId, ownership) => withShip(shipId, ship => {
+          ship.ownership = ownership;
+        }),
 
-      addCommissionedShip: (name, ownership, characterOwnerId) => {
-        const id = crypto.randomUUID();
-        const base = createBlankShip(name, COMMISSIONED_SHIP_PRESET.size, false);
-        const ship: Ship = {
-          ...base,
-          id,
-          mechanisms: [...COMMISSIONED_SHIP_PRESET.mechanisms],
-          comodoIds:  [...COMMISSIONED_SHIP_PRESET.comodoIds],
-          ownership,
-          characterOwnerId,
-        };
-        set(state => { state.ships.push(ship); state.activeShipId = id; });
-        return id;
-      },
+        addCommissionedShip: (name, ownership, characterOwnerId) => {
+          const id = crypto.randomUUID();
+          const base = createBlankShip(name, COMMISSIONED_SHIP_PRESET.size, false);
+          const ship: Ship = {
+            ...base,
+            id,
+            mechanisms: [...COMMISSIONED_SHIP_PRESET.mechanisms],
+            comodoIds:  [...COMMISSIONED_SHIP_PRESET.comodoIds],
+            ownership,
+            characterOwnerId,
+          };
+          set(state => { state.ships.push(ship); state.activeShipId = id; });
+          return id;
+        },
 
-      upgradeShipSize: (shipId, newSize) => {
-        set(state => {
-          const ship = state.ships.find(s => s.id === shipId);
-          if (!ship) return;
+        upgradeShipSize: (shipId, newSize) => withShip(shipId, ship => {
           const currentIdx = SHIP_SIZES_ORDERED.indexOf(ship.size);
           const newIdx     = SHIP_SIZES_ORDERED.indexOf(newSize);
           if (newIdx <= currentIdx) return;
           ship.size    = newSize;
           ship.maxHull = SHIP_SIZES[newSize].maxHull;
           // currentHull kept as-is; mechanisms and comodoIds preserved
-        });
-      },
-    })),
+        }),
+      };
+    }),
     {
       name: "bnw-ships",
       storage: createJSONStorage(() => localStorage),
