@@ -4,21 +4,15 @@ import { SectionCard, Button, Badge } from "../../../shared/components";
 import { TECHNIQUE_RANKS } from "../../../data/techniques";
 import type { Technique, TechniqueRank } from "../../../shared/types/character";
 import { ATTR_SHORT_LABELS, DEFENSIVE_ATTRS, OFFENSIVE_ATTRS } from "../../../data/attributes";
+import { TECHNIQUE_RANK_STYLES } from "./techniqueRankStyles";
 
-const RANK_COLORS: Record<TechniqueRank, string> = {
-  E: "text-slate-400 border-slate-600",
-  D: "text-blue-400 border-blue-700",
-  C: "text-green-400 border-green-700",
-  B: "text-purple-400 border-purple-700",
-  A: "text-amber-400 border-amber-600",
-};
 
 function TechCard({ tech, onRemove }: { tech: Technique; onRemove: () => void }) {
   return (
-    <div className={`border rounded-xl p-3 bg-slate-900 ${RANK_COLORS[tech.rank].split(" ")[1]}`}>
+    <div className={`border rounded-xl p-3 bg-slate-900 ${TECHNIQUE_RANK_STYLES[tech.rank].border}`}>
       <div className="flex items-start justify-between mb-1">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-bold ${RANK_COLORS[tech.rank].split(" ")[0]}`}>
+          <span className={`text-xs font-bold ${TECHNIQUE_RANK_STYLES[tech.rank].text}`}>
             [{tech.rank}]
           </span>
           <span className="text-sm font-semibold text-slate-200">{tech.name}</span>
@@ -96,7 +90,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
                 key={r}
                 onClick={() => setForm(f => ({ ...f, rank: r }))}
                 className={`flex-1 py-1.5 rounded text-xs font-bold border transition-colors ${
-                  form.rank === r ? `${RANK_COLORS[r]} bg-slate-800` : "border-slate-700 text-slate-600 hover:border-slate-500"
+                  form.rank === r ? `${TECHNIQUE_RANK_STYLES[r].text} ${TECHNIQUE_RANK_STYLES[r].border} bg-slate-800` : "border-slate-700 text-slate-600 hover:border-slate-500"
                 }`}
               >
                 {r}
@@ -148,7 +142,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
       </div>
 
       <div className="flex items-center gap-3 text-xs text-slate-500 bg-slate-800 rounded-lg p-2">
-        <span className={`font-bold ${RANK_COLORS[form.rank ?? "A"].split(" ")[0]}`}>Rank {form.rank}</span>
+        <span className={`font-bold ${TECHNIQUE_RANK_STYLES[form.rank ?? "A"].text}`}>Rank {form.rank}</span>
         <span>+{rankData.baseBonus} bônus</span>
         <span>{rankData.energyCost} EN</span>
         <span>{rankData.gemCost}g</span>
