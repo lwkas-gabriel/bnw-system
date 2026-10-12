@@ -1,4 +1,4 @@
-import type { Character, Technique, BaseAttributes } from "./character";
+import type { Character, Technique, BaseAttributes, ZoanPoint } from "./character";
 
 // ─── Combat Setup ─────────────────────────────────────────────────────────────
 
@@ -14,7 +14,7 @@ export interface ActiveBuffs {
   /** Advanced Haki active (additional layer) */
   hakiAdvanced: boolean;
   /** Which Zoan point is active (null = none / human form) */
-  zoanPoint: "hybrid" | "animal" | "awakened" | null;
+  zoanPoint: ZoanPoint["id"] | null;
   /** Logia Elemental Domain active (Rank S) */
   logiaElementalDomain: boolean;
 }

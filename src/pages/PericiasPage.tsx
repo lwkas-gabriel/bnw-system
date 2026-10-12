@@ -1,4 +1,4 @@
-import { PageHeader, SectionCard } from "../shared/components";
+import { PageHeader, SectionCard, StatTile } from "../shared/components";
 import { PERICIAS, PERICIAS_DC, periciaRollBonus } from "../data/pericias";
 import { totalPericiaPoints } from "../features/character/utils/attrCalc";
 
@@ -17,18 +17,9 @@ export default function PericiasPage() {
         {/* Regras gerais */}
         <SectionCard title="Como Funcionam" icon="📖">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Roll</p>
-              <p className="text-sm font-bold font-mono text-amber-400">3d6 + (grad × 3)</p>
-            </div>
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Pontos iniciais (Nv. 1)</p>
-              <p className="text-sm font-bold font-mono text-amber-400">3 pontos</p>
-            </div>
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Máximo por perícia</p>
-              <p className="text-sm font-bold font-mono text-amber-400">5 (graduação)</p>
-            </div>
+            <StatTile label="Roll" value="3d6 + (grad × 3)" valueClassName="text-sm font-bold font-mono text-amber-400" />
+            <StatTile label="Pontos iniciais (Nv. 1)" value="3 pontos" valueClassName="text-sm font-bold font-mono text-amber-400" />
+            <StatTile label="Máximo por perícia" value="5 (graduação)" valueClassName="text-sm font-bold font-mono text-amber-400" />
           </div>
           <p className="text-xs text-slate-400">
             +1 ponto a cada nível par. Bônus raciais e de Zoan são aplicados por cima da graduação,

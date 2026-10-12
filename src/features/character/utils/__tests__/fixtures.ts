@@ -34,3 +34,63 @@ export function createCharacterFixture(overrides: Partial<Character> = {}): Char
   };
   return { ...base, ...overrides };
 }
+
+/**
+ * Personagem "completo" para testes de export/import: Zoan, Haki, AM Laranja com
+ * Arma Única, Ciborgue com bônus de energia, técnicas, equipamentos, facção e companheiros.
+ */
+export function createRichCharacterFixture(overrides: Partial<Character> = {}): Character {
+  return createCharacterFixture({
+    id: "rich-char",
+    name: "Roronoa Teste",
+    level: 20,
+    race: "mink",
+    location: "grand_line",
+    investedAttributes: { power: 6, precision: 5, defense: 4, constitution: 5 },
+    racialBonus: { precision: 2 },
+    pericias: { ...blankPericias(), atletismo: 3, percepcao: 2, ambicao: 1 },
+    energy: { bpn: 15, energy: 66, energyInvested: 6 },
+    haki: {
+      primaryType: "armament", primaryStage: 3,
+      secondaryType: "observation", secondaryStage: 2,
+      hasKing: false, kingStage: null, advancedType: null,
+    },
+    akuma: {
+      type: "zoan", name: "Neko Neko no Mi", rank: "B", animalClass: "carnivore",
+      isMythical: false, isAncestral: false, vigorAnimalBonus: 2,
+      points: [{ id: "hybrid", primaryAttr: "power", complementaryAttr: "precision", bonus: 2 }],
+      abilities: [],
+    },
+    artesMarciais: { currentFaixa: "verde", laranjaChoice: "unique_weapon" },
+    cyborg: {
+      shifts: [
+        { shiftNumber: 1, location: "right_arm", name: "Braço Canhão", description: "Canhão no braço" },
+        { shiftNumber: 2, location: "left_leg", name: "Perna Mola", description: "Salto" },
+        { shiftNumber: 3, location: "torso", name: "Núcleo", description: "Reator" },
+      ],
+      shift3Bonus: "energy", gear: null, usesFuel: true,
+    },
+    techniques: [
+      {
+        id: "t1", name: "Golpe Tigre", description: "Corte duplo", rank: "C", type: "offensive",
+        targetAttr: "power", baseBonus: 3, energyCost: 3, adherences: [], source: "purchased",
+      },
+      {
+        id: "t2", name: "Guarda de Ferro", description: "Bloqueio", rank: "D", type: "defensive",
+        targetAttr: "defense", baseBonus: 2, energyCost: 2, adherences: [], source: "purchased",
+      },
+    ],
+    equippedWeapon: {
+      id: "w1", name: "Katana", description: "Lâmina negra", slot: "weapon", quality: "common",
+      bonusAttr: "power", bonusValue: 1, uniqueName: "Shusui", characteristic: "shusui",
+    },
+    equippedDefensive: [
+      { id: "d1", name: "Elmo", description: "", slot: "head", quality: "splendid", bonusAttr: "defense", bonusValue: 1 },
+      null,
+    ],
+    gemBudget: 400,
+    faction: { type: "marinha", rank: "capitao", prestige: 12, discountUsed: false },
+    companions: [{ id: "c1", name: "Usopp Jr.", rank: "C", type: "companion" }],
+    ...overrides,
+  });
+}

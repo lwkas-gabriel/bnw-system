@@ -24,28 +24,47 @@ description: >
 
 ```
 src/shared/types/character.ts     ← TIPOS: Character, Haki, Akuma, AM, Cyborg, Technique, PericiaId,
-                                            FactionType, FactionData (faction?: FactionData no Character)
+                                            FactionType, FactionData, LocationId, PrimaryHakiType, TechniqueSource
 src/shared/types/combat.ts        ← TIPOS: CombatantState, TurnChoice, DiceRoll, CombatSummary
 src/shared/types/ship.ts          ← TIPOS: Ship, ShipSize, ShipOwnership, Klabautermann
+src/shared/types/io.ts            ← ImportStatus, ExportEnvelope (JSON exportado)
 src/data/                         ← DADOS IMUTÁVEIS do sistema (nunca modificar em runtime)
-  races.ts, haki.ts, techniques.ts, uniqueWeapons.ts
-  pericias.ts     ← PERICIAS (11), PERICIAS_DC, periciaRollBonus()
-  professions.ts  ← PROFESSIONS (7), PROFESSIONS_BY_ID, ProfessionData
-  bugigangas.ts   ← BUGIGANGAS (16), BugigangaData
-  ships.ts        ← SHIP_SIZES, SHIP_MECHANISMS, SHIP_COMODOS
-  factions.ts     ← FACTIONS (5), FactionRankData, getFactionRank(), COMMISSIONED_SHIP_PRESET
+  gemCosts.ts      ← GEM_COSTS (FONTE ÚNICA de custos), GEM_BUDGET_MIN/MAX, FACTION_DISCOUNT_GEMS
+  attributes.ts    ← ATTR_KEYS, ATTR_SHORT_LABELS (POD/PRE/DEF/CON), ATTR_LABELS, BASE_ATTRIBUTES
+  artesMarciais.ts ← AM_FAIXAS (14 faixas), faixaIndex(), hasReachedFaixa(), faixaStatBonuses()
+  cyborg.ts        ← CYBORG_LOCATIONS, CYBORG_SHIFT_BONUS, cyborgBonusLabel()
+  equipment.ts     ← QUALITY_LABELS, QUALITY_BONUS, EQUIPMENT_PRICES, SLOT_LABELS, SLOT_ATTRS
+  locations.ts     ← LOCATION_LABELS
+  races.ts, haki.ts (HAKI_TYPE_NAMES), techniques.ts (TECHNIQUE_RANKS, TECHNIQUE_SOURCE_LABELS), uniqueWeapons.ts
+  akumaModules.ts  ← módulos Zoan/Paramecia, *_BY_ID, AKUMA_TYPE_LABELS, regras por rank (Vigor, Points, slots)
+  pericias.ts      ← PERICIAS (11), RACE_PERICIA_BONUS (derivado de RACES), ZOAN_CLASS_PERICIA_BONUS
+  professions.ts   ← PROFESSIONS (7), PROFESSIONS_BY_ID, STANDARD_CRAFT_DC
+  bugigangas.ts    ← BUGIGANGAS (16), BUGIGANGAS_BY_ID
+  ships.ts         ← SHIP_SIZES (com maxHull), SHIP_MECHANISMS, SHIP_COMODOS, SHIP_ROLE_LABELS,
+                     SHIP_OWNERSHIP_LABELS, ENGINEER_DISCOUNT, KLABAUTERMANN_VOYAGES
+  factions.ts      ← FACTIONS (5), getFactionRank(), getFactionLabel(), COMMISSIONED_SHIP_PRESET
 src/features/character/utils/
-  attrCalc.ts     ← bpn(), energyMax(), totalAttributePoints(), totalPericiaPoints()
-  gemBudget.ts    ← GEM_COSTS (FONTE ÚNICA), computeGemBudget(), computeFactionDiscount()
-  validator.ts    ← validateCharacterFull(), ValidationIssue, ValidationReport
-  exporter.ts     ← exportToJSON(), exportToForumText()
-  importer.ts     ← importFromFile(), migrateCharacter()
+  attrCalc.ts      ← bpn(), energyMax(), characterMaxEnergy(), baseAttributes(), totalAttributePoints()
+  gemBudget.ts     ← computeGemBudget(), computeFactionDiscount()
+  haki.ts          ← computeHakiCost(), hakiCostBreakdown(), hakiStageNum()
+  akuma.ts         ← createAkuma(), applyAkumaRank(), syncFreeTechniques()
+  equipment.ts     ← isUniqueWeapon(), hasWeaponTrait()
+  artesMarciais.ts ← isUniqueWeaponFromLaranja()
+  attrBreakdown.ts ← computeAttrBreakdown() (somatória de atributos por fonte)
+  validator.ts     ← validateCharacterFull(), ValidationIssue, ValidationCategory, ValidationReport
+  exporter.ts      ← exportToJSON(), exportToForumHTML() (render* por seção), downloadCharacter*()
+  importer.ts      ← parseImportJSON(), parseImportForumHTML() (parsers por seção), importFromFile/Clipboard()
+src/features/character/hooks/useDraft.ts       ← { draft, updateDraft } com seletores (use nas seções)
 src/features/character/store/characterStore.ts  ← updateDraft(), saveDraft(), loadCharacter()
-src/features/combat/engine/combatEngine.ts      ← ENGINE PURA (sem React)
+src/features/character/components/              ← seções do builder; subpastas akuma/ e equipment/
+src/features/combat/engine/combatEngine.ts      ← ENGINE PURA (sem React): resolveAttributes, processTurn, simulateCombat
 src/features/combat/store/combatStore.ts        ← simulate(), setCharA/B(), setChoice()
-src/features/ships/store/shipStore.ts           ← CRUD de navios, mecanismos, cômodos, viagens,
-                                                   updateOwnership(), unlockKlabautermannWithDiscount()
+src/features/ships/store/shipStore.ts           ← CRUD de navios (helper withShip), mecanismos, cômodos, viagens
+src/features/ships/utils/                       ← shipCalc (preço, slots), shipExporter, shipImporter
+src/features/ships/components/                  ← abas da página de Embarcações
 src/shared/components/index.tsx                 ← TODOS os componentes reutilizáveis
+src/shared/utils/                               ← format (formatBerries), download, importIO, labels (invertLabels)
+src/shared/hooks/                               ← useCopyToClipboard, useFileImport
 src/router/index.tsx                            ← rotas com lazy loading
 src/shared/components/AppLayout.tsx             ← sidebar nav (array NAV)
 src/pages/
@@ -54,12 +73,14 @@ src/pages/
   ShipsPage.tsx, PericiasPage.tsx, ProfissoesPage.tsx
 ```
 
+Convenções de código (onde cada coisa vive, tipagem, testes, contrato da ficha do fórum, dívida conhecida): seção "Convenções de código e manutenibilidade" do `CLAUDE.md`.
+
 ---
 
 ## Regras de Ouro (NUNCA violar)
 
 1. **Lógica de negócio NUNCA em componentes React** → vai em `utils/` ou `combatEngine.ts`
-2. **Custos de gemas SEMPRE em `GEM_COSTS`** em `gemBudget.ts` — nunca hardcode em JSX
+2. **Custos de gemas SEMPRE em `GEM_COSTS`** em `src/data/gemCosts.ts` — nunca hardcode em JSX
 3. **`updateDraft(c => { ... })`** é o único ponto de entrada para modificar ficha
 4. **Engine de combate é TypeScript puro** — não importar React, não importar stores
 5. **Types primeiro** — qualquer nova mecânica começa em `shared/types/character.ts`

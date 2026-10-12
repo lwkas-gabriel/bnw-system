@@ -1,14 +1,16 @@
 import type { Ship } from "../../../shared/types/ship";
-import { SHIP_SIZES, SHIP_MECHANISMS_BY_ID, SHIP_COMODOS_BY_ID } from "../../../data/ships";
+import {
+  KLABAUTERMANN_VOYAGES,
+  SHIP_COMODOS_BY_ID, SHIP_MECHANISMS_BY_ID, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES,
+} from "../../../data/ships";
+import { formatBerries } from "../../../shared/utils/format";
+import { downloadText, slugify } from "../../../shared/utils/download";
+import type { ExportEnvelope } from "../../../shared/types/io";
+import { computeShipTotalPrice, usedComodoSlots } from "./shipCalc";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
-export interface ExportedShip {
-  _version: "1.0";
-  _exportedAt: string;
-  _system: "bnw-ship-system";
-  ship: Ship;
-}
+export type ExportedShip = ExportEnvelope<"bnw-ship-system", "ship", Ship>;
 
 export function exportShipToJSON(ship: Ship): ExportedShip {
   return {
@@ -24,55 +26,11 @@ export function exportShipToJSONString(ship: Ship): string {
 }
 
 export function downloadShipJSON(ship: Ship): void {
-  const json = exportShipToJSONString(ship);
-  const blob = new Blob([json], { type: "application/json" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${ship.name.replace(/\s+/g, "_").toLowerCase()}_navio.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportShipToJSONString(ship), `${slugify(ship.name)}_navio.json`, "application/json");
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const SHIP_OWNERSHIP_LABELS: Record<string, string> = {
-  owned:          "Próprio",
-  navy_permanent: "Comissionado (Marinha)",
-  cp_temporary:   "Temporário (CP — 1 aventura)",
-  cp_galeon:      "Galeão Emprestado (CP Comandante)",
-};
-
-const ROLE_LABELS: Record<string, string> = {
-  captain:      "Capitão",
-  first_mate:   "Imediato",
-  navigator:    "Navegante",
-  doctor:       "Médico",
-  cook:         "Cozinheiro",
-  shipwright:   "Carpinteiro",
-  musician:     "Músico",
-  sniper:       "Atirador",
-  archaeologist:"Arqueólogo(a)",
-  crew:         "Tripulante",
-};
-
-function formatBerries(n: number): string {
-  return `B$ ${n.toLocaleString("pt-BR")}`;
-}
-
-function computeShipTotalPrice(ship: Ship): number {
-  const sizeData = SHIP_SIZES[ship.size];
-  let total = sizeData.price;
-  if (ship.builtByEngineer) total = Math.floor(total * 0.7);
-  for (const id of ship.mechanisms) {
-    total += SHIP_MECHANISMS_BY_ID[id]?.price ?? 0;
-  }
-  for (const id of ship.comodoIds) {
-    total += SHIP_COMODOS_BY_ID[id]?.price ?? 0;
-  }
-  if (ship.klabautermannUnlockedWithDiscount) total += 20_000_000;
-  return total;
-}
 
 // ─── Forum HTML export (dohtml) ───────────────────────────────────────────────
 
@@ -82,13 +40,11 @@ export function exportShipToForumHTML(ship: Ship): string {
   const ownershipLabel = SHIP_OWNERSHIP_LABELS[ship.ownership] ?? ship.ownership;
   const totalPrice = computeShipTotalPrice(ship);
 
-  const usedSlots = ship.comodoIds.reduce((sum, id) => {
-    return sum + (SHIP_COMODOS_BY_ID[id]?.size ?? 0);
-  }, 0);
+  const usedSlots = usedComodoSlots(ship.comodoIds);
 
   const klabStr = ship.klabautermann.active
     ? `Ativo (${ship.klabautermann.voyageCount} viagens)`
-    : `Não-ativo (${ship.klabautermann.voyageCount}/10 viagens)`;
+    : `Não-ativo (${ship.klabautermann.voyageCount}/${KLABAUTERMANN_VOYAGES} viagens)`;
 
   const L: string[] = [];
   const ln = (...parts: string[]) => L.push(parts.join(""));
@@ -148,7 +104,7 @@ export function exportShipToForumHTML(ship: Ship): string {
     ln(`<div style=" border: 1px solid; padding: 10px; ">`);
     ln(`<d>Tripulação (${ship.crew.length}/${sizeData.maxCrew})</d>`);
     for (const member of ship.crew) {
-      ln(`[b]${ROLE_LABELS[member.role] ?? member.role}:[/b] ${member.name}`);
+      ln(`[b]${SHIP_ROLE_LABELS[member.role] ?? member.role}:[/b] ${member.name}`);
     }
     ln(`</div>`);
     ln();
@@ -168,14 +124,6 @@ export function exportShipToForumHTML(ship: Ship): string {
 }
 
 export function downloadShipForumHTML(ship: Ship): void {
-  const html = exportShipToForumHTML(ship);
-  const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${ship.name.replace(/\s+/g, "_").toLowerCase()}_navio.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportShipToForumHTML(ship), `${slugify(ship.name)}_navio.txt`);
 }
 
-export { copyToClipboard as copyShipToClipboard } from "../../character/utils/exporter";

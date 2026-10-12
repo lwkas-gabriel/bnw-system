@@ -1,12 +1,27 @@
 import { z } from "zod";
-import type { Character, PericiaId } from "../../../shared/types/character";
+import type {
+  AkumaNoMi, AkumaRank, AkumaType, AMFaixaId, ArtesMarciais, BaseAttributes, Character,
+  CharacterPericias, CharacterProfession, CompanionData, CyborgPath, CyborgShift, CyborgShiftData,
+  CyborgShiftLocation, Equipment, FactionData, HakiPath, HakiStage, LocationId, PericiaId, RaceId,
+  Technique, TechniqueRank, UniqueWeapon,
+} from "../../../shared/types/character";
+import type { ImportStatus } from "../../../shared/types/io";
+import { AKUMA_TYPE_LABELS } from "../../../data/akumaModules";
+import { AM_FAIXA_ORDER, faixaForumLabel } from "../../../data/artesMarciais";
+import { BASE_ATTRIBUTES } from "../../../data/attributes";
+import { CYBORG_LOCATIONS } from "../../../data/cyborg";
+import { GEM_BUDGET_MIN } from "../../../data/gemCosts";
+import { LOCATION_LABELS } from "../../../data/locations";
+import { RACES, raceForumLabel } from "../../../data/races";
+import { readClipboardText, readFileAsText, regexCapture, validateImportFile } from "../../../shared/utils/importIO";
+import { invertLabels } from "../../../shared/utils/labels";
+import { blankPericias, CYBORG_ENERGY_BONUS, energyMax } from "./attrCalc";
 import type { ExportedCharacter } from "./exporter";
-import { blankPericias } from "./attrCalc";
 import { validateCharacterFull, type ValidationReport } from "./validator";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type ImportStatus = "success" | "success_with_warnings" | "error";
+export type { ImportStatus };
 
 export interface ImportResult {
   status: ImportStatus;
@@ -16,10 +31,6 @@ export interface ImportResult {
   /** Full validation report (null if parse failed) */
   validation: ValidationReport | null;
 }
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-const MAX_FILE_SIZE = 512 * 1024; // 512 KB
 
 // ─── Zod schema ───────────────────────────────────────────────────────────────
 
@@ -87,52 +98,73 @@ function formatZodIssue(issue: z.ZodIssue): string {
 
 // ─── Migration ────────────────────────────────────────────────────────────────
 
+// O formato já foi validado pelo schema zod e as regras são checadas pelo
+// validator; aqui só preenchemos padrões para campos ausentes.
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" ? value as Record<string, unknown> : {};
+}
+
+function asList<T>(value: unknown): T[] {
+  return Array.isArray(value) ? value as T[] : [];
+}
+
+/** Campo do JSON importado, ou `fallback` se ausente/nulo */
+function fieldOr<T>(raw: Record<string, unknown>, key: string, fallback: T): T {
+  return (raw[key] ?? fallback) as T;
+}
+
+function migratePericias(raw: Record<string, unknown>): CharacterPericias {
+  const pericias = blankPericias();
+  if (raw.pericias && typeof raw.pericias === "object") {
+    const source = asRecord(raw.pericias);
+    for (const key of Object.keys(pericias) as PericiaId[]) {
+      if (typeof source[key] === "number") pericias[key] = source[key] as number;
+    }
+  } else if (typeof raw.ambition === "number") {
+    // Compat: fichas antigas tinham só o campo `ambition`
+    pericias.ambicao = raw.ambition || 0;
+  }
+  return pericias;
+}
+
 function migrateCharacter(raw: Record<string, unknown>): Character {
+  const attrs = asRecord(raw.investedAttributes);
+  const energy = asRecord(raw.energy);
+  const defensive = asList<Equipment | null>(raw.equippedDefensive);
   return {
-    id:          (raw.id as string) ?? crypto.randomUUID(),
-    name:        (raw.name as string) ?? "Personagem Importado",
+    id:          fieldOr(raw, "id", crypto.randomUUID()),
+    name:        fieldOr(raw, "name", "Personagem Importado"),
     level:       Number(raw.level) || 1,
-    race:        (raw.race as any) ?? "human",
+    race:        fieldOr<RaceId>(raw, "race", "human"),
     investedAttributes: {
-      power:        Number((raw.investedAttributes as any)?.power)        || 0,
-      precision:    Number((raw.investedAttributes as any)?.precision)    || 0,
-      defense:      Number((raw.investedAttributes as any)?.defense)      || 0,
-      constitution: Number((raw.investedAttributes as any)?.constitution) || 0,
+      power:        Number(attrs.power)        || 0,
+      precision:    Number(attrs.precision)    || 0,
+      defense:      Number(attrs.defense)      || 0,
+      constitution: Number(attrs.constitution) || 0,
     },
-    racialBonus:    (raw.racialBonus    as any) ?? {},
-    pericias: (() => {
-      const base = blankPericias();
-      if (raw.pericias && typeof raw.pericias === "object") {
-        for (const key of Object.keys(base) as PericiaId[]) {
-          const v = (raw.pericias as any)[key];
-          if (typeof v === "number") base[key] = v;
-        }
-      } else if (typeof (raw as any).ambition === "number") {
-        // Backward compat: migrate old ambition field
-        base.ambicao = Number((raw as any).ambition) || 0;
-      }
-      return base;
-    })(),
-    humanPericiaChoice: (raw.humanPericiaChoice as any) ?? null,
-    professions: Array.isArray(raw.professions) ? (raw.professions as any[]) : [],
+    racialBonus:        fieldOr<Partial<BaseAttributes>>(raw, "racialBonus", {}),
+    pericias:           migratePericias(raw),
+    humanPericiaChoice: fieldOr<PericiaId | null>(raw, "humanPericiaChoice", null),
+    professions:        asList<CharacterProfession>(raw.professions),
     energy: {
-      bpn:             0,
-      energy:          Number((raw.energy as any)?.energy)          || 0,
-      energyInvested:  Number((raw.energy as any)?.energyInvested)  || 0,
+      bpn:            0,
+      energy:         Number(energy.energy)         || 0,
+      energyInvested: Number(energy.energyInvested) || 0,
     },
-    haki:           (raw.haki          as any) ?? null,
-    akuma:          (raw.akuma         as any) ?? null,
-    artesMarciais:  (raw.artesMarciais as any) ?? null,
-    cyborg:         (raw.cyborg        as any) ?? null,
-    techniques:     Array.isArray(raw.techniques) ? (raw.techniques as any[]) : [],
-    equippedWeapon: (raw.equippedWeapon as any) ?? null,
-    equippedDefensive: Array.isArray(raw.equippedDefensive)
-      ? [(raw.equippedDefensive as any[])[0] ?? null, (raw.equippedDefensive as any[])[1] ?? null]
-      : [null, null],
-    gemsSpent:   Number(raw.gemsSpent)   || 0,
-    gemBudget:   Number(raw.gemBudget)   || 20,
-    location:    (raw.location as any)   ?? "blues",
-    companions:  Array.isArray(raw.companions) ? (raw.companions as any[]) : [],
+    haki:              fieldOr<HakiPath | null>(raw, "haki", null),
+    akuma:             fieldOr<AkumaNoMi | null>(raw, "akuma", null),
+    artesMarciais:     fieldOr<ArtesMarciais | null>(raw, "artesMarciais", null),
+    cyborg:            fieldOr<CyborgPath | null>(raw, "cyborg", null),
+    techniques:        asList<Technique>(raw.techniques),
+    equippedWeapon:    fieldOr<Equipment | UniqueWeapon | null>(raw, "equippedWeapon", null),
+    equippedDefensive: [defensive[0] ?? null, defensive[1] ?? null],
+    gemsSpent:   Number(raw.gemsSpent) || 0,
+    gemBudget:   Number(raw.gemBudget) || GEM_BUDGET_MIN,
+    location:    fieldOr<LocationId>(raw, "location", "blues"),
+    companions:  asList<CompanionData>(raw.companions),
+    ...(raw.faction && typeof raw.faction === "object" ? { faction: raw.faction as FactionData } : {}),
+    ...(typeof raw.commissionedShipId === "string" ? { commissionedShipId: raw.commissionedShipId } : {}),
   };
 }
 
@@ -215,261 +247,222 @@ export function parseImportJSON(raw: string): ImportResult {
 
 // ─── Parse Forum HTML (dohtml) ────────────────────────────────────────────────
 
-const RACE_MAP: Record<string, string> = {
-  "humano": "human", "tritão": "fishman", "fishman": "fishman",
-  "sireno": "siren", "siren": "siren", "lunar": "lunar",
-  "mink": "mink", "anão": "dwarf", "gigante": "giant",
-  "meio-gigante": "half_giant", "meio gigante": "half_giant",
+// Rótulos da ficha → id, derivados dos mesmos dados que o exporter usa,
+// mais grafias alternativas aceitas em fichas antigas/escritas à mão.
+const RACE_MAP: Record<string, RaceId> = {
+  ...invertLabels(Object.fromEntries((Object.keys(RACES) as RaceId[]).map(id => [id, raceForumLabel(id)])) as Record<RaceId, string>),
+  "fishman": "fishman", "siren": "siren", "meio gigante": "half_giant",
 };
 
-const LOCATION_MAP: Record<string, string> = {
-  "blues": "blues", "grand line": "grand_line", "paradise": "grand_line",
-  "new world": "new_world", "novo mundo": "new_world",
+const LOCATION_MAP: Record<string, LocationId> = {
+  ...invertLabels(LOCATION_LABELS),
+  "paradise": "grand_line", "novo mundo": "new_world",
 };
 
-const FAIXA_MAP: Record<string, string> = {
-  "branca": "branca", "cinza": "cinza", "azul clara": "azul_clara",
-  "azul escura": "azul_escura", "amarela": "amarela", "laranja": "laranja",
-  "verde": "verde", "roxa": "roxa", "marrom": "marrom", "preta": "preta",
-  "coral": "coral", "rajada": "rajada", "vermelha": "vermelha",
-  "grão mestre": "grao_mestre", "grao mestre": "grao_mestre",
+const FAIXA_MAP: Record<string, AMFaixaId> = {
+  ...invertLabels(Object.fromEntries(AM_FAIXA_ORDER.map(id => [id, faixaForumLabel(id)])) as Record<AMFaixaId, string>),
+  "grao mestre": "grao_mestre",
 };
 
-const AKUMA_TYPE_MAP: Record<string, string> = {
-  "zoan": "zoan", "logia": "logia", "paramecia": "paramecia",
-};
+const AKUMA_TYPE_MAP = invertLabels(AKUMA_TYPE_LABELS);
 
-function rx1(text: string, pattern: RegExp): string | null {
-  return text.match(pattern)?.[1]?.trim() ?? null;
+const CYBORG_LOC_MAP = invertLabels(
+  Object.fromEntries(CYBORG_LOCATIONS.map(l => [l.id, l.label])) as Record<CyborgShiftLocation, string>,
+);
+
+const rx1 = regexCapture;
+
+/** Número capturado por `pattern`, ou `fallback` se ausente/zero */
+function rxNumber(text: string, pattern: RegExp, fallback: number): number {
+  return Number(rx1(text, pattern)) || fallback;
 }
 
-export function parseImportForumHTML(text: string): ImportResult {
-  const parseErrors: string[] = [
-    "Importado via formato de fórum — campos narrativos não importados.",
-  ];
-
-  const name    = rx1(text, /<div class="toptitle">([^<]+)<\/div>/) ?? "Personagem Importado";
-  const raceRaw = rx1(text, /<e>Ra[çc]a:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? "";
-  const locRaw  = rx1(text, /<e>Localiza[çc][ãa]o:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? "";
-
-  const race     = RACE_MAP[raceRaw]     ?? "human";
-  const location = LOCATION_MAP[locRaw] ?? "blues";
-
-  const level     = Number(rx1(text, /<e>N[ií]vel:\s*<\/e>(\d+)/))   || 1;
-  const gemBudget = Number(rx1(text, /<e>Gemas Totais:\s*<\/e>(\d+)/)) || 20;
-  const gemsSpent = Number(rx1(text, /<e>Gemais? Gastas:\s*<\/e>(\d+)/)) || 0;
-
-  const totalPow = Number(rx1(text, /<e>Poder\s*\(PDR\):\s*<\/e>(\d+)/)) || 1;
-  const totalPre = Number(rx1(text, /<e>Precis[ãa]o\s*\(PRE\):\s*<\/e>(\d+)/)) || 1;
-  const totalDef = Number(rx1(text, /<e>Defesa\s*\(DEF\):\s*<\/e>(\d+)/)) || 1;
-  const totalCon = Number(rx1(text, /<e>Constitui[çc][ãa]o[^<]*<\/e>(\d+)/)) || 3;
-
-  const investedAttributes = {
-    power:        Math.max(0, totalPow - 1),
-    precision:    Math.max(0, totalPre - 1),
-    defense:      Math.max(0, totalDef - 1),
-    constitution: Math.max(0, totalCon - 3),
+function parseForumAttributes(text: string): BaseAttributes {
+  // O primeiro número de cada linha é o valor base (1/1/1/3 + investido), sem bônus raciais/AM
+  const total = {
+    power:        rxNumber(text, /<e>Poder\s*\(PDR\):\s*<\/e>(\d+)/, BASE_ATTRIBUTES.power),
+    precision:    rxNumber(text, /<e>Precis[ãa]o\s*\(PRE\):\s*<\/e>(\d+)/, BASE_ATTRIBUTES.precision),
+    defense:      rxNumber(text, /<e>Defesa\s*\(DEF\):\s*<\/e>(\d+)/, BASE_ATTRIBUTES.defense),
+    constitution: rxNumber(text, /<e>Constitui[çc][ãa]o[^<]*<\/e>(\d+)/, BASE_ATTRIBUTES.constitution),
   };
+  return {
+    power:        Math.max(0, total.power        - BASE_ATTRIBUTES.power),
+    precision:    Math.max(0, total.precision    - BASE_ATTRIBUTES.precision),
+    defense:      Math.max(0, total.defense      - BASE_ATTRIBUTES.defense),
+    constitution: Math.max(0, total.constitution - BASE_ATTRIBUTES.constitution),
+  };
+}
 
-  const energyInvested = Math.max(0,
-    (Number(rx1(text, /<e>Energia\s*\(EN\):\s*<\/e>(\d+)/)) || level * 3) - level * 3
-  );
+/** Regex de cada perícia na ficha (aceita grafias com e sem acento) */
+const PERICIA_PATTERNS: Array<[PericiaId, RegExp]> = [
+  ["ambicao",       /<e>Ambi[çc][ãa]o:\s*<\/e>(\d+)/],
+  ["atletismo",     /<e>Atletismo:\s*<\/e>(\d+)/],
+  ["destreza",      /<e>Destreza:\s*<\/e>(\d+)/],
+  ["erudicao",      /<e>Erudi[çc][ãa]o:\s*<\/e>(\d+)/],
+  ["expressao",     /<e>Express[ãa]o:\s*<\/e>(\d+)/],
+  ["furtividade",   /<e>Furtividade:\s*<\/e>(\d+)/],
+  ["investigacao",  /<e>Investiga[çc][ãa]o:\s*<\/e>(\d+)/],
+  ["logica",        /<e>L[oó]gica:\s*<\/e>(\d+)/],
+  ["percepcao",     /<e>Percep[çc][ãa]o:\s*<\/e>(\d+)/],
+  ["persuasao",     /<e>Persuas[ãa]o:\s*<\/e>(\d+)/],
+  ["sobrevivencia", /<e>Sobreviv[eê]ncia:\s*<\/e>(\d+)/],
+];
 
-  const PERICID_LABELS: Array<[PericiaId, RegExp]> = [
-    ["ambicao",      /<e>Ambi[çc][ãa]o:\s*<\/e>(\d+)/],
-    ["atletismo",    /<e>Atletismo:\s*<\/e>(\d+)/],
-    ["destreza",     /<e>Destreza:\s*<\/e>(\d+)/],
-    ["erudicao",     /<e>Erudi[çc][ãa]o:\s*<\/e>(\d+)/],
-    ["expressao",    /<e>Express[ãa]o:\s*<\/e>(\d+)/],
-    ["furtividade",  /<e>Furtividade:\s*<\/e>(\d+)/],
-    ["investigacao", /<e>Investiga[çc][ãa]o:\s*<\/e>(\d+)/],
-    ["logica",       /<e>L[oó]gica:\s*<\/e>(\d+)/],
-    ["percepcao",    /<e>Percep[çc][ãa]o:\s*<\/e>(\d+)/],
-    ["persuasao",    /<e>Persuas[ãa]o:\s*<\/e>(\d+)/],
-    ["sobrevivencia",/<e>Sobreviv[eê]ncia:\s*<\/e>(\d+)/],
-  ];
-
+function parseForumPericias(text: string): CharacterPericias {
   const pericias = blankPericias();
-  for (const [id, pattern] of PERICID_LABELS) {
-    const v = Number(rx1(text, pattern));
-    if (!isNaN(v)) pericias[id] = v;
+  for (const [id, pattern] of PERICIA_PATTERNS) {
+    const value = Number(rx1(text, pattern));
+    if (!isNaN(value)) pericias[id] = value;
   }
+  return pericias;
+}
 
-  // Techniques
-  const techniques: unknown[] = [];
-  const techRankBlocks = [...text.matchAll(/<e>Rank ([EDCBA])<\/e>([\s\S]*?)(?=<e>Rank [EDCBA]<\/e>|<\/div>)/g)];
-  for (const [, rank, block] of techRankBlocks) {
+function parseForumTechniques(text: string): Technique[] {
+  const techniques: Technique[] = [];
+  const rankBlocks = text.matchAll(/<e>Rank ([EDCBA])<\/e>([\s\S]*?)(?=<e>Rank [EDCBA]<\/e>|<\/div>)/g);
+  for (const [, rank, block] of rankBlocks) {
     for (const techBlock of block.split(/(?=\[b\]Nome:\[\/b\])/)) {
-      const tName = rx1(techBlock, /\[b\]Nome:\[\/b\]\s*([^\n]+)/);
-      if (!tName || tName === "Nome da técnica") continue;
-      const energyCost = Number(rx1(techBlock, /\[b\]Energia:\[\/b\]\s*(\d+)/)) || 1;
+      const name = rx1(techBlock, /\[b\]Nome:\[\/b\]\s*([^\n]+)/);
+      if (!name || name === "Nome da técnica") continue;
       techniques.push({
         id: crypto.randomUUID(),
-        name: tName,
+        name,
         description: rx1(techBlock, /\[b\]Descri[çc][ãa]o:\[\/b\]\s*([^\n]+)/) ?? "",
-        rank,
+        rank: rank as TechniqueRank,
         type: "offensive",
         targetAttr: "power",
         baseBonus: 1,
-        energyCost,
+        energyCost: rxNumber(techBlock, /\[b\]Energia:\[\/b\]\s*(\d+)/, 1),
         adherences: [],
         source: "purchased",
       });
     }
   }
-
-  // Akuma no Mi
-  let akuma: unknown = null;
-  const akumaBlock = rx1(text, /<d>Akuma no Mi<\/d>([\s\S]*?)(?=<\/div>)/);
-  if (akumaBlock) {
-    const akumaName = rx1(akumaBlock, /\[b\]Nome:\[\/b\]\s*([^.\n]+)/);
-    const akumaType = rx1(akumaBlock, /\[b\]Tipo:\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? "";
-    const akumaRank = rx1(akumaBlock, /\[b\]Rank:\[\/b\]\s*([SABC])/);
-    if (akumaName && AKUMA_TYPE_MAP[akumaType]) {
-      akuma = { type: AKUMA_TYPE_MAP[akumaType], name: akumaName, rank: akumaRank ?? "C",
-        ...(AKUMA_TYPE_MAP[akumaType] === "zoan"
-          ? { animalClass: "herbivore", isMythical: false, isAncestral: false, points: [], abilities: [], vigorAnimalBonus: 0 }
-          : AKUMA_TYPE_MAP[akumaType] === "logia"
-            ? { elementalNatureAttr: "power", statusEnhanced: { name: "", description: "", combination: [""] }, intangibilityBonus: { defense: 4, constitution: 4 } }
-            : { parameciaClass: "corporeal", specialAdherence: "", passives: [], actives: [] }
-        ),
-      };
-    }
-  }
-
-  // Haki
-  let haki: unknown = null;
-  const hakiArmBlock  = rx1(text, /<d>Haki do Armamento<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
-  const hakiObsBlock  = rx1(text, /<d>Haki da Observa[çc][ãa]o<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
-  const hakiKingBlock = text.includes("<d>Haki do Rei</d>");
-
-  if (hakiArmBlock || hakiObsBlock) {
-    const armStage = Number(rx1(hakiArmBlock ?? "", /\[b\]N[ií]vel:\s*\[\/b\]\s*(\d+)/)) || 0;
-    const obStage  = Number(rx1(hakiObsBlock  ?? "", /\[b\]N[ií]vel:\s*\[\/b\]\s*(\d+)/)) || 0;
-    const armCost  = Number(rx1(hakiArmBlock  ?? "", /\[b\]Custo:\s*\[\/b\]\s*(\d+)/))    || 0;
-
-    const primaryType   = armCost > 0 ? "armament" : "observation";
-    const secondaryType = primaryType === "armament" ? "observation" : "armament";
-
-    haki = {
-      primaryType,
-      primaryStage:   primaryType === "armament" ? armStage : obStage,
-      secondaryType,
-      secondaryStage: primaryType === "armament" ? obStage  : armStage,
-      hasKing:        hakiKingBlock,
-      kingStage:      hakiKingBlock ? "controlled" : null,
-      advancedType:   null,
-    };
-  }
-
-  // Cyborg
-  let cyborg: unknown = null;
-  const cyborgBlocks = [...text.matchAll(/<d>Ciborgue<\/d>([\s\S]*?)(?=<d>Ciborgue<\/d>|<\/div>)/g)];
-  if (cyborgBlocks.length > 0) {
-    const CYBORG_LOC_MAP: Record<string, string> = {
-      "cabeça": "head", "braço direito": "right_arm", "braço esquerdo": "left_arm",
-      "perna direita": "right_leg", "perna esquerda": "left_leg", "tronco": "torso",
-    };
-    const shifts = cyborgBlocks.map((m, i) => {
-      const block = m[1];
-      const locRawC = rx1(block, /\[b\]Local:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase().trim() ?? "";
-      return {
-        shiftNumber: (i + 1) as 1|2|3|4|5|6,
-        location: CYBORG_LOC_MAP[locRawC] ?? "torso",
-        name: rx1(block, /\[b\]Nome:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
-        description: rx1(block, /\[b\]Descri[çc][ãa]o:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
-        bugigangaId: null,
-      };
-    });
-    cyborg = { shifts, shift3Bonus: null, gear: null, usesFuel: shifts.length >= 3 };
-  }
-
-  // Artes Marciais
-  let artesMarciais: unknown = null;
-  const amBlock = rx1(text, /<d>Artes Marciais<\/d>([\s\S]*?)(?=<\/div>)/);
-  if (amBlock) {
-    const faixaRaw = rx1(amBlock, /\[b\]Faixa:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase().trim() ?? "";
-    const faixa = FAIXA_MAP[faixaRaw] ?? null;
-    if (faixa) artesMarciais = { currentFaixa: faixa, laranjaChoice: null };
-  }
-
-  const rawChar: Record<string, unknown> = {
-    name,
-    level,
-    race,
-    investedAttributes,
-    racialBonus: {},
-    pericias,
-    professions: [],
-    energy: { energy: level * 3 + energyInvested, energyInvested },
-    haki,
-    akuma,
-    artesMarciais,
-    cyborg,
-    techniques,
-    equippedWeapon:    null,
-    equippedDefensive: [null, null],
-    gemsSpent,
-    gemBudget,
-    location,
-    companions: [],
-  };
-
-  const character = migrateCharacter(rawChar);
-  const validation = validateCharacterFull(character);
-
-  const status: ImportStatus = !validation.isValid
-    ? "success_with_warnings"
-    : validation.hasWarnings
-      ? "success_with_warnings"
-      : "success_with_warnings"; // always warn since narratives are missing
-
-  return { status, character, parseErrors, validation };
+  return techniques;
 }
 
-// ─── File reader ──────────────────────────────────────────────────────────────
+/** Akuma com os campos específicos do tipo em branco (o fórum só traz nome/tipo/rank) */
+function blankAkuma(type: AkumaType, name: string, rank: AkumaRank): AkumaNoMi {
+  switch (type) {
+    case "zoan":
+      return { type, name, rank, animalClass: "herbivore", isMythical: false, isAncestral: false, points: [], abilities: [], vigorAnimalBonus: 0 };
+    case "logia":
+      return { type, name, rank, elementalNatureAttr: "power", statusEnhanced: { name: "", description: "", combination: [""] }, intangibilityBonus: { defense: 4, constitution: 4 } };
+    case "paramecia":
+      return { type, name, rank, parameciaClass: "corporeal", specialAdherence: "", passives: [], actives: [] };
+  }
+}
 
-export function readFileAsText(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload  = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Falha ao ler o arquivo."));
-    reader.readAsText(file);
+function parseForumAkuma(text: string): AkumaNoMi | null {
+  // Formato atual do exporter: <d>Akuma no Mi — Nome (Tipo Rank X — N gemas)</d>
+  const header = /<d>Akuma no Mi — (.+?) \((\w+) Rank ([SABC])\b[^)]*\)<\/d>/.exec(text);
+  // Formato legado: <d>Akuma no Mi</d> seguido de [b]Nome/Tipo/Rank:[/b]
+  const legacy = rx1(text, /<d>Akuma no Mi<\/d>([\s\S]*?)(?=<\/div>)/) ?? "";
+  if (!header && !legacy) return null;
+
+  const name = header?.[1].trim() ?? rx1(legacy, /\[b\]Nome:\[\/b\]\s*([^.\n]+)/);
+  const type = AKUMA_TYPE_MAP[(header?.[2] ?? rx1(legacy, /\[b\]Tipo:\[\/b\]\s*([^.\n]+)/) ?? "").toLowerCase()];
+  const rank = (header?.[3] ?? rx1(legacy, /\[b\]Rank:\[\/b\]\s*([SABC])/) ?? "C") as AkumaRank;
+  return name && type ? blankAkuma(type, name, rank) : null;
+}
+
+function parseForumHaki(text: string): HakiPath | null {
+  const armBlock = rx1(text, /<d>Haki do Armamento<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
+  const obsBlock = rx1(text, /<d>Haki da Observa[çc][ãa]o<\/d>([\s\S]*?)(?=<d>Haki|<\/div>)/);
+  if (!armBlock && !obsBlock) return null;
+
+  const stageOf = (block: string | null) => rxNumber(block ?? "", /\[b\]N[ií]vel:\s*\[\/b\]\s*(\d+)/, 0) as HakiStage;
+  const armStage = stageOf(armBlock);
+  const obsStage = stageOf(obsBlock);
+  // O primário é o que tem custo (o secundário é gratuito)
+  const armCost = rxNumber(armBlock ?? "", /\[b\]Custo:\s*\[\/b\]\s*(\d+)/, 0);
+  const armamentIsPrimary = armCost > 0;
+  const hasKing = text.includes("<d>Haki do Rei</d>");
+
+  return {
+    primaryType:    armamentIsPrimary ? "armament" : "observation",
+    primaryStage:   armamentIsPrimary ? armStage : obsStage,
+    secondaryType:  armamentIsPrimary ? "observation" : "armament",
+    secondaryStage: armamentIsPrimary ? obsStage : armStage,
+    hasKing,
+    kingStage:      hasKing ? "controlled" : null,
+    advancedType:   null,
+  };
+}
+
+function parseForumCyborg(text: string): CyborgPath | null {
+  const blocks = [...text.matchAll(/<d>Ciborgue<\/d>([\s\S]*?)(?=<d>Ciborgue<\/d>|<\/div>)/g)];
+  if (blocks.length === 0) return null;
+
+  const shifts: CyborgShiftData[] = blocks.map(([, block], i) => ({
+    shiftNumber: (i + 1) as CyborgShift,
+    location:    CYBORG_LOC_MAP[rx1(block, /\[b\]Local:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? ""] ?? "torso",
+    name:        rx1(block, /\[b\]Nome:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
+    description: rx1(block, /\[b\]Descri[çc][ãa]o:\s*\[\/b\]\s*([^.\n]+)/) ?? "",
+    bugigangaId: null,
+  }));
+  const shift3Raw = rx1(text, /\[b\]Bônus do Shift 3:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? "";
+  const shift3Bonus = shift3Raw.includes("energia") ? "energy" : shift3Raw.includes("técnicas") ? "techniques" : null;
+  return { shifts, shift3Bonus, gear: null, usesFuel: shifts.length >= 3 };
+}
+
+function parseForumArtesMarciais(text: string): ArtesMarciais | null {
+  const block = rx1(text, /<d>Artes Marciais<\/d>([\s\S]*?)(?=<\/div>)/);
+  const faixa = block ? FAIXA_MAP[rx1(block, /\[b\]Faixa:\s*\[\/b\]\s*([^.\n]+)/)?.toLowerCase() ?? ""] : undefined;
+  return faixa ? { currentFaixa: faixa, laranjaChoice: null } : null;
+}
+
+export function parseImportForumHTML(text: string): ImportResult {
+  const parseErrors = ["Importado via formato de fórum — campos narrativos não importados."];
+
+  const level  = rxNumber(text, /<e>N[ií]vel:\s*<\/e>(\d+)/, 1);
+  const cyborg = parseForumCyborg(text);
+
+  // Energia exportada = Lv×3 + investida + bônus do Shift 3 (ver characterMaxEnergy)
+  const exportedEnergy = rxNumber(text, /<e>Energia\s*\(EN\):\s*<\/e>(\d+)/, level * 3);
+  const cyborgEnergyBonus = cyborg?.shift3Bonus === "energy" ? CYBORG_ENERGY_BONUS : 0;
+  const energyInvested = Math.max(0, exportedEnergy - level * 3 - cyborgEnergyBonus);
+
+  const character = migrateCharacter({
+    name:               rx1(text, /<div class="toptitle">([^<]+)<\/div>/) ?? "Personagem Importado",
+    level,
+    race:               RACE_MAP[rx1(text, /<e>Ra[çc]a:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? ""] ?? "human",
+    location:           LOCATION_MAP[rx1(text, /<e>Localiza[çc][ãa]o:\s*<\/e>([^.\n<]+)/)?.toLowerCase() ?? ""] ?? "blues",
+    investedAttributes: parseForumAttributes(text),
+    racialBonus:        {},
+    pericias:           parseForumPericias(text),
+    professions:        [],
+    energy:             { energy: energyMax(level, energyInvested), energyInvested },
+    haki:               parseForumHaki(text),
+    akuma:              parseForumAkuma(text),
+    artesMarciais:      parseForumArtesMarciais(text),
+    cyborg,
+    techniques:         parseForumTechniques(text),
+    equippedWeapon:     null,
+    equippedDefensive:  [null, null],
+    gemsSpent:          rxNumber(text, /<e>Gemais? Gastas:\s*<\/e>(\d+)/, 0),
+    gemBudget:          rxNumber(text, /<e>Gemas Totais:\s*<\/e>(\d+)/, GEM_BUDGET_MIN),
+    companions:         [],
   });
+
+  // Sempre com avisos: campos narrativos (aparência, história…) não vêm do fórum
+  return { status: "success_with_warnings", character, parseErrors, validation: validateCharacterFull(character) };
+}
+
+// ─── File / clipboard ─────────────────────────────────────────────────────────
+
+function importError(message: string): ImportResult {
+  return { status: "error", character: null, parseErrors: [message], validation: null };
 }
 
 export async function importFromFile(file: File): Promise<ImportResult> {
-  if (file.size > MAX_FILE_SIZE) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: [`Arquivo muito grande (${Math.round(file.size / 1024)} KB). Máximo: ${MAX_FILE_SIZE / 1024} KB.`],
-      validation: null,
-    };
-  }
-
-  const isTxt  = file.name.endsWith(".txt");
-  const isJson = file.name.endsWith(".json");
-
-  if (!isJson && !isTxt) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Formato de arquivo inválido. Apenas arquivos .json ou .txt são aceitos."],
-      validation: null,
-    };
-  }
+  const invalid = validateImportFile(file);
+  if (invalid) return importError(invalid);
 
   try {
-    const text = await readFileAsText(file);
-    return parseImportAuto(text);
+    return parseImportAuto(await readFileAsText(file));
   } catch (e) {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Erro ao ler o arquivo: " + (e instanceof Error ? e.message : String(e))],
-      validation: null,
-    };
+    return importError("Erro ao ler o arquivo: " + (e instanceof Error ? e.message : String(e)));
   }
 }
 
@@ -480,31 +473,6 @@ function parseImportAuto(text: string): ImportResult {
 }
 
 export async function importFromClipboard(): Promise<ImportResult> {
-  try {
-    const text = await navigator.clipboard.readText();
-    if (!text.trim()) {
-      return {
-        status: "error",
-        character: null,
-        parseErrors: ["Área de transferência vazia."],
-        validation: null,
-      };
-    }
-    if (text.length > MAX_FILE_SIZE) {
-      return {
-        status: "error",
-        character: null,
-        parseErrors: [`Conteúdo muito grande. Máximo: ${MAX_FILE_SIZE / 1024} KB.`],
-        validation: null,
-      };
-    }
-    return parseImportAuto(text);
-  } catch {
-    return {
-      status: "error",
-      character: null,
-      parseErrors: ["Sem acesso à área de transferência. Use o upload de arquivo."],
-      validation: null,
-    };
-  }
+  const clip = await readClipboardText();
+  return clip.ok ? parseImportAuto(clip.text) : importError(clip.error);
 }

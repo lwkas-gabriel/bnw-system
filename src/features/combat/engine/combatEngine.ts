@@ -4,6 +4,11 @@ import type {
   TurnEvent, AttackRollResult, DamageResult, DiceRoll,
   CombatSummary, ActiveBuffs,
 } from "../../../shared/types/combat";
+import { baseAttributes, bpn, characterMaxEnergy } from "../../character/utils/attrCalc";
+import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
+import { CYBORG_LOCATIONS_BY_ID, CYBORG_SHIFT_BONUS } from "../../../data/cyborg";
+import { hasWeaponTrait } from "../../character/utils/equipment";
+import { periciaTotal } from "../../character/utils/pericias";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -33,14 +38,6 @@ export function averageRoll(): DiceRoll {
 
 // ─── BPN & Energy ─────────────────────────────────────────────────────────────
 
-export function calcBPN(level: number): number {
-  return Math.floor((level * 3) / 4);
-}
-
-export function calcEnergy(level: number, gemsInvested: number): number {
-  return level * 3 + gemsInvested;
-}
-
 // ─── Stat Resolvers ───────────────────────────────────────────────────────────
 
 /**
@@ -51,19 +48,12 @@ export function resolveAttributes(
   char: Character,
   buffs: ActiveBuffs
 ): BaseAttributes & { energyCostPerTurn: number } {
-  const base: BaseAttributes = {
-    power:        1 + char.investedAttributes.power        + (char.racialBonus.power        ?? 0),
-    precision:    1 + char.investedAttributes.precision    + (char.racialBonus.precision    ?? 0),
-    defense:      1 + char.investedAttributes.defense      + (char.racialBonus.defense      ?? 0),
-    constitution: 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0),
-  };
+  const base: BaseAttributes = baseAttributes(char);
 
   // Murakumogiri: triples base CON (before any path bonuses)
-  const isMurakumogiri = char.equippedWeapon && "characteristic" in char.equippedWeapon
-    && char.equippedWeapon.characteristic === "murakumogiri";
+  const isMurakumogiri = hasWeaponTrait(char, "murakumogiri");
   if (isMurakumogiri) {
-    const initialCon = 3 + char.investedAttributes.constitution + (char.racialBonus.constitution ?? 0);
-    base.constitution += initialCon * 2; // ×3 total
+    base.constitution *= 3;
   }
 
   let energyCost = 0;
@@ -89,8 +79,7 @@ export function resolveAttributes(
           base[point.complementaryAttr] += point.bonus;
 
           // Haissaikai: mirrors active Zoan point bonus onto weapon (adds same bonus again)
-          const isHaissaikai = char.equippedWeapon && "characteristic" in char.equippedWeapon
-            && char.equippedWeapon.characteristic === "haissaikai";
+          const isHaissaikai = hasWeaponTrait(char, "haissaikai");
           if (isHaissaikai) {
             const mult = buffs.zoanPoint === "awakened" ? 0.5 : 1;
             base[point.primaryAttr]       += Math.floor(point.bonus * mult);
@@ -125,8 +114,7 @@ export function resolveAttributes(
     const stageNum = typeof stage === "number" ? stage : 5;
     base.power        += stageNum;
     // Enma: doubles Haki Armament POD bonus
-    const isEnma = char.equippedWeapon && "characteristic" in char.equippedWeapon
-      && char.equippedWeapon.characteristic === "enma";
+    const isEnma = hasWeaponTrait(char, "enma");
     if (isEnma) base.power += stageNum;
     // CON temp is handled separately in CombatantState.tempConStack
     energyCost        += stageNum;
@@ -148,7 +136,7 @@ export function resolveAttributes(
 
   // ── Artes Marciais flat bonuses (always active once unlocked) ────
   if (char.artesMarciais?.currentFaixa) {
-    const faixaBonuses = getFaixaBonuses(char.artesMarciais.currentFaixa);
+    const faixaBonuses = faixaStatBonuses(char.artesMarciais.currentFaixa);
     base.power        += faixaBonuses.power        ?? 0;
     base.precision    += faixaBonuses.precision    ?? 0;
     base.defense      += faixaBonuses.defense      ?? 0;
@@ -158,63 +146,11 @@ export function resolveAttributes(
   // ── Ciborgue shift bonuses (always active) ───────────────────────
   if (char.cyborg?.shifts) {
     for (const shift of char.cyborg.shifts) {
-      const shiftBonus = getCyborgShiftBonus(shift.location);
-      base.power        += shiftBonus.power        ?? 0;
-      base.precision    += shiftBonus.precision    ?? 0;
-      base.defense      += shiftBonus.defense      ?? 0;
-      base.constitution += shiftBonus.constitution ?? 0;
+      base[CYBORG_LOCATIONS_BY_ID[shift.location].attr] += CYBORG_SHIFT_BONUS;
     }
   }
 
   return { ...base, energyCostPerTurn: energyCost };
-}
-
-/** Returns the flat stat bonus for a given cyborg shift location */
-function getCyborgShiftBonus(location: string): Partial<BaseAttributes> {
-  const bonuses: Record<string, Partial<BaseAttributes>> = {
-    head:       { precision: 4 },
-    right_arm:  { power: 4 },
-    left_arm:   { power: 4 },
-    right_leg:  { defense: 4 },
-    left_leg:   { defense: 4 },
-    torso:      { constitution: 4 },
-  };
-  return bonuses[location] ?? {};
-}
-
-/** Returns the cumulative flat stat bonuses from AM faixas up to and including the given one */
-function getFaixaBonuses(faixa: string): Partial<BaseAttributes> {
-  // Ordered list of flat stat bonuses per faixa
-  const bonuses: Record<string, Partial<BaseAttributes>> = {
-    branca:      {},
-    cinza:       { precision: 2 },
-    azul_clara:  { defense: 2 },
-    azul_escura: { power: 2 },
-    amarela:     { constitution: 2 },
-    laranja:     {},
-    verde:       {},
-    roxa:        {},
-    marrom:      {},
-    preta:       {},
-    coral:       {},
-    rajada:      {},
-    vermelha:    {},
-    grao_mestre: {},
-  };
-
-  const order = ["branca","cinza","azul_clara","azul_escura","amarela",
-                 "laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"];
-  const idx = order.indexOf(faixa);
-
-  const acc: Partial<BaseAttributes> = {};
-  for (let i = 0; i <= idx; i++) {
-    const b = bonuses[order[i]];
-    if (b.power)        acc.power        = (acc.power        ?? 0) + b.power;
-    if (b.precision)    acc.precision    = (acc.precision    ?? 0) + b.precision;
-    if (b.defense)      acc.defense      = (acc.defense      ?? 0) + b.defense;
-    if (b.constitution) acc.constitution = (acc.constitution ?? 0) + b.constitution;
-  }
-  return acc;
 }
 
 // ─── Technique Bonus Resolver ─────────────────────────────────────────────────
@@ -234,31 +170,21 @@ export function resolveTechniqueBonus(
   let bonus = tech.baseBonus; // 1–5 base
 
   // Kitetsu: doubles base technique bonus (not path bonuses)
-  const isKitetsu = char.equippedWeapon && "characteristic" in char.equippedWeapon
-    && char.equippedWeapon.characteristic === "kitetsu";
+  const isKitetsu = hasWeaponTrait(char, "kitetsu");
   if (isKitetsu) bonus *= 2;
-
-  // TODO: confirmar regras — bônus de técnica exclusivo para Zoan/Logia precisa
-  // ser mapeado no arquivo de regras antes de ser habilitado. Desabilitado temporariamente.
-  // const isZoan = char.akuma?.type === "zoan";
-  // if (isZoan) bonus += 1;
-  // const isLogia = char.akuma?.type === "logia";
-  // if (isLogia) bonus += 1;
 
   // AM Faixa Verde: +2 to defensive techniques
   // AM Faixa Roxa: +2 to offensive techniques
   if (char.artesMarciais?.currentFaixa) {
-    const faixaOrder = ["branca","cinza","azul_clara","azul_escura","amarela",
-                        "laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"];
-    const idx = faixaOrder.indexOf(char.artesMarciais.currentFaixa);
-    if (!isOffensive && idx >= faixaOrder.indexOf("verde")) bonus += 2;   // Faixa Verde
-    if (isOffensive  && idx >= faixaOrder.indexOf("roxa"))  bonus += 2;   // Faixa Roxa
+    const faixa = char.artesMarciais.currentFaixa;
+    if (!isOffensive && hasReachedFaixa(faixa, "verde")) bonus += 2;   // Faixa Verde
+    if (isOffensive  && hasReachedFaixa(faixa, "roxa"))  bonus += 2;   // Faixa Roxa
   }
 
   // Rei Avancado: adds Ambição to technique bonus while King Haki is active
   if (choice.buffs.hakiKing && choice.buffs.hakiAdvanced &&
-      char.haki?.kingStage === "advanced" && char.pericias.ambicao) {
-    bonus += char.pericias.ambicao;
+      char.haki?.kingStage === "advanced") {
+    bonus += periciaTotal(char, "ambicao"); // graduação + bônus raciais/bugigangas
   }
 
   // Yoru: halves energy cost (bonus calculation unaffected)
@@ -331,8 +257,8 @@ export function resolveAttack(
   const atkAttrs = resolveAttributes(attacker, attackerChoice.buffs);
   const defAttrs = resolveAttributes(defender, defenderChoice.buffs);
 
-  const bpnAtk = calcBPN(attacker.level);
-  const bpnDef = calcBPN(defender.level);
+  const bpnAtk = bpn(attacker.level);
+  const bpnDef = bpn(defender.level);
 
   // Offensive technique targets PRE or POD — for attack roll we use PRE bonus
   const offTech = attackerChoice.offensive;
@@ -406,9 +332,7 @@ export function resolveDamage(
   const newBaseCon = defenderState.currentCon - totalBaseConDamage;
 
   const isKnockout = newBaseCon <= 0;
-  const hasMurakumogiri = !!defenderState.character.equippedWeapon &&
-    "characteristic" in defenderState.character.equippedWeapon &&
-    defenderState.character.equippedWeapon.characteristic === "murakumogiri";
+  const hasMurakumogiri = hasWeaponTrait(defenderState.character, "murakumogiri");
   const retemAvailable =
     isKnockout && !defenderState.retemUsed && (
       (defenderState.character.akuma?.type === "zoan" &&
@@ -431,7 +355,6 @@ export function resolveDamage(
 function applyEnergyCost(
   state: CombatantState,
   choice: TurnChoice,
-  _useAverage: boolean
 ): { newState: CombatantState; events: TurnEvent[] } {
   const attrs = resolveAttributes(state.character, choice.buffs);
   let totalCost = attrs.energyCostPerTurn;
@@ -442,8 +365,7 @@ function applyEnergyCost(
   if (choice.useElementalista) totalCost += 1;
 
   // Kitetsu Shusui: +2 EN/turn if active and not already counted
-  if (state.character.equippedWeapon && "characteristic" in state.character.equippedWeapon
-      && state.character.equippedWeapon.characteristic === "shusui") {
+  if (hasWeaponTrait(state.character, "shusui")) {
     totalCost += 2;
   }
 
@@ -463,6 +385,66 @@ function applyEnergyCost(
   };
 }
 
+/**
+ * Um ataque completo (rolagem + dano) de `attacker` contra `defender`.
+ * Registra os eventos em `events` e retorna o novo estado do defensor.
+ */
+function resolveStrike(
+  attacker: Character,
+  attackerChoice: TurnChoice,
+  defender: CombatantState,
+  defenderChoice: TurnChoice,
+  useAverage: boolean,
+  events: TurnEvent[],
+): CombatantState {
+  const target = defender.character;
+  const roll = resolveAttack(attacker, attackerChoice, target, defenderChoice, useAverage);
+
+  events.push({
+    type: "attack",
+    actorId: attacker.id,
+    targetId: target.id,
+    description: roll.hit
+      ? `${attacker.name} acerta! (${roll.attackerTotal} vs ${roll.defenderThreshold})`
+      : `${attacker.name} erra. (${roll.attackerTotal} vs ${roll.defenderThreshold})`,
+    roll: roll.roll,
+    numerics: { total: roll.attackerTotal, threshold: roll.defenderThreshold },
+  });
+  if (!roll.hit) return defender;
+
+  const dmg = resolveDamage(attacker, attackerChoice, defender, defenderChoice);
+  const newCon = Math.max(
+    dmg.retemActivated ? 1 : 0,
+    defender.currentCon - dmg.baseConDamage - dmg.directConDamage
+  );
+
+  events.push({
+    type: "damage",
+    actorId: attacker.id,
+    targetId: target.id,
+    description: `${attacker.name} causa ${dmg.rawDamage} de POD. ` +
+      (dmg.tempConAbsorbed > 0 ? `CON temp absorveu ${dmg.tempConAbsorbed}. ` : "") +
+      (dmg.directConDamage > 0 ? `+${dmg.directConDamage} de dano direto. ` : "") +
+      `${target.name}: ${defender.currentCon} → ${newCon} CON.`,
+    numerics: { raw: dmg.rawDamage, absorbed: dmg.tempConAbsorbed, direct: dmg.directConDamage, conBefore: defender.currentCon, conAfter: newCon },
+  });
+
+  if (dmg.retemActivated) {
+    events.push({ type: "retem", actorId: target.id,
+      description: `${target.name} ativa Retém 1 CON! Permanece com 1 CON.` });
+  }
+  if (dmg.isKnockout) {
+    events.push({ type: "knockout", actorId: attacker.id, targetId: target.id,
+      description: `${target.name} foi nocauteado!` });
+  }
+
+  return {
+    ...defender,
+    currentCon: newCon,
+    retemUsed: dmg.retemActivated ? true : defender.retemUsed,
+  };
+}
+
 export function processTurn(
   stateA: CombatantState,
   stateB: CombatantState,
@@ -477,53 +459,7 @@ export function processTurn(
   let currentB = { ...stateB };
 
   // ── 1. Attack A → B ────────────────────────────────────────────────
-  const rollAB = resolveAttack(stateA.character, choiceA, stateB.character, choiceB, useAverage);
-
-  events.push({
-    type: "attack",
-    actorId: stateA.character.id,
-    targetId: stateB.character.id,
-    description: rollAB.hit
-      ? `${stateA.character.name} acerta! (${rollAB.attackerTotal} vs ${rollAB.defenderThreshold})`
-      : `${stateA.character.name} erra. (${rollAB.attackerTotal} vs ${rollAB.defenderThreshold})`,
-    roll: rollAB.roll,
-    numerics: { total: rollAB.attackerTotal, threshold: rollAB.defenderThreshold },
-  });
-
-  if (rollAB.hit) {
-    const dmgAB = resolveDamage(stateA.character, choiceA, currentB, choiceB);
-    const newConB = Math.max(
-      dmgAB.retemActivated ? 1 : 0,
-      currentB.currentCon - dmgAB.baseConDamage - dmgAB.directConDamage
-    );
-
-    events.push({
-      type: "damage",
-      actorId: stateA.character.id,
-      targetId: stateB.character.id,
-      description: `${stateA.character.name} causa ${dmgAB.rawDamage} de POD. ` +
-        (dmgAB.tempConAbsorbed > 0 ? `CON temp absorveu ${dmgAB.tempConAbsorbed}. ` : "") +
-        (dmgAB.directConDamage > 0 ? `+${dmgAB.directConDamage} de dano direto. ` : "") +
-        `${stateB.character.name}: ${currentB.currentCon} → ${newConB} CON.`,
-      numerics: { raw: dmgAB.rawDamage, absorbed: dmgAB.tempConAbsorbed, direct: dmgAB.directConDamage, conBefore: currentB.currentCon, conAfter: newConB },
-    });
-
-    if (dmgAB.retemActivated) {
-      events.push({ type: "retem", actorId: stateB.character.id,
-        description: `${stateB.character.name} ativa Retém 1 CON! Permanece com 1 CON.` });
-    }
-
-    currentB = {
-      ...currentB,
-      currentCon: newConB,
-      retemUsed: dmgAB.retemActivated ? true : currentB.retemUsed,
-    };
-
-    if (dmgAB.isKnockout) {
-      events.push({ type: "knockout", actorId: stateA.character.id, targetId: stateB.character.id,
-        description: `${stateB.character.name} foi nocauteado!` });
-    }
-  }
+  currentB = resolveStrike(stateA.character, choiceA, currentB, choiceB, useAverage, events);
 
   // ── 2. Attack B → A ────────────────────────────────────────────────
   // In JxJ mode T1: both attack simultaneously regardless of first attacker
@@ -533,65 +469,18 @@ export function processTurn(
     : currentB.currentCon > 0;
 
   if (bAttacks) {
-    const rollBA = resolveAttack(stateB.character, choiceB, stateA.character, choiceA, useAverage);
-
-    events.push({
-      type: "attack",
-      actorId: stateB.character.id,
-      targetId: stateA.character.id,
-      description: rollBA.hit
-        ? `${stateB.character.name} acerta! (${rollBA.attackerTotal} vs ${rollBA.defenderThreshold})`
-        : `${stateB.character.name} erra. (${rollBA.attackerTotal} vs ${rollBA.defenderThreshold})`,
-      roll: rollBA.roll,
-      numerics: { total: rollBA.attackerTotal, threshold: rollBA.defenderThreshold },
-    });
-
-    if (rollBA.hit) {
-      const dmgBA = resolveDamage(stateB.character, choiceB, currentA, choiceA);
-      const newConA = Math.max(
-        dmgBA.retemActivated ? 1 : 0,
-        currentA.currentCon - dmgBA.baseConDamage - dmgBA.directConDamage
-      );
-
-      events.push({
-        type: "damage",
-        actorId: stateB.character.id,
-        targetId: stateA.character.id,
-        description: `${stateB.character.name} causa ${dmgBA.rawDamage} de POD. ` +
-          (dmgBA.tempConAbsorbed > 0 ? `CON temp absorveu ${dmgBA.tempConAbsorbed}. ` : "") +
-          `${stateA.character.name}: ${currentA.currentCon} → ${newConA} CON.`,
-        numerics: { raw: dmgBA.rawDamage, absorbed: dmgBA.tempConAbsorbed, conBefore: currentA.currentCon, conAfter: newConA },
-      });
-
-      if (dmgBA.retemActivated) {
-        events.push({ type: "retem", actorId: stateA.character.id,
-          description: `${stateA.character.name} ativa Retém 1 CON! Permanece com 1 CON.` });
-      }
-
-      currentA = {
-        ...currentA,
-        currentCon: newConA,
-        retemUsed: dmgBA.retemActivated ? true : currentA.retemUsed,
-      };
-
-      if (dmgBA.isKnockout) {
-        events.push({ type: "knockout", actorId: stateB.character.id, targetId: stateA.character.id,
-          description: `${stateA.character.name} foi nocauteado!` });
-      }
-    }
+    currentA = resolveStrike(stateB.character, choiceB, currentA, choiceA, useAverage, events);
   }
 
   // ── 3. Energy costs ────────────────────────────────────────────────
-  const { newState: newA } = applyEnergyCost(currentA, choiceA, useAverage);
-  const { newState: newB } = applyEnergyCost(currentB, choiceB, useAverage);
+  const { newState: newA } = applyEnergyCost(currentA, choiceA);
+  const { newState: newB } = applyEnergyCost(currentB, choiceB);
   currentA = newA;
   currentB = newB;
 
   // ── 4. Kitetsu self-damage ─────────────────────────────────────────
   const applyKitetsuSelfDmg = (state: CombatantState, choice: TurnChoice): CombatantState => {
-    const isKitetsu = state.character.equippedWeapon &&
-      "characteristic" in state.character.equippedWeapon &&
-      state.character.equippedWeapon.characteristic === "kitetsu";
+    const isKitetsu = hasWeaponTrait(state.character, "kitetsu");
     if (!isKitetsu) return state;
     const techCount = (choice.offensive ? 1 : 0) + (choice.defensive ? 1 : 0);
     const selfDmg = techCount; // 1 direct CON per technique used
@@ -645,6 +534,22 @@ const NO_BUFFS: ActiveBuffs = {
   logiaElementalDomain: false,
 };
 
+/**
+ * Estado inicial de um combatente. Usa resolveAttributes sem buffs para incluir
+ * bônus passivos na CON inicial (Logia +4, Vigor Animal, AM Amarela +2) e
+ * characterMaxEnergy para a energia (inclui o +20 do Shift 3 do Ciborgue).
+ */
+export function initialCombatantState(char: Character): CombatantState {
+  return {
+    character: char,
+    currentCon: resolveAttributes(char, NO_BUFFS).constitution,
+    currentEnergy: characterMaxEnergy(char),
+    retemUsed: false,
+    tempConStack: [],
+    statusEffects: [],
+  };
+}
+
 export function simulateCombat(
   charA: Character,
   charB: Character,
@@ -652,28 +557,8 @@ export function simulateCombat(
   mode: CombatMode = "jxj",
   useAverage: boolean = false
 ): CombatSummary {
-  // Use resolveAttributes with no buffs so passive bonuses (Logia +4 CON,
-  // Zoan vigorAnimal, AM Amarela +2 CON) are included in the starting CON.
-  const baseAttrsA = resolveAttributes(charA, NO_BUFFS);
-  const baseAttrsB = resolveAttributes(charB, NO_BUFFS);
-
-  let stateA: CombatantState = {
-    character: charA,
-    currentCon: baseAttrsA.constitution,
-    currentEnergy: calcEnergy(charA.level, charA.energy.energyInvested),
-    retemUsed: false,
-    tempConStack: [],
-    statusEffects: [],
-  };
-
-  let stateB: CombatantState = {
-    character: charB,
-    currentCon: baseAttrsB.constitution,
-    currentEnergy: calcEnergy(charB.level, charB.energy.energyInvested),
-    retemUsed: false,
-    tempConStack: [],
-    statusEffects: [],
-  };
+  let stateA = initialCombatantState(charA);
+  let stateB = initialCombatantState(charB);
 
   const turns: TurnResult[] = [];
   let combatEnded = false;

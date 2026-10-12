@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../features/character/store/characterStore";
 import { PageHeader, Button, EmptyState, Badge } from "../shared/components";
 import type { Character } from "../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../data/attributes";
+import { baseAttributes } from "../features/character/utils/attrCalc";
 
 function CharacterCard({ char, onLoad, onDelete }: { char: Character; onLoad: () => void; onDelete: () => void }) {
   const paths = [
@@ -10,6 +12,7 @@ function CharacterCard({ char, onLoad, onDelete }: { char: Character; onLoad: ()
     char.artesMarciais?.currentFaixa && `AM ${char.artesMarciais.currentFaixa}`,
     char.cyborg   && `Ciborgue S${char.cyborg.shifts.length}`,
   ].filter(Boolean);
+  const baseAttrs = baseAttributes(char, false);
 
   return (
     <div className="card hover:border-slate-600 transition-colors group">
@@ -28,12 +31,7 @@ function CharacterCard({ char, onLoad, onDelete }: { char: Character; onLoad: ()
             )}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
-            {[
-              { label: "POD", value: 1 + char.investedAttributes.power },
-              { label: "PRE", value: 1 + char.investedAttributes.precision },
-              { label: "DEF", value: 1 + char.investedAttributes.defense },
-              { label: "CON", value: 3 + char.investedAttributes.constitution },
-            ].map(s => (
+            {ATTR_KEYS.map(attr => ({ label: ATTR_SHORT_LABELS[attr], value: baseAttrs[attr] })).map(s => (
               <div key={s.label} className="bg-slate-800 rounded p-1">
                 <p className="text-[9px] text-slate-500 uppercase tracking-wider">{s.label}</p>
                 <p className="text-sm font-bold font-mono text-slate-300">{s.value}</p>

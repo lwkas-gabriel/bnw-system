@@ -1,0 +1,292 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`exportToForumHTML — snapshot (contrato com o fórum) > personagem completo 1`] = `
+"[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Roronoa Teste</div><br>
+
+<img src="[URL DA IMAGEM]" width="500px" height="279px"/></img><br>
+
+<div class="post"><t>1 | Informações gerais</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>Roronoa Teste.
+<e>Idade: </e>[PREENCHER].
+<e>Raça: </e>Mink.
+<e>Localização: </e>Grand Line.
+<e>Alcunha: </e>[PREENCHER].
+<e>Facção: </e>Marinha.
+<e>Recompensa / Patente / Cargo / Rank: </e>Capitão (Rank 6).
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>20
+<e>Experiência (XP): </e>[PREENCHER]
+<e>Gemas Totais: </e>420
+<e>Gemais Gastas: </e>281
+<e>Gemas Atuais: </e>139
+<e>Prestígio:  </e>12
+</div>
+
+<t>2 | Atributos e afins (6 gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>7 +2 [Bônus AM]
+<e>Precisão (PRE): </e>6 +2 [Racial: Mink] +2 [Bônus AM]
+<e>Defesa (DEF): </e>5 +2 [Bônus AM]
+<e>Constituição (CON) </e>8 +2 [Bônus AM]
+<e>Energia (EN): </e>86
+<e>Bônus por Nível: </e>15
+<e>Ganhos raciais: </e>+2 PRE, +1 Percepção, +1 Furtividade (Zoan).
+
+<e>Profissões:</e> </e>Nenhuma.
+</div>
+
+<t>3 | Perícias</t>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<e>Ambição: </e>01
+<e>Atletismo: </e>03
+<e>Destreza: </e>00
+<e>Erudição: </e>00
+<e>Expressão: </e>00
+<e>Furtividade: </e>00 +1 [Zoan]
+<e>Investigação: </e>00
+<e>Lógica: </e>00
+<e>Percepção: </e>02 +1 [Raça: Mink]
+<e>Persuasão: </e>00
+<e>Sobrevivência: </e>00
+</div>
+
+<t>4 | Técnicas (15 gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<e>Rank D</e>
+[b]Nome:[/b] Guarda de Ferro
+[b]Descrição:[/b] Bloqueio
+[b]Custo:[/b] 7 gemas.
+[b]Efeito:[/b] +2 +2 [Bônus AM] DEF.
+[b]Energia:[/b] 2.
+
+<e>Rank C</e>
+[b]Nome:[/b] Golpe Tigre
+[b]Descrição:[/b] Corte duplo
+[b]Custo:[/b] 8 gemas.
+[b]Efeito:[/b] +3 POD.
+[b]Energia:[/b] 3.
+
+</div>
+
+<t>5 | Caminhos (250 gemas)</t>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi — Neko Neko no Mi (Zoan Rank B — 60 gemas)</d>
+
+<d>ZOAN</d>
+[SIZE=1]Comida por: Roronoa Teste[/SIZE]
+
+Permite ao usuário se transformar em um [PREENCHER].
+
+<e>1. Points</e>
+[b]Rank C:[/b] + 1 nos atributos de cada point.
+[b]Rank B:[/b] + 3 nos atributos de cada point.
+[b]Rank A:[/b] + 4 nos atributos de cada point.
+
+[QUOTE]
+[b]Point 01 - Híbrido:[/b]
+[B]POD[/B]: +2
+[b]PRE:[/b] +2
+[/QUOTE]
+
+<e>2. Efeito Aderido Especial</e>
+[QUOTE][b]♦ Bestialidade:[/b]
+A técnica apresenta toda a bestialidade de um usuário Zoan, com as melhores características do animal que a representa. Melhora o bônus da técnica em +1 para o atributo primário durante a criação da ficha. Este é o único Efeito Aderido que funciona tanto em técnicas defensivas como ofensivas, ou seja, se usado em ambas em um mesmo turno, proporcionam um bônus total de +2.[/QUOTE]
+
+<e>3. Vigor Animal</e>
+[b]Rank C:[/b] + 2 de Constituição
+[b]Rank B:[/b] + 4 de Constituição
+[b]Rank A:[/b] + 6 de Constituição
+
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Ciborgue</d>
+[b]Nome: [/b]Braço Canhão.
+[b]Descrição: [/b]Canhão no braço.
+[b]Local: [/b]Braço Direito.
+[b]Bônus: [/b]+4 POD.
+
+<d>Ciborgue</d>
+[b]Nome: [/b]Perna Mola.
+[b]Descrição: [/b]Salto.
+[b]Local: [/b]Perna Esquerda.
+[b]Bônus: [/b]+4 DEF.
+
+<d>Ciborgue</d>
+[b]Nome: [/b]Núcleo.
+[b]Descrição: [/b]Reator.
+[b]Local: [/b]Tronco.
+[b]Bônus: [/b]+4 CON.
+
+[b]Bônus do Shift 3: [/b]+20 de Energia.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Haki do Armamento</d>
+[b]Nível: [/b]03
+[b]Aventuras: [/b]00/02
+[b]Custo: [/b]60 gemas.
+[b]Bônus: [/b]+3 POD, +3 CON.
+[b]Gasto de energia: [/b]3 por turno.
+[b]Efeito interpretativo: [/b]Você tem plena consciência do uso deste poder e já consegue fazer o uso do Haki como bem entender. A personagem revestir apenas regiões pequenas e específicas, como um punho, para endurecê-la de forma mais rápida e eficiente. Estas partes revestidas se tornam totalmente negras e são tão intensas que os golpes desferidos são mais destrutivos e perigosos. A intensidade é tanta que se torna possível tocar/acertar o corpo de um usuário de Akuma no Mi do tipo Logia ou com outras invulnerabilidades. Nesse nível, o personagem consegue deixar partes de seu corpo com a cor negra.
+
+<d>Haki da Observação</d>
+[b]Nível: [/b]02
+[b]Aventuras: [/b]00/02
+[b]Custo: [/b]0 gemas.
+[b]Bônus: [/b]+2 PRE, +2 DEF.
+[b]Gasto de energia: [/b]2 por turno.
+[b]Efeito interpretativo: [/b]Você é capaz de sentir pessoas ao seu redor, embora não saiba dizer sua posição específica. Mesmo que a alguma distância, consegue 'ver' as silhuetas das pessoas, mesmo que esteja até mesmo de olhos fechados ou seja cego. Age numa distância de 2 ações de movimento.
+
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>
+[b]Faixa: [/b]Verde.
+[b]Custo: [/b]70 gemas.
+[b]Escolha Laranja: [/b]Arma Única.
+[b]Bônus acumulados: [/b]
+- Faixa Branca: +2 de bônus na arma equipada
+- Faixa Cinza: +2 de Precisão
+- Faixa Azul Clara: +2 de Defesa
+- Faixa Azul Escura: +2 de Poder
+- Faixa Amarela: +2 de Constituição
+- Faixa Laranja: +1 em todos os itens defensivos; 2 Técnicas Rank A ou 1 Arma Única Comum
+- Faixa Verde: +2 de bônus em técnicas defensivas
+</div>
+
+<t>6 | Itens e Equipamentos</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Berries: </e>B$ 200.000.
+
+<e>Equipamentos Ofensivos</e>
+[b]Nome: [/b]Katana.
+[b]Qualidade: [/b]Comum.
+[b]Bônus: [/b]+1 +2 [Bônus AM] POD; Aplica o valor de Ambição ao BPN. Consome 2 de energia por turno..
+[b]Custo: [/b]Concedida via Faixa Laranja.
+[b]Valor: [/b]B$ 500.000.
+[b]Descrição: [/b]Lâmina negra.
+[b]Característica Única: [/b]Shusui.
+
+<e>Equipamentos Defensivos</e>
+[b]Nome: [/b]Elmo.
+[b]Qualidade: [/b]Esplêndido.
+[b]Bônus: [/b]+1 +1 [Bônus AM] DEF.
+[b]Valor: [/b]B$ 5.000.000.
+[b]Descrição: [/b][PREENCHER].
+
+</div>
+
+<t>7 | Social e histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Aparência</d>
+[PREENCHER]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Personalidade</d>
+[PREENCHER]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>História</d>
+[PREENCHER]
+</div>
+
+<t>8 | Histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Aventuras: </e>[PREENCHER]
+
+<e>Narração: </e>[PREENCHER]
+
+<e>Eventos e Extras: </e>[PREENCHER]
+</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]"
+`;
+
+exports[`exportToForumHTML — snapshot (contrato com o fórum) > personagem mínimo 1`] = `
+"[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Test Character</div><br>
+
+<img src="[URL DA IMAGEM]" width="500px" height="279px"/></img><br>
+
+<div class="post"><t>1 | Informações gerais</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>Test Character.
+<e>Idade: </e>[PREENCHER].
+<e>Raça: </e>Humano.
+<e>Localização: </e>Blues.
+<e>Alcunha: </e>[PREENCHER].
+<e>Facção: </e>Aventureiro.
+<e>Recompensa / Patente / Cargo / Rank: </e>Aventureiro.
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>01
+<e>Experiência (XP): </e>[PREENCHER]
+<e>Gemas Totais: </e>20
+<e>Gemais Gastas: </e>0
+<e>Gemas Atuais: </e>20
+<e>Prestígio:  </e>00
+</div>
+
+<t>2 | Atributos e afins</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>1
+<e>Precisão (PRE): </e>1
+<e>Defesa (DEF): </e>1
+<e>Constituição (CON) </e>4
+<e>Energia (EN): </e>3
+<e>Bônus por Nível: </e>0
+<e>Ganhos raciais: </e>Nenhum.
+
+<e>Profissões:</e> </e>Nenhuma.
+</div>
+
+<t>3 | Perícias</t>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<e>Ambição: </e>00
+<e>Atletismo: </e>00
+<e>Destreza: </e>00
+<e>Erudição: </e>00
+<e>Expressão: </e>00
+<e>Furtividade: </e>00
+<e>Investigação: </e>00
+<e>Lógica: </e>00
+<e>Percepção: </e>00
+<e>Persuasão: </e>00
+<e>Sobrevivência: </e>00
+</div>
+
+<t>6 | Itens e Equipamentos</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Berries: </e>B$ 200.000.
+
+</div>
+
+<t>7 | Social e histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Aparência</d>
+[PREENCHER]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>Personalidade</d>
+[PREENCHER]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; "><d>História</d>
+[PREENCHER]
+</div>
+
+<t>8 | Histórico</t>
+
+<div style=" border: 1px solid; padding: 10px; "><e>Aventuras: </e>[PREENCHER]
+
+<e>Narração: </e>[PREENCHER]
+
+<e>Eventos e Extras: </e>[PREENCHER]
+</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]"
+`;

@@ -1,13 +1,14 @@
-import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { useDraft } from "../hooks/useDraft";
+import { SectionCard, Button, Badge, StatTile, Callout } from "../../../shared/components";
 import type { CompanionData, CompanionRank, CompanionType } from "../../../shared/types/character";
+import { GEM_COSTS } from "../../../data/gemCosts";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
 const RANK_OPTIONS: { value: CompanionRank; label: string; cost: number }[] = [
-  { value: "C", label: "Rank C", cost: 10 },
-  { value: "B", label: "Rank B", cost: 20 },
-  { value: "A", label: "Rank A", cost: 30 },
+  { value: "C", label: "Rank C", cost: GEM_COSTS.companion.C },
+  { value: "B", label: "Rank B", cost: GEM_COSTS.companion.B },
+  { value: "A", label: "Rank A", cost: GEM_COSTS.companion.A },
 ];
 
 const RANK_LIMITS: Record<CompanionRank, { maxLevel: number; maxGems: number; maxPericia: number }> = {
@@ -16,13 +17,13 @@ const RANK_LIMITS: Record<CompanionRank, { maxLevel: number; maxGems: number; ma
   A: { maxLevel: 35, maxGems: 300, maxPericia: 5 },
 };
 
-const COMPANION_COST: Record<CompanionRank, number> = { C: 10, B: 20, A: 30 };
+const COMPANION_COST = GEM_COSTS.companion;
 const MASCOTE_BONUS_MULT: Record<CompanionRank, number> = { C: 2, B: 4, A: 6 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CompanheirosSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const companions = draft.companions ?? [];
@@ -68,11 +69,14 @@ export function CompanheirosSection() {
           {RANK_OPTIONS.map(r => {
             const lim = RANK_LIMITS[r.value];
             return (
-              <div key={r.value} className="bg-slate-800 rounded-lg p-2 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">{r.label}</p>
-                <p className="text-xs font-bold text-amber-400">{r.cost}g</p>
-                <p className="text-[9px] text-slate-600 mt-1">Nv. máx {lim.maxLevel} · {lim.maxGems}g</p>
-              </div>
+              <StatTile
+                key={r.value}
+                compact
+                label={r.label}
+                value={`${r.cost}g`}
+                valueClassName="text-xs font-bold text-amber-400"
+                sub={`Nv. máx ${lim.maxLevel} · ${lim.maxGems}g`}
+              />
             );
           })}
         </div>
@@ -162,7 +166,7 @@ export function CompanheirosSection() {
 
               {/* Type-specific info */}
               {isMascote && (
-                <div className="bg-amber-950/20 border border-amber-800/40 rounded-lg p-3 space-y-1.5">
+                <Callout className="p-3 space-y-1.5 rounded-lg">
                   <p className="text-xs font-semibold text-amber-400">Mascote — Regras especiais</p>
                   <p className="text-xs text-slate-400">
                     Lutam juntos com o Adestrador, intercalando turnos. Compartilham a CON de menor valor.
@@ -176,7 +180,7 @@ export function CompanheirosSection() {
                   <p className="text-[10px] text-slate-600">
                     Este bônus pode ultrapassar o limite do Rank. Mascotes não têm Perícias, Profissões nem Haki.
                   </p>
-                </div>
+                </Callout>
               )}
 
               {isAutomato && (

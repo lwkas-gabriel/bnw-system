@@ -1,7 +1,11 @@
-import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
-import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI } from "../../../data/haki";
-import type { HakiPath, AdvancedHakiVariant } from "../../../shared/types/character";
+import { useDraft } from "../hooks/useDraft";
+import { SectionCard, Button, Badge, Callout, Switch } from "../../../shared/components";
+import { GEM_COSTS } from "../../../data/gemCosts";
+import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES, type AdvancedHakiData } from "../../../data/haki";
+import type { HakiPath, HakiStage } from "../../../shared/types/character";
+import { computeHakiCost, hakiStageNum } from "../utils/haki";
+import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
+import { periciaTotal } from "../utils/pericias";
 
 const STAGE_LABELS = [1, 2, 3, 4, 5];
 
@@ -42,7 +46,7 @@ function StageProgress({ stages, current, onSelect, type }: {
           <div className="flex gap-3 text-xs">
             {Object.entries(stages[currentNum - 1].bonus).map(([k, v]) => (
               <span key={k} className="text-slate-300">
-                +{v} <span className="text-slate-500 uppercase text-[10px]">{k.slice(0, 3)}</span>
+                +{v} <span className="text-slate-500 uppercase text-[10px]">{ATTR_SHORT_LABELS[k as AttrKey]}</span>
               </span>
             ))}
             <span className="ml-auto text-slate-500">{stages[currentNum - 1].energyCostPerTurn} EN/turno</span>
@@ -58,7 +62,7 @@ function StageProgress({ stages, current, onSelect, type }: {
 }
 
 export function HakiSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const haki = draft.haki;
@@ -80,14 +84,14 @@ export function HakiSection() {
   function setPrimaryStage(s: number) {
     updateDraft(c => {
       if (!c.haki) return;
-      c.haki.primaryStage = s as any;
+      c.haki.primaryStage = s as HakiStage;
     });
   }
 
   function setSecondaryStage(s: number) {
     updateDraft(c => {
       if (!c.haki) return;
-      c.haki.secondaryStage = s as any;
+      c.haki.secondaryStage = s as HakiStage;
     });
   }
 
@@ -109,24 +113,19 @@ export function HakiSection() {
     });
   }
 
-  function setAdvanced(variant: AdvancedHakiVariant) {
+  function setAdvanced(variant: AdvancedHakiData["variant"]) {
     if (draft!.location !== "new_world") return;
     updateDraft(c => {
       if (!c.haki) return;
       c.haki.advancedType = variant;
-      if (variant === "king_advanced") c.haki.kingStage = "advanced";
     });
   }
 
-  const primaryStageNum = typeof haki?.primaryStage === "number" ? haki.primaryStage : 0;
+  const primaryStageNum = haki ? hakiStageNum(haki.primaryStage) : 0;
   const canHaveKing = primaryStageNum >= 5 || (typeof haki?.secondaryStage === "number" && haki.secondaryStage >= 5);
   const canHaveAdvanced = draft.location === "new_world";
 
-  // Both Armament and Observation cost 20g/stage as primary; only secondary is free
-  const gemCost = (primaryStageNum * 20)
-    + (haki?.hasKing ? 20 : 0)
-    + (haki?.advancedType === "king_advanced" ? 20 : 0)
-    + (haki?.advancedType && haki.advancedType !== "king_advanced" ? 40 : 0);
+  const gemCost = haki ? computeHakiCost(haki) : 0;
 
   return (
     <div className="space-y-4 max-w-2xl">
@@ -165,7 +164,7 @@ export function HakiSection() {
 
           {/* Primary Haki */}
           <SectionCard
-            title={`Haki ${haki.primaryType === "armament" ? "do Armamento" : "da Observação"} (Primário)`}
+            title={`Haki ${HAKI_TYPE_NAMES[haki.primaryType].withArticle} (Primário)`}
             icon={haki.primaryType === "armament" ? "🔶" : "👁️"}
             action={<Badge variant="amber">Pago</Badge>}
           >
@@ -190,7 +189,7 @@ export function HakiSection() {
 
           {/* Secondary Haki - FREE */}
           <SectionCard
-            title={`Haki ${haki.secondaryType === "armament" ? "do Armamento" : "da Observação"} (Secundário)`}
+            title={`Haki ${HAKI_TYPE_NAMES[haki.secondaryType].withArticle} (Secundário)`}
             icon={haki.secondaryType === "armament" ? "🔶" : "👁️"}
             action={<Badge variant="green">Gratuito</Badge>}
           >
@@ -210,28 +209,22 @@ export function HakiSection() {
                 <p className="text-xs text-slate-400">Custo: 20g. Requer estágio 5 em um dos Hakis.</p>
                 {!canHaveKing && <p className="text-[10px] text-amber-500/80 mt-0.5">Atinja estágio 5 primeiro.</p>}
               </div>
-              <button
-                onClick={toggleKing}
-                disabled={!canHaveKing && !haki.hasKing}
-                className={`relative w-12 h-6 rounded-full transition-colors ${haki.hasKing ? "bg-amber-600" : "bg-slate-700"} disabled:opacity-40 disabled:cursor-not-allowed`}
-              >
-                <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${haki.hasKing ? "translate-x-6" : "translate-x-0.5"}`} />
-              </button>
+              <Switch size="md" checked={haki.hasKing} onChange={toggleKing} disabled={!canHaveKing && !haki.hasKing} />
             </div>
             {haki.hasKing && (
               <div className="space-y-2">
-                <div className="p-2 bg-amber-950/30 border border-amber-800/30 rounded-lg">
+                <Callout className="p-2 rounded-lg">
                   <p className="text-xs font-medium text-amber-400 mb-1">Haki do Rei — Controlado</p>
                   <p className="text-[10px] text-slate-500">{KING_HAKI.controlled.description}</p>
                   <div className="flex gap-3 mt-1 text-[10px] text-slate-400">
                     <span>+{KING_HAKI.controlled.persuasionBonus} Persuasão</span>
                     <span>{KING_HAKI.controlled.energyCostPerTurn} EN/turno</span>
                   </div>
-                </div>
+                </Callout>
 
                 {canHaveAdvanced && (
                   <div>
-                    <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-wider">Haki do Rei Avançado (+20g)</p>
+                    <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-wider">Haki do Rei Avançado (+{GEM_COSTS.haki.kingAdvanced}g · nível único)</p>
                     <button
                       onClick={() => haki.advancedType === "king_advanced" ? updateDraft(c => { if (c.haki) { c.haki.kingStage = "controlled"; c.haki.advancedType = null; }}) : setKingAdvanced()}
                       className={`w-full p-3 rounded-lg border text-left transition-all ${
@@ -240,9 +233,9 @@ export function HakiSection() {
                           : "border-slate-700 bg-slate-800 hover:border-amber-700"
                       }`}
                     >
-                      <p className="text-xs font-medium text-amber-400">Imbuir do Rei</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Adiciona valor de Ambição ao bônus de todas as técnicas com o Rei ativo.</p>
-                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {draft.pericias.ambicao}: +{draft.pericias.ambicao} por técnica</p>
+                      <p className="text-xs font-medium text-amber-400">{KING_HAKI.advanced.label}</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{KING_HAKI.advanced.effect}</p>
+                      <p className="text-[10px] text-amber-500/70 mt-1">Com Ambição {periciaTotal(draft, "ambicao")}: +{periciaTotal(draft, "ambicao")} por técnica</p>
                     </button>
                   </div>
                 )}
@@ -258,7 +251,7 @@ export function HakiSection() {
             <SectionCard title="Haki Avançado" icon="⚡">
               <p className="text-[10px] text-amber-500/80 mb-3">Só é possível um tipo de Haki Avançado. Rei Avançado custa 20g; os outros custam 40g (parcial + completo).</p>
               <div className="grid grid-cols-1 gap-2">
-                {ADVANCED_HAKI.filter(a => a.type !== "king").map(adv => (
+                {ADVANCED_HAKI.map(adv => (
                   <button
                     key={adv.variant}
                     onClick={() => setAdvanced(adv.variant)}

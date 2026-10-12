@@ -174,7 +174,7 @@ const TABS = [
 - Max 2 mecanismos por navio; cômodos limitados por slots do tamanho
 - `COMMISSIONED_SHIP_PRESET` em `factions.ts`: Médio + Kairoseki + Cabine + Canhão + Arsenal + Brigue
 
-### Companheiros 📋 Documentado, não implementado
+### Companheiros ✅ Implementado (CompanheirosSection + checkCompanions no validator)
 - **Regras em:** `docs/25-companheiros.md`
 - Ranks C(10g)/B(20g)/A(30g), Mascotes, Autômatos
 

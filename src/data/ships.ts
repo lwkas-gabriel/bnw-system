@@ -1,4 +1,4 @@
-import type { ShipSize, ShipSizeData, ShipMechanismData, ShipComodoData } from "../shared/types/ship";
+import type { ShipSize, ShipSizeData, ShipMechanismData, ShipComodoData, ShipRole, ShipOwnership } from "../shared/types/ship";
 
 // ─── Ship sizes ───────────────────────────────────────────────────────────────
 // Fonte: regras BNW — tabela de embarcações.
@@ -12,6 +12,7 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 1,
     maxMechanisms: 2,
     comodoSlots: 0,
+    maxHull: 10,
   },
   pequeno: {
     id: "pequeno",
@@ -21,6 +22,7 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 6,
     maxMechanisms: 2,
     comodoSlots: 4,
+    maxHull: 20,
   },
   medio: {
     id: "medio",
@@ -30,6 +32,7 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 15,
     maxMechanisms: 2,
     comodoSlots: 8,
+    maxHull: 40,
   },
   grande: {
     id: "grande",
@@ -39,6 +42,7 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 25,
     maxMechanisms: 2,
     comodoSlots: 12,
+    maxHull: 70,
   },
   gigante: {
     id: "gigante",
@@ -48,6 +52,7 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 50,
     maxMechanisms: 2,
     comodoSlots: 16,
+    maxHull: 110,
   },
   colossal: {
     id: "colossal",
@@ -57,22 +62,40 @@ export const SHIP_SIZES: Record<ShipSize, ShipSizeData> = {
     maxCrew: 100,
     maxMechanisms: 2,
     comodoSlots: 20,
+    maxHull: 160,
   },
 };
 
-/** Hull points by size */
-export const SHIP_MAX_HULL: Record<ShipSize, number> = {
-  individual: 10,
-  pequeno:    20,
-  medio:      40,
-  grande:     70,
-  gigante:    110,
-  colossal:   160,
+/** Tamanhos em ordem crescente (usado em upgrades) */
+export const SHIP_SIZES_ORDERED: ShipSize[] = Object.keys(SHIP_SIZES) as ShipSize[];
+
+/** Desconto no preço do casco quando construído por um Engenheiro */
+export const ENGINEER_DISCOUNT = 0.3;
+
+/** Viagens necessárias para despertar o Klabautermann */
+export const KLABAUTERMANN_VOYAGES = 10;
+/** Preço (Berries) de despertar o Klabautermann usando o Desconto de Facção */
+export const KLABAUTERMANN_DISCOUNT_PRICE = 20_000_000;
+
+export const SHIP_ROLE_LABELS: Record<ShipRole, string> = {
+  captain:       "Capitão",
+  first_mate:    "Imediato",
+  navigator:     "Navegante",
+  doctor:        "Médico",
+  cook:          "Cozinheiro",
+  shipwright:    "Carpinteiro",
+  musician:      "Músico",
+  sniper:        "Atirador",
+  archaeologist: "Arqueólogo(a)",
+  crew:          "Tripulante",
 };
 
-export const SHIP_SIZES_ORDERED: ShipSize[] = [
-  "individual", "pequeno", "medio", "grande", "gigante", "colossal",
-];
+export const SHIP_OWNERSHIP_LABELS: Record<ShipOwnership, string> = {
+  owned:          "Próprio",
+  navy_permanent: "Comissionado (Marinha)",
+  cp_temporary:   "Temporário (CP — 1 aventura)",
+  cp_galeon:      "Galeão Emprestado (CP Comandante)",
+};
 
 // ─── Mecanismos Avançados (max 2 por navio, permanentes) ─────────────────────
 // Fonte: regras BNW — tabela de mecanismos avançados.
@@ -393,3 +416,23 @@ export const SHIP_COMODOS: ShipComodoData[] = [
 export const SHIP_COMODOS_BY_ID: Record<string, ShipComodoData> = Object.fromEntries(
   SHIP_COMODOS.map(c => [c.id, c])
 );
+
+/** Profissão beneficiada por cada cômodo (badge na UI) */
+export const COMODO_PROFESSION: Record<string, string> = {
+  cozinha_industrial: "Cozinheiro",
+  oficina:            "Engenheiro",
+  forja:              "Ferreiro",
+  laboratorio:        "Médico",
+  escritorio:         "Navegador / Arqueólogo",
+  biblioteca:         "Arqueólogo",
+  picadeiro:          "Adestrador",
+  motor:              "Ciborgue",
+  remos:              "Haki / AM",
+  turbina:            "Akuma no Mi",
+  brigue:             "Caçador",
+  antena:             "Ciborgue (Gear Drone)",
+  tanque_reserva:     "Ciborgue (Combustível)",
+  enfermaria:         "Médico",
+};
+
+export const SHIP_ROLES = Object.keys(SHIP_ROLE_LABELS) as ShipRole[];

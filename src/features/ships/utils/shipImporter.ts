@@ -1,10 +1,12 @@
 import type { Ship, ShipSize, ShipOwnership, ShipRole } from "../../../shared/types/ship";
-import { SHIP_MAX_HULL, SHIP_MECHANISMS, SHIP_COMODOS } from "../../../data/ships";
-import { readFileAsText } from "../../character/utils/importer";
+import { KLABAUTERMANN_VOYAGES, SHIP_COMODOS, SHIP_MECHANISMS, SHIP_OWNERSHIP_LABELS, SHIP_ROLE_LABELS, SHIP_SIZES } from "../../../data/ships";
+import { invertLabels } from "../../../shared/utils/labels";
+import type { ImportStatus } from "../../../shared/types/io";
+import { readClipboardText, readFileAsText, regexCapture, validateImportFile } from "../../../shared/utils/importIO";
 
 // ─── Result type ──────────────────────────────────────────────────────────────
 
-export type ShipImportStatus = "success" | "success_with_warnings" | "error";
+export type ShipImportStatus = ImportStatus;
 
 export interface ShipImportResult {
   status: ShipImportStatus;
@@ -15,24 +17,11 @@ export interface ShipImportResult {
 
 // ─── Reverse label maps ───────────────────────────────────────────────────────
 
-const SIZE_BY_LABEL: Record<string, ShipSize> = {
-  "individual": "individual", "pequeno": "pequeno", "médio": "medio",
-  "grande": "grande", "gigante": "gigante", "colossal": "colossal",
-};
-
-const OWNERSHIP_BY_LABEL: Record<string, ShipOwnership> = {
-  "próprio": "owned",
-  "comissionado (marinha)": "navy_permanent",
-  "temporário (cp — 1 aventura)": "cp_temporary",
-  "galeão emprestado (cp comandante)": "cp_galeon",
-};
-
-const ROLE_BY_LABEL: Record<string, ShipRole> = {
-  "capitão": "captain", "imediato": "first_mate", "navegante": "navigator",
-  "médico": "doctor", "cozinheiro": "cook", "carpinteiro": "shipwright",
-  "músico": "musician", "atirador": "sniper", "arqueólogo(a)": "archaeologist",
-  "tripulante": "crew",
-};
+const SIZE_BY_LABEL = invertLabels(
+  Object.fromEntries(Object.values(SHIP_SIZES).map(s => [s.id, s.name])) as Record<ShipSize, string>,
+);
+const OWNERSHIP_BY_LABEL = invertLabels(SHIP_OWNERSHIP_LABELS);
+const ROLE_BY_LABEL = invertLabels(SHIP_ROLE_LABELS);
 
 // ─── JSON import ──────────────────────────────────────────────────────────────
 
@@ -70,9 +59,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  function extract(pattern: RegExp): string | null {
-    return pattern.exec(text)?.[1]?.trim() ?? null;
-  }
+  const extract = (pattern: RegExp) => regexCapture(text, pattern);
 
   const name = extract(/<div class="toptitle">([^<]+)/) ?? extract(/<e>Nome: <\/e>([^\n<]+)/);
   if (!name) {
@@ -84,13 +71,13 @@ function parseShipDoHTML(text: string): ShipImportResult {
   if (!sizeRaw || !SIZE_BY_LABEL[sizeRaw]) warnings.push("Tamanho não reconhecido — assumido Médio.");
 
   const hullMatch = /<e>Casco \(Hull\): <\/e>(\d+)\/(\d+)/.exec(text);
-  const maxHull = hullMatch ? parseInt(hullMatch[2]) : SHIP_MAX_HULL[size];
+  const maxHull = hullMatch ? parseInt(hullMatch[2]) : SHIP_SIZES[size].maxHull;
   const currentHull = hullMatch ? parseInt(hullMatch[1]) : maxHull;
 
   const builtByEngineer = /<e>Construído por Engenheiro: <\/e>Sim/.test(text);
   const klabActive = /<e>Klabautermann: <\/e>Ativo/.test(text);
   const voyageMatch = /\((\d+)\/10 viagens\)/.exec(text);
-  const voyageCount = voyageMatch ? parseInt(voyageMatch[1]) : (klabActive ? 10 : 0);
+  const voyageCount = voyageMatch ? parseInt(voyageMatch[1]) : (klabActive ? KLABAUTERMANN_VOYAGES : 0);
 
   const ownershipRaw = extract(/<e>Aquisição: <\/e>([^\n<]+)/)?.toLowerCase();
   const ownership: ShipOwnership = (ownershipRaw && OWNERSHIP_BY_LABEL[ownershipRaw])
@@ -100,7 +87,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   // Mechanisms — extract from [b]Name:[/b] blocks inside Mecanismos section
   const mechanismsSection = /<d>Mecanismos Avançados[^<]*<\/d>([\s\S]*?)(?:<d>|<\/div>)/.exec(text)?.[1] ?? "";
   const mechanisms: string[] = [];
-  const mecNameReg = /\[b\]([^\[:\]]+):\[\/b\]/g;
+  const mecNameReg = /\[b\]([^[:\]]+):\[\/b\]/g;
   let mecMatch: RegExpExecArray | null;
   while ((mecMatch = mecNameReg.exec(mechanismsSection)) !== null) {
     const name_ = mecMatch[1].trim().toLowerCase();
@@ -124,7 +111,7 @@ function parseShipDoHTML(text: string): ShipImportResult {
   // Crew — extract from [b]Role:[/b] Name lines inside Tripulação section
   const crewSection = /<d>Tripulação[^<]*<\/d>([\s\S]*?)(?:<\/div>)/.exec(text)?.[1] ?? "";
   const crew: Ship["crew"] = [];
-  const crewReg = /\[b\]([^\[\]]+):\[\/b\]\s*([^\n]+)/g;
+  const crewReg = /\[b\]([^[\]]+):\[\/b\]\s*([^\n]+)/g;
   let crewMatch: RegExpExecArray | null;
   while ((crewMatch = crewReg.exec(crewSection)) !== null) {
     const roleLabel = crewMatch[1].trim().toLowerCase();
@@ -169,20 +156,22 @@ export function parseShipImport(text: string): ShipImportResult {
   return parseShipJSON(trimmed);
 }
 
+function shipImportError(message: string): ShipImportResult {
+  return { status: "error", ship: null, parseErrors: [message], warnings: [] };
+}
+
 export async function importShipFromFile(file: File): Promise<ShipImportResult> {
+  const invalid = validateImportFile(file);
+  if (invalid) return shipImportError(invalid);
+
   try {
-    const text = await readFileAsText(file);
-    return parseShipImport(text);
+    return parseShipImport(await readFileAsText(file));
   } catch {
-    return { status: "error", ship: null, parseErrors: ["Erro ao ler arquivo."], warnings: [] };
+    return shipImportError("Erro ao ler arquivo.");
   }
 }
 
 export async function importShipFromClipboard(): Promise<ShipImportResult> {
-  try {
-    const text = await navigator.clipboard.readText();
-    return parseShipImport(text);
-  } catch {
-    return { status: "error", ship: null, parseErrors: ["Não foi possível acessar a área de transferência."], warnings: [] };
-  }
+  const clip = await readClipboardText();
+  return clip.ok ? parseShipImport(clip.text) : shipImportError(clip.error);
 }

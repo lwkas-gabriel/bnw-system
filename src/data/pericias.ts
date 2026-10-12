@@ -1,4 +1,5 @@
-import type { PericiaId } from "../shared/types/character";
+import type { PericiaId, RaceId, ZoanClass } from "../shared/types/character";
+import { RACES } from "./races";
 
 // ─── Pericias data ────────────────────────────────────────────────────────────
 
@@ -44,20 +45,14 @@ export const PERICIAS_DC: { label: string; dc: number }[] = [
 // ─── Racial péricia bonuses ───────────────────────────────────────────────────
 
 /** Which péricia (by ID) a given race gets a fixed +1 bonus on (outside the pool). */
-export const RACE_PERICIA_BONUS: Partial<Record<string, PericiaId>> = {
-  fishman:    "sobrevivencia",
-  siren:      "atletismo",
-  lunar:      "logica",
-  mink:       "percepcao",
-  dwarf:      "furtividade",
-  giant:      "sobrevivencia",
-  half_giant: "sobrevivencia",
-  // human: free choice → stored in char.humanPericiaChoice
-};
+// Humano: escolha livre, guardada em char.humanPericiaChoice
+export const RACE_PERICIA_BONUS: Partial<Record<RaceId, PericiaId>> = Object.fromEntries(
+  Object.values(RACES).flatMap(r => (r.periciaBonus ? [[r.id, r.periciaBonus.pericia]] : [])),
+);
 
 // ─── Zoan class péricia bonuses ───────────────────────────────────────────────
 
-export const ZOAN_CLASS_PERICIA_BONUS: Record<string, PericiaId> = {
+export const ZOAN_CLASS_PERICIA_BONUS: Record<ZoanClass, PericiaId> = {
   flying:    "atletismo",
   herbivore: "sobrevivencia",
   carnivore: "furtividade",

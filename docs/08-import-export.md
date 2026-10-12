@@ -65,26 +65,18 @@ Esta função garante que fichas exportadas em versões anteriores (com campos a
 
 ---
 
-## Texto para Fórum — exportToForumText
+## Ficha para Fórum — exportToForumHTML
 
-Gera texto ASCII formatado pronto para postar no fórum:
+`exportToForumHTML(char)` gera a ficha no formato `[dohtml]` usado pelo fórum (seções 1–8:
+informações gerais, atributos, perícias, técnicas, caminhos, equipamentos, social e histórico).
+Cada seção é montada por um `render*()` próprio no `exporter.ts`.
 
-```
-╔════════════════════════════════════╗
-║  FICHA — NOME DO PERSONAGEM        ║
-╚════════════════════════════════════╝
+O formato é um **contrato**: `parseImportForumHTML(text)` lê essa mesma ficha de volta (os mapas
+de rótulo → id do importer são derivados dos mesmos labels do export). Os snapshots em
+`features/character/utils/__tests__/__snapshots__` fixam o texto gerado; mudar uma string exige
+atualizar o importer e o snapshot de forma intencional.
 
-[ INFORMAÇÕES GERAIS ]
-Nome: ...
-Nível: ...  |  BPN: ...  |  Energia: ...
-
-[ ATRIBUTOS ]
-Poder:        XX  (1 base + X racial + X investido)
-...
-
-[ AVISOS DE VALIDAÇÃO ]
-[ERROR] Título: descrição...   ← aparece só se houver problemas
-```
+Campos narrativos (aparência, história…) saem como `[PREENCHER]` e não são importados.
 
 ---
 
@@ -92,9 +84,9 @@ Poder:        XX  (1 base + X racial + X investido)
 
 | Método | Função | Notas |
 |--------|--------|-------|
-| Upload de arquivo | `importFromFile(file: File)` | Aceita apenas `.json` |
+| Upload de arquivo | `importFromFile(file: File)` | `.json` ou `.txt` (ficha do fórum), até 512 KB |
 | Área de transferência | `importFromClipboard()` | Requer permissão do browser |
-| String direta | `parseImportJSON(raw: string)` | Para uso programático |
+| String direta | `parseImportJSON(raw)` / `parseImportForumHTML(text)` | Para uso programático |
 
 ---
 
@@ -104,7 +96,8 @@ Poder:        XX  (1 base + X racial + X investido)
 |---------|--------|-----|
 | Arquivo JSON | `downloadCharacterJSON(char)` | Backup, importação futura |
 | String JSON | `exportToJSONString(char)` | Copiar para clipboard |
-| Texto para fórum | `exportToForumText(char)` | Copiar e colar no post |
+| Ficha do fórum (arquivo) | `downloadCharacterForumHTML(char)` | Postar no fórum |
+| Ficha do fórum (texto) | `exportToForumHTML(char)` | Copiar e colar no post |
 
 ---
 

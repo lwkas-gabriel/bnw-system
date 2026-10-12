@@ -96,6 +96,8 @@ export interface TechniqueAdherence {
   times: number; // how many times this effect was added
 }
 
+export type TechniqueSource = "akuma" | "haki" | "artes_marciais" | "ciborgue" | "purchased";
+
 export interface Technique {
   id: string;
   name: string;
@@ -108,15 +110,17 @@ export interface Technique {
   energyCost: number;   // 1–5 based on rank
   adherences: TechniqueAdherence[];
   /** Source path that granted this technique for free */
-  source?: "akuma" | "haki" | "artes_marciais" | "ciborgue" | "purchased";
+  source?: TechniqueSource;
 }
 
 // ─── Haki ─────────────────────────────────────────────────────────────────────
 
+export type PrimaryHakiType = Exclude<HakiType, "king">;
+
 export interface HakiPath {
-  primaryType: "armament" | "observation";
+  primaryType: PrimaryHakiType;
   primaryStage: HakiStage;
-  secondaryType: "armament" | "observation";
+  secondaryType: PrimaryHakiType;
   secondaryStage: HakiStage;
   hasKing: boolean;
   kingStage: "dormant" | "controlled" | "advanced" | null;
@@ -243,7 +247,7 @@ export interface Equipment {
   bugiganga?: {
     name: string;
     quality: EquipmentQuality;
-    periciaBonus?: { pericia: string; value: number };
+    periciaBonus?: { pericia: PericiaId; value: number };
     interpretive?: string;
   };
 }
@@ -284,6 +288,8 @@ export interface FactionData {
 
 // ─── Character ────────────────────────────────────────────────────────────────
 
+export type LocationId = "blues" | "grand_line" | "new_world";
+
 export interface Character {
   id: string;
   name: string;
@@ -308,7 +314,7 @@ export interface Character {
   equippedDefensive: [Equipment | null, Equipment | null];
   gemsSpent: number;
   gemBudget: number;
-  location: "blues" | "grand_line" | "new_world";
+  location: LocationId;
   faction?: FactionData;
   /** ID of the ship commissioned via faction rank (links to ShipStore) */
   commissionedShipId?: string;

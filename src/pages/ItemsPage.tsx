@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { PageHeader, SectionCard, Badge } from "../shared/components";
+import { PageHeader, SectionCard, Badge, SegmentedControl } from "../shared/components";
 import { BUGIGANGAS } from "../data/bugigangas";
 import { UNIQUE_WEAPONS } from "../data/uniqueWeapons";
 import type { BugigangaEffect } from "../data/bugigangas";
 import type { EquipmentQuality } from "../shared/types/character";
+import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../data/equipment";
+import { STANDARD_CRAFT_DC } from "../data/professions";
+import { formatBerries, formatBerriesShort } from "../shared/utils/format";
+import { PERICIAS } from "../data/pericias";
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
-
-const QUALITY_LABELS: Record<EquipmentQuality, string> = {
-  common:    "Comum",
-  splendid:  "Esplêndido",
-  legendary: "Lendário",
-};
 
 const EFFECT_LABELS: Record<BugigangaEffect, string> = {
   pericia_bonus: "Bônus de Perícia",
@@ -22,14 +20,6 @@ const QUALITY_COLORS: Record<EquipmentQuality, string> = {
   common:    "text-slate-400",
   splendid:  "text-sky-400",
   legendary: "text-amber-400",
-};
-
-const WEAPON_PRICES: Record<EquipmentQuality, number> = {
-  common: 500_000, splendid: 10_000_000, legendary: 80_000_000,
-};
-
-const DEFENSIVE_PRICES: Record<EquipmentQuality, number> = {
-  common: 500_000, splendid: 5_000_000, legendary: 40_000_000,
 };
 
 const SLOT_INFO = [
@@ -131,14 +121,14 @@ export default function ItemsPage() {
                 <tbody>
                   {SLOT_INFO.map((s, i) => {
                     const isWeapon = s.slot === "weapon";
-                    const prices = isWeapon ? WEAPON_PRICES : DEFENSIVE_PRICES;
+                    const prices = EQUIPMENT_PRICES[isWeapon ? "weapon" : "defensive"];
                     return (
                       <tr key={s.slot} className={i % 2 === 0 ? "bg-slate-800/30" : ""}>
                         <td className="py-2 pr-4 text-slate-300 font-medium">{s.label}</td>
                         <td className="py-2 pr-4 text-slate-500">{s.attrs}</td>
-                        <td className="py-2 pr-4 text-right font-mono text-slate-400">₿{(prices.common / 1000).toFixed(0)}k</td>
-                        <td className="py-2 pr-4 text-right font-mono text-sky-400">₿{(prices.splendid / 1_000_000).toFixed(0)}M</td>
-                        <td className="py-2 text-right font-mono text-amber-400">₿{(prices.legendary / 1_000_000).toFixed(0)}M</td>
+                        <td className="py-2 pr-4 text-right font-mono text-slate-400">{formatBerriesShort(prices.common)}</td>
+                        <td className="py-2 pr-4 text-right font-mono text-sky-400">{formatBerriesShort(prices.splendid)}</td>
+                        <td className="py-2 text-right font-mono text-amber-400">{formatBerriesShort(prices.legendary)}</td>
                       </tr>
                     );
                   })}
@@ -162,7 +152,7 @@ export default function ItemsPage() {
                 <p>Perícia: <span className="text-amber-400">{p.skill}</span></p>
                 <p>{p.crafts}</p>
                 <div className="grid grid-cols-3 gap-1 mt-2">
-                  {[{l:"Comum",dc:9},{l:"Esplêndido",dc:18},{l:"Lendário",dc:27}].map(t => (
+                  {(Object.keys(STANDARD_CRAFT_DC) as EquipmentQuality[]).map(q => ({ l: QUALITY_LABELS[q], dc: STANDARD_CRAFT_DC[q] })).map(t => (
                     <div key={t.l} className="bg-slate-800 rounded p-1.5 text-center">
                       <p className="text-[10px] text-slate-500">{t.l}</p>
                       <p className="font-mono font-bold text-amber-400">DC {t.dc}</p>
@@ -210,36 +200,20 @@ export default function ItemsPage() {
             >
               {/* Filters */}
               <div className="flex flex-wrap gap-2 mb-4">
-                <div className="flex gap-1">
-                  {(["all", "pericia_bonus", "interpretive"] as const).map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setEffectFilter(f)}
-                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                        effectFilter === f
-                          ? "bg-amber-600 text-white"
-                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                      }`}
-                    >
-                      {f === "all" ? "Todos" : EFFECT_LABELS[f]}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex gap-1">
-                  {(["all", "common", "splendid", "legendary"] as const).map(f => (
-                    <button
-                      key={f}
-                      onClick={() => setQualityFilter(f)}
-                      className={`px-2 py-1 rounded text-[10px] transition-colors ${
-                        qualityFilter === f
-                          ? "bg-amber-600 text-white"
-                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                      }`}
-                    >
-                      {f === "all" ? "Todas qualidades" : QUALITY_LABELS[f]}
-                    </button>
-                  ))}
-                </div>
+                <SegmentedControl
+                  className="flex gap-1"
+                  buttonClassName="px-2 py-1 rounded text-[10px]"
+                  options={(["all", "pericia_bonus", "interpretive"] as const).map(f => ({ value: f, label: f === "all" ? "Todos" : EFFECT_LABELS[f] }))}
+                  value={effectFilter}
+                  onChange={setEffectFilter}
+                />
+                <SegmentedControl
+                  className="flex gap-1"
+                  buttonClassName="px-2 py-1 rounded text-[10px]"
+                  options={(["all", "common", "splendid", "legendary"] as const).map(f => ({ value: f, label: f === "all" ? "Todas qualidades" : QUALITY_LABELS[f] }))}
+                  value={qualityFilter}
+                  onChange={setQualityFilter}
+                />
               </div>
 
               {/* Grid */}
@@ -262,7 +236,7 @@ export default function ItemsPage() {
                       <p className="text-[10px] text-slate-500 mt-1">{b.description}</p>
                       {b.periciaBonus && (
                         <p className="text-[10px] text-green-400 mt-0.5">
-                          +{b.periciaBonus.value} {b.periciaBonus.pericia}
+                          +{b.periciaBonus.value} {PERICIAS[b.periciaBonus.pericia].name}
                         </p>
                       )}
                       {b.interpretive && (
@@ -271,7 +245,7 @@ export default function ItemsPage() {
                     </div>
                     <div className="text-right shrink-0 space-y-0.5">
                       <p className="text-[10px] font-mono text-slate-400">
-                        ₿{b.price.toLocaleString("pt-BR")}
+                        {formatBerries(b.price)}
                       </p>
                       <p className="text-[10px] text-slate-600">
                         {b.ciborgueShifts} shift{b.ciborgueShifts > 1 ? "s" : ""} ciborgue
@@ -311,10 +285,10 @@ export default function ItemsPage() {
                         <p className="text-sm font-bold text-slate-200 mb-2">{item.bonus}</p>
                         <div className="space-y-0.5">
                           <p className="text-[10px] text-slate-500">
-                            Mercado: <span className="font-mono text-slate-400">₿{item.price.toLocaleString("pt-BR")}</span>
+                            Mercado: <span className="font-mono text-slate-400">{formatBerries(item.price)}</span>
                           </p>
                           <p className="text-[10px] text-slate-500">
-                            Custo: <span className="font-mono text-slate-400">₿{(item.price / 2).toLocaleString("pt-BR")}</span>
+                            Custo: <span className="font-mono text-slate-400">{formatBerries(item.price / 2)}</span>
                           </p>
                         </div>
                       </div>

@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`exportShipToForumHTML — snapshot > navio com mecanismo, cômodos e tripulação 1`] = `
+"[dohtml] <div id="BNWPOSTOFICIAL"><br><br>
+
+<div class="toptitle">Going Teste</div><br>
+
+<div class="post"><t>Embarcação — Médio</t>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Informações do Navio</d>
+<e>Nome: </e>Going Teste
+<e>Tamanho: </e>Médio
+<e>Casco (Hull): </e>20/30
+<e>Tripulação máx.: </e>15
+<e>Slots de Cômodos: </e>2/8
+<e>Navegação (Percepção mín.): </e>2
+<e>Aquisição: </e>Próprio
+<e>Construído por Engenheiro: </e>Sim (30% desconto)
+<e>Klabautermann: </e>Não-ativo (4/10 viagens)
+<e>Valor total estimado: </e>B$ 100.500.000
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Mecanismos Avançados (1/2)</d>
+[QUOTE][b]Submarino:[/b] Permite navegar submerso sem limitações e fugir de combates em alto mar contra outras embarcações.[/QUOTE]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Cômodos (2/8 slots)</d>
+[QUOTE][b]Escritório (Tamanho 1):[/b] Cômodo dedicado ao estudo e elaboração de cartas náuticas e mapas.
+[b]Bônus:[/b] +1 nas rolagens de criação de Eternal Pose.[/QUOTE]
+[QUOTE][b]Biblioteca (Tamanho 1):[/b] Cômodo dedicado ao armazenamento e estudo de livros diversos.
+[b]Bônus:[/b] +1 nas rolagens para localizar Poneglyph.[/QUOTE]
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Tripulação (2/15)</d>
+[b]Capitão:[/b] Luffy
+[b]Navegante:[/b] Nami
+</div>
+
+<div style=" border: 1px solid; padding: 10px; ">
+<d>Observações</d>
+[PREENCHER]
+</div>
+
+</div>
+<div class="versao">STAFF BNW 2024</div></div>[/dohtml]"
+`;

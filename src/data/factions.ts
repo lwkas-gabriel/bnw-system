@@ -32,6 +32,8 @@ export interface FactionLateralRank extends FactionRankData {
 export interface FactionDefinition {
   type: FactionType;
   name: string;
+  /** Nome no singular, usado na ficha do fórum ("Facção: Pirata") */
+  singularName: string;
   icon: string;
   colorClass: string;   // Tailwind text color
   borderClass: string;  // Tailwind border color
@@ -57,6 +59,7 @@ export const FACTIONS: Record<FactionType, FactionDefinition> = {
   pirata: {
     type: "pirata",
     name: "Piratas",
+    singularName: "Pirata",
     icon: "☠️",
     colorClass: "text-red-400",
     borderClass: "border-red-800/50",
@@ -82,6 +85,7 @@ export const FACTIONS: Record<FactionType, FactionDefinition> = {
   marinha: {
     type: "marinha",
     name: "Marinha",
+    singularName: "Marinha",
     icon: "⚓",
     colorClass: "text-blue-400",
     borderClass: "border-blue-800/50",
@@ -110,6 +114,7 @@ export const FACTIONS: Record<FactionType, FactionDefinition> = {
   cacador: {
     type: "cacador",
     name: "Caçadores de Recompensa",
+    singularName: "Caçador de Recompensas",
     icon: "🎯",
     colorClass: "text-yellow-400",
     borderClass: "border-yellow-800/50",
@@ -135,6 +140,7 @@ export const FACTIONS: Record<FactionType, FactionDefinition> = {
   governo: {
     type: "governo",
     name: "Agentes do Governo",
+    singularName: "Governo",
     icon: "🕵️",
     colorClass: "text-slate-300",
     borderClass: "border-slate-600/50",
@@ -160,6 +166,7 @@ export const FACTIONS: Record<FactionType, FactionDefinition> = {
   revolucionario: {
     type: "revolucionario",
     name: "Revolucionários",
+    singularName: "Revolucionário",
     icon: "✊",
     colorClass: "text-green-400",
     borderClass: "border-green-800/50",

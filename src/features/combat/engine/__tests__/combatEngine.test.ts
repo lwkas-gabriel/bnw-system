@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   absorbDamage, resolveAttributes, buildTempConStack,
   resolveTechniqueBonus, resolveDamage, hitProbability,
-  calcBPN, calcEnergy,
+  initialCombatantState, processTurn,
 } from "../combatEngine";
 import { createCharacterFixture } from "../../../character/utils/__tests__/fixtures";
 import type { ActiveBuffs, CombatantState, TurnChoice } from "../../../../shared/types/combat";
@@ -31,17 +31,18 @@ function makeState(overrides: Partial<CombatantState> = {}): CombatantState {
 
 // ─── Dice utils ───────────────────────────────────────────────────────────────
 
-describe("calcBPN / calcEnergy", () => {
-  it("calcBPN matches bpn() formula", () => {
-    expect(calcBPN(1)).toBe(0);
-    expect(calcBPN(10)).toBe(7);
-    expect(calcBPN(40)).toBe(30);
+describe("initialCombatantState", () => {
+  it("energia inicial = nível×3 + gemas investidas", () => {
+    const char = createCharacterFixture({ level: 10, energy: { bpn: 7, energy: 35, energyInvested: 5 } });
+    expect(initialCombatantState(char).currentEnergy).toBe(35);
   });
 
-  it("calcEnergy is level×3 + gems", () => {
-    expect(calcEnergy(10, 0)).toBe(30);
-    expect(calcEnergy(10, 5)).toBe(35);
-    expect(calcEnergy(1, 0)).toBe(3);
+  it("energia inicial inclui o +20 do Shift 3 do Ciborgue", () => {
+    const char = createCharacterFixture({
+      level: 10,
+      cyborg: { shifts: [], shift3Bonus: "energy", gear: null, usesFuel: true },
+    });
+    expect(initialCombatantState(char).currentEnergy).toBe(50);
   });
 });
 
@@ -254,6 +255,17 @@ describe("buildTempConStack", () => {
 describe("resolveTechniqueBonus", () => {
   const baseTech = { id: "t1", name: "Punch", description: "", rank: "B" as const, type: "offensive" as const, targetAttr: "power" as const, baseBonus: 3, energyCost: 3, adherences: [], source: "purchased" as const };
 
+  it("Rei Avançado soma a Ambição efetiva (graduação + bônus racial)", () => {
+    const char = createCharacterFixture({
+      race: "human", humanPericiaChoice: "ambicao",
+      pericias: { ...createCharacterFixture().pericias, ambicao: 4 },
+      haki: { primaryType: "armament", primaryStage: 5, secondaryType: "observation", secondaryStage: 0,
+        hasKing: true, kingStage: "advanced", advancedType: "king_advanced" },
+    });
+    const choice = makeChoice({ offensive: baseTech, buffs: { ...NO_BUFFS, hakiKing: true, hakiAdvanced: true } });
+    expect(resolveTechniqueBonus(char, choice, true)).toBe(3 + 5); // 4 investido + 1 racial
+  });
+
   it("returns baseBonus with no modifiers", () => {
     const char = createCharacterFixture();
     const choice = makeChoice({ offensive: baseTech });
@@ -417,3 +429,34 @@ describe("hitProbability", () => {
     expect(prob).toBeLessThanOrEqual(1);
   });
 });
+
+// ─── processTurn ──────────────────────────────────────────────────────────────
+
+describe("processTurn", () => {
+  const choice: TurnChoice = {
+    offensive: null, defensive: null, useElementalista: false,
+    buffs: { ...NO_BUFFS, zoanPoint: null, logiaElementalDomain: false },
+  };
+  const strong = createCharacterFixture({ id: "a", name: "A", level: 40, investedAttributes: { power: 30, precision: 30, defense: 0, constitution: 1 } });
+  const weak   = createCharacterFixture({ id: "b", name: "B", level: 1 });
+
+  it("A ataca primeiro; em JxJ turno 1 ambos atacam mesmo após nocaute", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 1, "jxj", true);
+    const attacks = result.events.filter(e => e.type === "attack");
+    expect(attacks.map(e => e.actorId)).toEqual(["a", "b"]);
+    expect(result.combatEnded).toBe(true);
+    expect(result.winner).toBe("a");
+  });
+
+  it("fora do turno 1, B nocauteado não contra-ataca", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 2, "jxj", true);
+    expect(result.events.filter(e => e.type === "attack").map(e => e.actorId)).toEqual(["a"]);
+  });
+
+  it("eventos de dano trazem CON antes/depois coerentes com o estado final", () => {
+    const result = processTurn(initialCombatantState(strong), initialCombatantState(weak), choice, choice, 2, "jxj", true);
+    const dmg = result.events.find(e => e.type === "damage" && e.targetId === "b");
+    expect(dmg?.numerics?.conAfter).toBe(result.stateAfter[1].currentCon);
+  });
+});
+

@@ -1,3 +1,5 @@
+import type { AkumaRank, AkumaType } from "../shared/types/character";
+
 export interface AkumaModuleOption {
   id: string;
   label: string;
@@ -42,3 +44,29 @@ export const ZOAN_MODULES: AkumaModuleOption[] = [
   { id: "status_res", label: "Resistência a Status",        description: "Resiste a um tipo de status (duração ÷ 2)",               slots: 1, mythicalOnly: true },
   { id: "alter_env",  label: "Altera Ambiente",             description: "Altera o ambiente de combate por 2 turnos",               slots: 1, mythicalOnly: true },
 ];
+
+export const PARAMECIA_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object.fromEntries(
+  PARAMECIA_MODULES.map(m => [m.id, m]),
+);
+
+export const ZOAN_MODULES_BY_ID: Record<string, AkumaModuleOption> = Object.fromEntries(
+  ZOAN_MODULES.map(m => [m.id, m]),
+);
+
+export const AKUMA_TYPE_LABELS: Record<AkumaType, string> = {
+  zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
+};
+
+// ─── Regras por rank ──────────────────────────────────────────────────────────
+
+/** Bônus fixo de CON do Vigor Animal (Zoan) */
+export const ZOAN_VIGOR_ANIMAL: Record<AkumaRank, number> = { C: 2, B: 4, A: 6, S: 6 };
+/** Bônus por atributo de cada Point (Híbrido/Animal) da Zoan */
+export const ZOAN_POINT_BONUS: Record<AkumaRank, number> = { C: 1, B: 3, A: 4, S: 4 };
+/** Slots de módulo por habilidade passiva / ativa da Paramecia, e EN das ativas */
+export const PARAMECIA_PASSIVE_SLOTS: Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 5 };
+export const PARAMECIA_ACTIVE_SLOTS: Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 0 };
+export const PARAMECIA_ACTIVE_EN: Record<AkumaRank, number> = { C: 2, B: 3, A: 3, S: 0 };
+
+/** Técnicas Rank A gratuitas concedidas pela Akuma: C = 1, B/A/S = 2 */
+export const AKUMA_FREE_TECH_COUNT: Record<AkumaRank, number> = { C: 1, B: 2, A: 2, S: 2 };

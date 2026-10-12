@@ -1,17 +1,13 @@
-import { PageHeader, SectionCard } from "../shared/components";
-import { PROFESSIONS } from "../data/professions";
-
-const PERICIA_LABELS: Record<string, string> = {
-  ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
-  erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
-  investigacao: "Investigação", logica: "Lógica",
-  percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
-};
+import { PageHeader, SectionCard, StatTile } from "../shared/components";
+import { PROFESSIONS, STANDARD_CRAFT_DC } from "../data/professions";
+import { PERICIAS } from "../data/pericias";
+import { QUALITY_LABELS } from "../data/equipment";
+import { GEM_COSTS } from "../data/gemCosts";
 
 const DC_ROWS = [
-  { quality: "Comum",      dc: 9,  color: "text-slate-300" },
-  { quality: "Esplêndido", dc: 18, color: "text-sky-400"   },
-  { quality: "Lendário",   dc: 27, color: "text-amber-400" },
+  { quality: QUALITY_LABELS.common,    dc: STANDARD_CRAFT_DC.common,    color: "text-slate-300" },
+  { quality: QUALITY_LABELS.splendid,  dc: STANDARD_CRAFT_DC.splendid,  color: "text-sky-400"   },
+  { quality: QUALITY_LABELS.legendary, dc: STANDARD_CRAFT_DC.legendary, color: "text-amber-400" },
 ];
 
 export default function ProfissoesPage() {
@@ -27,18 +23,9 @@ export default function ProfissoesPage() {
         {/* Regras gerais */}
         <SectionCard title="Como Funcionam" icon="📖">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Custo</p>
-              <p className="text-sm font-bold font-mono text-amber-400">10 gemas</p>
-            </div>
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Roll de Craft</p>
-              <p className="text-sm font-bold font-mono text-amber-400">3d6 + (grad × 3)</p>
-            </div>
-            <div className="bg-slate-800 rounded-lg p-3 text-center">
-              <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-1">Slots por Aventura</p>
-              <p className="text-sm font-bold font-mono text-amber-400">2 usos</p>
-            </div>
+            <StatTile label="Custo" value={`${GEM_COSTS.profession} gemas`} valueClassName="text-sm font-bold font-mono text-amber-400" />
+            <StatTile label="Roll de Craft" value="3d6 + (grad × 3)" valueClassName="text-sm font-bold font-mono text-amber-400" />
+            <StatTile label="Slots por Aventura" value="2 usos" valueClassName="text-sm font-bold font-mono text-amber-400" />
           </div>
           <p className="text-xs text-slate-400">
             Cada profissão está vinculada a uma perícia. O roll de craft usa o bônus dessa perícia.
@@ -78,7 +65,7 @@ export default function ProfissoesPage() {
                 <div className="shrink-0 text-right">
                   <p className="text-[10px] text-slate-600 mb-1">Perícia vinculada</p>
                   <span className="text-xs font-mono bg-slate-700 text-sky-400 px-2 py-0.5 rounded">
-                    {PERICIA_LABELS[p.linkedPericias[0]]}
+                    {PERICIAS[p.linkedPericias[0]].name}
                   </span>
                 </div>
               </div>

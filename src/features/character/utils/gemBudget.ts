@@ -1,49 +1,10 @@
-import type { Character, AMFaixaId, AkumaRank, CompanionRank } from "../../../shared/types/character";
+import type { Character } from "../../../shared/types/character";
 import { FACTIONS } from "../../../data/factions";
-
-// ─── Gem costs (single source of truth) ──────────────────────────────────────
-
-export const GEM_COSTS = {
-  // Akuma no Mi
-  akuma: {
-    C: 30, B: 60, A: 90,
-    S: 50,            // Awakening, paid on top of A
-    evolveCtoB: 30,   // difference
-    evolveBtoA: 30,
-    evolveAtoS: 50,
-  },
-  // Haki — primary only; secondary is FREE
-  haki: {
-    stageBase: 20,    // per stage, × 5 stages = 100g for primary
-    secondary: 0,     // always free
-    king: 20,         // Dormant / Controlled (single payment)
-    advancedPartial:  20,
-    advancedComplete: 20,
-  },
-  // Artes Marciais — each faixa
-  artesMarciais: {
-    branca:      10, cinza:       10, azul_clara:  10,
-    azul_escura: 10, amarela:     10, laranja:     10,
-    verde:       10, roxa:        10, marrom:      10,
-    preta:       10, coral:       10, rajada:      10,
-    vermelha:    10, grao_mestre: 10,
-  } as Record<AMFaixaId, number>,
-  // Ciborgue
-  cyborg: {
-    perShift: 20,   // 6 shifts × 20 = 120g total
-    gear: 20,
-  },
-  // Unique weapon
-  uniqueWeapon: 20,
-  // Techniques (per rank)
-  technique: { E: 6, D: 7, C: 8, B: 9, A: 10 },
-  // Profession
-  profession: 10,
-  // Companions
-  companion: { C: 10, B: 20, A: 30 } as Record<CompanionRank, number>,
-  // Energy investment (1g = 1 EN)
-  energyPerGem: 1,
-} as const;
+import { hakiCostBreakdown } from "./haki";
+import { faixasUpTo } from "../../../data/artesMarciais";
+import { FACTION_DISCOUNT_GEMS, GEM_COSTS } from "../../../data/gemCosts";
+import { isUniqueWeapon } from "./equipment";
+import { isUniqueWeaponFromLaranja } from "./artesMarciais";
 
 // ─── Gem Budget Calculator ────────────────────────────────────────────────────
 
@@ -80,7 +41,7 @@ export function computeFactionDiscount(char: Character): {
     (currentIdx < 0 && char.level >= fac.ranks[grantIdx].requiredLevel)
   );
 
-  return { hasDiscount, bonus: hasDiscount ? 20 : 0 };
+  return { hasDiscount, bonus: hasDiscount ? FACTION_DISCOUNT_GEMS : 0 };
 }
 
 /** Computes the full gem budget breakdown for a character */
@@ -90,53 +51,24 @@ export function computeGemBudget(char: Character): GemBudgetResult {
   // ── Akuma no Mi ──────────────────────────────────────────────────
   if (char.akuma) {
     const rank = char.akuma.rank;
-    const costs: Record<AkumaRank, number> = { C: 30, B: 60, A: 90, S: 140 };
     breakdown.push({
       category: "Akuma no Mi",
       detail: `${char.akuma.name} — Rank ${rank}`,
-      cost: costs[rank],
+      cost: GEM_COSTS.akumaTotal[rank],
     });
   }
 
   // ── Haki ─────────────────────────────────────────────────────────
   if (char.haki) {
-    const primaryCost = typeof char.haki.primaryStage === "number"
-      ? char.haki.primaryStage * GEM_COSTS.haki.stageBase
-      : 5 * GEM_COSTS.haki.stageBase; // stage 5
-
-    breakdown.push({
-      category: "Haki",
-      detail: `${char.haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-${typeof char.haki.primaryStage === "number" ? char.haki.primaryStage : 5})`,
-      cost: primaryCost,
-    });
-
-    if (char.haki.hasKing) {
-      breakdown.push({ category: "Haki", detail: "Haki do Rei (Dormente/Controlado)", cost: GEM_COSTS.haki.king });
-    }
-
-    if (char.haki.kingStage === "advanced") {
-      breakdown.push({ category: "Haki", detail: "Haki do Rei Avançado", cost: GEM_COSTS.haki.advancedPartial });
-    }
-
-    if (char.haki.advancedType && char.haki.advancedType !== "king_advanced") {
-      breakdown.push({
-        category: "Haki",
-        detail: `Haki Avançado — ${char.haki.advancedType} (parcial + completo)`,
-        cost: GEM_COSTS.haki.advancedPartial + GEM_COSTS.haki.advancedComplete,
-      });
+    for (const item of hakiCostBreakdown(char.haki)) {
+      breakdown.push({ category: "Haki", ...item });
     }
   }
 
   // ── Artes Marciais ────────────────────────────────────────────────
   if (char.artesMarciais?.currentFaixa) {
-    const order: AMFaixaId[] = [
-      "branca","cinza","azul_clara","azul_escura","amarela",
-      "laranja","verde","roxa","marrom",
-      "preta","coral","rajada","vermelha","grao_mestre",
-    ];
-    const idx = order.indexOf(char.artesMarciais.currentFaixa);
-    const total = order.slice(0, idx + 1).reduce(
-      (sum, f) => sum + GEM_COSTS.artesMarciais[f], 0
+    const total = faixasUpTo(char.artesMarciais.currentFaixa).reduce(
+      (sum, f) => sum + GEM_COSTS.artesMarciais[f.id], 0
     );
     breakdown.push({
       category: "Artes Marciais",
@@ -156,17 +88,10 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
   // ── Unique Weapon ─────────────────────────────────────────────────
   // Only count if NOT obtained via AM Laranja (Laranja faixa or higher + not explicitly "techniques")
-  const hasUniqueWeapon = char.equippedWeapon && "characteristic" in char.equippedWeapon;
-  const LARANJA_IDX = ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf("laranja");
-  const currentFaixaIdx = char.artesMarciais?.currentFaixa
-    ? ["branca","cinza","azul_clara","azul_escura","amarela","laranja","verde","roxa","marrom","preta","coral","rajada","vermelha","grao_mestre"].indexOf(char.artesMarciais.currentFaixa)
-    : -1;
-  const hasLaranja = currentFaixaIdx >= LARANJA_IDX;
-  const gotFromLaranja = hasUniqueWeapon && hasLaranja && char.artesMarciais?.laranjaChoice !== "techniques";
-  if (hasUniqueWeapon && !gotFromLaranja) {
+  if (isUniqueWeapon(char.equippedWeapon) && !isUniqueWeaponFromLaranja(char)) {
     breakdown.push({
       category: "Arma Única",
-      detail: (char.equippedWeapon as any).uniqueName ?? "Arma Única",
+      detail: char.equippedWeapon.uniqueName ?? "Arma Única",
       cost: GEM_COSTS.uniqueWeapon,
     });
   }

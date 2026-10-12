@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { PROFESSIONS, PROFESSIONS_BY_ID } from "../../../data/professions";
 import { PERICIAS } from "../../../data/pericias";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 import { periciaRollBonus } from "../../../data/pericias";
-import { GEM_COSTS } from "../utils/gemBudget";
+import { GEM_COSTS } from "../../../data/gemCosts";
 import type { CharacterProfession, PericiaId, ZoanAkuma } from "../../../shared/types/character";
 
 export function ProfissoesSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   const [expandedCraft, setExpandedCraft] = useState<string | null>(null);
 
   if (!draft) return null;
@@ -20,11 +20,11 @@ export function ProfissoesSection() {
   const racialPericiaId: PericiaId | undefined =
     draft.race === "human"
       ? (draft.humanPericiaChoice ?? undefined)
-      : RACE_PERICIA_BONUS[draft.race] as PericiaId | undefined;
+      : RACE_PERICIA_BONUS[draft.race];
 
   const zoanPericiaId: PericiaId | undefined =
     draft.akuma?.type === "zoan"
-      ? ZOAN_CLASS_PERICIA_BONUS[(draft.akuma as ZoanAkuma).animalClass] as PericiaId | undefined
+      ? ZOAN_CLASS_PERICIA_BONUS[(draft.akuma as ZoanAkuma).animalClass]
       : undefined;
 
   function getEffectivePericia(id: PericiaId): number {

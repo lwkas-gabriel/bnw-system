@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { computeGemBudget, GEM_COSTS } from "../gemBudget";
+import { computeGemBudget } from "../gemBudget";
+import { GEM_COSTS } from "../../../../data/gemCosts";
 import { createCharacterFixture } from "./fixtures";
 
 describe("GEM_COSTS", () => {

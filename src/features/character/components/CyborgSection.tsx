@@ -1,17 +1,13 @@
-import { useCharacterStore } from "../store/characterStore";
-import { SectionCard, Button, Badge } from "../../../shared/components";
+import { useDraft } from "../hooks/useDraft";
+import { SectionCard, Button, Badge, StatTile } from "../../../shared/components";
 import type { CyborgShiftData, CyborgShiftLocation, CyborgGear, CyborgPath } from "../../../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../../../data/attributes";
+import { CYBORG_LOCATIONS, cyborgBonusLabel } from "../../../data/cyborg";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
-const LOCATIONS: { value: CyborgShiftLocation; label: string; attrBonus: string }[] = [
-  { value: "head",       label: "Cabeça",         attrBonus: "+4 PRE" },
-  { value: "right_arm",  label: "Braço Direito",  attrBonus: "+4 POD" },
-  { value: "left_arm",   label: "Braço Esquerdo", attrBonus: "+4 POD" },
-  { value: "right_leg",  label: "Perna Direita",  attrBonus: "+4 DEF" },
-  { value: "left_leg",   label: "Perna Esquerda", attrBonus: "+4 DEF" },
-  { value: "torso",      label: "Tronco",         attrBonus: "+4 CON" },
-];
+const LOCATIONS: { value: CyborgShiftLocation; label: string; attrBonus: string }[] =
+  CYBORG_LOCATIONS.map(l => ({ value: l.id, label: l.label, attrBonus: cyborgBonusLabel(l.id) }));
 
 const GEARS: { value: CyborgGear; label: string; description: string }[] = [
   { value: "overclock", label: "Overclock", description: "Dobra custo de combustível de 1 técnica/turno; concede +metade do efeito (arredonda ↑)." },
@@ -35,7 +31,7 @@ function newShift(shiftNumber: number, usedLocations: CyborgShiftLocation[]): Cy
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function CyborgSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   if (!draft) return null;
 
   const cyborg = draft.cyborg;
@@ -144,16 +140,16 @@ export function CyborgSection() {
         <Button size="sm" variant="danger" onClick={removeCyborg}>Remover</Button>
       }>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-          {(["power","precision","defense","constitution"] as const).map(attr => {
-            const labels: Record<string, string> = { power:"POD", precision:"PRE", defense:"DEF", constitution:"CON" };
+          {ATTR_KEYS.map(attr => {
             const val = attrBonuses[attr];
             return (
-              <div key={attr} className="bg-slate-800 rounded-lg p-2 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500">{labels[attr]}</p>
-                <p className={`text-sm font-bold font-mono ${val > 0 ? "text-amber-400" : "text-slate-600"}`}>
-                  {val > 0 ? `+${val}` : "—"}
-                </p>
-              </div>
+              <StatTile
+                key={attr}
+                compact
+                label={ATTR_SHORT_LABELS[attr]}
+                value={val > 0 ? `+${val}` : "—"}
+                valueClassName={`text-sm font-bold font-mono ${val > 0 ? "text-amber-400" : "text-slate-600"}`}
+              />
             );
           })}
         </div>

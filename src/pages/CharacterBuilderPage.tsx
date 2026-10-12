@@ -15,6 +15,7 @@ import { FaccoesSection } from "../features/character/components/FaccoesSection"
 import { EmbarcacaoSection } from "../features/character/components/EmbarcacaoSection";
 import { CyborgSection } from "../features/character/components/CyborgSection";
 import { CompanheirosSection } from "../features/character/components/CompanheirosSection";
+import { GEM_BUDGET_MAX, GEM_BUDGET_MIN } from "../data/gemCosts";
 
 const BASE_TABS = [
   { id: "attributes",  label: "Atributos",      icon: "📊" },
@@ -49,7 +50,7 @@ export default function CharacterBuilderPage() {
   type CreationMode = "novato" | "custom" | "max";
   const [mode, setMode] = useState<CreationMode>("novato");
   const [levelInput, setLevelInput] = useState(1);
-  const [gemsInput, setGemsInput] = useState(20);
+  const [gemsInput, setGemsInput] = useState(GEM_BUDGET_MIN);
 
   useEffect(() => {
     if (id && id !== "new") {
@@ -57,12 +58,12 @@ export default function CharacterBuilderPage() {
     } else {
       setShowNameModal(true);
     }
-  }, [id]);
+  }, [id, loadCharacter]);
 
   function handleCreate() {
     if (!nameInput.trim()) return;
     const level = mode === "custom" ? Math.min(40, Math.max(1, levelInput)) : 1;
-    const gems  = mode === "novato" ? 20 : mode === "max" ? 400 : Math.min(400, Math.max(20, gemsInput));
+    const gems  = mode === "novato" ? GEM_BUDGET_MIN : mode === "max" ? GEM_BUDGET_MAX : Math.min(GEM_BUDGET_MAX, Math.max(GEM_BUDGET_MIN, gemsInput));
     newCharacter(nameInput.trim(), gems, level);
     setShowNameModal(false);
   }
@@ -74,9 +75,9 @@ export default function CharacterBuilderPage() {
 
   if (showNameModal) {
     const MODES: { id: CreationMode; label: string; icon: string; sub: string }[] = [
-      { id: "novato", icon: "⚓", label: "Jogador Novo",   sub: "Nível 1 · 20 gemas" },
+      { id: "novato", icon: "⚓", label: "Jogador Novo",   sub: `Nível 1 · ${GEM_BUDGET_MIN} gemas` },
       { id: "custom", icon: "⚙️", label: "Personalizado",  sub: "Nível e gemas livres" },
-      { id: "max",    icon: "💎", label: "Máximo",          sub: "Nível 1 · 400 gemas" },
+      { id: "max",    icon: "💎", label: "Máximo",          sub: `Nível 1 · ${GEM_BUDGET_MAX} gemas` },
     ];
 
     return (
@@ -127,11 +128,11 @@ export default function CharacterBuilderPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-400 mb-1">Gemas (20–400)</label>
+                <label className="block text-xs font-medium text-slate-400 mb-1">Gemas ({GEM_BUDGET_MIN}–{GEM_BUDGET_MAX})</label>
                 <input
                   type="number"
-                  min={20}
-                  max={400}
+                  min={GEM_BUDGET_MIN}
+                  max={GEM_BUDGET_MAX}
                   value={gemsInput}
                   onChange={e => setGemsInput(Number(e.target.value))}
                   className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500"

@@ -1,23 +1,18 @@
 import { useState } from "react";
-import { useCharacterStore } from "../store/characterStore";
+import { useDraft } from "../hooks/useDraft";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import { TECHNIQUE_RANKS } from "../../../data/techniques";
 import type { Technique, TechniqueRank } from "../../../shared/types/character";
+import { ATTR_SHORT_LABELS, DEFENSIVE_ATTRS, OFFENSIVE_ATTRS } from "../../../data/attributes";
+import { TECHNIQUE_RANK_STYLES } from "./techniqueRankStyles";
 
-const RANK_COLORS: Record<TechniqueRank, string> = {
-  E: "text-slate-400 border-slate-600",
-  D: "text-blue-400 border-blue-700",
-  C: "text-green-400 border-green-700",
-  B: "text-purple-400 border-purple-700",
-  A: "text-amber-400 border-amber-600",
-};
 
 function TechCard({ tech, onRemove }: { tech: Technique; onRemove: () => void }) {
   return (
-    <div className={`border rounded-xl p-3 bg-slate-900 ${RANK_COLORS[tech.rank].split(" ")[1]}`}>
+    <div className={`border rounded-xl p-3 bg-slate-900 ${TECHNIQUE_RANK_STYLES[tech.rank].border}`}>
       <div className="flex items-start justify-between mb-1">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-bold ${RANK_COLORS[tech.rank].split(" ")[0]}`}>
+          <span className={`text-xs font-bold ${TECHNIQUE_RANK_STYLES[tech.rank].text}`}>
             [{tech.rank}]
           </span>
           <span className="text-sm font-semibold text-slate-200">{tech.name}</span>
@@ -29,7 +24,7 @@ function TechCard({ tech, onRemove }: { tech: Technique; onRemove: () => void })
       </div>
       <p className="text-[10px] text-slate-500 mb-2">{tech.description}</p>
       <div className="flex items-center gap-3 text-[10px]">
-        <span className="text-slate-400">+{tech.baseBonus} {tech.targetAttr.slice(0, 3).toUpperCase()}</span>
+        <span className="text-slate-400">+{tech.baseBonus} {ATTR_SHORT_LABELS[tech.targetAttr]}</span>
         <span className="text-slate-500">{tech.energyCost} EN</span>
         {tech.source && (
           <span className="text-slate-600 capitalize">{tech.source}</span>
@@ -95,7 +90,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
                 key={r}
                 onClick={() => setForm(f => ({ ...f, rank: r }))}
                 className={`flex-1 py-1.5 rounded text-xs font-bold border transition-colors ${
-                  form.rank === r ? `${RANK_COLORS[r]} bg-slate-800` : "border-slate-700 text-slate-600 hover:border-slate-500"
+                  form.rank === r ? `${TECHNIQUE_RANK_STYLES[r].text} ${TECHNIQUE_RANK_STYLES[r].border} bg-slate-800` : "border-slate-700 text-slate-600 hover:border-slate-500"
                 }`}
               >
                 {r}
@@ -122,13 +117,10 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
         <div>
           <label className="text-[10px] text-slate-500 mb-1 block">Atributo</label>
           <div className="flex gap-1">
-            {(form.type === "offensive"
-              ? [["power","POD"],["precision","PRE"]]
-              : [["defense","DEF"],["constitution","CON"]]
-            ).map(([v, l]) => (
+            {(form.type === "offensive" ? OFFENSIVE_ATTRS : DEFENSIVE_ATTRS).map(v => [v, ATTR_SHORT_LABELS[v]] as const).map(([v, l]) => (
               <button
                 key={v}
-                onClick={() => setForm(f => ({ ...f, targetAttr: v as any }))}
+                onClick={() => setForm(f => ({ ...f, targetAttr: v }))}
                 className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                   form.targetAttr === v ? "bg-amber-600 text-white" : "bg-slate-800 border border-slate-700 text-slate-500"
                 }`}
@@ -150,7 +142,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
       </div>
 
       <div className="flex items-center gap-3 text-xs text-slate-500 bg-slate-800 rounded-lg p-2">
-        <span className={`font-bold ${RANK_COLORS[form.rank ?? "A"].split(" ")[0]}`}>Rank {form.rank}</span>
+        <span className={`font-bold ${TECHNIQUE_RANK_STYLES[form.rank ?? "A"].text}`}>Rank {form.rank}</span>
         <span>+{rankData.baseBonus} bônus</span>
         <span>{rankData.energyCost} EN</span>
         <span>{rankData.gemCost}g</span>
@@ -167,7 +159,7 @@ function NewTechForm({ onAdd, onCancel }: { onAdd: (t: Technique) => void; onCan
 }
 
 export function TechniquesSection() {
-  const { draft, updateDraft } = useCharacterStore();
+  const { draft, updateDraft } = useDraft();
   const [showForm, setShowForm] = useState(false);
   if (!draft) return null;
 

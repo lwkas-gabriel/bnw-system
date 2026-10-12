@@ -1,12 +1,14 @@
 import { useCombatStore } from "../features/combat/store/combatStore";
 import { useCharacterStore } from "../features/character/store/characterStore";
-import { PageHeader, Button } from "../shared/components";
+import { PageHeader, Button, EmptyState } from "../shared/components";
 import type { Character } from "../shared/types/character";
+import { ATTR_KEYS, ATTR_SHORT_LABELS } from "../data/attributes";
+import { baseAttributes } from "../features/character/utils/attrCalc";
 import { hitProbability } from "../features/combat/engine/combatEngine";
 
 function CombatantPanel({
   label, char, onSelect,
-}: { label: string; char: Character | null; onSelect: (c: Character) => void }) {
+}: { label: string; char: Character | null; onSelect: (c: Character | null) => void }) {
   const saved = useCharacterStore(s => s.saved);
 
   return (
@@ -16,7 +18,7 @@ function CombatantPanel({
         <div>
           <p className="text-xs text-slate-500 mb-3">Selecione um personagem salvo ou configure manualmente.</p>
           {saved.length === 0 ? (
-            <p className="text-xs text-slate-600 text-center py-4">Nenhum personagem salvo.</p>
+            <EmptyState compact title="Nenhum personagem salvo." />
           ) : (
             <div className="space-y-1 max-h-48 overflow-y-auto">
               {saved.map(c => (
@@ -39,15 +41,10 @@ function CombatantPanel({
               <p className="text-sm font-bold text-slate-200">{char.name}</p>
               <p className="text-xs text-slate-500">Nível {char.level} · {char.race}</p>
             </div>
-            <Button size="sm" variant="ghost" onClick={() => onSelect(null as any)}>Trocar</Button>
+            <Button size="sm" variant="ghost" onClick={() => onSelect(null)}>Trocar</Button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center">
-            {[
-              { l: "POD", v: 1 + char.investedAttributes.power },
-              { l: "PRE", v: 1 + char.investedAttributes.precision },
-              { l: "DEF", v: 1 + char.investedAttributes.defense },
-              { l: "CON", v: 3 + char.investedAttributes.constitution },
-            ].map(s => (
+            {ATTR_KEYS.map(attr => ({ l: ATTR_SHORT_LABELS[attr], v: baseAttributes(char, false)[attr] })).map(s => (
               <div key={s.l} className="bg-slate-800 rounded p-1.5">
                 <p className="text-[9px] text-slate-500 uppercase">{s.l}</p>
                 <p className="text-sm font-bold font-mono text-slate-200">{s.v}</p>
@@ -134,13 +131,13 @@ export default function CombatPage() {
         <div className="flex items-center gap-3">
           <span className="text-xs text-slate-500">Modo:</span>
           <div className="flex gap-1">
-            {[
+            {([
               { id: "jxj", label: "Jogador × Jogador" },
               { id: "vs_npc", label: "Jogador × NPC" },
-            ].map(m => (
+            ] as const).map(m => (
               <button
                 key={m.id}
-                onClick={() => setMode(m.id as any)}
+                onClick={() => setMode(m.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   mode === m.id ? "bg-amber-600 text-white" : "bg-slate-800 border border-slate-700 text-slate-400 hover:border-slate-600"
                 }`}
@@ -205,7 +202,9 @@ export default function CombatPage() {
               <p className="text-sm font-bold text-slate-200">
                 {result.winner
                   ? `🏆 ${result.winner === charA?.id ? charA?.name : charB?.name} vence!`
-                  : "⚔️ Empate — ambos os combatentes foram nocauteados."}
+                  : result.finalStates.every(s => s.currentCon <= 0)
+                    ? "⚔️ Empate — ambos os combatentes foram nocauteados."
+                    : `⏱️ Sem vencedor após ${result.turnsCount} turno(s) — ninguém foi nocauteado.`}
               </p>
               <p className="text-xs text-slate-500 mt-1">{result.turnsCount} turno{result.turnsCount !== 1 ? "s" : ""}</p>
             </div>

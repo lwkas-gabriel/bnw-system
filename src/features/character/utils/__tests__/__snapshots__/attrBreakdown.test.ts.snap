@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`computeAttrBreakdown > personagem completo — snapshot das fontes de bônus 1`] = `
+[
+  {
+    "con": 3,
+    "def": 1,
+    "pod": 1,
+    "pre": 1,
+    "source": "Base",
+  },
+  {
+    "con": 0,
+    "def": 0,
+    "pod": 0,
+    "pre": 2,
+    "source": "Raça",
+  },
+  {
+    "con": 5,
+    "def": 4,
+    "pod": 6,
+    "pre": 5,
+    "source": "Investido",
+  },
+  {
+    "con": 0,
+    "def": 0,
+    "pod": 1,
+    "pre": 0,
+    "source": "Katana",
+  },
+  {
+    "con": 0,
+    "def": 1,
+    "pod": 0,
+    "pre": 0,
+    "source": "Elmo",
+  },
+  {
+    "con": 4,
+    "def": 4,
+    "pod": 4,
+    "pre": 0,
+    "source": "Ciborgue (shifts)",
+  },
+  {
+    "con": 2,
+    "def": 0,
+    "pod": 0,
+    "pre": 0,
+    "source": "Vigor Animal",
+  },
+  {
+    "con": 0,
+    "def": 0,
+    "isCombat": true,
+    "pod": 2,
+    "pre": 2,
+    "source": "Point Híbrido",
+  },
+  {
+    "con": 2,
+    "def": 2,
+    "pod": 2,
+    "pre": 2,
+    "source": "AM (faixas Cinza–Amarela)",
+  },
+  {
+    "con": 0,
+    "def": 1,
+    "pod": 0,
+    "pre": 0,
+    "source": "AM (bônus defensivos)",
+  },
+  {
+    "con": 0,
+    "conTemp": 3,
+    "def": 0,
+    "isCombat": true,
+    "pod": 3,
+    "pre": 0,
+    "source": "Haki Armamento (primário · Estágio 3)",
+  },
+  {
+    "con": 0,
+    "def": 2,
+    "isCombat": true,
+    "pod": 0,
+    "pre": 2,
+    "source": "Haki Observação (secundário · Estágio 2)",
+  },
+]
+`;

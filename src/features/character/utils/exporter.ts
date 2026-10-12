@@ -1,22 +1,33 @@
-import type { Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
-import { bpn } from "./attrCalc";
-import { computeGemBudget } from "./gemBudget";
-import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
+import type {
+  AkumaNoMi, AMFaixaId, ArtesMarciais, BaseAttributes, Character, CyborgPath, Equipment,
+  HakiPath, LogiaAkuma, ParameciaAkuma, PericiaId, PrimaryHakiType, ZoanAkuma,
+} from "../../../shared/types/character";
+import type { ExportEnvelope } from "../../../shared/types/io";
+import { AKUMA_TYPE_LABELS, PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
+import { faixaForumLabel, faixasUpTo, faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
+import { ATTR_KEYS, ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
+import { CYBORG_LOCATIONS_BY_ID, cyborgBonusLabel } from "../../../data/cyborg";
+import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../../../data/equipment";
+import { FACTIONS, getFactionLabel } from "../../../data/factions";
+import { GEM_COSTS } from "../../../data/gemCosts";
+import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, HAKI_TYPE_NAMES } from "../../../data/haki";
+import { LOCATION_LABELS } from "../../../data/locations";
+import { PERICIAS, RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
+import { raceForumLabel } from "../../../data/races";
+import { TECHNIQUE_RANKS, TECHNIQUE_SOURCE_LABELS } from "../../../data/techniques";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
-import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
-import { BUGIGANGAS } from "../../../data/bugigangas";
-import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
-import { getFactionLabel } from "../../../data/factions";
+import { downloadText, slugify } from "../../../shared/utils/download";
+import { formatBerries, pad2 } from "../../../shared/utils/format";
+import { isUniqueWeaponFromLaranja } from "./artesMarciais";
+import { baseAttributes, bpn, characterMaxEnergy, CYBORG_ENERGY_BONUS } from "./attrCalc";
+import { isUniqueWeapon } from "./equipment";
+import { computeGemBudget, type GemBudgetResult } from "./gemBudget";
+import { hakiStageNum } from "./haki";
+import { computePericiaBonuses } from "./pericias";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
-export interface ExportedCharacter {
-  /** Schema version for forward-compatibility */
-  _version: "1.0";
-  _exportedAt: string;
-  _system: "bnw-character-system";
-  character: Character;
-}
+export type ExportedCharacter = ExportEnvelope<"bnw-character-system", "character", Character>;
 
 export function exportToJSON(char: Character): ExportedCharacter {
   return {
@@ -32,146 +43,20 @@ export function exportToJSONString(char: Character): string {
 }
 
 export function downloadCharacterJSON(char: Character): void {
-  const json = exportToJSONString(char);
-  const blob = new Blob([json], { type: "application/json" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${char.name.replace(/\s+/g, "_").toLowerCase()}_ficha.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(exportToJSONString(char), `${slugify(char.name)}_ficha.json`, "application/json");
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function attrLabel(key: string): string {
-  return ({ power: "POD", precision: "PRE", defense: "DEF", constitution: "CON" })[key] ?? key;
+  return ATTR_SHORT_LABELS[key as AttrKey] ?? key;
 }
 
-function qualityLabel(q: string): string {
-  return ({ common: "Comum", splendid: "Esplêndido", legendary: "Lendário" })[q] ?? q;
+/** Preço formatado ("B$ 500.000"), ou marcador se ausente */
+function formatBerriesOr(value: number | undefined): string {
+  return value === undefined ? "[PREENCHER]" : formatBerries(value);
 }
 
-const OFFENSIVE_PRICE: Record<string, string> = {
-  common:    "B$ 500.000",
-  splendid:  "B$ 10.000.000",
-  legendary: "B$ 80.000.000",
-};
-
-const DEFENSIVE_PRICE: Record<string, string> = {
-  common:    "B$ 500.000",
-  splendid:  "B$ 5.000.000",
-  legendary: "B$ 40.000.000",
-};
-
-const RACE_LABELS: Record<string, string> = {
-  human: "Humano", fishman: "Tritão", siren: "Sireno", lunar: "Lunar",
-  mink: "Mink", dwarf: "Anão", giant: "Gigante", half_giant: "Meio-Gigante",
-};
-
-const LOCATION_LABELS: Record<string, string> = {
-  blues: "Blues", grand_line: "Grand Line", new_world: "New World",
-};
-
-const FACTION_LABELS: Record<string, string> = {
-  pirata: "Pirata", marinha: "Marinha", cacador: "Caçador de Recompensas",
-  governo: "Governo", revolucionario: "Revolucionário",
-};
-
-const HAKI_TYPE_LABELS: Record<string, string> = {
-  armament: "do Armamento", observation: "da Observação",
-};
-
-const CYBORG_LOCATION_LABELS: Record<string, string> = {
-  head: "Cabeça", right_arm: "Braço Direito", left_arm: "Braço Esquerdo",
-  right_leg: "Perna Direita", left_leg: "Perna Esquerda", torso: "Tronco",
-};
-
-const CYBORG_LOCATION_BONUS: Record<string, string> = {
-  head: "+4 PRE", right_arm: "+4 POD", left_arm: "+4 POD",
-  right_leg: "+4 DEF", left_leg: "+4 DEF", torso: "+4 CON",
-};
-
-const FAIXA_LABELS: Record<string, string> = {
-  branca: "Branca", cinza: "Cinza", azul_clara: "Azul Clara", azul_escura: "Azul Escura",
-  amarela: "Amarela", laranja: "Laranja", verde: "Verde", roxa: "Roxa", marrom: "Marrom",
-  preta: "Preta", coral: "Coral", rajada: "Rajada", vermelha: "Vermelha", grao_mestre: "Grão Mestre",
-};
-
-const AKUMA_TYPE_LABELS: Record<string, string> = {
-  zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
-};
-
-const TECH_COSTS: Record<string, number> = { E: 6, D: 7, C: 8, B: 9, A: 10 };
-
-const TECH_SOURCE_LABELS: Record<string, string> = {
-  akuma: "Akuma no Mi", haki: "Haki", artes_marciais: "Artes Marciais", ciborgue: "Ciborgue",
-};
-
-// Accumulated bonuses up to and including each faixa
-const FAIXA_ORDER: import("../../../shared/types/character").AMFaixaId[] = [
-  "branca", "cinza", "azul_clara", "azul_escura", "amarela",
-  "laranja", "verde", "roxa", "marrom",
-  "preta", "coral", "rajada", "vermelha", "grao_mestre",
-];
-
-const FAIXA_BONUS_LINES: Record<string, string[]> = {
-  branca:      ["+2 de bônus na arma equipada"],
-  cinza:       ["+2 de bônus na arma equipada", "+2 de Precisão"],
-  azul_clara:  ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa"],
-  azul_escura: ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder"],
-  amarela:     ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição"],
-  laranja:     ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum"],
-  verde:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas"],
-  roxa:        ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas"],
-  marrom:      ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A"],
-  preta:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra"],
-  coral:       ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra"],
-  rajada:      ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos"],
-  vermelha:    ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos",
-                "+2 em POD/PRE/DEF/CON por 2 de energia (escolha por turno)"],
-  grao_mestre: ["+2 de bônus na arma equipada", "+2 de Precisão", "+2 de Defesa", "+2 de Poder", "+2 de Constituição",
-                "+1 em todos os itens defensivos", "2 Técnicas Rank A ou 1 Arma Única Comum",
-                "+2 de bônus em técnicas defensivas", "+2 de bônus em técnicas ofensivas",
-                "+1 em todos os itens defensivos", "1 Técnica Rank A",
-                "Pode equipar uma arma extra", "+2 de bônus na arma extra",
-                "+1 de bônus nos equipamentos defensivos",
-                "+2 em POD/PRE/DEF/CON por 2 de energia (escolha por turno)",
-                "+2 em ataque por 3 de energia OU -2 no ataque do oponente por 3 de energia"],
-};
-
-const PERICIAS_LABELS: Record<PericiaId, string> = {
-  ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
-  erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
-  investigacao: "Investigação", logica: "Lógica",
-  percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
-};
 
 function attrDisplay(base: number, racial: number, raceName: string, am: number): string {
   let s = `${base}`;
@@ -391,136 +276,63 @@ function formatParameciaTable(param: ParameciaAkuma, charName: string): string[]
   return ls;
 }
 
-// ─── Pericia bonus aggregator ─────────────────────────────────────────────────
-
-function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<{ label: string; value: number }>>> {
-  const result: Partial<Record<PericiaId, Array<{ label: string; value: number }>>> = {};
-
-  function add(pericia: PericiaId | undefined | null, label: string, value: number) {
-    if (!pericia) return;
-    (result[pericia] ??= []).push({ label, value });
-  }
-
-  // Racial / human choice
-  if (char.race === "human") {
-    add(char.humanPericiaChoice, "Raça: Humano", 1);
-  } else {
-    add(RACE_PERICIA_BONUS[char.race] as PericiaId | undefined, `Raça: ${RACE_LABELS[char.race] ?? char.race}`, 1);
-  }
-
-  // Zoan class bonus
-  if (char.akuma?.type === "zoan") {
-    const animalClass = (char.akuma as any).animalClass as string;
-    add(ZOAN_CLASS_PERICIA_BONUS[animalClass], "Zoan", 1);
-  }
-
-  // Cyborg shift bugigangas (referenced by ID)
-  for (const shift of char.cyborg?.shifts ?? []) {
-    if (!shift.bugigangaId) continue;
-    const bug = BUGIGANGAS.find(b => b.id === shift.bugigangaId);
-    if (bug?.periciaBonus) add(bug.periciaBonus.pericia, `Bugiganga: ${bug.name}`, bug.periciaBonus.value);
-  }
-
-  // Equipment bugigangas (embedded)
-  const allEquip = [char.equippedWeapon, ...char.equippedDefensive].filter(Boolean);
-  for (const eq of allEquip) {
-    const pb = (eq as any)?.bugiganga?.periciaBonus as { pericia: PericiaId; value: number; name?: string } | undefined;
-    const bugName = (eq as any)?.bugiganga?.name as string | undefined;
-    if (pb) add(pb.pericia, `Bugiganga: ${bugName ?? "Bugiganga"}`, pb.value);
-  }
-
-  return result;
-}
-
 // ─── Forum HTML export (dohtml) ───────────────────────────────────────────────
 
-export function exportToForumHTML(char: Character): string {
-  const charBPN = bpn(char.level);
-  const energy  = char.level * 3 + char.energy.energyInvested;
-  const budget  = computeGemBudget(char);
+/** Abertura padrão das caixas da ficha do fórum */
+const BOX = `<div style=" border: 1px solid; padding: 10px; ">`;
 
-  // ── Artes Marciais passive bonuses ───────────────────────────────────────────
-  const amIdx = char.artesMarciais?.currentFaixa
-    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
-  const amAtIdx = (f: typeof FAIXA_ORDER[number]) => amIdx >= FAIXA_ORDER.indexOf(f);
-  const amPow  = amAtIdx("azul_escura") ? 2 : 0;
-  const amPre  = amAtIdx("cinza")       ? 2 : 0;
-  const amDef  = amAtIdx("azul_clara")  ? 2 : 0;
-  const amCon  = amAtIdx("amarela")     ? 2 : 0;
-  const amWeaponBonus  = amAtIdx("branca") ? 2 : 0;
-  const amDefItemBonus = (amAtIdx("laranja") ? 1 : 0) + (amAtIdx("marrom") ? 1 : 0) + (amAtIdx("rajada") ? 1 : 0);
-  const amOffTechBonus = amAtIdx("roxa")  ? 2 : 0;
-  const amDefTechBonus = amAtIdx("verde") ? 2 : 0;
+/** Acumula linhas da ficha; `ln()` sem argumentos gera uma linha em branco */
+function createLineBuilder() {
+  const lines: string[] = [];
+  return { lines, ln: (...parts: string[]) => { lines.push(parts.join("")); } };
+}
 
-  const racialPow = char.racialBonus.power        ?? 0;
-  const racialPre = char.racialBonus.precision    ?? 0;
-  const racialDef = char.racialBonus.defense      ?? 0;
-  const racialCon = char.racialBonus.constitution ?? 0;
-  const basePow = 1 + char.investedAttributes.power;
-  const basePre = 1 + char.investedAttributes.precision;
-  const baseDef = 1 + char.investedAttributes.defense;
-  const baseCon = 3 + char.investedAttributes.constitution;
+type LineFn = (...parts: string[]) => void;
 
-  const periciaExtras = computePericiaExtras(char);
+/** Bônus passivos de Artes Marciais exibidos na ficha */
+interface AMForumBonuses {
+  stats: Partial<BaseAttributes>;
+  weapon: number;
+  defensiveItem: number;
+  offensiveTech: number;
+  defensiveTech: number;
+}
 
-  const racialParts: string[] = [];
-  if (racialPow) racialParts.push(`+${racialPow} POD`);
-  if (racialPre) racialParts.push(`+${racialPre} PRE`);
-  if (racialDef) racialParts.push(`+${racialDef} DEF`);
-  if (racialCon) racialParts.push(`+${racialCon} CON`);
-  // Racial/human/zoan pericia bonus
-  const racialPericiaId = char.race === "human" ? char.humanPericiaChoice : (RACE_PERICIA_BONUS[char.race] as PericiaId | undefined);
-  if (racialPericiaId) racialParts.push(`+1 ${PERICIAS_LABELS[racialPericiaId]}`);
-  if (char.akuma?.type === "zoan") {
-    const zoanPericiaId = ZOAN_CLASS_PERICIA_BONUS[(char.akuma as any).animalClass] as PericiaId | undefined;
-    if (zoanPericiaId) racialParts.push(`+1 ${PERICIAS_LABELS[zoanPericiaId]} (Zoan)`);
-  }
-  const racialStr = racialParts.length > 0 ? racialParts.join(", ") : "Nenhum";
+function amForumBonuses(char: Character): AMForumBonuses {
+  const faixa = char.artesMarciais?.currentFaixa ?? null;
+  const reached = (f: AMFaixaId) => hasReachedFaixa(faixa, f);
+  return {
+    stats: faixa ? faixaStatBonuses(faixa) : {},
+    weapon: reached("branca") ? 2 : 0,
+    defensiveItem: (reached("laranja") ? 1 : 0) + (reached("marrom") ? 1 : 0) + (reached("rajada") ? 1 : 0),
+    offensiveTech: reached("roxa") ? 2 : 0,
+    defensiveTech: reached("verde") ? 2 : 0,
+  };
+}
 
-  const techTotalCost = char.techniques
-    .filter(t => t.source === "purchased")
-    .reduce((s, t) => s + (TECH_COSTS[t.rank] ?? 0), 0);
+/** Dados calculados uma vez e compartilhados pelas seções da ficha */
+interface ForumContext {
+  char: Character;
+  budget: GemBudgetResult;
+  am: AMForumBonuses;
+}
 
-  const caminhoCost = budget.breakdown
-    .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
+function sumBreakdown(budget: GemBudgetResult, categories: string[]): number {
+  return budget.breakdown
+    .filter(b => categories.includes(b.category))
     .reduce((s, b) => s + b.cost, 0);
+}
 
-  const LARANJA_IDX_EXP = FAIXA_ORDER.indexOf("laranja");
-  const currentFaixaIdxExp = char.artesMarciais?.currentFaixa
-    ? FAIXA_ORDER.indexOf(char.artesMarciais.currentFaixa) : -1;
-  const isUniqueFromLaranja = !!(
-    char.equippedWeapon &&
-    "characteristic" in char.equippedWeapon &&
-    currentFaixaIdxExp >= LARANJA_IDX_EXP &&
-    char.artesMarciais?.laranjaChoice !== "techniques"
-  );
-  const equipCost = isUniqueFromLaranja ? 0 : budget.breakdown
-    .filter(b => b.category === "Arma Única")
-    .reduce((s, b) => s + b.cost, 0);
-
-  const hasCaminho = !!(char.akuma || char.cyborg || char.haki || char.artesMarciais?.currentFaixa);
-
-  const L: string[] = [];
-  const ln = (...parts: string[]) => L.push(parts.join(""));
-
-  // ── Wrapper
-  ln(`[dohtml] <div id="BNWPOSTOFICIAL"><br><br>`);
-  ln();
-  ln(`<div class="toptitle">${char.name}</div><br>`);
-  ln();
-  ln(`<img src="[URL DA IMAGEM]" width="500px" height="279px"/></img><br>`);
-  ln();
+function renderGeneralInfo({ char, budget }: ForumContext, ln: LineFn): void {
   ln(`<div class="post"><t>1 | Informações gerais</t>`);
   ln();
-
-  // ── Seção 1 — Info Geral
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>${char.name}.`);
+  ln(`${BOX}<e>Nome: </e>${char.name}.`);
   ln(`<e>Idade: </e>[PREENCHER].`);
-  ln(`<e>Raça: </e>${RACE_LABELS[char.race] ?? char.race}.`);
+  ln(`<e>Raça: </e>${raceForumLabel(char.race)}.`);
   ln(`<e>Localização: </e>${LOCATION_LABELS[char.location] ?? char.location}.`);
   ln(`<e>Alcunha: </e>[PREENCHER].`);
   if (char.faction) {
-    ln(`<e>Facção: </e>${FACTION_LABELS[char.faction.type] ?? char.faction.type}.`);
+    ln(`<e>Facção: </e>${FACTIONS[char.faction.type]?.singularName ?? char.faction.type}.`);
     ln(`<e>Recompensa / Patente / Cargo / Rank: </e>${getFactionLabel(char.faction.type, char.faction.rank)}.`);
   } else {
     ln(`<e>Facção: </e>Aventureiro.`);
@@ -529,279 +341,285 @@ export function exportToForumHTML(char: Character): string {
   ln(`</div>`);
   ln();
 
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nível: </e>${String(char.level).padStart(2, "0")}`);
+  ln(`${BOX}<e>Nível: </e>${pad2(char.level)}`);
   ln(`<e>Experiência (XP): </e>[PREENCHER]`);
   ln(`<e>Gemas Totais: </e>${budget.total}`);
   ln(`<e>Gemais Gastas: </e>${budget.spent}`);
   ln(`<e>Gemas Atuais: </e>${budget.remaining}`);
-  ln(`<e>Prestígio:  </e>${String(char.faction?.prestige ?? 0).padStart(2, "0")}`);
+  ln(`<e>Prestígio:  </e>${pad2(char.faction?.prestige ?? 0)}`);
   ln(`</div>`);
   ln();
+}
 
-  // ── Seção 2 — Atributos
-  const attrSectionCost = budget.breakdown
-    .filter(b => b.category === "Energia" || b.category === "Profissão")
-    .reduce((s, b) => s + b.cost, 0);
-  const attrSectionLabel = attrSectionCost > 0
-    ? `2 | Atributos e afins (${attrSectionCost} gemas)`
-    : `2 | Atributos e afins`;
-  ln(`<t>${attrSectionLabel}</t>`);
+/** "+2 PRE, +1 Percepção, +1 Furtividade (Zoan)" */
+function racialGainsLabel(char: Character): string {
+  const parts: string[] = [];
+  for (const attr of ATTR_KEYS) {
+    const value = char.racialBonus[attr] ?? 0;
+    if (value) parts.push(`+${value} ${ATTR_SHORT_LABELS[attr]}`);
+  }
+  const racialPericiaId = char.race === "human" ? char.humanPericiaChoice : RACE_PERICIA_BONUS[char.race];
+  if (racialPericiaId) parts.push(`+1 ${PERICIAS[racialPericiaId].name}`);
+  if (char.akuma?.type === "zoan") {
+    const zoanPericiaId = ZOAN_CLASS_PERICIA_BONUS[char.akuma.animalClass];
+    if (zoanPericiaId) parts.push(`+1 ${PERICIAS[zoanPericiaId].name} (Zoan)`);
+  }
+  return parts.length > 0 ? parts.join(", ") : "Nenhum";
+}
+
+function renderAttributes({ char, budget, am }: ForumContext, ln: LineFn): void {
+  const sectionCost = sumBreakdown(budget, ["Energia", "Profissão"]);
+  ln(`<t>2 | Atributos e afins${sectionCost > 0 ? ` (${sectionCost} gemas)` : ""}</t>`);
   ln();
-  const raceName = RACE_LABELS[char.race] ?? char.race;
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>${attrDisplay(basePow, racialPow, raceName, amPow)}`);
-  ln(`<e>Precisão (PRE): </e>${attrDisplay(basePre, racialPre, raceName, amPre)}`);
-  ln(`<e>Defesa (DEF): </e>${attrDisplay(baseDef, racialDef, raceName, amDef)}`);
-  ln(`<e>Constituição (CON) </e>${attrDisplay(baseCon, racialCon, raceName, amCon)}`);
-  ln(`<e>Energia (EN): </e>${energy}`);
-  ln(`<e>Bônus por Nível: </e>${charBPN}`);
-  ln(`<e>Ganhos raciais: </e>${racialStr}.`);
+  const base = baseAttributes(char, false);
+  const raceName = raceForumLabel(char.race);
+  const attr = (key: AttrKey) => attrDisplay(base[key], char.racialBonus[key] ?? 0, raceName, am.stats[key] ?? 0);
+  ln(`${BOX}<e>Poder (PDR): </e>${attr("power")}`);
+  ln(`<e>Precisão (PRE): </e>${attr("precision")}`);
+  ln(`<e>Defesa (DEF): </e>${attr("defense")}`);
+  ln(`<e>Constituição (CON) </e>${attr("constitution")}`);
+  ln(`<e>Energia (EN): </e>${characterMaxEnergy(char)}`);
+  ln(`<e>Bônus por Nível: </e>${bpn(char.level)}`);
+  ln(`<e>Ganhos raciais: </e>${racialGainsLabel(char)}.`);
   ln();
   if (char.professions && char.professions.length > 0) {
     ln(`<e>Profissões:</e> </e>`);
     for (const prof of char.professions) {
-      ln(`- ${prof.name} (10 gemas)`);
+      ln(`- ${prof.name} (${GEM_COSTS.profession} gemas)`);
     }
   } else {
     ln(`<e>Profissões:</e> </e>Nenhuma.`);
   }
   ln(`</div>`);
   ln();
+}
 
-  // ── Seção 3 — Perícias
+function renderPericias({ char }: ForumContext, ln: LineFn): void {
+  const extras = computePericiaBonuses(char);
   ln(`<t>3 | Perícias</t>`);
   ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-  for (const id of Object.keys(PERICIAS_LABELS) as PericiaId[]) {
-    const value = char.pericias?.[id] ?? 0;
-    const extras = periciaExtras[id];
-    const extrasStr = extras
-      ? extras.map(e => ` +${e.value} [${e.label}]`).join("")
-      : "";
-    ln(`<e>${PERICIAS_LABELS[id]}: </e>${String(value).padStart(2, "0")}${extrasStr}`);
+  ln(BOX);
+  for (const id of Object.keys(PERICIAS) as PericiaId[]) {
+    const extrasStr = (extras[id] ?? []).map(e => ` +${e.value} [${e.label}]`).join("");
+    ln(`<e>${PERICIAS[id].name}: </e>${pad2(char.pericias?.[id] ?? 0)}${extrasStr}`);
   }
   ln(`</div>`);
   ln();
+}
 
-  // ── Seção 4 — Técnicas (condicional)
-  if (char.techniques.length > 0) {
-    ln(`<t>4 | Técnicas (${techTotalCost} gemas)</t>`);
-    ln();
-    ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-    for (const rank of ["E", "D", "C", "B", "A"]) {
-      const rankTechs = char.techniques.filter(t => t.rank === rank);
-      if (rankTechs.length === 0) continue;
-      ln(`<e>Rank ${rank}</e>`);
-      for (const tech of rankTechs) {
-        const costStr = tech.source && tech.source !== "purchased"
-          ? `Concedida por ${TECH_SOURCE_LABELS[tech.source] ?? tech.source}.`
-          : `${TECH_COSTS[rank] ?? 0} gemas.`;
-        ln(`[b]Nome:[/b] ${tech.name}`);
-        ln(`[b]Descrição:[/b] ${tech.description || "[PREENCHER]"}`);
-        ln(`[b]Custo:[/b] ${costStr}`);
-        const amTechBonus = tech.type === "offensive" ? amOffTechBonus : amDefTechBonus;
-        ln(`[b]Efeito:[/b] ${bonusWithAM(tech.baseBonus, amTechBonus, attrLabel(tech.targetAttr))}.`);
-        ln(`[b]Energia:[/b] ${tech.energyCost}.`);
-        ln();
-      }
-    }
-    ln(`</div>`);
-    ln();
-  }
+function renderTechniques({ char, am }: ForumContext, ln: LineFn): void {
+  if (char.techniques.length === 0) return;
+  const totalCost = char.techniques
+    .filter(t => t.source === "purchased")
+    .reduce((s, t) => s + (TECHNIQUE_RANKS[t.rank]?.gemCost ?? 0), 0);
 
-  // ── Seção 5 — Caminhos (condicional)
-  if (hasCaminho) {
-    ln(`<t>5 | Caminhos (${caminhoCost} gemas)</t>`);
-    ln();
-
-    // Akuma no Mi
-    if (char.akuma) {
-      const AKUMA_COSTS: Record<string, number> = { C: 30, B: 60, A: 90, S: 140 };
-      const akumaCost = AKUMA_COSTS[char.akuma.rank] ?? 0;
-      ln(`<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi — ${char.akuma.name} (${AKUMA_TYPE_LABELS[char.akuma.type] ?? char.akuma.type} Rank ${char.akuma.rank} — ${akumaCost} gemas)</d>`);
-      ln();
-      if (char.akuma.type === "zoan")       L.push(...formatZoanTable(char.akuma, char.name));
-      else if (char.akuma.type === "logia") L.push(...formatLogiaTable(char.akuma, char.name));
-      else                                  L.push(...formatParameciaTable(char.akuma, char.name));
-      ln();
-      ln(`</div>`);
-      ln();
-    }
-
-    // Ciborgue
-    if (char.cyborg && char.cyborg.shifts.length > 0) {
-      ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-      for (const shift of char.cyborg.shifts) {
-        ln(`<d>Ciborgue</d>`);
-        ln(`[b]Nome: [/b]${shift.name || "[PREENCHER]"}.`);
-        ln(`[b]Descrição: [/b]${shift.description || "[PREENCHER]"}.`);
-        ln(`[b]Local: [/b]${CYBORG_LOCATION_LABELS[shift.location] ?? shift.location}.`);
-        ln(`[b]Bônus: [/b]${CYBORG_LOCATION_BONUS[shift.location] ?? "[PREENCHER]"}.`);
-        if (shift.bugigangaId) {
-          ln(`[b]Bugiganga: [/b]${shift.bugigangaId}.`);
-        }
-        ln();
-      }
-      if (char.cyborg.gear) {
-        ln(`[b]Gear: [/b]${char.cyborg.gear}.`);
-      }
-      ln(`</div>`);
-      ln();
-    }
-
-    // Haki
-    if (char.haki) {
-      ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-      const pType  = char.haki.primaryType;
-      const sType  = char.haki.secondaryType;
-      const pStage = typeof char.haki.primaryStage   === "number" ? char.haki.primaryStage   : 5;
-      const sStage = typeof char.haki.secondaryStage === "number" ? char.haki.secondaryStage : 0;
-      const pStages = pType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
-      const sStages = sType === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
-      const pData   = pStage > 0 ? pStages[pStage - 1] : null;
-      const sData   = sStage > 0 ? sStages[sStage - 1] : null;
-
-      const hakiBlock = (type: string, stage: number, data: typeof pData, cost: number) => {
-        ln(`<d>Haki ${HAKI_TYPE_LABELS[type] ?? type}</d>`);
-        ln(`[b]Nível: [/b]${String(stage).padStart(2, "0")}`);
-        ln(`[b]Aventuras: [/b]00/02`);
-        ln(`[b]Custo: [/b]${cost} gemas.`);
-        if (data) {
-          const bonusStr = Object.entries(data.bonus)
-            .map(([k, v]) => `+${v} ${attrLabel(k)}`)
-            .join(", ");
-          ln(`[b]Bônus: [/b]${bonusStr}.`);
-          ln(`[b]Gasto de energia: [/b]${data.energyCostPerTurn} por turno.`);
-          ln(`[b]Efeito interpretativo: [/b]${data.description}`);
-        }
-        ln();
-      };
-
-      hakiBlock(pType, pStage, pData, pStage * 20);
-      if (sStage > 0) hakiBlock(sType, sStage, sData, 0);
-
-      if (char.haki.hasKing) {
-        const isKingAdvanced = char.haki.kingStage === "advanced";
-        ln(`<d>Haki do Rei</d>`);
-        ln(`[b]Nível: [/b]${isKingAdvanced ? "Avançado" : "Controlado"}`);
-        ln(`[b]Custo: [/b]20 gemas.`);
-        ln(`[b]Bônus: [/b]${isKingAdvanced ? "Infunde o Rei nas técnicas — adiciona Ambição ao bônus de todas as técnicas enquanto ativo." : "+4 de Persuasão."}`);
-        ln(`[b]Gasto de energia: [/b]5 por turno.`);
-        ln(`[b]Efeito interpretativo: [/b]${isKingAdvanced ? "Relâmpagos negros emanam do usuário. Dano sem contato físico." : "Desmaia alvos com 5 níveis a menos. Resistentes ficam sem ação de ataque por 2 turnos."}`);
-        ln();
-      }
-
-      ln(`</div>`);
-      ln();
-    }
-
-    // Artes Marciais
-    if (char.artesMarciais?.currentFaixa) {
-      const faixa     = char.artesMarciais.currentFaixa;
-      const faixaCost = budget.breakdown.find(b => b.category === "Artes Marciais")?.cost ?? 0;
-      const bonusLines = FAIXA_BONUS_LINES[faixa] ?? [];
-      ln(`<div style=" border: 1px solid; padding: 10px; "><d>Artes Marciais</d>`);
-      ln(`[b]Faixa: [/b]${FAIXA_LABELS[faixa] ?? faixa}.`);
-      ln(`[b]Custo: [/b]${faixaCost} gemas.`);
-      if (char.artesMarciais.laranjaChoice) {
-        ln(`[b]Escolha Laranja: [/b]${char.artesMarciais.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}.`);
-      }
-      if (bonusLines.length > 0) {
-        ln(`[b]Bônus acumulados: [/b]`);
-        for (let i = 0; i < FAIXA_ORDER.length; i++) {
-          const f = FAIXA_ORDER[i];
-          const label = FAIXA_LABELS[f] ?? f;
-          const linhaFaixa = FAIXA_BONUS_LINES[f]?.[i];
-          if (!linhaFaixa) break;
-          ln(`- Faixa ${label}: ${linhaFaixa}`);
-          if (f === faixa) break;
-        }
-      }
-      ln(`</div>`);
+  ln(`<t>4 | Técnicas (${totalCost} gemas)</t>`);
+  ln();
+  ln(BOX);
+  for (const rank of ["E", "D", "C", "B", "A"] as const) {
+    const rankTechs = char.techniques.filter(t => t.rank === rank);
+    if (rankTechs.length === 0) continue;
+    ln(`<e>Rank ${rank}</e>`);
+    for (const tech of rankTechs) {
+      const costStr = tech.source && tech.source !== "purchased"
+        ? `Concedida por ${TECHNIQUE_SOURCE_LABELS[tech.source]}.`
+        : `${TECHNIQUE_RANKS[rank].gemCost} gemas.`;
+      const amTechBonus = tech.type === "offensive" ? am.offensiveTech : am.defensiveTech;
+      ln(`[b]Nome:[/b] ${tech.name}`);
+      ln(`[b]Descrição:[/b] ${tech.description || "[PREENCHER]"}`);
+      ln(`[b]Custo:[/b] ${costStr}`);
+      ln(`[b]Efeito:[/b] ${bonusWithAM(tech.baseBonus, amTechBonus, attrLabel(tech.targetAttr))}.`);
+      ln(`[b]Energia:[/b] ${tech.energyCost}.`);
       ln();
     }
   }
+  ln(`</div>`);
+  ln();
+}
 
-  // ── Seção 6 — Itens e Equipamentos
+function renderAkuma(akuma: AkumaNoMi, charName: string, ln: LineFn): void {
+  const cost = GEM_COSTS.akumaTotal[akuma.rank] ?? 0;
+  ln(`${BOX}<d>Akuma no Mi — ${akuma.name} (${AKUMA_TYPE_LABELS[akuma.type] ?? akuma.type} Rank ${akuma.rank} — ${cost} gemas)</d>`);
+  ln();
+  const table = akuma.type === "zoan"  ? formatZoanTable(akuma, charName)
+              : akuma.type === "logia" ? formatLogiaTable(akuma, charName)
+              : formatParameciaTable(akuma, charName);
+  for (const line of table) ln(line);
+  ln();
+  ln(`</div>`);
+  ln();
+}
+
+function renderCyborg(cyborg: CyborgPath, ln: LineFn): void {
+  if (cyborg.shifts.length === 0) return;
+  ln(BOX);
+  for (const shift of cyborg.shifts) {
+    const location = CYBORG_LOCATIONS_BY_ID[shift.location];
+    ln(`<d>Ciborgue</d>`);
+    ln(`[b]Nome: [/b]${shift.name || "[PREENCHER]"}.`);
+    ln(`[b]Descrição: [/b]${shift.description || "[PREENCHER]"}.`);
+    ln(`[b]Local: [/b]${location?.label ?? shift.location}.`);
+    ln(`[b]Bônus: [/b]${location ? cyborgBonusLabel(shift.location) : "[PREENCHER]"}.`);
+    if (shift.bugigangaId) ln(`[b]Bugiganga: [/b]${shift.bugigangaId}.`);
+    ln();
+  }
+  if (cyborg.shift3Bonus) {
+    ln(`[b]Bônus do Shift 3: [/b]${cyborg.shift3Bonus === "energy" ? `+${CYBORG_ENERGY_BONUS} de Energia` : "+2 Técnicas Rank A"}.`);
+  }
+  if (cyborg.gear) ln(`[b]Gear: [/b]${cyborg.gear}.`);
+  ln(`</div>`);
+  ln();
+}
+
+function renderHakiStage(type: PrimaryHakiType, stage: number, cost: number, ln: LineFn): void {
+  const stages = type === "armament" ? HAKI_ARMAMENT_STAGES : HAKI_OBSERVATION_STAGES;
+  const data = stage > 0 ? stages[stage - 1] : null;
+  ln(`<d>Haki ${HAKI_TYPE_NAMES[type].withArticle}</d>`);
+  ln(`[b]Nível: [/b]${pad2(stage)}`);
+  ln(`[b]Aventuras: [/b]00/02`);
+  ln(`[b]Custo: [/b]${cost} gemas.`);
+  if (data) {
+    const bonusStr = Object.entries(data.bonus).map(([k, v]) => `+${v} ${attrLabel(k)}`).join(", ");
+    ln(`[b]Bônus: [/b]${bonusStr}.`);
+    ln(`[b]Gasto de energia: [/b]${data.energyCostPerTurn} por turno.`);
+    ln(`[b]Efeito interpretativo: [/b]${data.description}`);
+  }
+  ln();
+}
+
+function renderHaki(haki: HakiPath, ln: LineFn): void {
+  ln(BOX);
+  const primaryStage = hakiStageNum(haki.primaryStage);
+  const secondaryStage = hakiStageNum(haki.secondaryStage, 0);
+  renderHakiStage(haki.primaryType, primaryStage, primaryStage * GEM_COSTS.haki.stageBase, ln);
+  if (secondaryStage > 0) renderHakiStage(haki.secondaryType, secondaryStage, 0, ln);
+
+  if (haki.hasKing) {
+    const isAdvanced = haki.kingStage === "advanced";
+    ln(`<d>Haki do Rei</d>`);
+    ln(`[b]Nível: [/b]${isAdvanced ? "Avançado" : "Controlado"}`);
+    ln(`[b]Custo: [/b]${GEM_COSTS.haki.king + (isAdvanced ? GEM_COSTS.haki.kingAdvanced : 0)} gemas.`);
+    ln(`[b]Bônus: [/b]${isAdvanced ? "Infunde o Rei nas técnicas — adiciona Ambição ao bônus de todas as técnicas enquanto ativo." : "+4 de Persuasão."}`);
+    ln(`[b]Gasto de energia: [/b]5 por turno.`);
+    ln(`[b]Efeito interpretativo: [/b]${isAdvanced ? "Relâmpagos negros emanam do usuário. Dano sem contato físico." : "Desmaia alvos com 5 níveis a menos. Resistentes ficam sem ação de ataque por 2 turnos."}`);
+    ln();
+  }
+
+  ln(`</div>`);
+  ln();
+}
+
+function renderArtesMarciais(am: ArtesMarciais, budget: GemBudgetResult, ln: LineFn): void {
+  const faixa = am.currentFaixa;
+  if (!faixa) return;
+  ln(`${BOX}<d>Artes Marciais</d>`);
+  ln(`[b]Faixa: [/b]${faixaForumLabel(faixa)}.`);
+  ln(`[b]Custo: [/b]${sumBreakdown(budget, ["Artes Marciais"])} gemas.`);
+  if (am.laranjaChoice) {
+    ln(`[b]Escolha Laranja: [/b]${am.laranjaChoice === "unique_weapon" ? "Arma Única" : "2 Técnicas Rank A"}.`);
+  }
+  ln(`[b]Bônus acumulados: [/b]`);
+  for (const f of faixasUpTo(faixa)) {
+    ln(`- Faixa ${faixaForumLabel(f.id)}: ${f.bonusLines.join("; ")}`);
+  }
+  ln(`</div>`);
+  ln();
+}
+
+function renderCaminhos({ char, budget }: ForumContext, ln: LineFn): void {
+  const hasCaminho = !!(char.akuma || char.cyborg || char.haki || char.artesMarciais?.currentFaixa);
+  if (!hasCaminho) return;
+  ln(`<t>5 | Caminhos (${sumBreakdown(budget, ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"])} gemas)</t>`);
+  ln();
+  if (char.akuma)         renderAkuma(char.akuma, char.name, ln);
+  if (char.cyborg)        renderCyborg(char.cyborg, ln);
+  if (char.haki)          renderHaki(char.haki, ln);
+  if (char.artesMarciais) renderArtesMarciais(char.artesMarciais, budget, ln);
+}
+
+function renderEquipment({ char, budget, am }: ForumContext, ln: LineFn): void {
+  const fromLaranja = isUniqueWeaponFromLaranja(char);
+  const equipCost = fromLaranja ? 0 : sumBreakdown(budget, ["Arma Única"]);
   ln(`<t>6 | Itens e Equipamentos${equipCost > 0 ? ` (${equipCost} gemas)` : ""}</t>`);
   ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Berries: </e>B$ 200.000.`);
+  ln(`${BOX}<e>Berries: </e>${formatBerries(200_000)}.`);
   ln();
 
-  if (char.equippedWeapon) {
-    const w = char.equippedWeapon as any;
-    const uniqueData = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { name: string; effect: string }>)[w.characteristic] : null;
-    const baseBonus = bonusWithAM(w.bonusValue ?? 0, amWeaponBonus, attrLabel(w.bonusAttr));
-    const bonusStr = uniqueData
-      ? `${baseBonus}; ${uniqueData.effect}`
-      : baseBonus;
+  const weapon = char.equippedWeapon;
+  if (weapon) {
+    const uniqueData = isUniqueWeapon(weapon) ? UNIQUE_WEAPONS[weapon.characteristic] : null;
+    const baseBonus = bonusWithAM(weapon.bonusValue ?? 0, am.weapon, attrLabel(weapon.bonusAttr));
     ln(`<e>Equipamentos Ofensivos</e>`);
-    ln(`[b]Nome: [/b]${w.name}.`);
-    ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
-    ln(`[b]Bônus: [/b]${bonusStr}.`);
-    if (uniqueData) ln(`[b]Custo: [/b]${isUniqueFromLaranja ? "Concedida via Faixa Laranja." : "20 gemas."}`);
-    ln(`[b]Valor: [/b]${OFFENSIVE_PRICE[w.quality] ?? "[PREENCHER]"}.`);
-    ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
+    ln(`[b]Nome: [/b]${weapon.name}.`);
+    ln(`[b]Qualidade: [/b]${QUALITY_LABELS[weapon.quality] ?? weapon.quality}.`);
+    ln(`[b]Bônus: [/b]${uniqueData ? `${baseBonus}; ${uniqueData.effect}` : baseBonus}.`);
+    if (uniqueData) ln(`[b]Custo: [/b]${fromLaranja ? "Concedida via Faixa Laranja." : `${GEM_COSTS.uniqueWeapon} gemas.`}`);
+    ln(`[b]Valor: [/b]${formatBerriesOr(EQUIPMENT_PRICES.weapon[weapon.quality])}.`);
+    ln(`[b]Descrição: [/b]${weapon.description || "[PREENCHER]"}.`);
     if (uniqueData) ln(`[b]Característica Única: [/b]${uniqueData.name}.`);
     ln();
   }
 
-  const defensives = char.equippedDefensive.filter(Boolean);
+  const defensives = char.equippedDefensive.filter((item): item is Equipment => !!item);
   if (defensives.length > 0) {
     ln(`<e>Equipamentos Defensivos</e>`);
     for (const item of defensives) {
-      if (!item) continue;
       ln(`[b]Nome: [/b]${item.name}.`);
-      ln(`[b]Qualidade: [/b]${qualityLabel(item.quality)}.`);
-      ln(`[b]Bônus: [/b]${bonusWithAM(item.bonusValue ?? 0, amDefItemBonus, attrLabel(item.bonusAttr))}.`);
-      ln(`[b]Valor: [/b]${DEFENSIVE_PRICE[item.quality] ?? "[PREENCHER]"}.`);
-      ln(`[b]Descrição: [/b]${(item as any).description || "[PREENCHER]"}.`);
+      ln(`[b]Qualidade: [/b]${QUALITY_LABELS[item.quality] ?? item.quality}.`);
+      ln(`[b]Bônus: [/b]${bonusWithAM(item.bonusValue ?? 0, am.defensiveItem, attrLabel(item.bonusAttr))}.`);
+      ln(`[b]Valor: [/b]${formatBerriesOr(EQUIPMENT_PRICES.defensive[item.quality])}.`);
+      ln(`[b]Descrição: [/b]${item.description || "[PREENCHER]"}.`);
       ln();
     }
   }
 
   ln(`</div>`);
   ln();
+}
 
-  // ── Seção 7 — Social
+/** Seções 7 e 8: campos de texto livre que o jogador preenche no fórum */
+function renderSocialAndHistory(ln: LineFn): void {
   ln(`<t>7 | Social e histórico</t>`);
   ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; "><d>Aparência</d>`);
-  ln(`[PREENCHER]`);
-  ln(`</div>`);
-  ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; "><d>Personalidade</d>`);
-  ln(`[PREENCHER]`);
-  ln(`</div>`);
-  ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; "><d>História</d>`);
-  ln(`[PREENCHER]`);
-  ln(`</div>`);
-  ln();
+  for (const title of ["Aparência", "Personalidade", "História"]) {
+    ln(`${BOX}<d>${title}</d>`);
+    ln(`[PREENCHER]`);
+    ln(`</div>`);
+    ln();
+  }
 
-  // ── Seção 8 — Histórico
   ln(`<t>8 | Histórico</t>`);
   ln();
-  ln(`<div style=" border: 1px solid; padding: 10px; "><e>Aventuras: </e>[PREENCHER]`);
+  ln(`${BOX}<e>Aventuras: </e>[PREENCHER]`);
   ln();
   ln(`<e>Narração: </e>[PREENCHER]`);
   ln();
   ln(`<e>Eventos e Extras: </e>[PREENCHER]`);
-  ln(`</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]`);
+}
 
-  return L.join("\n");
+export function exportToForumHTML(char: Character): string {
+  const ctx: ForumContext = { char, budget: computeGemBudget(char), am: amForumBonuses(char) };
+  const { lines, ln } = createLineBuilder();
+
+  ln(`[dohtml] <div id="BNWPOSTOFICIAL"><br><br>`);
+  ln();
+  ln(`<div class="toptitle">${char.name}</div><br>`);
+  ln();
+  ln(`<img src="[URL DA IMAGEM]" width="500px" height="279px"/></img><br>`);
+  ln();
+
+  renderGeneralInfo(ctx, ln);
+  renderAttributes(ctx, ln);
+  renderPericias(ctx, ln);
+  renderTechniques(ctx, ln);
+  renderCaminhos(ctx, ln);
+  renderEquipment(ctx, ln);
+  renderSocialAndHistory(ln);
+
+  ln(`</div></div><div class="versao">STAFF BNW 2022</div></div>[/dohtml]`);
+  return lines.join("\n");
 }
 
 export function downloadCharacterForumHTML(char: Character): void {
-  const html = exportToForumHTML(char);
-  const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = `${char.name.replace(/\s+/g, "_").toLowerCase()}_ficha.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-export function copyToClipboard(text: string): Promise<void> {
-  return navigator.clipboard.writeText(text);
+  downloadText(exportToForumHTML(char), `${slugify(char.name)}_ficha.txt`);
 }
