@@ -33,6 +33,8 @@ Para cada grupo lógico de mudanças ainda não commitadas:
 
 Nunca use `git add -A` ou `git add .` — adicione arquivos específicos.
 
+Não adicione o Claude como co-autor: nenhuma linha `Co-Authored-By: Claude ...` na mensagem do commit.
+
 ---
 
 ## Passo 4 — Determinar o número da nova versão
@@ -120,6 +122,57 @@ git commit -m "chore(release): bump version to {VERSION}"
 
 Corpo do commit deve listar as features/fixes incluídos, seguindo o template em `bnw-versioning/SKILL.md`.
 
+Não adicione o Claude como co-autor: nenhuma linha `Co-Authored-By: Claude ...` na mensagem do commit.
+
+---
+
+## Passo 9 — Criar o PR (opcional, só quando o usuário pedir)
+
+Só execute este passo se o usuário pedir explicitamente o PR (ex: `/deliver pr` ou "crie o PR"). Caso contrário, pule para o Fim.
+
+1. Confirme que `develop` já foi enviada ao remoto e está em dia: `git fetch origin` e `git status -sb` (não pode haver `ahead`). Se houver commits não enviados, **pare** e peça ao usuário para fazer o push — nunca faça push você mesmo.
+2. Verifique se já existe PR aberto de `develop` para `main`: `gh pr list --head develop --base main --state open`. Se existir, informe o link e não crie outro.
+3. Monte o **título** no formato do commit de release, resumindo a entrega:
+   ```
+   release {VERSION}: {TITLE}
+   ```
+   onde `{TITLE}` é o mesmo título do arquivo de entrega (ex: `release 0.7.1: rótulo da patente no export do fórum`).
+4. Monte o **body** a partir do arquivo de entrega e dos commits de `main..HEAD`, seguindo o template abaixo, e salve num arquivo temporário (fora do repo).
+5. Crie o PR:
+   ```
+   gh pr create --base main --head develop --title "{PR_TITLE}" --body-file {ARQUIVO_TEMP}
+   ```
+
+Não adicione rodapé `Generated with Claude Code` nem qualquer atribuição ao Claude no body.
+
+### Template do body
+
+```markdown
+## Resumo
+
+{SUMMARY — mesmo resumo do arquivo de entrega: o que foi feito e por quê}
+
+## O que mudou
+
+- {item por feature/fix, em linguagem de usuário do sistema}
+
+## Commits
+
+- `{hash curto}` {mensagem do commit}
+
+## Versão
+
+**{PREV_VERSION} → {VERSION}** ({MINOR|PATCH}): {critério de bump segundo bnw-versioning}
+
+## Verificação
+
+- [x] `npm run type-check` — zero erros
+- [x] `npx vitest run` — {N} testes passando
+- [ ] {verificação manual sugerida}
+
+Detalhes completos: `deliveries/{slug}-{VERSION}.md`
+```
+
 ---
 
 ## Fim
@@ -129,3 +182,4 @@ Informe ao usuário:
 - Os commits criados (lista)
 - O arquivo de entrega criado
 - Que o push deve ser feito manualmente
+- Se o Passo 9 rodou: o link do PR criado (ou o motivo de não ter criado)

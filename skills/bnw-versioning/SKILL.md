@@ -68,6 +68,7 @@ Nunca atualizar apenas um dos dois.
 | 0.5.2  | Modos de criação de personagem: Jogador Novo, Personalizado e Máximo | — |
 | 0.6.0  | Aba de embarcação comissionada no builder e upgrade de tamanho de navio | — |
 | 0.7.0  | Exportador/importador de fichas de embarcação; tabelas completas AM no fórum; bônus racial+AM detalhados | ships/utils (shipExporter, shipImporter) |
+| 0.7.1  | Fix: rótulo da patente da facção no export do fórum; /deliver com criação opcional de PR | — |
 
 ---
 

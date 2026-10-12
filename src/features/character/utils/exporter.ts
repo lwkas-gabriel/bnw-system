@@ -6,6 +6,7 @@ import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 import { BUGIGANGAS } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
+import { getFactionLabel } from "../../../data/factions";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -520,7 +521,7 @@ export function exportToForumHTML(char: Character): string {
   ln(`<e>Alcunha: </e>[PREENCHER].`);
   if (char.faction) {
     ln(`<e>Facção: </e>${FACTION_LABELS[char.faction.type] ?? char.faction.type}.`);
-    ln(`<e>Recompensa / Patente / Cargo / Rank: </e>${char.faction.rank}.`);
+    ln(`<e>Recompensa / Patente / Cargo / Rank: </e>${getFactionLabel(char.faction.type, char.faction.rank)}.`);
   } else {
     ln(`<e>Facção: </e>Aventureiro.`);
     ln(`<e>Recompensa / Patente / Cargo / Rank: </e>Aventureiro.`);

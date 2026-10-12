@@ -15,6 +15,10 @@ npm run test         # vitest (watch mode)
 npm run test:ui      # vitest com UI interativa
 ```
 
+## Commits e PRs
+
+Não adicione o Claude como co-autor: nenhuma linha `Co-Authored-By: Claude ...` em commits e nenhum rodapé `Generated with Claude Code` em PRs.
+
 ## Skill Files
 
 Antes de qualquer tarefa, leia:
