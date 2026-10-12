@@ -8,18 +8,16 @@ import type {
   ZoanAbility, ParameciaHabilityPassive, ParameciaHabilityActive, Technique,
 } from "../../../shared/types/character";
 import { ATTR_KEYS, ATTR_SHORT_LABELS, DEFENSIVE_ATTRS, OFFENSIVE_ATTRS, type AttrKey } from "../../../data/attributes";
+import { GEM_COSTS } from "../../../data/gemCosts";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const VIGOR_ANIMAL: Record<AkumaRank, number>   = { C: 2, B: 4, A: 6, S: 6 };
 const POINT_BONUS: Record<AkumaRank, number>    = { C: 1, B: 3, A: 4, S: 4 };
 
-const RANKS: { rank: AkumaRank; cost: number }[] = [
-  { rank: "C", cost: 30  },
-  { rank: "B", cost: 60  },
-  { rank: "A", cost: 90  },
-  { rank: "S", cost: 140 },
-];
+const RANKS: { rank: AkumaRank; cost: number }[] = (["C", "B", "A", "S"] as const).map(rank => ({
+  rank, cost: GEM_COSTS.akumaTotal[rank],
+}));
 
 const FREE_TECHS: Partial<Record<AkumaRank, string>> = {
   C: "1 Técnica Rank A gratuita",

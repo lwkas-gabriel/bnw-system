@@ -1,6 +1,7 @@
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
 import type { CompanionData, CompanionRank, CompanionType } from "../../../shared/types/character";
+import { GEM_COSTS } from "../../../data/gemCosts";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
 
@@ -16,7 +17,7 @@ const RANK_LIMITS: Record<CompanionRank, { maxLevel: number; maxGems: number; ma
   A: { maxLevel: 35, maxGems: 300, maxPericia: 5 },
 };
 
-const COMPANION_COST: Record<CompanionRank, number> = { C: 10, B: 20, A: 30 };
+const COMPANION_COST = GEM_COSTS.companion;
 const MASCOTE_BONUS_MULT: Record<CompanionRank, number> = { C: 2, B: 4, A: 6 };
 
 // ─── Component ────────────────────────────────────────────────────────────────

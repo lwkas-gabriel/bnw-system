@@ -1,4 +1,5 @@
 import type { TechniqueRank, TechniqueSource } from "../shared/types/character";
+import { GEM_COSTS } from "./gemCosts";
 
 export interface TechniqueRankData {
   rank: TechniqueRank;
@@ -10,11 +11,11 @@ export interface TechniqueRankData {
 }
 
 export const TECHNIQUE_RANKS: Record<TechniqueRank, TechniqueRankData> = {
-  E: { rank: "E", baseBonus: 1, gemCost: 6,  energyCost: 1, canHaveAdherences: false, canHaveSpecial: false },
-  D: { rank: "D", baseBonus: 2, gemCost: 7,  energyCost: 2, canHaveAdherences: true,  canHaveSpecial: false },
-  C: { rank: "C", baseBonus: 3, gemCost: 8,  energyCost: 3, canHaveAdherences: true,  canHaveSpecial: false },
-  B: { rank: "B", baseBonus: 4, gemCost: 9,  energyCost: 4, canHaveAdherences: true,  canHaveSpecial: false },
-  A: { rank: "A", baseBonus: 5, gemCost: 10, energyCost: 5, canHaveAdherences: true,  canHaveSpecial: true  },
+  E: { rank: "E", baseBonus: 1, gemCost: GEM_COSTS.technique.E,energyCost: 1, canHaveAdherences: false, canHaveSpecial: false },
+  D: { rank: "D", baseBonus: 2, gemCost: GEM_COSTS.technique.D,energyCost: 2, canHaveAdherences: true,  canHaveSpecial: false },
+  C: { rank: "C", baseBonus: 3, gemCost: GEM_COSTS.technique.C,energyCost: 3, canHaveAdherences: true,  canHaveSpecial: false },
+  B: { rank: "B", baseBonus: 4, gemCost: GEM_COSTS.technique.B,energyCost: 4, canHaveAdherences: true,  canHaveSpecial: false },
+  A: { rank: "A", baseBonus: 5, gemCost: GEM_COSTS.technique.A,energyCost: 5, canHaveAdherences: true,  canHaveSpecial: true  },
 };
 
 /** Cost to upgrade a technique: difference between new and current rank */

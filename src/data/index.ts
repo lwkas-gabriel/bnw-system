@@ -13,3 +13,4 @@ export * from "./artesMarciais";
 export * from "./cyborg";
 export * from "./equipment";
 export * from "./locations";
+export * from "./gemCosts";

@@ -1,6 +1,7 @@
 import type { AMFaixaId, Character, PrimaryHakiType, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
 import { bpn, characterMaxEnergy } from "./attrCalc";
-import { computeGemBudget, GEM_COSTS } from "./gemBudget";
+import { computeGemBudget } from "./gemBudget";
+import { GEM_COSTS } from "../../../data/gemCosts";
 import { hakiStageNum } from "./haki";
 import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES } from "../../../data/haki";
 import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
@@ -505,8 +506,7 @@ export function exportToForumHTML(char: Character): string {
 
     // Akuma no Mi
     if (char.akuma) {
-      const AKUMA_COSTS: Record<string, number> = { C: 30, B: 60, A: 90, S: 140 };
-      const akumaCost = AKUMA_COSTS[char.akuma.rank] ?? 0;
+      const akumaCost = GEM_COSTS.akumaTotal[char.akuma.rank] ?? 0;
       ln(`<div style=" border: 1px solid; padding: 10px; "><d>Akuma no Mi — ${char.akuma.name} (${AKUMA_TYPE_LABELS[char.akuma.type] ?? char.akuma.type} Rank ${char.akuma.rank} — ${akumaCost} gemas)</d>`);
       ln();
       if (char.akuma.type === "zoan")       L.push(...formatZoanTable(char.akuma, char.name));

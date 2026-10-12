@@ -4,6 +4,7 @@ import { immer } from "zustand/middleware/immer";
 import type { Character } from "../../../shared/types/character";
 import { validateCharacter, blankPericias } from "../utils/attrCalc";
 import { computeGemBudget, type GemBudgetResult } from "../utils/gemBudget";
+import { GEM_BUDGET_MIN } from "../../../data/gemCosts";
 
 // ─── State shape ──────────────────────────────────────────────────────────────
 
@@ -37,7 +38,7 @@ interface CharacterActions {
 
 // ─── Default character factory ────────────────────────────────────────────────
 
-function createBlankCharacter(name: string, gemBudget = 20, level = 1): Character {
+function createBlankCharacter(name: string, gemBudget = GEM_BUDGET_MIN, level = 1): Character {
   return {
     id: crypto.randomUUID(),
     name,
@@ -73,7 +74,7 @@ export const useCharacterStore = create<CharacterState & CharacterActions>()(
       errors: {},
       budget: null,
 
-      newCharacter: (name, gemBudget = 20, level = 1) => {
+      newCharacter: (name, gemBudget = GEM_BUDGET_MIN, level = 1) => {
         const char = createBlankCharacter(name, gemBudget, level);
         set(state => {
           state.draft = char;

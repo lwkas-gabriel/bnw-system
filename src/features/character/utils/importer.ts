@@ -3,6 +3,7 @@ import type { Character, PericiaId } from "../../../shared/types/character";
 import type { ExportedCharacter } from "./exporter";
 import { blankPericias, CYBORG_ENERGY_BONUS, energyMax } from "./attrCalc";
 import { validateCharacterFull, type ValidationReport } from "./validator";
+import { GEM_BUDGET_MIN } from "../../../data/gemCosts";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -130,7 +131,7 @@ function migrateCharacter(raw: Record<string, unknown>): Character {
       ? [(raw.equippedDefensive as any[])[0] ?? null, (raw.equippedDefensive as any[])[1] ?? null]
       : [null, null],
     gemsSpent:   Number(raw.gemsSpent)   || 0,
-    gemBudget:   Number(raw.gemBudget)   || 20,
+    gemBudget:   Number(raw.gemBudget)   || GEM_BUDGET_MIN,
     location:    (raw.location as any)   ?? "blues",
     companions:  Array.isArray(raw.companions) ? (raw.companions as any[]) : [],
     ...(raw.faction && typeof raw.faction === "object" ? { faction: raw.faction as Character["faction"] } : {}),
@@ -258,7 +259,7 @@ export function parseImportForumHTML(text: string): ImportResult {
   const location = LOCATION_MAP[locRaw] ?? "blues";
 
   const level     = Number(rx1(text, /<e>N[ií]vel:\s*<\/e>(\d+)/))   || 1;
-  const gemBudget = Number(rx1(text, /<e>Gemas Totais:\s*<\/e>(\d+)/)) || 20;
+  const gemBudget = Number(rx1(text, /<e>Gemas Totais:\s*<\/e>(\d+)/)) || GEM_BUDGET_MIN;
   const gemsSpent = Number(rx1(text, /<e>Gemais? Gastas:\s*<\/e>(\d+)/)) || 0;
 
   const totalPow = Number(rx1(text, /<e>Poder\s*\(PDR\):\s*<\/e>(\d+)/)) || 1;

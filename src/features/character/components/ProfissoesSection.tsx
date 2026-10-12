@@ -5,7 +5,7 @@ import { PROFESSIONS, PROFESSIONS_BY_ID } from "../../../data/professions";
 import { PERICIAS } from "../../../data/pericias";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 import { periciaRollBonus } from "../../../data/pericias";
-import { GEM_COSTS } from "../utils/gemBudget";
+import { GEM_COSTS } from "../../../data/gemCosts";
 import type { CharacterProfession, PericiaId, ZoanAkuma } from "../../../shared/types/character";
 
 export function ProfissoesSection() {
