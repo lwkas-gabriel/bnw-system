@@ -11,6 +11,7 @@ import { ATTR_KEYS, ATTR_LABELS } from "../../../data/attributes";
 import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID } from "../../../data/cyborg";
 import { HAKI_TYPE_NAMES } from "../../../data/haki";
+import { hasWeaponTrait } from "../utils/equipment";
 
 // ─── Attr Breakdown ───────────────────────────────────────────────────────────
 
@@ -149,10 +150,7 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
   }
 
   // Haissaikai — espelha bônus do Point Zoan ativo
-  const isHaissaikai =
-    char.equippedWeapon &&
-    "characteristic" in char.equippedWeapon &&
-    (char.equippedWeapon as { characteristic: string }).characteristic === "haissaikai";
+  const isHaissaikai = hasWeaponTrait(char, "haissaikai");
   if (isHaissaikai && char.akuma?.type === "zoan") {
     const zoan = char.akuma as ZoanAkuma;
     for (const point of zoan.points) {

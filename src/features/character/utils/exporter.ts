@@ -21,6 +21,8 @@ import { HAKI_TYPE_NAMES } from "../../../data/haki";
 import { formatBerries, pad2 } from "../../../shared/utils/format";
 import { downloadText, slugify } from "../../../shared/utils/download";
 import type { ExportEnvelope } from "../../../shared/types/io";
+import { isUniqueWeapon } from "./equipment";
+import { isUniqueWeaponFromLaranja } from "./artesMarciais";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -368,12 +370,7 @@ export function exportToForumHTML(char: Character): string {
     .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
     .reduce((s, b) => s + b.cost, 0);
 
-  const isUniqueFromLaranja = !!(
-    char.equippedWeapon &&
-    "characteristic" in char.equippedWeapon &&
-    amIdx >= faixaIndex("laranja") &&
-    char.artesMarciais?.laranjaChoice !== "techniques"
-  );
+  const isUniqueFromLaranja = isUniqueWeaponFromLaranja(char);
   const equipCost = isUniqueFromLaranja ? 0 : budget.breakdown
     .filter(b => b.category === "Arma Única")
     .reduce((s, b) => s + b.cost, 0);
@@ -603,7 +600,7 @@ export function exportToForumHTML(char: Character): string {
 
   if (char.equippedWeapon) {
     const w = char.equippedWeapon;
-    const uniqueData = "characteristic" in w ? UNIQUE_WEAPONS[w.characteristic] : null;
+    const uniqueData = isUniqueWeapon(w) ? UNIQUE_WEAPONS[w.characteristic] : null;
     const baseBonus = bonusWithAM(w.bonusValue ?? 0, amWeaponBonus, attrLabel(w.bonusAttr));
     const bonusStr = uniqueData
       ? `${baseBonus}; ${uniqueData.effect}`

@@ -7,6 +7,7 @@ import type {
 import { baseAttributes, bpn, characterMaxEnergy } from "../../character/utils/attrCalc";
 import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID, CYBORG_SHIFT_BONUS } from "../../../data/cyborg";
+import { hasWeaponTrait } from "../../character/utils/equipment";
 
 // ─── Dice ─────────────────────────────────────────────────────────────────────
 
@@ -49,8 +50,7 @@ export function resolveAttributes(
   const base: BaseAttributes = baseAttributes(char);
 
   // Murakumogiri: triples base CON (before any path bonuses)
-  const isMurakumogiri = char.equippedWeapon && "characteristic" in char.equippedWeapon
-    && char.equippedWeapon.characteristic === "murakumogiri";
+  const isMurakumogiri = hasWeaponTrait(char, "murakumogiri");
   if (isMurakumogiri) {
     base.constitution *= 3;
   }
@@ -78,8 +78,7 @@ export function resolveAttributes(
           base[point.complementaryAttr] += point.bonus;
 
           // Haissaikai: mirrors active Zoan point bonus onto weapon (adds same bonus again)
-          const isHaissaikai = char.equippedWeapon && "characteristic" in char.equippedWeapon
-            && char.equippedWeapon.characteristic === "haissaikai";
+          const isHaissaikai = hasWeaponTrait(char, "haissaikai");
           if (isHaissaikai) {
             const mult = buffs.zoanPoint === "awakened" ? 0.5 : 1;
             base[point.primaryAttr]       += Math.floor(point.bonus * mult);
@@ -114,8 +113,7 @@ export function resolveAttributes(
     const stageNum = typeof stage === "number" ? stage : 5;
     base.power        += stageNum;
     // Enma: doubles Haki Armament POD bonus
-    const isEnma = char.equippedWeapon && "characteristic" in char.equippedWeapon
-      && char.equippedWeapon.characteristic === "enma";
+    const isEnma = hasWeaponTrait(char, "enma");
     if (isEnma) base.power += stageNum;
     // CON temp is handled separately in CombatantState.tempConStack
     energyCost        += stageNum;
@@ -171,8 +169,7 @@ export function resolveTechniqueBonus(
   let bonus = tech.baseBonus; // 1–5 base
 
   // Kitetsu: doubles base technique bonus (not path bonuses)
-  const isKitetsu = char.equippedWeapon && "characteristic" in char.equippedWeapon
-    && char.equippedWeapon.characteristic === "kitetsu";
+  const isKitetsu = hasWeaponTrait(char, "kitetsu");
   if (isKitetsu) bonus *= 2;
 
   // TODO: confirmar regras — bônus de técnica exclusivo para Zoan/Logia precisa
@@ -341,9 +338,7 @@ export function resolveDamage(
   const newBaseCon = defenderState.currentCon - totalBaseConDamage;
 
   const isKnockout = newBaseCon <= 0;
-  const hasMurakumogiri = !!defenderState.character.equippedWeapon &&
-    "characteristic" in defenderState.character.equippedWeapon &&
-    defenderState.character.equippedWeapon.characteristic === "murakumogiri";
+  const hasMurakumogiri = hasWeaponTrait(defenderState.character, "murakumogiri");
   const retemAvailable =
     isKnockout && !defenderState.retemUsed && (
       (defenderState.character.akuma?.type === "zoan" &&
@@ -377,8 +372,7 @@ function applyEnergyCost(
   if (choice.useElementalista) totalCost += 1;
 
   // Kitetsu Shusui: +2 EN/turn if active and not already counted
-  if (state.character.equippedWeapon && "characteristic" in state.character.equippedWeapon
-      && state.character.equippedWeapon.characteristic === "shusui") {
+  if (hasWeaponTrait(state.character, "shusui")) {
     totalCost += 2;
   }
 
@@ -524,9 +518,7 @@ export function processTurn(
 
   // ── 4. Kitetsu self-damage ─────────────────────────────────────────
   const applyKitetsuSelfDmg = (state: CombatantState, choice: TurnChoice): CombatantState => {
-    const isKitetsu = state.character.equippedWeapon &&
-      "characteristic" in state.character.equippedWeapon &&
-      state.character.equippedWeapon.characteristic === "kitetsu";
+    const isKitetsu = hasWeaponTrait(state.character, "kitetsu");
     if (!isKitetsu) return state;
     const techCount = (choice.offensive ? 1 : 0) + (choice.defensive ? 1 : 0);
     const selfDmg = techCount; // 1 direct CON per technique used

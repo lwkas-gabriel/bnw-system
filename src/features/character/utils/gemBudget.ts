@@ -1,8 +1,10 @@
 import type { Character } from "../../../shared/types/character";
 import { FACTIONS } from "../../../data/factions";
 import { hakiCostBreakdown } from "./haki";
-import { faixasUpTo, hasReachedFaixa } from "../../../data/artesMarciais";
+import { faixasUpTo } from "../../../data/artesMarciais";
 import { FACTION_DISCOUNT_GEMS, GEM_COSTS } from "../../../data/gemCosts";
+import { isUniqueWeapon } from "./equipment";
+import { isUniqueWeaponFromLaranja } from "./artesMarciais";
 
 // ─── Gem Budget Calculator ────────────────────────────────────────────────────
 
@@ -86,13 +88,10 @@ export function computeGemBudget(char: Character): GemBudgetResult {
 
   // ── Unique Weapon ─────────────────────────────────────────────────
   // Only count if NOT obtained via AM Laranja (Laranja faixa or higher + not explicitly "techniques")
-  const hasUniqueWeapon = char.equippedWeapon && "characteristic" in char.equippedWeapon;
-  const hasLaranja = hasReachedFaixa(char.artesMarciais?.currentFaixa, "laranja");
-  const gotFromLaranja = hasUniqueWeapon && hasLaranja && char.artesMarciais?.laranjaChoice !== "techniques";
-  if (hasUniqueWeapon && !gotFromLaranja) {
+  if (isUniqueWeapon(char.equippedWeapon) && !isUniqueWeaponFromLaranja(char)) {
     breakdown.push({
       category: "Arma Única",
-      detail: (char.equippedWeapon as any).uniqueName ?? "Arma Única",
+      detail: char.equippedWeapon.uniqueName ?? "Arma Única",
       cost: GEM_COSTS.uniqueWeapon,
     });
   }

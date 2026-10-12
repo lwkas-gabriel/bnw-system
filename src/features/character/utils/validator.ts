@@ -3,6 +3,7 @@ import { computeGemBudget } from "./gemBudget";
 import { computeHakiCost, hakiStageNum } from "./haki";
 import { characterMaxEnergy, totalAttributePoints, totalPericiaPoints } from "./attrCalc";
 import { HAKI_TYPE_NAMES } from "../../../data/haki";
+import { isUniqueWeapon } from "./equipment";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -475,7 +476,7 @@ function checkEquipment(char: Character): ValidationIssue[] {
   }
 
   // Unique weapon from Laranja but also paid
-  const hasUniqueWeapon = char.equippedWeapon && "characteristic" in char.equippedWeapon;
+  const hasUniqueWeapon = isUniqueWeapon(char.equippedWeapon);
   const gotFromLaranja = char.artesMarciais?.laranjaChoice === "unique_weapon";
   if (hasUniqueWeapon && gotFromLaranja) {
     const budget = computeGemBudget(char);

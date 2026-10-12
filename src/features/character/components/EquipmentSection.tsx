@@ -13,6 +13,7 @@ import type {
 import { ATTR_SHORT_LABELS } from "../../../data/attributes";
 import { EQUIPMENT_PRICES, QUALITY_BONUS, QUALITY_LABELS, SLOT_ATTRS, SLOT_LABELS } from "../../../data/equipment";
 import { formatBerries } from "../../../shared/utils/format";
+import { isUniqueWeapon } from "../utils/equipment";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -323,11 +324,11 @@ function UniqueWeaponPicker({ current, onSave, onClear }: UniqueWeaponPickerProp
 interface EquipCardProps {
   label: string;
   equipment: Equipment | null;
-  isUniqueWeapon?: boolean;
+  hasUniqueWeapon?: boolean;
   onEdit: () => void;
 }
 
-function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps) {
+function EquipCard({ label, equipment, hasUniqueWeapon, onEdit }: EquipCardProps) {
   if (!equipment) {
     return (
       <button
@@ -344,7 +345,7 @@ function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps)
     <button
       onClick={onEdit}
       className={`w-full text-left p-3 bg-slate-800 rounded-lg border transition-colors hover:border-slate-500 ${
-        isUniqueWeapon ? "border-amber-700/50" : "border-slate-700"
+        hasUniqueWeapon ? "border-amber-700/50" : "border-slate-700"
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -367,7 +368,7 @@ function EquipCard({ label, equipment, isUniqueWeapon, onEdit }: EquipCardProps)
       {equipment.bugiganga && (
         <p className="text-[10px] text-amber-600/70 mt-1 truncate">✦ {equipment.bugiganga.name}</p>
       )}
-      {isUniqueWeapon && (equipment as UniqueWeapon).description && (
+      {hasUniqueWeapon && (equipment as UniqueWeapon).description && (
         <p className="text-[10px] text-amber-400/80 mt-1 truncate">✦ {(equipment as UniqueWeapon).description}</p>
       )}
     </button>
@@ -385,10 +386,10 @@ export function EquipmentSection() {
 
   if (!draft) return null;
 
-  const isUniqueWeapon = !!draft.equippedWeapon && "characteristic" in draft.equippedWeapon;
+  const hasUniqueWeapon = isUniqueWeapon(draft.equippedWeapon);
 
   function openWeaponEditor() {
-    setUniqueMode(isUniqueWeapon);
+    setUniqueMode(hasUniqueWeapon);
     setEditing("weapon");
   }
 
@@ -460,7 +461,7 @@ export function EquipmentSection() {
             <EquipCard
               label="Arma"
               equipment={draft.equippedWeapon}
-              isUniqueWeapon={isUniqueWeapon}
+              hasUniqueWeapon={hasUniqueWeapon}
               onEdit={openWeaponEditor}
             />
           </div>
@@ -508,7 +509,7 @@ export function EquipmentSection() {
             </div>
             {uniqueMode ? (
               <UniqueWeaponPicker
-                current={isUniqueWeapon ? draft.equippedWeapon as UniqueWeapon : null}
+                current={hasUniqueWeapon ? draft.equippedWeapon as UniqueWeapon : null}
                 onSave={saveUniqueWeapon}
                 onClear={() => clearSlot("weapon")}
               />
@@ -516,7 +517,7 @@ export function EquipmentSection() {
               <SlotForm
                 title="Configurar Arma"
                 slotOptions={["weapon"]}
-                current={!isUniqueWeapon ? draft.equippedWeapon : null}
+                current={!hasUniqueWeapon ? draft.equippedWeapon : null}
                 isWeapon
                 onSave={saveWeapon}
                 onClear={() => clearSlot("weapon")}
