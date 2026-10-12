@@ -1,6 +1,6 @@
 import { useCharacterStore } from "../store/characterStore";
 import { SectionCard, Button, Badge } from "../../../shared/components";
-import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI } from "../../../data/haki";
+import { HAKI_ARMAMENT_STAGES, HAKI_OBSERVATION_STAGES, ADVANCED_HAKI, KING_HAKI, HAKI_TYPE_NAMES } from "../../../data/haki";
 import type { HakiPath, AdvancedHakiVariant } from "../../../shared/types/character";
 import { computeHakiCost, hakiStageNum } from "../utils/haki";
 
@@ -162,7 +162,7 @@ export function HakiSection() {
 
           {/* Primary Haki */}
           <SectionCard
-            title={`Haki ${haki.primaryType === "armament" ? "do Armamento" : "da Observação"} (Primário)`}
+            title={`Haki ${HAKI_TYPE_NAMES[haki.primaryType].withArticle} (Primário)`}
             icon={haki.primaryType === "armament" ? "🔶" : "👁️"}
             action={<Badge variant="amber">Pago</Badge>}
           >
@@ -187,7 +187,7 @@ export function HakiSection() {
 
           {/* Secondary Haki - FREE */}
           <SectionCard
-            title={`Haki ${haki.secondaryType === "armament" ? "do Armamento" : "da Observação"} (Secundário)`}
+            title={`Haki ${HAKI_TYPE_NAMES[haki.secondaryType].withArticle} (Secundário)`}
             icon={haki.secondaryType === "armament" ? "🔶" : "👁️"}
             action={<Badge variant="green">Gratuito</Badge>}
           >

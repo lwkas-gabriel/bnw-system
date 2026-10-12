@@ -2,6 +2,7 @@ import type { Character, ZoanAkuma, PericiaId } from "../../../shared/types/char
 import { computeGemBudget } from "./gemBudget";
 import { computeHakiCost, hakiStageNum } from "./haki";
 import { characterMaxEnergy, totalAttributePoints, totalPericiaPoints } from "./attrCalc";
+import { HAKI_TYPE_NAMES } from "../../../data/haki";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -249,7 +250,7 @@ function checkHaki(char: Character): ValidationIssue[] {
       severity: "info",
       category: "Haki",
       title: "Lembrete: Haki secundário é gratuito",
-      description: `O Haki ${haki.secondaryType === "armament" ? "do Armamento" : "da Observação"} (secundário) não custa gemas — apenas aventuras.`,
+      description: `O Haki ${HAKI_TYPE_NAMES[haki.secondaryType].withArticle} (secundário) não custa gemas — apenas aventuras.`,
       fix: "Nenhuma ação necessária. Apenas avance o secundário cumprindo os requisitos de aventura.",
     });
   }

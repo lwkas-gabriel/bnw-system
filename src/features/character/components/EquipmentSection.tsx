@@ -11,41 +11,9 @@ import type {
   BaseAttributes,
 } from "../../../shared/types/character";
 import { ATTR_SHORT_LABELS } from "../../../data/attributes";
+import { EQUIPMENT_PRICES, QUALITY_BONUS, QUALITY_LABELS, SLOT_ATTRS, SLOT_LABELS } from "../../../data/equipment";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-
-const QUALITY_LABELS: Record<EquipmentQuality, string> = {
-  common:    "Comum",
-  splendid:  "Esplêndido",
-  legendary: "Lendário",
-};
-
-const QUALITY_BONUS: Record<EquipmentQuality, number> = {
-  common: 0, splendid: 1, legendary: 2,
-};
-
-const QUALITY_PRICES = {
-  weapon:    { common: 500_000, splendid: 10_000_000, legendary: 80_000_000 },
-  defensive: { common: 500_000, splendid: 5_000_000,  legendary: 40_000_000 },
-};
-
-/** Attributes each slot can boost */
-const SLOT_ATTRS: Record<EquipmentSlot, (keyof BaseAttributes)[]> = {
-  weapon: ["precision", "power"],
-  head:   ["precision", "constitution"],
-  arms:   ["precision", "defense"],
-  torso:  ["constitution", "defense"],
-  legs:   ["precision", "defense"],
-};
-
-const SLOT_LABELS: Record<EquipmentSlot, string> = {
-  weapon: "Arma",
-  head:   "Cabeça",
-  arms:   "Braços",
-  torso:  "Torso",
-  legs:   "Pernas",
-};
-
 
 const DEFENSIVE_SLOTS: EquipmentSlot[] = ["head", "arms", "torso", "legs"];
 
@@ -82,7 +50,7 @@ function SlotForm({ title, slotOptions, current, isWeapon, onSave, onClear }: Sl
 
   const allowedAttrs = SLOT_ATTRS[eq.slot];
   const priceKey = isWeapon ? "weapon" : "defensive";
-  const price = QUALITY_PRICES[priceKey][eq.quality];
+  const price = EQUIPMENT_PRICES[priceKey][eq.quality];
 
   function handleChange<K extends keyof Equipment>(key: K, value: Equipment[K]) {
     setEq(prev => {
@@ -593,13 +561,13 @@ export function EquipmentSection() {
                 <div className="flex justify-between text-xs px-2 py-1 bg-slate-800 rounded">
                   <span className="text-slate-400">Arma</span>
                   <span className="font-mono text-slate-300">
-                    ₿{QUALITY_PRICES.weapon[q].toLocaleString("pt-BR")}
+                    ₿{EQUIPMENT_PRICES.weapon[q].toLocaleString("pt-BR")}
                   </span>
                 </div>
                 <div className="flex justify-between text-xs px-2 py-1 bg-slate-800 rounded">
                   <span className="text-slate-400">Defensivo</span>
                   <span className="font-mono text-slate-300">
-                    ₿{QUALITY_PRICES.defensive[q].toLocaleString("pt-BR")}
+                    ₿{EQUIPMENT_PRICES.defensive[q].toLocaleString("pt-BR")}
                   </span>
                 </div>
               </div>

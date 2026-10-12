@@ -11,3 +11,5 @@ export * from "./ships";
 export * from "./attributes";
 export * from "./artesMarciais";
 export * from "./cyborg";
+export * from "./equipment";
+export * from "./locations";

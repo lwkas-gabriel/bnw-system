@@ -1,4 +1,4 @@
-import type { TechniqueRank } from "../shared/types/character";
+import type { TechniqueRank, TechniqueSource } from "../shared/types/character";
 
 export interface TechniqueRankData {
   rank: TechniqueRank;
@@ -116,4 +116,9 @@ export const ROKOUGAN: RokushikiTechnique = {
   id: "rokougan", name: "Rokougan", gemCost: 10, energyCost: 5, baseBonus: 4, bonusAttr: "power",
   description: "Dois punhos para desferir onda de choque a curta distância.",
   effect: "+4 de Poder; 1 de dano direto na CON base (ignora CON temporária)",
+};
+
+/** Origem de técnicas gratuitas (ficha do fórum) */
+export const TECHNIQUE_SOURCE_LABELS: Record<Exclude<TechniqueSource, "purchased">, string> = {
+  akuma: "Akuma no Mi", haki: "Haki", artes_marciais: "Artes Marciais", ciborgue: "Ciborgue",
 };

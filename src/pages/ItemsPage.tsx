@@ -4,14 +4,10 @@ import { BUGIGANGAS } from "../data/bugigangas";
 import { UNIQUE_WEAPONS } from "../data/uniqueWeapons";
 import type { BugigangaEffect } from "../data/bugigangas";
 import type { EquipmentQuality } from "../shared/types/character";
+import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../data/equipment";
+import { STANDARD_CRAFT_DC } from "../data/professions";
 
 // ─── Labels ───────────────────────────────────────────────────────────────────
-
-const QUALITY_LABELS: Record<EquipmentQuality, string> = {
-  common:    "Comum",
-  splendid:  "Esplêndido",
-  legendary: "Lendário",
-};
 
 const EFFECT_LABELS: Record<BugigangaEffect, string> = {
   pericia_bonus: "Bônus de Perícia",
@@ -22,14 +18,6 @@ const QUALITY_COLORS: Record<EquipmentQuality, string> = {
   common:    "text-slate-400",
   splendid:  "text-sky-400",
   legendary: "text-amber-400",
-};
-
-const WEAPON_PRICES: Record<EquipmentQuality, number> = {
-  common: 500_000, splendid: 10_000_000, legendary: 80_000_000,
-};
-
-const DEFENSIVE_PRICES: Record<EquipmentQuality, number> = {
-  common: 500_000, splendid: 5_000_000, legendary: 40_000_000,
 };
 
 const SLOT_INFO = [
@@ -131,7 +119,7 @@ export default function ItemsPage() {
                 <tbody>
                   {SLOT_INFO.map((s, i) => {
                     const isWeapon = s.slot === "weapon";
-                    const prices = isWeapon ? WEAPON_PRICES : DEFENSIVE_PRICES;
+                    const prices = EQUIPMENT_PRICES[isWeapon ? "weapon" : "defensive"];
                     return (
                       <tr key={s.slot} className={i % 2 === 0 ? "bg-slate-800/30" : ""}>
                         <td className="py-2 pr-4 text-slate-300 font-medium">{s.label}</td>
@@ -162,7 +150,7 @@ export default function ItemsPage() {
                 <p>Perícia: <span className="text-amber-400">{p.skill}</span></p>
                 <p>{p.crafts}</p>
                 <div className="grid grid-cols-3 gap-1 mt-2">
-                  {[{l:"Comum",dc:9},{l:"Esplêndido",dc:18},{l:"Lendário",dc:27}].map(t => (
+                  {(Object.keys(STANDARD_CRAFT_DC) as EquipmentQuality[]).map(q => ({ l: QUALITY_LABELS[q], dc: STANDARD_CRAFT_DC[q] })).map(t => (
                     <div key={t.l} className="bg-slate-800 rounded p-1.5 text-center">
                       <p className="text-[10px] text-slate-500">{t.l}</p>
                       <p className="font-mono font-bold text-amber-400">DC {t.dc}</p>

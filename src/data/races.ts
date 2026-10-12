@@ -1,11 +1,13 @@
-import type { RaceId, BaseAttributes } from "../shared/types/character";
+import type { RaceId, BaseAttributes, PericiaId } from "../shared/types/character";
 
 export interface RaceData {
   id: RaceId;
   name: string;
+  /** Grafia usada na ficha do fórum, quando difere de `name` */
+  forumLabel?: string;
   description: string;
   attrBonus: Partial<BaseAttributes>;
-  periciaBonus: { pericia: string; value: number } | null;
+  periciaBonus: { pericia: PericiaId; value: number } | null;
   specialAbility?: string;
 }
 
@@ -35,6 +37,7 @@ export const RACES: Record<RaceId, RaceData> = {
   lunar: {
     id: "lunar",
     name: "Povo Lunar",
+    forumLabel: "Lunar",
     description: "Birkans, Shandians e Skypeans — originários da Lua, com asas decorativas nas costas.",
     attrBonus: { precision: 1 },
     periciaBonus: { pericia: "logica", value: 1 },
@@ -57,6 +60,7 @@ export const RACES: Record<RaceId, RaceData> = {
   giant: {
     id: "giant",
     name: "Gigante / Meio-gigante",
+    forumLabel: "Gigante",
     description: "Imensos guerreiros de Elbaf. Meio-gigantes variam entre 5 e 7 metros.",
     attrBonus: { constitution: 1 },
     periciaBonus: { pericia: "sobrevivencia", value: 1 },
@@ -64,8 +68,14 @@ export const RACES: Record<RaceId, RaceData> = {
   half_giant: {
     id: "half_giant",
     name: "Meio-gigante",
+    forumLabel: "Meio-Gigante",
     description: "Híbrido entre gigante e humano. Usa a tabela de Gigante.",
     attrBonus: { constitution: 1 },
     periciaBonus: { pericia: "sobrevivencia", value: 1 },
   },
 };
+
+export function raceForumLabel(id: RaceId): string {
+  const race = RACES[id];
+  return race ? race.forumLabel ?? race.name : id;
+}

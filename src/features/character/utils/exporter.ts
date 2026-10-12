@@ -1,4 +1,4 @@
-import type { AMFaixaId, Character, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
+import type { AMFaixaId, Character, PrimaryHakiType, PericiaId, ZoanAkuma, LogiaAkuma, ParameciaAkuma } from "../../../shared/types/character";
 import { bpn, characterMaxEnergy } from "./attrCalc";
 import { computeGemBudget, GEM_COSTS } from "./gemBudget";
 import { hakiStageNum } from "./haki";
@@ -7,10 +7,16 @@ import { UNIQUE_WEAPONS } from "../../../data/uniqueWeapons";
 import { RACE_PERICIA_BONUS, ZOAN_CLASS_PERICIA_BONUS } from "../../../data/pericias";
 import { BUGIGANGAS } from "../../../data/bugigangas";
 import { PARAMECIA_MODULES, ZOAN_MODULES } from "../../../data/akumaModules";
-import { getFactionLabel } from "../../../data/factions";
+import { FACTIONS, getFactionLabel } from "../../../data/factions";
 import { faixaForumLabel, faixaIndex, faixasUpTo } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID, cyborgBonusLabel } from "../../../data/cyborg";
 import { ATTR_SHORT_LABELS, type AttrKey } from "../../../data/attributes";
+import { EQUIPMENT_PRICES, QUALITY_LABELS } from "../../../data/equipment";
+import { LOCATION_LABELS } from "../../../data/locations";
+import { raceForumLabel } from "../../../data/races";
+import { PERICIAS } from "../../../data/pericias";
+import { TECHNIQUE_RANKS, TECHNIQUE_SOURCE_LABELS } from "../../../data/techniques";
+import { HAKI_TYPE_NAMES } from "../../../data/haki";
 
 // ─── JSON export ──────────────────────────────────────────────────────────────
 
@@ -52,55 +58,13 @@ function attrLabel(key: string): string {
   return ATTR_SHORT_LABELS[key as AttrKey] ?? key;
 }
 
-function qualityLabel(q: string): string {
-  return ({ common: "Comum", splendid: "Esplêndido", legendary: "Lendário" })[q] ?? q;
+/** Preço formatado como na ficha do fórum ("B$ 500.000"), ou marcador se ausente */
+function formatBerriesOr(value: number | undefined): string {
+  return value === undefined ? "[PREENCHER]" : `B$ ${value.toLocaleString("pt-BR")}`;
 }
-
-const OFFENSIVE_PRICE: Record<string, string> = {
-  common:    "B$ 500.000",
-  splendid:  "B$ 10.000.000",
-  legendary: "B$ 80.000.000",
-};
-
-const DEFENSIVE_PRICE: Record<string, string> = {
-  common:    "B$ 500.000",
-  splendid:  "B$ 5.000.000",
-  legendary: "B$ 40.000.000",
-};
-
-const RACE_LABELS: Record<string, string> = {
-  human: "Humano", fishman: "Tritão", siren: "Sireno", lunar: "Lunar",
-  mink: "Mink", dwarf: "Anão", giant: "Gigante", half_giant: "Meio-Gigante",
-};
-
-const LOCATION_LABELS: Record<string, string> = {
-  blues: "Blues", grand_line: "Grand Line", new_world: "New World",
-};
-
-const FACTION_LABELS: Record<string, string> = {
-  pirata: "Pirata", marinha: "Marinha", cacador: "Caçador de Recompensas",
-  governo: "Governo", revolucionario: "Revolucionário",
-};
-
-const HAKI_TYPE_LABELS: Record<string, string> = {
-  armament: "do Armamento", observation: "da Observação",
-};
 
 const AKUMA_TYPE_LABELS: Record<string, string> = {
   zoan: "Zoan", logia: "Logia", paramecia: "Paramecia",
-};
-
-const TECH_COSTS: Record<string, number> = { E: 6, D: 7, C: 8, B: 9, A: 10 };
-
-const TECH_SOURCE_LABELS: Record<string, string> = {
-  akuma: "Akuma no Mi", haki: "Haki", artes_marciais: "Artes Marciais", ciborgue: "Ciborgue",
-};
-
-const PERICIAS_LABELS: Record<PericiaId, string> = {
-  ambicao: "Ambição", atletismo: "Atletismo", destreza: "Destreza",
-  erudicao: "Erudição", expressao: "Expressão", furtividade: "Furtividade",
-  investigacao: "Investigação", logica: "Lógica",
-  percepcao: "Percepção", persuasao: "Persuasão", sobrevivencia: "Sobrevivência",
 };
 
 function attrDisplay(base: number, racial: number, raceName: string, am: number): string {
@@ -335,7 +299,7 @@ function computePericiaExtras(char: Character): Partial<Record<PericiaId, Array<
   if (char.race === "human") {
     add(char.humanPericiaChoice, "Raça: Humano", 1);
   } else {
-    add(RACE_PERICIA_BONUS[char.race] as PericiaId | undefined, `Raça: ${RACE_LABELS[char.race] ?? char.race}`, 1);
+    add(RACE_PERICIA_BONUS[char.race] as PericiaId | undefined, `Raça: ${raceForumLabel(char.race)}`, 1);
   }
 
   // Zoan class bonus
@@ -399,16 +363,16 @@ export function exportToForumHTML(char: Character): string {
   if (racialCon) racialParts.push(`+${racialCon} CON`);
   // Racial/human/zoan pericia bonus
   const racialPericiaId = char.race === "human" ? char.humanPericiaChoice : (RACE_PERICIA_BONUS[char.race] as PericiaId | undefined);
-  if (racialPericiaId) racialParts.push(`+1 ${PERICIAS_LABELS[racialPericiaId]}`);
+  if (racialPericiaId) racialParts.push(`+1 ${PERICIAS[racialPericiaId].name}`);
   if (char.akuma?.type === "zoan") {
     const zoanPericiaId = ZOAN_CLASS_PERICIA_BONUS[(char.akuma as any).animalClass] as PericiaId | undefined;
-    if (zoanPericiaId) racialParts.push(`+1 ${PERICIAS_LABELS[zoanPericiaId]} (Zoan)`);
+    if (zoanPericiaId) racialParts.push(`+1 ${PERICIAS[zoanPericiaId].name} (Zoan)`);
   }
   const racialStr = racialParts.length > 0 ? racialParts.join(", ") : "Nenhum";
 
   const techTotalCost = char.techniques
     .filter(t => t.source === "purchased")
-    .reduce((s, t) => s + (TECH_COSTS[t.rank] ?? 0), 0);
+    .reduce((s, t) => s + (TECHNIQUE_RANKS[t.rank]?.gemCost ?? 0), 0);
 
   const caminhoCost = budget.breakdown
     .filter(b => ["Akuma no Mi", "Haki", "Artes Marciais", "Ciborgue"].includes(b.category))
@@ -442,11 +406,11 @@ export function exportToForumHTML(char: Character): string {
   // ── Seção 1 — Info Geral
   ln(`<div style=" border: 1px solid; padding: 10px; "><e>Nome: </e>${char.name}.`);
   ln(`<e>Idade: </e>[PREENCHER].`);
-  ln(`<e>Raça: </e>${RACE_LABELS[char.race] ?? char.race}.`);
+  ln(`<e>Raça: </e>${raceForumLabel(char.race)}.`);
   ln(`<e>Localização: </e>${LOCATION_LABELS[char.location] ?? char.location}.`);
   ln(`<e>Alcunha: </e>[PREENCHER].`);
   if (char.faction) {
-    ln(`<e>Facção: </e>${FACTION_LABELS[char.faction.type] ?? char.faction.type}.`);
+    ln(`<e>Facção: </e>${FACTIONS[char.faction.type]?.singularName ?? char.faction.type}.`);
     ln(`<e>Recompensa / Patente / Cargo / Rank: </e>${getFactionLabel(char.faction.type, char.faction.rank)}.`);
   } else {
     ln(`<e>Facção: </e>Aventureiro.`);
@@ -473,7 +437,7 @@ export function exportToForumHTML(char: Character): string {
     : `2 | Atributos e afins`;
   ln(`<t>${attrSectionLabel}</t>`);
   ln();
-  const raceName = RACE_LABELS[char.race] ?? char.race;
+  const raceName = raceForumLabel(char.race);
   ln(`<div style=" border: 1px solid; padding: 10px; "><e>Poder (PDR): </e>${attrDisplay(basePow, racialPow, raceName, amPow)}`);
   ln(`<e>Precisão (PRE): </e>${attrDisplay(basePre, racialPre, raceName, amPre)}`);
   ln(`<e>Defesa (DEF): </e>${attrDisplay(baseDef, racialDef, raceName, amDef)}`);
@@ -497,13 +461,13 @@ export function exportToForumHTML(char: Character): string {
   ln(`<t>3 | Perícias</t>`);
   ln();
   ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-  for (const id of Object.keys(PERICIAS_LABELS) as PericiaId[]) {
+  for (const id of Object.keys(PERICIAS) as PericiaId[]) {
     const value = char.pericias?.[id] ?? 0;
     const extras = periciaExtras[id];
     const extrasStr = extras
       ? extras.map(e => ` +${e.value} [${e.label}]`).join("")
       : "";
-    ln(`<e>${PERICIAS_LABELS[id]}: </e>${String(value).padStart(2, "0")}${extrasStr}`);
+    ln(`<e>${PERICIAS[id].name}: </e>${String(value).padStart(2, "0")}${extrasStr}`);
   }
   ln(`</div>`);
   ln();
@@ -513,14 +477,14 @@ export function exportToForumHTML(char: Character): string {
     ln(`<t>4 | Técnicas (${techTotalCost} gemas)</t>`);
     ln();
     ln(`<div style=" border: 1px solid; padding: 10px; ">`);
-    for (const rank of ["E", "D", "C", "B", "A"]) {
+    for (const rank of ["E", "D", "C", "B", "A"] as const) {
       const rankTechs = char.techniques.filter(t => t.rank === rank);
       if (rankTechs.length === 0) continue;
       ln(`<e>Rank ${rank}</e>`);
       for (const tech of rankTechs) {
         const costStr = tech.source && tech.source !== "purchased"
-          ? `Concedida por ${TECH_SOURCE_LABELS[tech.source] ?? tech.source}.`
-          : `${TECH_COSTS[rank] ?? 0} gemas.`;
+          ? `Concedida por ${TECHNIQUE_SOURCE_LABELS[tech.source as keyof typeof TECHNIQUE_SOURCE_LABELS] ?? tech.source}.`
+          : `${TECHNIQUE_RANKS[rank]?.gemCost ?? 0} gemas.`;
         ln(`[b]Nome:[/b] ${tech.name}`);
         ln(`[b]Descrição:[/b] ${tech.description || "[PREENCHER]"}`);
         ln(`[b]Custo:[/b] ${costStr}`);
@@ -589,8 +553,8 @@ export function exportToForumHTML(char: Character): string {
       const pData   = pStage > 0 ? pStages[pStage - 1] : null;
       const sData   = sStage > 0 ? sStages[sStage - 1] : null;
 
-      const hakiBlock = (type: string, stage: number, data: typeof pData, cost: number) => {
-        ln(`<d>Haki ${HAKI_TYPE_LABELS[type] ?? type}</d>`);
+      const hakiBlock = (type: PrimaryHakiType, stage: number, data: typeof pData, cost: number) => {
+        ln(`<d>Haki ${HAKI_TYPE_NAMES[type].withArticle}</d>`);
         ln(`[b]Nível: [/b]${String(stage).padStart(2, "0")}`);
         ln(`[b]Aventuras: [/b]00/02`);
         ln(`[b]Custo: [/b]${cost} gemas.`);
@@ -649,18 +613,18 @@ export function exportToForumHTML(char: Character): string {
   ln();
 
   if (char.equippedWeapon) {
-    const w = char.equippedWeapon as any;
-    const uniqueData = w.characteristic ? (UNIQUE_WEAPONS as Record<string, { name: string; effect: string }>)[w.characteristic] : null;
+    const w = char.equippedWeapon;
+    const uniqueData = "characteristic" in w ? UNIQUE_WEAPONS[w.characteristic] : null;
     const baseBonus = bonusWithAM(w.bonusValue ?? 0, amWeaponBonus, attrLabel(w.bonusAttr));
     const bonusStr = uniqueData
       ? `${baseBonus}; ${uniqueData.effect}`
       : baseBonus;
     ln(`<e>Equipamentos Ofensivos</e>`);
     ln(`[b]Nome: [/b]${w.name}.`);
-    ln(`[b]Qualidade: [/b]${qualityLabel(w.quality)}.`);
+    ln(`[b]Qualidade: [/b]${QUALITY_LABELS[w.quality] ?? w.quality}.`);
     ln(`[b]Bônus: [/b]${bonusStr}.`);
     if (uniqueData) ln(`[b]Custo: [/b]${isUniqueFromLaranja ? "Concedida via Faixa Laranja." : "20 gemas."}`);
-    ln(`[b]Valor: [/b]${OFFENSIVE_PRICE[w.quality] ?? "[PREENCHER]"}.`);
+    ln(`[b]Valor: [/b]${formatBerriesOr(EQUIPMENT_PRICES.weapon[w.quality])}.`);
     ln(`[b]Descrição: [/b]${w.description || "[PREENCHER]"}.`);
     if (uniqueData) ln(`[b]Característica Única: [/b]${uniqueData.name}.`);
     ln();
@@ -672,10 +636,10 @@ export function exportToForumHTML(char: Character): string {
     for (const item of defensives) {
       if (!item) continue;
       ln(`[b]Nome: [/b]${item.name}.`);
-      ln(`[b]Qualidade: [/b]${qualityLabel(item.quality)}.`);
+      ln(`[b]Qualidade: [/b]${QUALITY_LABELS[item.quality] ?? item.quality}.`);
       ln(`[b]Bônus: [/b]${bonusWithAM(item.bonusValue ?? 0, amDefItemBonus, attrLabel(item.bonusAttr))}.`);
-      ln(`[b]Valor: [/b]${DEFENSIVE_PRICE[item.quality] ?? "[PREENCHER]"}.`);
-      ln(`[b]Descrição: [/b]${(item as any).description || "[PREENCHER]"}.`);
+      ln(`[b]Valor: [/b]${formatBerriesOr(EQUIPMENT_PRICES.defensive[item.quality])}.`);
+      ln(`[b]Descrição: [/b]${item.description || "[PREENCHER]"}.`);
       ln();
     }
   }

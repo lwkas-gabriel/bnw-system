@@ -1,4 +1,4 @@
-import type { HakiStage, AdvancedHakiVariant } from "../shared/types/character";
+import type { HakiStage, AdvancedHakiVariant, PrimaryHakiType } from "../shared/types/character";
 
 export interface HakiStageData {
   stage: HakiStage;
@@ -165,4 +165,10 @@ export const KING_HAKI: {
     persuasionBonus: 4,
     description: "Desmaia alvos com 5 níveis a menos. Resistentes com Obs. 3+ ficam sem ação de ataque por 2 turnos.",
   },
+};
+
+/** Nome do Haki primário/secundário, com e sem artigo ("do Armamento") */
+export const HAKI_TYPE_NAMES: Record<PrimaryHakiType, { name: string; withArticle: string }> = {
+  armament:    { name: "Armamento", withArticle: "do Armamento" },
+  observation: { name: "Observação", withArticle: "da Observação" },
 };

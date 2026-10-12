@@ -1,5 +1,6 @@
 import type { HakiPath, HakiStage } from "../../../shared/types/character";
 import { GEM_COSTS } from "./gemBudget";
+import { HAKI_TYPE_NAMES } from "../../../data/haki";
 
 /** Converte o estágio em número; estágios avançados ("advanced_*") contam como 5. */
 export function hakiStageNum(stage: HakiStage, fallback = 5): number {
@@ -15,7 +16,7 @@ export interface HakiCostItem {
 export function hakiCostBreakdown(haki: HakiPath): HakiCostItem[] {
   const primaryStage = hakiStageNum(haki.primaryStage);
   const items: HakiCostItem[] = [{
-    detail: `${haki.primaryType === "armament" ? "Armamento" : "Observação"} (primário, estágios 1-${primaryStage})`,
+    detail: `${HAKI_TYPE_NAMES[haki.primaryType].name} (primário, estágios 1-${primaryStage})`,
     cost: primaryStage * GEM_COSTS.haki.stageBase,
   }];
 

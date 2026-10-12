@@ -1,4 +1,4 @@
-import type { AMFaixaId, BaseAttributes } from "../shared/types/character";
+import type { AMFaixaId, BaseAttributes, LocationId } from "../shared/types/character";
 
 export type FaixaRegion = "any" | "grand_line" | "new_world";
 
@@ -71,7 +71,7 @@ export const FAIXA_REGION_LABELS: Record<FaixaRegion, string> = {
 };
 
 /** Se a faixa pode ser obtida na localização atual do personagem. */
-export function isFaixaAvailable(id: AMFaixaId, location: "blues" | "grand_line" | "new_world"): boolean {
+export function isFaixaAvailable(id: AMFaixaId, location: LocationId): boolean {
   const region = AM_FAIXAS_BY_ID[id].region;
   if (region === "grand_line") return location === "grand_line" || location === "new_world";
   if (region === "new_world") return location === "new_world";

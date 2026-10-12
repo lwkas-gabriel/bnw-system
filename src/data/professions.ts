@@ -20,7 +20,7 @@ export interface ProfessionData {
 }
 
 /** Shared craft DCs for all professions (per rules). */
-const STANDARD_CRAFT_DC: CraftDC = { common: 9, splendid: 18, legendary: 27 };
+export const STANDARD_CRAFT_DC: CraftDC = { common: 9, splendid: 18, legendary: 27 };
 
 export const PROFESSIONS: ProfessionData[] = [
   {

@@ -10,6 +10,7 @@ import type {
 import { ATTR_KEYS, ATTR_LABELS } from "../../../data/attributes";
 import { faixaStatBonuses, hasReachedFaixa } from "../../../data/artesMarciais";
 import { CYBORG_LOCATIONS_BY_ID } from "../../../data/cyborg";
+import { HAKI_TYPE_NAMES } from "../../../data/haki";
 
 // ─── Attr Breakdown ───────────────────────────────────────────────────────────
 
@@ -176,7 +177,7 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
       const isArm = primaryType === "armament";
       // Armamento: +N POD, +N CON temp
       // Observação: +N PRE, +N DEF
-      add(`Haki ${isArm ? "Armamento" : "Observação"} (primário · Estágio ${pNum})`,
+      add(`Haki ${HAKI_TYPE_NAMES[primaryType].name} (primário · Estágio ${pNum})`,
         isArm ? pNum : 0,
         isArm ? 0 : pNum,
         isArm ? 0 : pNum,
@@ -188,7 +189,7 @@ function computeAttrBreakdown(char: Character): AttrRow[] {
     // Secundário
     if (sNum > 0) {
       const isArm = secondaryType === "armament";
-      add(`Haki ${isArm ? "Armamento" : "Observação"} (secundário · Estágio ${sNum})`,
+      add(`Haki ${HAKI_TYPE_NAMES[secondaryType].name} (secundário · Estágio ${sNum})`,
         isArm ? sNum : 0,
         isArm ? 0 : sNum,
         isArm ? 0 : sNum,
